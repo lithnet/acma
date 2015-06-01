@@ -1,0 +1,194 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:c="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaDatabaseViewModel}"
+                              ItemsSource="{Binding Path=ConfigItems}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Connect to database..."
+                              Command="{Binding Commands.ConnectToDatabase}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaAttributesViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add attribute..."
+                              Command="{Binding Commands.AddAttribute}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaAttributeViewModel}"
+                              ItemsSource="{Binding Path=ChildNodes}">
+
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete attribute..."
+                              Command="{Binding Commands.DeleteAttribute}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaObjectsViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add object class..."
+                              Command="{Binding Commands.AddObjectClass}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaObjectViewModel}"
+                              ItemsSource="{Binding Path=ChildNodes}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete object class..."
+                              Command="{Binding Commands.DeleteObjectClass}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaMappingsViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add new binding..."
+                              Command="{Binding Commands.AddMapping}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaMappingViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete binding..."
+                              Command="{Binding Commands.DeleteMapping}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaShadowObjectLinksViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add link..."
+                              Command="{Binding Commands.AddLink}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaShadowObjectLinkViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete link..."
+                              Command="{Binding Commands.DeleteLink}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSequencesViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add new sequence..."
+                              Command="{Binding Commands.AddSequence}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSequenceViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete sequence..."
+                              Command="{Binding Commands.DeleteSequence}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaReferenceLinksViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add new link..."
+                              Command="{Binding Commands.AddLink}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaSchemaReferenceLinkViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete link..."
+                              Command="{Binding Commands.DeleteLink}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:SafetyRulesViewModel}"
+                              ItemsSource="{Binding Path=ItemViewModels}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add new safety rule..."
+                              Command="{Binding Commands.Add}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:SafetyRuleViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete safety rule..."
+                              Command="{Binding Commands.Delete}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AcmaConstantsViewModel}">
+        <p:TreeViewItemControl>
+
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+</ResourceDictionary>

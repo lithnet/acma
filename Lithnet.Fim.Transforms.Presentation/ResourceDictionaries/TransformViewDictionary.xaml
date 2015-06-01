@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/UnknownTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/FormatNumberTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/StringCaseTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/GetDNComponentTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/DelimitedTextFileLookupTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/XmlLookupTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/SubstringTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/TrimStringTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/RegexReplaceTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/MultivalueToSingleValueTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/StringSplitTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/BitmaskToBooleanTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/BitmaskTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/ConcatStringTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/FormatStringTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/NumberCalculationTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/DateConverterTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/SimpleLookupTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/SidStringBiDirectionalTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/SidToDomainTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/GroupStringsToADGroupTypeTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/ADGroupTypeToStringTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/ADGroupScopeToStringTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/TypeConverterTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/HashTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/ValueMergeTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/RemoveDiacriticsTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/MVBooleanToBitmaskTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/BooleanOperationTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/StringEscapeTransformView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Fim.Transforms.Presentation;component/Views/EncodeStringTransformView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+   
+</ResourceDictionary>

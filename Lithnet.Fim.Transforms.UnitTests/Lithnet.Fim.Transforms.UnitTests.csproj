@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FF9AD97-2F6F-4B89-88A6-F22B9B97BF19}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lithnet.Fim.Transforms.UnitTests</RootNamespace>
+    <AssemblyName>Lithnet.Fim.Transforms.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.MetadirectoryServicesEx">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lithnet.Fim.Core\References\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="ADGroupScopeToStringTransformTest.cs" />
+    <Compile Include="BitmaskToBooleanTest.cs" />
+    <Compile Include="BooleanOperationTransformTests.cs" />
+    <Compile Include="MVBooleanToBitmaskTest.cs" />
+    <Compile Include="BooleanToBitmaskTest.cs" />
+    <Compile Include="DateConverterTransformTest.cs" />
+    <Compile Include="ADGroupTypeToStringTransformTest.cs" />
+    <Compile Include="GroupStringsToADGroupTypeTransformTest.cs" />
+    <Compile Include="SidToDomainTransformTest.cs" />
+    <Compile Include="SidStringBiDirectionalTransformTest.cs" />
+    <Compile Include="FormatStringUnitTest.cs" />
+    <Compile Include="DelimitedTextFileLookupTransformTest.cs" />
+    <Compile Include="FormatNumberTransformTest.cs" />
+    <Compile Include="GetDNComponentTransformTest.cs" />
+    <Compile Include="MultivaluetoSingleValueTransformTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexReplaceTransformTest.cs" />
+    <Compile Include="ConcatStringTransformTest.cs" />
+    <Compile Include="StringEscapeTransformTest.cs" />
+    <Compile Include="ValueMergeTransformTest.cs" />
+    <Compile Include="StringSplitTransformTest.cs" />
+    <Compile Include="StringCaseTransformTest.cs" />
+    <Compile Include="SubStringTransformTest.cs" />
+    <Compile Include="TransformKeyedCollectionTest.cs" />
+    <Compile Include="BitmaskTransformTest.cs" />
+    <Compile Include="TrimStringTransformTest.cs" />
+    <Compile Include="UnitTestControl.cs" />
+    <Compile Include="SimpleLookupTransformTest.cs" />
+    <Compile Include="XmlLookupTransformTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lithnet\Lithnet.Common\Lithnet.Logging\Lithnet.Logging.csproj">
+      <Project>{901e0ba4-9507-4fdb-8f90-fd82a4858fda}</Project>
+      <Name>Lithnet.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Fim.MmsResolver\Lithnet.Fim.MmsResolver.csproj">
+      <Project>{6442282e-27e5-435d-956f-26f55fd96df6}</Project>
+      <Name>Lithnet.Fim.MmsResolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Common.ObjectModel\Lithnet.Common.ObjectModel.csproj">
+      <Project>{fabb65ac-fa5b-48fe-a1bd-50bae4182663}</Project>
+      <Name>Lithnet.Common.ObjectModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.Core\Lithnet.Fim.Core.csproj">
+      <Project>{a7499be9-8b2b-4c10-a9a0-6b6e9ddb5c31}</Project>
+      <Name>Lithnet.Fim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.Transforms\Lithnet.Fim.Transforms.csproj">
+      <Project>{3eeacb2d-e292-4dce-a476-1be0f4897e19}</Project>
+      <Name>Lithnet.Fim.Transforms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\OUMappingsWithComments.csv" />
+    <None Include="TestData\OUMappings.esv" />
+    <None Include="TestData\OUMappings.tsv" />
+    <None Include="TestData\OUMappings.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData\OUMappings.xml" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,92 @@
+﻿-- =============================================
+-- Author:		Ryan Newington
+-- Create date: 06/03/2015
+-- Description:	Gets the delta changes from the specified version
+-- =============================================
+CREATE PROCEDURE [dbo].[spGetDeltaChanges]
+	@changeVersion bigint
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	IF (@changeVersion < CHANGE_TRACKING_MIN_VALID_VERSION(object_ID('[dbo].[MA_Objects]'))) 
+		THROW 55000, N'The requested change version is not available', 1
+
+	IF (@changeVersion < CHANGE_TRACKING_MIN_VALID_VERSION(object_ID('[dbo].[MA_Attributes]'))) 
+		THROW 55000, N'The requested change version is not available', 1
+
+	IF (@changeVersion < CHANGE_TRACKING_MIN_VALID_VERSION(object_ID('[dbo].[MA_References]'))) 
+		THROW 55000, N'The requested change version is not available', 1
+
+IF (OBJECT_ID('#tmpDelta')) IS NOT NULL
+	DROP TABLE #tmpDelta
+
+DECLARE @deletedColumnID int = COLUMNPROPERTY(
+    OBJECT_ID('dbo.MA_Objects'),'deleted', 'ColumnId')
+
+DECLARE @tmpTable TABLE (
+	[objectId] uniqueIdentifier NOT NULL PRIMARY KEY,
+	[changeType] nvarchar(10) NOT NULL,
+	[version] bigint NOT NULL
+)
+
+INSERT INTO @tmpTable (objectId, [version], changeType)
+	SELECT 
+		c.objectID as objectType, 
+		c.SYS_CHANGE_VERSION as [version],
+		changeType = 
+			CASE
+				WHEN c.SYS_CHANGE_OPERATION = 'D'	THEN 'delete'
+				WHEN c.SYS_CHANGE_OPERATION = 'I'	THEN 'add'
+				WHEN c.SYS_CHANGE_OPERATION = 'U'	THEN 
+					CASE 
+						WHEN (CHANGE_TRACKING_IS_COLUMN_IN_MASK(@deletedColumnID, c.SYS_CHANGE_COLUMNS) = 1 AND o.deleted = 0) THEN 'add'
+						WHEN (CHANGE_TRACKING_IS_COLUMN_IN_MASK(@deletedColumnID, c.SYS_CHANGE_COLUMNS) = 1 AND o.deleted > 0) THEN 'delete'
+						ELSE 'modify'
+					END
+			END
+ FROM 
+	CHANGETABLE(CHANGES [dbo].[MA_Objects], @changeVersion) c
+	LEFT OUTER JOIN [dbo].[MA_Objects] o
+		ON o.objectID = c.objectID
+	WHERE NOT (c.SYS_CHANGE_OPERATION = 'D' AND (c.SYS_CHANGE_CREATION_VERSION IS NOT NULL AND @changeVersion < c.SYS_CHANGE_CREATION_VERSION))
+
+INSERT INTO @tmpTable (objectId, [version], changeType)
+SELECT TOP 1 c.objectID, c.SYS_CHANGE_VERSION as [version], 'modify' as changeType
+ FROM 
+	CHANGETABLE(CHANGES [dbo].[MA_Attributes], @changeVersion) c
+	WHERE c.objectId NOT IN (SELECT objectId from @tmpTable)
+	AND not (c.SYS_CHANGE_OPERATION = 'D' AND (c.SYS_CHANGE_CREATION_VERSION IS NOT NULL AND @changeVersion < c.SYS_CHANGE_CREATION_VERSION))
+	ORDER BY c.SYS_CHANGE_VERSION DESC
+
+UPDATE @tmpTable 
+	SET [version] = c.SYS_CHANGE_VERSION 
+	FROM 
+		CHANGETABLE(CHANGES [dbo].[MA_Attributes], @changeVersion) c
+			JOIN @tmpTable t
+			on t.objectId = c.objectId
+			WHERE c.SYS_CHANGE_VERSION > t.[version]
+
+
+INSERT INTO @tmpTable (objectId, [version], changeType)
+SELECT TOP 1 c.objectID, c.SYS_CHANGE_VERSION as [version], 'modify' as changeType
+ FROM 
+	CHANGETABLE(CHANGES [dbo].[MA_References], @changeVersion) c
+	WHERE not (c.SYS_CHANGE_OPERATION = 'D' AND (c.SYS_CHANGE_CREATION_VERSION IS NOT NULL AND @changeVersion < c.SYS_CHANGE_CREATION_VERSION))
+	AND c.objectId NOT IN (SELECT objectId from @tmpTable)
+	ORDER BY c.SYS_CHANGE_VERSION DESC
+
+UPDATE @tmpTable 
+	SET [version] = c.SYS_CHANGE_VERSION 
+	FROM 
+		CHANGETABLE(CHANGES [dbo].[MA_References], @changeVersion) c
+			JOIN @tmpTable t
+			on t.objectId = c.objectId
+			WHERE c.SYS_CHANGE_VERSION > t.[version]
+
+SELECT t.[version], t.[objectId], t.[changeType] as [operation], o.* FROM
+@tmpTable t
+LEFT OUTER JOIN [dbo].[MA_Objects] o
+ON t.objectId = o.objectId
+
+END

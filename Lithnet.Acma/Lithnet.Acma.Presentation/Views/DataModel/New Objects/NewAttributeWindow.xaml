@@ -1,0 +1,138 @@
+﻿<Window x:Class="Lithnet.Acma.Presentation.NewAttributeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation"
+        xmlns:a="clr-namespace:Lithnet.Acma;assembly=Lithnet.Acma"
+        xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+        xmlns:fim="clr-namespace:Microsoft.MetadirectoryServices;assembly=Microsoft.MetadirectoryServicesEx"
+        Title="{Binding DisplayName}"
+        Height="300"
+        Width="398"
+        ResizeMode="CanResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        Icon="{Binding DisplayIcon}"
+        FocusManager.FocusedElement="{Binding ElementName=AttributeName}">
+
+    <Grid HorizontalAlignment="Left"
+          Width="367">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.Margin>
+                    <Thickness>15</Thickness>
+                </Grid.Margin>
+
+                <Label Content="Attribute name"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <TextBox Grid.Row="0"
+                         Grid.Column="1"
+                         Margin="2"
+                         Name="AttributeName"
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+
+                <Label Content="Data type"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding Path=AllowedDataTypes}"
+                          SelectedValue="{Binding Type, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Margin="2"
+                          Grid.Row="1"
+                          Grid.Column="1" />
+
+                <Label Content="Indexable"
+                       Grid.Row="2"
+                       Grid.Column="0" />
+                <CheckBox Grid.Row="2"
+                          Grid.Column="1"
+                          Margin="2"
+                          VerticalAlignment="Center"
+                          IsEnabled="{Binding IsIndexableAllowed}"
+                          IsChecked="{Binding IsIndexable, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+
+                <Label Content="Indexed"
+                       Grid.Row="3"
+                       Grid.Column="0" />
+                <CheckBox Grid.Row="3"
+                          Grid.Column="1"
+                          Margin="2"
+                          VerticalAlignment="Center"
+                          IsEnabled="{Binding IsIndexedAllowed}"
+                          IsChecked="{Binding IsIndexed, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+
+                <Label Content="Multivalued"
+                       Grid.Row="4"
+                       Grid.Column="0" />
+                <CheckBox Grid.Row="4"
+                          Grid.Column="1"
+                          Margin="2"
+                          VerticalAlignment="Center"
+                          IsEnabled="{Binding IsMultivaluedAllowed}"
+                          IsChecked="{Binding IsMultivalued, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+
+                <Label Content="Supported operation"
+                       Grid.Row="5"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type a:AcmaAttributeOperation}}}"
+                          SelectedValue="{Binding Operation, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Margin="2"
+                          Grid.Row="5"
+                          Grid.Column="1" />
+            </Grid>
+        </StackPanel>
+
+        <!--<ContentPresenter Grid.Row="1" DataContext="{Binding NewTransform}">
+            <ContentPresenter.Resources>
+                <ResourceDictionary Source="/Views/ResourceDictionaries/TransformViewDictionary.xaml" />
+            </ContentPresenter.Resources>
+        </ContentPresenter>-->
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+            
+            <Button Content="Create and add new"
+                    MinWidth="50"
+                    MinHeight="27"
+                    Margin="5"
+                    Command="{Binding Commands.CreateAndAddNew}"
+                    IsDefault="True" />
+
+            <Button Content="Create"
+                    MinWidth="50"
+                    MinHeight="27"
+                    Margin="5"
+                    Command="{Binding Commands.Create}" />
+            
+            <Button Content="Cancel"
+                    Margin="5"
+                    MinWidth="50"
+                    MinHeight="27"
+                    IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>

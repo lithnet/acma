@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{21A9F51A-52C1-40D5-A80A-C474A186B6E0}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>Lithnet.Acma</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>Lithnet.Acma</RootNamespace>
+    <StartupObject />
+    <FileUpgradeFlags />
+    <MyType>Windows</MyType>
+    <UpgradeBackupLocation />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>529976be</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\debug\</OutputPath>
+    <DocumentationFile />
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG</DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugType>full</DebugType>
+    <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>C:\Program Files\Microsoft Forefront Identity Manager\2010\Synchronization Service\Extensions</OutputPath>
+    <DocumentationFile />
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineConstants />
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.MetadirectoryServicesEx, Version=4.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Lithnet.Fim.Core\References\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PropertyChanged">
+      <HintPath>..\..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Reeb.SqlOM">
+      <HintPath>.\Reeb.SqlOM.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Config\Constructors\AttributeConstructors\UniqueValueConstructor.cs" />
+    <Compile Include="Config\Declarations\ComplexValueDeclaration.cs" />
+    <Compile Include="Config\Constructors\Constructors.cs" />
+    <Compile Include="Config\Declarations\DeclarationComponent.cs" />
+    <Compile Include="Config\Declarations\IValueDeclaration.cs" />
+    <Compile Include="Config\Declarations\SimpleValueDeclaration.cs" />
+    <Compile Include="Config\Declarations\Parsers\ValueDeclarationParser.cs" />
+    <Compile Include="Config\Declarations\Parsers\VariableDeclarationParser.cs" />
+    <Compile Include="Config\Declarations\Parsers\AttributeDeclarationParser.cs" />
+    <Compile Include="Config\Declarations\Parsers\TransformParser.cs" />
+    <Compile Include="Config\Declarations\UniqueValueDeclaration.cs" />
+    <Compile Include="Config\Events\AcmaEvents.cs" />
+    <Compile Include="Config\Events\AcmaExternalExitEvent.cs" />
+    <Compile Include="Config\Events\AcmaExternalExitEventExtensible.cs" />
+    <Compile Include="Config\Events\AcmaExternalExitEventCmd.cs" />
+    <Compile Include="Config\Events\AcmaInternalExitEvent.cs" />
+    <Compile Include="Config\Events\AcmaOperationEvent.cs" />
+    <Compile Include="Config\Events\IAcmaExternalEventExtensible.cs" />
+    <Compile Include="Config\RuleObjects\AdvancedComparisonRule.cs" />
+    <Compile Include="Config\RuleObjects\ValueComparisonRule.cs" />
+    <Compile Include="Core\AcmaInheritedAttributeChange.cs" />
+    <Compile Include="Core\AttributeChangeCollection.cs" />
+    <Compile Include="Core\AttributeChangeExtensions.cs" />
+    <Compile Include="Core\RandomValueGenerator.cs" />
+    <Compile Include="Core\SchemaAttributeUsage.cs" />
+    <Compile Include="DataModel\AcmaConstant.cs" />
+    <Compile Include="DataModel\AcmaDatabase.cs" />
+    <Compile Include="Config\XmlConfigFile.cs" />
+    <Compile Include="Config\Constructors\AttributeConstructorGroup.cs" />
+    <Compile Include="Config\Constructors\ExecutableConstructorObject.cs" />
+    <Compile Include="Core\RaisedEvent.cs" />
+    <Compile Include="Config\Events\AcmaEvent.cs" />
+    <Compile Include="Core\AcmaExtensions.cs" />
+    <Compile Include="DataModel\AcmaSchemaMapping.cs" />
+    <Compile Include="DataModel\AcmaSequence.cs" />
+    <Compile Include="Core\ActiveConfig.cs" />
+    <Compile Include="DataModel\InternalAttributeValues.cs" />
+    <Compile Include="DataModel\DBAttributeValuesSVWrapper.cs" />
+    <Compile Include="DataModel\DBSchema.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBSchema.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AcmaSchemaAttribute.cs" />
+    <Compile Include="DataModel\AcmaSchemaObjectClass.cs" />
+    <Compile Include="DataModel\AcmaSchemaReferenceLink.cs" />
+    <Compile Include="DataModel\MissingAttributeEventArgs.cs" />
+    <Compile Include="DataModel\SafetyRule.cs" />
+    <Compile Include="DBManagement\DBInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DBManagement\DBInstaller.Designer.cs">
+      <DependentUpon>DBInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBManagement\DBInstallUpgrader.cs" />
+    <Compile Include="Enums\AcmaAttributeModificationType.cs" />
+    <Compile Include="Enums\AcmaEventOperationType.cs" />
+    <Compile Include="Enums\AcmaEventErrorHandlingMode.cs" />
+    <Compile Include="Enums\AcmaEventType.cs" />
+    <Compile Include="Enums\HologramView.cs" />
+    <Compile Include="Exceptions\DeclarationExpansionException.cs" />
+    <Compile Include="Exceptions\ConstructorExecutionException.cs" />
+    <Compile Include="Exceptions\ShadowObjectExportException.cs" />
+    <Compile Include="Exceptions\NotConnectedException.cs" />
+    <Compile Include="Exceptions\DuplicateObjectException.cs" />
+    <Compile Include="Exceptions\DBVersionException.cs" />
+    <Compile Include="ImportExport\AcmaCSEntryChange.cs" />
+    <Compile Include="ImportExport\CSEntryChangeXmlExport.cs" />
+    <Compile Include="ImportExport\CSEntryChangeXmlImport.cs" />
+    <Compile Include="Enums\GroupExecutionRule.cs" />
+    <Compile Include="Core\MAStatistics.cs" />
+    <Compile Include="Core\ValueChangeComparer.cs" />
+    <Compile Include="Core\CSEntryChangeHelper.cs" />
+    <Compile Include="Config\DBQuery\DBQueryByValue.cs" />
+    <Compile Include="Config\DBQuery\DBQueryGroup.cs" />
+    <Compile Include="Config\DBQuery\DBQueryObject.cs" />
+    <Compile Include="Config\DBQuery\DBQueryBuilder.cs" />
+    <Compile Include="Config\DBQuery\DBQuery.cs" />
+    <Compile Include="Enums\MAOperationType.cs" />
+    <Compile Include="Exceptions\DeletedObjectModificationException.cs" />
+    <Compile Include="Exceptions\CircularUpdateException.cs" />
+    <Compile Include="Exceptions\SafetyRuleViolationException.cs" />
+    <Compile Include="Exceptions\LdifFormatException.cs" />
+    <Compile Include="Exceptions\QueryValueNullException.cs" />
+    <Compile Include="Exceptions\InvalidDeclarationStringException.cs" />
+    <Compile Include="Core\MADiagnostics.cs" />
+    <Compile Include="Enums\AcmaAttributeOperation.cs" />
+    <Compile Include="Exceptions\MaximumAllocationAttemptsExceededException.cs" />
+    <Compile Include="Exceptions\MissingCSEntryChangeException.cs" />
+    <Compile Include="Exceptions\InheritedValueModificationException.cs" />
+    <Compile Include="Exceptions\ObjectClassNotInheritableException.cs" />
+    <Compile Include="Exceptions\ReadOnlyValueException.cs" />
+    <Compile Include="Config\Declarations\AttributeDeclaration.cs" />
+    <Compile Include="Config\Declarations\ValueDeclaration.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ImportExport\LdifAttributeValuePair.cs" />
+    <Compile Include="ImportExport\LdifReader.cs" />
+    <Compile Include="Installers\AcmaInstallerActions.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Installers\AcmaInstallerActions.Designer.cs">
+      <DependentUpon>AcmaInstallerActions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IAttributeScopeProvider.cs" />
+    <Compile Include="Interfaces\IObjectClassScopeProvider.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Config\RuleObjects\EventRule.cs" />
+    <Compile Include="Config\Constructors\AttributeConstructors\AttributeValueDeleteConstructor.cs" />
+    <Compile Include="Config\Constructors\AttributeConstructors\ReferenceLookupConstructor.cs" />
+    <Compile Include="Config\Constructors\AttributeConstructors\AttributeConstructor.cs" />
+    <Compile Include="Config\Constructors\ClassConstructor.cs" />
+    <Compile Include="Config\Constructors\ClassConstructors.cs" />
+    <Compile Include="Config\Constructors\AttributeConstructors\DeclarativeValueConstructor.cs" />
+    <Compile Include="DataModel\AttributeValue.cs" />
+    <Compile Include="DataModel\AttributeValues.cs" />
+    <Compile Include="DataModel\DBAttributeValues.cs" />
+    <Compile Include="DataModel\DBAttributeValue.cs" />
+    <Compile Include="DataModel\MAObject.cs" />
+    <Compile Include="Config\Declarations\VariableDeclaration.cs" />
+    <Compile Include="Config\RuleObjects\AttributeChangeRule.cs" />
+    <Compile Include="Config\RuleObjects\AttributePresenceRule.cs" />
+    <Compile Include="Config\RuleObjects\RuleObject.cs" />
+    <Compile Include="Config\RuleObjects\ObjectChangeRule.cs" />
+    <Compile Include="Config\Constructors\AttributeConstructors\SequentialIntegerAllocationConstructor.cs" />
+    <Compile Include="DataModel\DBConnection.cs" />
+    <Compile Include="DataModel\MADataContext.cs" />
+    <Compile Include="DataModel\MAObjectHologram.cs" />
+    <Compile Include="Enums\TriggerEvents.cs" />
+    <Compile Include="Config\RuleObjects\Rule.cs" />
+    <Compile Include="Enums\GroupOperator.cs" />
+    <Compile Include="Config\RuleObjects\RuleGroup.cs" />
+    <Compile Include="ManagementAgent\CSEntryExport.cs" />
+    <Compile Include="ManagementAgent\CSEntryImport.cs" />
+    <Compile Include="Exceptions\ReferencedObjectNotPresentException.cs" />
+    <Compile Include="strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataModel\DBSchema.dbml.layout">
+      <DependentUpon>DBSchema.dbml</DependentUpon>
+    </None>
+    <None Include="DataModel\DBSchema.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DBSchema.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Documentation\Attribute Change Chart.xlsx" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Samples\acma-demo.acmax" />
+    <None Include="Samples\CreateAcmaDemoDB.ps1" />
+    <None Include="Samples\CreateAcmaDemoDBData.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Lithnet\Lithnet.Common\Lithnet.Logging\Lithnet.Logging.csproj">
+      <Project>{901E0BA4-9507-4FDB-8F90-FD82A4858FDA}</Project>
+      <Name>Lithnet.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Lithnet.Common.ObjectModel\Lithnet.Common.ObjectModel.csproj">
+      <Project>{fabb65ac-fa5b-48fe-a1bd-50bae4182663}</Project>
+      <Name>Lithnet.Common.ObjectModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Lithnet.FIM.Core\Lithnet.Fim.Core.csproj">
+      <Project>{a7499be9-8b2b-4c10-a9a0-6b6e9ddb5c31}</Project>
+      <Name>Lithnet.Fim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Lithnet.FIM.Transforms\Lithnet.Fim.Transforms.csproj">
+      <Project>{3eeacb2d-e292-4dce-a476-1be0f4897e19}</Project>
+      <Name>Lithnet.Fim.Transforms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lithnet.Fim.MmsResolver\Lithnet.Fim.MmsResolver.csproj">
+      <Project>{6442282e-27e5-435d-956f-26f55fd96df6}</Project>
+      <Name>Lithnet.Fim.MmsResolver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="DBManagement\Scripts\New\CreateDB.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_5_4.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_5_5.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Other\GrantSyncServicePermissions.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_0.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_1.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_2.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_3.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_4.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_5.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_6.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_7.sql" />
+    <Content Include="ChangeLog.txt" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_8.sql" />
+    <Content Include="FodyWeavers.xml" />
+    <EmbeddedResource Include="strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+  <Import Project="..\..\packages\Fody.1.24.0\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.24.0\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Fody.1.24.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.24.0\build\Fody.targets'))" />
+  </Target>
+</Project>

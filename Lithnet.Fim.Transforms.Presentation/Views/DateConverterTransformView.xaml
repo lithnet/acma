@@ -1,0 +1,118 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Lithnet.Fim.Transforms.Presentation"
+                    xmlns:t="clr-namespace:Lithnet.Fim.Transforms;assembly=Lithnet.Fim.Transforms"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <DataTemplate DataType="{x:Type vm:DateConverterTransformViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Input Type"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type t:DateType}}}"
+                          SelectedValue="{Binding InputDateType, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="0"
+                          Grid.Column="1" />
+
+                <Label Content="Input Format"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding InputFormat, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         IsEnabled="{Binding InputFormatIsEnabled}" />
+
+                <Label Content="Input Timezone"
+                       Grid.Row="2"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding SystemTimeZones}"
+                          SelectedItem="{Binding InputTimeZone, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          DisplayMemberPath="DisplayName"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          IsEnabled="{Binding Path=InputTimeZoneIsEnabled}"/>
+
+                <Label Content="Calculation"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="0,20,0,20" />
+                <Grid Grid.Row="3"
+                      Grid.Column="1"
+                      Margin="0,20,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type t:DateOperator}}}"
+                              SelectedValue="{Binding CalculationOperator,ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                              SelectedValuePath="Value"
+                              Grid.Column="0" />
+
+                    <TextBox Text="{Binding CalculationValue, ValidatesOnDataErrors=true}"
+                             Grid.Column="1"
+                             IsEnabled="{Binding CalculationIsEnabled}" />
+
+                    <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type t:TimeSpanType}}}"
+                              SelectedValue="{Binding CalculationTimeSpanType,ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                              SelectedValuePath="Value"
+                              Grid.Column="3"
+                              IsEnabled="{Binding CalculationIsEnabled}" />
+                </Grid>
+
+                <Label Content="Output Type"
+                       Grid.Row="4"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type t:DateType}}}"
+                          SelectedValue="{Binding OutputDateType, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="4"
+                          Grid.Column="1" />
+
+                <Label Content="Output Format"
+                       Grid.Row="5"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding OutputFormat, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="5"
+                         Grid.Column="1"
+                         IsEnabled="{Binding OutputFormatIsEnabled}" />
+
+                <Label Content="Output Timezone"
+                       Grid.Row="6"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding SystemTimeZones}"
+                          SelectedItem="{Binding OutputTimeZone, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          DisplayMemberPath="DisplayName"
+                          Grid.Row="6"
+                          Grid.Column="1"
+                          IsEnabled="{Binding Path=OutputTimeZoneIsEnabled}" />
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

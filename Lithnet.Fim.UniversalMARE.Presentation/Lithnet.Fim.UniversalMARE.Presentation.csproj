@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lithnet.Fim.UniversalMARE.Presentation</RootNamespace>
+    <AssemblyName>Lithnet.Fim.UniversalMARE.Presentation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>5382e965</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyChanged">
+      <HintPath>..\Lithnet.FIM.UniversalMARE\packages\PropertyChanged.Fody.1.48.1.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NewAliasWindow.xaml.cs">
+      <DependentUpon>NewAliasWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\FlowRuleAliasCollectionViewModel.cs" />
+    <Compile Include="ViewModels\FlowRuleAliasViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\NewAliasViewModel.cs" />
+    <Compile Include="ViewModels\XmlConfigFileViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="NewAliasWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\ItemViewDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FlowRuleAliasView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FlowRuleAliasCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lithnet\Lithnet.Common\Lithnet.Common.Wpf.Core\Lithnet.Common.Presentation.csproj">
+      <Project>{2efcb827-0009-4402-b8f4-0643b5ccf53a}</Project>
+      <Name>Lithnet.Common.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lithnet\Lithnet.Common\Lithnet.Logging\Lithnet.Logging.csproj">
+      <Project>{901e0ba4-9507-4fdb-8f90-fd82a4858fda}</Project>
+      <Name>Lithnet.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Common.ObjectModel\Lithnet.Common.ObjectModel.csproj">
+      <Project>{fabb65ac-fa5b-48fe-a1bd-50bae4182663}</Project>
+      <Name>Lithnet.Common.ObjectModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.Core\Lithnet.Fim.Core.csproj">
+      <Project>{a7499be9-8b2b-4c10-a9a0-6b6e9ddb5c31}</Project>
+      <Name>Lithnet.Fim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Fim.Transforms.Presentation\Lithnet.Fim.Transforms.Presentation.csproj">
+      <Project>{e5b53764-629f-4ed6-be7e-b87dbf869582}</Project>
+      <Name>Lithnet.Fim.Transforms.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.Transforms\Lithnet.Fim.Transforms.csproj">
+      <Project>{3eeacb2d-e292-4dce-a476-1be0f4897e19}</Project>
+      <Name>Lithnet.Fim.Transforms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.UniversalMARE\Lithnet.Fim.UniveralMARE.csproj">
+      <Project>{83d5a7ef-4d0d-4445-a85d-61f34fe66cba}</Project>
+      <Name>Lithnet.Fim.UniveralMARE</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+    <Resource Include="Resources\alias.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets" Condition="Exists('..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

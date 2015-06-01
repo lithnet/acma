@@ -1,0 +1,15 @@
+﻿-- =============================================
+-- Author:		Ryan Newington
+-- Create date: 06/03/2015
+-- Description:	Gets the current change tracking information from the database
+-- =============================================
+CREATE PROCEDURE [dbo].[spGetChangeTrackingInfo]
+AS
+BEGIN
+	SET NOCOUNT ON;
+		
+	SELECT CurrentVersion = CHANGE_TRACKING_CURRENT_VERSION(), (SELECT MAX(value)
+        FROM (VALUES (CHANGE_TRACKING_MIN_VALID_VERSION(OBJECT_ID('[dbo].[MA_Objects]'))),
+		 (CHANGE_TRACKING_MIN_VALID_VERSION(OBJECT_ID('[dbo].[MA_References]'))), 
+		 (CHANGE_TRACKING_MIN_VALID_VERSION(OBJECT_ID('[dbo].[MA_Attributes]')))) AS AllValues(value)) AS MinVersion
+END

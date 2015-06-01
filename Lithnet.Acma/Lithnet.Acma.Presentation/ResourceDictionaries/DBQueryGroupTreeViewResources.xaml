@@ -1,0 +1,61 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    >
+
+    <HierarchicalDataTemplate DataType="{x:Type p:DBQueryGroupViewModel}"
+                              ItemsSource="{Binding ConfigItems}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add query group..."
+                                  Command="{Binding Commands.AddQueryGroup}" />
+                        <Separator />
+                        <MenuItem Header="Add attribute query..."
+                                  Command="{Binding Commands.AddQueryByAttribute}" />
+                        
+                        <MenuItem Header="Add value query..."
+                                  Command="{Binding Commands.AddQueryByValue}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+  
+    <HierarchicalDataTemplate DataType="{x:Type p:DBQueryByValueViewModel}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Delete query..."
+                                  Command="{Binding Commands.DeleteQuery}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5B53764-629F-4ED6-BE7E-B87DBF869582}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lithnet.Fim.Transforms.Presentation</RootNamespace>
+    <AssemblyName>Lithnet.Fim.Transforms.Presentation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>9289a446</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.MetadirectoryServicesEx">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lithnet.Fim.Core\References\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyChanged">
+      <HintPath>..\Lithnet.Acma\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HyperLinkLauncher.cs" />
+    <Compile Include="NewItemWindow.xaml.cs">
+      <DependentUpon>NewItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TransformTypeMarkupExtension.cs" />
+    <Compile Include="ViewModels\ADGroupTypeToStringTransformViewModel.cs" />
+    <Compile Include="ViewModels\EncodeStringTransformViewModel.cs" />
+    <Compile Include="ViewModels\NumberCalculationTransform.cs" />
+    <Compile Include="ViewModels\StringEscapeTransformViewModel.cs" />
+    <Compile Include="ViewModels\StringSplitTransformViewModel.cs" />
+    <Compile Include="ViewModels\MVBooleanToBitmaskTransformViewModel.cs" />
+    <Compile Include="ViewModels\BitmaskTransformViewModel.cs" />
+    <Compile Include="ViewModels\DateConverterTransformViewModel.cs" />
+    <Compile Include="ViewModels\FormatStringTransformViewModel.cs" />
+    <Compile Include="ViewModels\DelimitedTextFileLookupTransformViewModel.cs" />
+    <Compile Include="ViewModels\BitmaskToBooleanTransformViewModel.cs" />
+    <Compile Include="ViewModels\FormatNumberTransformViewModel.cs" />
+    <Compile Include="ViewModels\GetDNComponentTransformViewModel.cs" />
+    <Compile Include="ViewModels\MultivalueToSingleValueTransformViewModel.cs" />
+    <Compile Include="ViewModels\NewTransformViewModel.cs" />
+    <Compile Include="ViewModels\RegexReplaceTransformViewModel.cs" />
+    <Compile Include="ViewModels\ConcatStringTransformViewModel.cs" />
+    <Compile Include="ViewModels\GroupStringsToADGroupTypeTransformViewModel.cs" />
+    <Compile Include="ViewModels\ADGroupScopeToStringTransformViewModel.cs" />
+    <Compile Include="ViewModels\SidStringBiDirectionalTransformViewModel.cs" />
+    <Compile Include="ViewModels\SidToDomainTransformViewModel.cs" />
+    <Compile Include="ViewModels\HashTransformViewModel.cs" />
+    <Compile Include="ViewModels\RemoveDiacriticsTransformViewModel.cs" />
+    <Compile Include="ViewModels\BooleanOperationTransformViewModel.cs" />
+    <Compile Include="ViewModels\ValueMergeTransformViewModel.cs" />
+    <Compile Include="ViewModels\TypeConverterTransformViewModel.cs" />
+    <Compile Include="ViewModels\StringCaseTransformViewModel.cs" />
+    <Compile Include="ViewModels\SubstringTransformViewModel.cs" />
+    <Compile Include="ViewModels\TransformCollectionViewModel.cs" />
+    <Compile Include="ViewModels\TransformTestViewModel.cs" />
+    <Compile Include="ViewModels\TransformViewModel.cs" />
+    <Compile Include="ViewModels\TrimStringTransformViewModel.cs" />
+    <Compile Include="ViewModels\SimpleLookupTransformViewModel.cs" />
+    <Compile Include="ViewModels\XmlLookupTransformViewModel.cs" />
+    <Compile Include="Views\FormatStringTransformView.xaml.cs">
+      <DependentUpon>FormatStringTransformView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormatNumberTransformView.cs">
+      <DependentUpon>FormatNumberTransformView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="NewItemWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EncodeStringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MVBooleanToBitmaskTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BitmaskTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BitmaskToBooleanTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConcatStringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DateConverterTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FormatStringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GroupStringsToADGroupTypeTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ADGroupScopeToStringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ADGroupTypeToStringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SimpleLookupTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SidStringBiDirectionalTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SidToDomainTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HashTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RemoveDiacriticsTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BooleanOperationTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NumberCalculationTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StringEscapeTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StringSplitTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ValueMergeTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TypeConverterTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\XmlLookupTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\DelimitedTextFileLookupTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\FormatNumberTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\GetDNComponentTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MultivaluetoSingleValueTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\RegexReplaceTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\StringCaseTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\SubstringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\TransformCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\TransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\TrimStringTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\UnknownTransformView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ResourceDictionaries\TransformViewDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\transform.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\transforms.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lithnet\Lithnet.Common\Lithnet.Common.Wpf.Core\Lithnet.Common.Presentation.csproj">
+      <Project>{2efcb827-0009-4402-b8f4-0643b5ccf53a}</Project>
+      <Name>Lithnet.Common.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Common.ObjectModel\Lithnet.Common.ObjectModel.csproj">
+      <Project>{fabb65ac-fa5b-48fe-a1bd-50bae4182663}</Project>
+      <Name>Lithnet.Common.ObjectModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.Core\Lithnet.Fim.Core.csproj">
+      <Project>{a7499be9-8b2b-4c10-a9a0-6b6e9ddb5c31}</Project>
+      <Name>Lithnet.Fim.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.FIM.Transforms\Lithnet.Fim.Transforms.csproj">
+      <Project>{3eeacb2d-e292-4dce-a476-1be0f4897e19}</Project>
+      <Name>Lithnet.Fim.Transforms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets" Condition="Exists('..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Lithnet.FIM.UniversalMARE\packages\Fody.1.23.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\Lithnet.Acma\packages\Fody.1.24.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Lithnet.Acma\packages\Fody.1.24.0\build\Fody.targets'))" />
+  </Target>
+  <Import Project="..\Lithnet.Acma\packages\Fody.1.24.0\build\Fody.targets" Condition="Exists('..\Lithnet.Acma\packages\Fody.1.24.0\build\Fody.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

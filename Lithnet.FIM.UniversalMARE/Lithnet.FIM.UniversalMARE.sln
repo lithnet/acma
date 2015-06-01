@@ -1,0 +1,120 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.UniveralMARE", "Lithnet.Fim.UniveralMARE.csproj", "{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Logging", "..\..\Lithnet\Lithnet.Common\Lithnet.Logging\Lithnet.Logging.csproj", "{901E0BA4-9507-4FDB-8F90-FD82A4858FDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.Core", "..\Lithnet.FIM.Core\Lithnet.Fim.Core.csproj", "{A7499BE9-8B2B-4C10-A9A0-6B6E9DDB5C31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.Transforms", "..\Lithnet.FIM.Transforms\Lithnet.Fim.Transforms.csproj", "{3EEACB2D-E292-4DCE-A476-1BE0F4897E19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.FIM.UniversalMARE.Editor", "..\Lithnet.FIM.UniversalMARE.Editor\Lithnet.FIM.UniversalMARE.Editor.csproj", "{C18A1E08-AE60-402C-9145-1D532B973EAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.Transforms.Presentation", "..\Lithnet.Fim.Transforms.Presentation\Lithnet.Fim.Transforms.Presentation.csproj", "{E5B53764-629F-4ED6-BE7E-B87DBF869582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.Transforms.UnitTests", "..\Lithnet.Fim.Transforms.UnitTests\Lithnet.Fim.Transforms.UnitTests.csproj", "{3FF9AD97-2F6F-4B89-88A6-F22B9B97BF19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.UniversalMARE.UnitTests", "..\Lithnet.Fim.UniversaalMARE.UnitTests\Lithnet.Fim.UniversalMARE.UnitTests.csproj", "{142E87AC-FCBA-488A-83C0-34A599D2BA6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Fim.UniversalMARE.Presentation", "..\Lithnet.Fim.UniversalMARE.Presentation\Lithnet.Fim.UniversalMARE.Presentation.csproj", "{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Common.Presentation", "..\..\Lithnet\Lithnet.Common\Lithnet.Common.Wpf.Core\Lithnet.Common.Presentation.csproj", "{2EFCB827-0009-4402-B8F4-0643B5CCF53A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Common.ObjectModel", "..\Lithnet.Acma\Lithnet.Common.ObjectModel\Lithnet.Common.ObjectModel.csproj", "{FABB65AC-FA5B-48FE-A1BD-50BAE4182663}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 12
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://ocio-tfs01-v02.ad.monash.edu:8090/tfs/dmsprojects
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\..\\Lithnet\\Lithnet.Common\\Lithnet.Logging\\Lithnet.Logging.csproj
+		SccProjectName1 = ../../Lithnet/Lithnet.Common/Lithnet.Logging
+		SccLocalPath1 = ..\\..\\Lithnet\\Lithnet.Common\\Lithnet.Logging
+		SccProjectUniqueName2 = ..\\Lithnet.FIM.Core\\Lithnet.Fim.Core.csproj
+		SccProjectName2 = ../Lithnet.FIM.Core
+		SccLocalPath2 = ..\\Lithnet.FIM.Core
+		SccProjectUniqueName3 = ..\\Lithnet.FIM.Transforms\\Lithnet.Fim.Transforms.csproj
+		SccProjectName3 = ../Lithnet.FIM.Transforms
+		SccLocalPath3 = ..\\Lithnet.FIM.Transforms
+		SccProjectUniqueName4 = Lithnet.Fim.UniveralMARE.csproj
+		SccLocalPath4 = .
+		SccProjectUniqueName5 = ..\\Lithnet.FIM.UniversalMARE.Editor\\Lithnet.FIM.UniversalMARE.Editor.csproj
+		SccProjectName5 = ../Lithnet.FIM.UniversalMARE.Editor
+		SccLocalPath5 = ..\\Lithnet.FIM.UniversalMARE.Editor
+		SccProjectUniqueName6 = ..\\Lithnet.Fim.Transforms.Presentation\\Lithnet.Fim.Transforms.Presentation.csproj
+		SccProjectName6 = ../Lithnet.Fim.Transforms.Presentation
+		SccLocalPath6 = ..\\Lithnet.Fim.Transforms.Presentation
+		SccProjectUniqueName7 = ..\\Lithnet.Fim.Transforms.UnitTests\\Lithnet.Fim.Transforms.UnitTests.csproj
+		SccProjectName7 = ../Lithnet.Fim.Transforms.UnitTests
+		SccLocalPath7 = ..\\Lithnet.Fim.Transforms.UnitTests
+		SccProjectUniqueName8 = ..\\Lithnet.Fim.UniversaalMARE.UnitTests\\Lithnet.Fim.UniversalMARE.UnitTests.csproj
+		SccProjectName8 = ../Lithnet.Fim.UniversaalMARE.UnitTests
+		SccLocalPath8 = ..\\Lithnet.Fim.UniversaalMARE.UnitTests
+		SccProjectUniqueName9 = ..\\Lithnet.Fim.UniversalMARE.Presentation\\Lithnet.Fim.UniversalMARE.Presentation.csproj
+		SccProjectName9 = ../Lithnet.Fim.UniversalMARE.Presentation
+		SccLocalPath9 = ..\\Lithnet.Fim.UniversalMARE.Presentation
+		SccProjectUniqueName10 = ..\\..\\Lithnet\\Lithnet.Common\\Lithnet.Common.Wpf.Core\\Lithnet.Common.Presentation.csproj
+		SccProjectName10 = ../../Lithnet/Lithnet.Common/Lithnet.Common.Wpf.Core
+		SccLocalPath10 = ..\\..\\Lithnet\\Lithnet.Common\\Lithnet.Common.Wpf.Core
+		SccProjectUniqueName11 = ..\\Lithnet.Acma\\Lithnet.Common.ObjectModel\\Lithnet.Common.ObjectModel.csproj
+		SccProjectName11 = ../Lithnet.Acma/Lithnet.Common.ObjectModel
+		SccLocalPath11 = ..\\Lithnet.Acma\\Lithnet.Common.ObjectModel
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{901E0BA4-9507-4FDB-8F90-FD82A4858FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{901E0BA4-9507-4FDB-8F90-FD82A4858FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{901E0BA4-9507-4FDB-8F90-FD82A4858FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{901E0BA4-9507-4FDB-8F90-FD82A4858FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7499BE9-8B2B-4C10-A9A0-6B6E9DDB5C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7499BE9-8B2B-4C10-A9A0-6B6E9DDB5C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7499BE9-8B2B-4C10-A9A0-6B6E9DDB5C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7499BE9-8B2B-4C10-A9A0-6B6E9DDB5C31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EEACB2D-E292-4DCE-A476-1BE0F4897E19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EEACB2D-E292-4DCE-A476-1BE0F4897E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EEACB2D-E292-4DCE-A476-1BE0F4897E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EEACB2D-E292-4DCE-A476-1BE0F4897E19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18A1E08-AE60-402C-9145-1D532B973EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18A1E08-AE60-402C-9145-1D532B973EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18A1E08-AE60-402C-9145-1D532B973EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18A1E08-AE60-402C-9145-1D532B973EAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5B53764-629F-4ED6-BE7E-B87DBF869582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B53764-629F-4ED6-BE7E-B87DBF869582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5B53764-629F-4ED6-BE7E-B87DBF869582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5B53764-629F-4ED6-BE7E-B87DBF869582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FF9AD97-2F6F-4B89-88A6-F22B9B97BF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FF9AD97-2F6F-4B89-88A6-F22B9B97BF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FF9AD97-2F6F-4B89-88A6-F22B9B97BF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FF9AD97-2F6F-4B89-88A6-F22B9B97BF19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{142E87AC-FCBA-488A-83C0-34A599D2BA6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{142E87AC-FCBA-488A-83C0-34A599D2BA6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{142E87AC-FCBA-488A-83C0-34A599D2BA6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{142E87AC-FCBA-488A-83C0-34A599D2BA6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EFCB827-0009-4402-B8F4-0643B5CCF53A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EFCB827-0009-4402-B8F4-0643B5CCF53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EFCB827-0009-4402-B8F4-0643B5CCF53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EFCB827-0009-4402-B8F4-0643B5CCF53A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FABB65AC-FA5B-48FE-A1BD-50BAE4182663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FABB65AC-FA5B-48FE-A1BD-50BAE4182663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FABB65AC-FA5B-48FE-A1BD-50BAE4182663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FABB65AC-FA5B-48FE-A1BD-50BAE4182663}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

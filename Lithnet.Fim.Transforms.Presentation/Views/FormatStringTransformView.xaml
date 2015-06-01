@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:Lithnet.Fim.Transforms.Presentation"
+                    x:Class="Lithnet.Fim.Transforms.Presentation.FormatStringTransformView"
+                    xmlns:t="clr-namespace:Lithnet.Fim.Transforms;assembly=Lithnet.Fim.Transforms"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <DataTemplate DataType="{x:Type vm:FormatStringTransformViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Format"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding Format, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Height="Auto"
+                         MinHeight="69"
+                         TextWrapping="Wrap" />
+
+                <Label Content="Multivalued behavior"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type t:MutivalueBehaviour}}}"
+                          SelectedValue="{Binding UserDefinedMultivalueInputBehaviour, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="1"
+                          Grid.Column="1" />
+                
+                <TextBlock Margin="5"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           TextWrapping="Wrap">Specify any string, using placeholders for the incoming attributes. Placeholders are numbers representing the incoming attribute, surrounded in braces '{}', starting from the zero. 
+                                If the multivalued attribute behvior is set to 'Individual' then only a single placeholder of {0} is allowed. 
+                                If the multivalued attribute behviour is set to 'grouped', then the first attribute will be {0}, the second {1}, and so on. 
+                                Note that the number of placeholders must match the number of incoming attribute values exactly.
+                </TextBlock>
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

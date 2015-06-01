@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SyntaxDefinition name="AcmaDL"
+        xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Attribute" foreground="#FF2B91AF" fontWeight="normal" />
+  <Color name="Variable" foreground="#FFA31515" fontWeight="normal" />
+  <Color name="Transform" foreground="#FF800080" fontWeight="normal"/>
+  <Color name="Operator" foreground="DarkGray" fontWeight="bold" />
+
+  <RuleSet>
+    <!--<Span begin="(?&lt;!\\)\[.*?(?&lt;!\\)\{.*?|(?&lt;!(?&lt;!\\)\\)\{.*?" end="[^\\]\}|[^\\]\}.*?(?&lt;!\\)\]" >-->
+    <Span begin="(?&lt;!\\)\{" end="(?&lt;!\\)\}" >
+      <RuleSet>
+        <Rule color="Attribute">((?&lt;=^)|(?&lt;=(-\&gt;))|(?&lt;=(\#)))\w+?((?=(\&gt;{2}))|(?=($))|(?=(-\&gt;)))</Rule>
+        <Rule color="Transform">(?&lt;=\&gt;{2})\w+?((?=(\&gt;{2}))|(?=($)))</Rule>
+        <Rule color="Operator">&gt;&gt;</Rule>
+        <Rule color="Operator">-&gt;</Rule>
+        <Rule color="Operator">\#</Rule>
+      </RuleSet>
+    </Span>
+
+    <Span color="Variable" begin="%" end="%" >
+      <RuleSet>
+        <Rule color="Variable">(?&lt;=^)\w+?((?=(\&gt;{2}))|(?=($)))</Rule>
+        <Rule color="Transform">(?&lt;=\&gt;{2})\w+?((?=(\&gt;{2}))|(?=($)))</Rule>
+        <Rule color="Operator">&gt;&gt;</Rule>
+      </RuleSet>
+    </Span>
+
+    <Keywords fontWeight="bold" foreground="Blue">
+      <Word>true</Word>
+      <Word>false</Word>
+    </Keywords>
+
+
+  </RuleSet>
+  
+  
+</SyntaxDefinition>

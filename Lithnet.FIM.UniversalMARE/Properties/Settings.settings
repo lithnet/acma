@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Lithnet.Fim.UniversalMARE.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="x1600x1050" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MyValue.jpg</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

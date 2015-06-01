@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<acma-config xmlns:t="http://lithnet.local/Lithnet.IdM.Transforms/v1/" xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://lithnet.local/Lithnet.Acma/v1/">
+  <acma>
+    <config-version i:nil="true" />
+    <description i:nil="true" />
+    <transforms />
+    <class-constructors>
+    </class-constructors>
+    <operation-events />
+  </acma>
+  <acma-unit-tests>
+    <config-version i:nil="true" />
+    <description i:nil="true" />
+    <unit-tests />
+  </acma-unit-tests>
+</acma-config>

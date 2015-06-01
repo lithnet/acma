@@ -1,0 +1,7 @@
+﻿1. Add transform to XSD
+2. Create new Transform
+3. Add XmlInclude attribute to Transform base class
+4. Create Unit Tests
+5. Create ViewModel
+6. Create View
+7. Add View to TransformViewDictionary

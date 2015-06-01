@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SyntaxDefinition name="AcmaDLTransform"
+        xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Transform" foreground="#FF800080" fontWeight="normal"/>
+  <Color name="Operator" foreground="DarkGray" fontWeight="bold" />
+
+  <RuleSet>
+    <Rule color="Operator">&gt;&gt;</Rule>
+    <Rule color="Transform">\w+?</Rule>
+  </RuleSet>
+  
+</SyntaxDefinition>
