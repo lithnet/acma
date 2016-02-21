@@ -1,0 +1,645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A730A740-B611-4CEB-B76D-DEE86239E0EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lithnet.Acma.Presentation</RootNamespace>
+    <AssemblyName>Lithnet.Acma.Presentation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>9a1f9a64</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DeclarationEditBox\DeclarationEditBox.cs" />
+    <Compile Include="DeclarationEditBox\TransformEditBox.cs" />
+    <Compile Include="DeclarationEditBox\DeclarationEditBoxMode.cs" />
+    <Compile Include="DeclarationEditBox\TransformCompletionItem.cs" />
+    <Compile Include="DeclarationEditBox\VariableCompletionItem.cs" />
+    <Compile Include="DeclarationEditBox\AttributeCompletionItem.cs" />
+    <Compile Include="DeclarationEditBox\EditBoxBase.cs" />
+    <Compile Include="DocXExporter.cs" />
+    <Compile Include="IconProvider.cs" />
+    <Compile Include="RegistrySettings.cs" />
+    <Compile Include="DeclarationEditBox\TextMarkerService.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaExternalEventExtensibleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaOperationEventsViewModel.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaEventViewModel.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaExternalEventCmdViewModel.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaOperationEventViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\AdvancedComparisonRuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\ValueDeclarationsViewModel.cs" />
+    <Compile Include="ViewModels\Config\ValueDeclarationViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\SchemaAttributeUsageViewModel.cs" />
+    <Compile Include="Views\UnitTests\UnitTestStepObjectCreationView.xaml.cs">
+      <DependentUpon>UnitTestStepObjectCreationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UnitTests\UnitTestStepObjectModificationView.xaml.cs">
+      <DependentUpon>UnitTestStepObjectModificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MissingAttributeViewModel.cs" />
+    <Compile Include="Windows\MissingAttributeWindow.xaml.cs">
+      <DependentUpon>MissingAttributeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DBConnectionWindow.xaml.cs">
+      <DependentUpon>DBConnectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DBConnectionViewModel.cs" />
+    <Compile Include="XmlConfigWrapper.cs" />
+    <Page Include="TreeViewItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="TreeViewItemControl.xaml.cs" />
+    <Compile Include="ViewModels\Config\DBQuery\DBQueryObjectsViewModel.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaInternalExitEventViewModel.cs" />
+    <Compile Include="ViewModels\Config\DBQuery\DBQueryGroupViewModel.cs" />
+    <Compile Include="ViewModels\Config\DBQuery\DBQueryByValueViewModel.cs" />
+    <Compile Include="ViewModels\Config\DBQuery\DBQueryObjectViewModel.cs" />
+    <Compile Include="ViewModels\Config\Events\AcmaExitEventsViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\AttributeChangeRuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\AttributePresenceRuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\EventRuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\ValueComparisonRuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\RuleObjectViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\ObjectChangeRuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\RuleViewModel.cs" />
+    <Compile Include="ViewModels\Config\Rules\RuleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\UniqueValueConstructorViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\ExecutableConstructorObjectViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\ConstructorsViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\AttributeConstructorGroupViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\ReferenceLookupConstructorViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\DeclarativeValueConstructorViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\SequentialIntegerAllocationConstructorViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\AttributeValueDeleteConstructorViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\New Objects\NewClassConstructorViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaConstantsViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\ClassConstructorViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\ClassConstructorsViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewSafetyRuleViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\SafetyRulesViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\SafetyRuleViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaReferenceLinksViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaReferenceLinkViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSequencesViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSequenceViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaShadowObjectLinkViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaShadowObjectLinksViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaDatabaseViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewAcmaSchemaReferenceLinkViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewAcmaSequenceViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewAcmaSchemaShadowObjectLinkViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewAcmaSchemaMappingViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewAcmaSchemaAttributeViewModel.cs" />
+    <Compile Include="ViewModels\FIM\New Objects\NewAttributeChangeViewModel.cs" />
+    <Compile Include="ViewModels\FIM\New Objects\NewValueChangeViewModel.cs" />
+    <Compile Include="ViewModels\FIM\New Objects\NewAttributeChangeWindow.xaml.cs">
+      <DependentUpon>NewAttributeChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\FIM\New Objects\NewValueChangeWindow.xaml.cs">
+      <DependentUpon>NewValueChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\FIM\ValueChangeViewModel.cs" />
+    <Compile Include="ViewModels\FIM\ValueChangesViewModel.cs" />
+    <Compile Include="ViewModels\FIM\CSEntryChangeViewModel.cs" />
+    <Compile Include="ViewModels\FIM\AttributeChangeViewModel.cs" />
+    <Compile Include="ViewModels\FIM\AttributeChangesViewModel.cs" />
+    <Compile Include="ViewModels\MRUItem.cs" />
+    <Compile Include="ViewModels\UnitTests\New Objects\NewObjectModificationWindow.xaml.cs">
+      <DependentUpon>NewObjectModificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\UnitTests\New Objects\NewObjectModificationViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\New Objects\NewObjectCreationWindow.xaml.cs">
+      <DependentUpon>NewObjectCreationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\UnitTests\New Objects\NewObjectCreationViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestObjectViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestStepObjectCreationViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestStepObjectModificationViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestStepObjectEvaluationViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestStepViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestStepsViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestGroupViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestObjectsViewModel.cs" />
+    <Compile Include="ViewModels\UnitTests\UnitTestFileViewModel.cs" />
+    <Compile Include="ViewModels\XmlConfigFileViewModel.cs" />
+    <Compile Include="Views\Config\Constructors\New Objects\NewClassConstructorWindow.xaml.cs">
+      <DependentUpon>NewClassConstructorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewSafetyRuleWindow.xaml.cs">
+      <DependentUpon>NewSafetyRuleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewReferenceLinkWindow.xaml.cs">
+      <DependentUpon>NewReferenceLinkWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewSequenceWindow.xaml.cs">
+      <DependentUpon>NewSequenceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewShadowLinkWindow.xaml.cs">
+      <DependentUpon>NewShadowLinkWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewMappingWindow.xaml.cs">
+      <DependentUpon>NewMappingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewAttributeWindow.xaml.cs">
+      <DependentUpon>NewAttributeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataModel\New Objects\NewObjectClassWindow.xaml.cs">
+      <DependentUpon>NewObjectClassWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaMappingsViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaObjectsViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaMappingViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\New Objects\NewAcmaSchemaObjectViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaObjectViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaAttributeViewModel.cs" />
+    <Compile Include="ViewModels\Config\Constructors\AttributeConstructorViewModel.cs" />
+    <Compile Include="ViewModels\DataModel\AcmaSchemaAttributesViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="Views\Config\Events\AcmaExternalExitEventExtensibleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Events\AcmaOperationEventsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Events\AcmaExternalExitEventCmdView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Events\AcmaOperationEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\AdvancedComparisonRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaObjectsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSequencesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaMappingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaReferenceLinksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaShadowObjectLinksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaDatabaseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MissingAttributeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DBConnectionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+    <Content Include="Resources\arrow_Dynamic16xSM.png" />
+    <Resource Include="Resources\EditObject.png" />
+    <Resource Include="Resources\EvaluateObject.png" />
+    <Resource Include="Resources\NewObject.png" />
+    <Resource Include="Resources\XmlConfigFile.png" />
+    <Resource Include="Resources\Constructors.png" />
+    <Resource Include="Resources\DisabledOverlay.png" />
+    <Resource Include="Resources\UnitTest.png" />
+    <Resource Include="Resources\UnitTests.png" />
+    <Resource Include="Resources\UnitTestStep.png" />
+    <Resource Include="Resources\DeclarativeValueConstructor.png" />
+    <Resource Include="Resources\ReferenceLookupConstructor.png" />
+    <Resource Include="Resources\UniqueValueConstructor.png" />
+    <Resource Include="Resources\ValueDeleteConstructor.png" />
+    <Resource Include="Resources\Rule.png" />
+    <Resource Include="Resources\DBQuery.png" />
+    <Resource Include="Resources\DBQueryGroup.png" />
+    <Resource Include="Resources\RuleGroup.png" />
+    <Resource Include="Resources\ExecutionConditions.png" />
+    <Resource Include="Resources\ConstructorGroup.png" />
+    <Resource Include="Resources\Event.png" />
+    <Resource Include="Resources\ShadowLink.png" />
+    <Resource Include="Resources\BackLink.png" />
+    <Resource Include="Resources\Sequence.png" />
+    <Resource Include="Resources\Database.png" />
+    <Resource Include="Resources\Constant.png" />
+    <Resource Include="Resources\MappingInherited.png" />
+    <Resource Include="Resources\Mapping.png" />
+    <Resource Include="Resources\AttributeTemp.png" />
+    <Resource Include="Resources\AttributeInherited.png" />
+    <Resource Include="Resources\Attribute.png" />
+    <Resource Include="Resources\AttributeImportOnly.png" />
+    <Resource Include="Resources\AttributeImportExport.png" />
+    <Resource Include="Resources\AttributeExportOnly.png" />
+    <Resource Include="Resources\AttributeInternal.png" />
+    <Resource Include="Resources\NewAttribute.png" />
+    <Resource Include="Resources\NewFile.png" />
+    <Resource Include="Resources\NewObjectClass.png" />
+    <Resource Include="Resources\ObjectClass.png" />
+    <Resource Include="Resources\ObjectClasses.png" />
+    <Resource Include="Resources\Open.png" />
+    <Resource Include="Resources\Schema.png" />
+    <Resource Include="Resources\ShadowObjectClass.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj">
+      <Project>{04cd3287-e3e0-4b53-ad70-0452c1cc1621}</Project>
+      <Name>Lithnet.Acma.TestEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
+      <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
+      <Name>Lithnet.Acma</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DocX, Version=1.0.0.18, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.0.0.18\lib\net40\DocX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Common.Presentation, Version=1.0.5777.18976, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.Presentation.1.0.5777.18976\lib\net40\Lithnet.Common.Presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5895.21369, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5895.21369\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Transforms, Version=1.5.5895.32224, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.1.5.5895.32224\lib\net40\Lithnet.Transforms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Transforms.Presentation, Version=1.5.5895.32320, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.Presentation.1.5.5895.32320\lib\net40\Lithnet.Transforms.Presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.MetadirectoryServicesEx">
+      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationCore.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Resource Include="Resources\AcmaDLNoAttributes.xshd">
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\AcmaDLTransform.xshd">
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\AcmaDL.xshd">
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ResourceDictionaries\DBQueryGroupTreeViewResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\AttributeConstructorViewDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\RuleItemViewDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryUnitTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryDBQueries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryDatabase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryEvents.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryRules.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionaryConstructors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewModels\FIM\New Objects\NewAttributeChangeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewModels\FIM\New Objects\NewValueChangeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewModels\UnitTests\New Objects\NewObjectModificationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewModels\UnitTests\New Objects\NewObjectCreationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\ConstructorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\ClassConstructorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\ClassConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\AttributeConstructorGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\DBQuery\DBQueryObjectsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Events\AcmaExitEventsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\XmlConfigFileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\UniqueValueConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\ReferenceLookupConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\AttributeValueDeleteConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\DeclarativeValueConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\SequentialIntegerAllocatorConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\AttributeConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\UnknownAttributeConstructorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\DBQuery\DBQueryByValueView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\DBQuery\DBQueryGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Events\AcmaInternalExitEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\RuleGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\ValueComparisonRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\EventRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\AttributePresenceRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\AttributeChangeRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Rules\ObjectChangeRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaConstantsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaAttributesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaReferenceLinkView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\SafetyRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSequenceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaShadowObjectLinkView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaMappingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Config\Constructors\New Objects\NewClassConstructorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewSafetyRuleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewReferenceLinkWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewSequenceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewShadowLinkWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewMappingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewAttributeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\New Objects\NewObjectClassWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\ItemViewDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionaries\TreeViewResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaAttributeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataModel\AcmaSchemaObjectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestStepObjectCreationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestStepObjectModificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestStepObjectEvaluationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestObjectsViewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestStepsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitTests\UnitTestFileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

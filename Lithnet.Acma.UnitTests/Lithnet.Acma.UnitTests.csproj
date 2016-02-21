@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{66C4C284-2005-4319-9099-CCDDC3445D90}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lithnet.Acma.UnitTests</RootNamespace>
+    <AssemblyName>Lithnet.Acma.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>0d3751ef</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5895.21369, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5895.21369\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5894.23080, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.5894.23080\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Transforms, Version=1.5.5895.32224, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.1.5.5895.32224\lib\net40\Lithnet.Transforms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.MetadirectoryServicesEx">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PropertyChanged, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Reeb.SqlOM, Version=0.3.5161.19594, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Reeb.SqlOM.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config Tests\AcmaInternalExitEventTest.cs" />
+    <Compile Include="Config Tests\AttributeDeclarationCSEntryChangeTest.cs" />
+    <Compile Include="Config Tests\XmlConfigFileTests.cs" />
+    <Compile Include="Config Tests\SafetyRuleTest.cs" />
+    <Compile Include="Config Tests\AcmaExternalExitEventTest.cs" />
+    <Compile Include="Constructor Tests\AttributeConstructor Tests\UniqueValueConstructorTest.cs" />
+    <Compile Include="Constructor Tests\ClassConstructorTests.cs" />
+    <Compile Include="Constructor Tests\AttributeConstructorGroupTests.cs" />
+    <Compile Include="DataModel Tests\CSEntryChangeHelperTests.cs" />
+    <Compile Include="DBQuery Tests\DBQueryGroupTest.cs" />
+    <Compile Include="DBQuery Tests\DBQueryByAttributeTest.cs" />
+    <Compile Include="DBQuery Tests\DBQueryByValueTest.cs" />
+    <Compile Include="Config Tests\AttributeDeclarationMAObjectTest.cs" />
+    <Compile Include="DataModel Tests\AttributeValuesTest.cs" />
+    <Compile Include="DataModel Tests\AttributeValueTest.cs" />
+    <Compile Include="Core Tests\ComparisonEngineTest.cs" />
+    <Compile Include="Config Tests\DeclarationStringTest.cs" />
+    <Compile Include="Core Tests\TypeConverterTest.cs" />
+    <Compile Include="DataModel Tests\MAObjectTest.cs" />
+    <Compile Include="DataModel Tests\MAObjectHologramTest.cs" />
+    <Compile Include="DataModel Tests\MADataContextTest.cs" />
+    <Compile Include="ImportExport Tests\AcmaCSEntryChangeTest.cs" />
+    <Compile Include="ImportExport Tests\LdifAttributeValuePairTest.cs" />
+    <Compile Include="ManagementAgent Tests\CSEntryImportTest.cs" />
+    <Compile Include="ManagementAgent Tests\CSEntryExportTest.cs" />
+    <Compile Include="ObjectClassScopeProviderForTest.cs" />
+    <Compile Include="RuleObjects Tests\EventRuleTest.cs" />
+    <Compile Include="Parser Tests\VariableDeclarationParserTests.cs" />
+    <Compile Include="Parser Tests\AttributeDeclarationParserTests.cs" />
+    <Compile Include="Parser Tests\TransformParserTests.cs" />
+    <Compile Include="RuleObjects Tests\AdvancedComparisonRuleTest.cs" />
+    <Compile Include="UnitTestControl.cs" />
+    <Compile Include="Constructor Tests\AttributeConstructor Tests\ReferenceLookupConstructorTest.cs" />
+    <Compile Include="Constructor Tests\AttributeConstructor Tests\AttributeValueDeleteConstructorTest.cs" />
+    <Compile Include="Constructor Tests\AttributeConstructor Tests\DeclarativeValueConstructorTest.cs" />
+    <Compile Include="Constructor Tests\AttributeConstructor Tests\SequentialIntegerAllocationConstructorTest.cs" />
+    <Compile Include="RuleObjects Tests\AttributePresenceRuleTest.cs" />
+    <Compile Include="RuleObjects Tests\AttributeChangeRuleTest.cs" />
+    <Compile Include="RuleObjects Tests\RuleGroupTest.cs" />
+    <Compile Include="RuleObjects Tests\MultivaluedAttributeValueRuleTest.cs" />
+    <Compile Include="RuleObjects Tests\ObjectChangeRuleTest.cs" />
+    <Compile Include="RuleObjects Tests\SingleValuedAttributeValueRuleTest.cs" />
+    <Compile Include="Config Tests\VariableDeclarationTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
+      <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
+      <Name>Lithnet.Acma</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="TestData\OUMappings.csv" />
+    <EmbeddedResource Include="TestData\TestData.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\AttributeConstructorMA.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+    <Content Include="TestData\OUMappings.xml" />
+    <Content Include="TestData\TestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

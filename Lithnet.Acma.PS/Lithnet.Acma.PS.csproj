@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BC9C0BE7-605F-4E6E-A1E7-1946A8E441EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lithnet.Acma.PS</RootNamespace>
+    <AssemblyName>Lithnet.Acma.PS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>8681bf46</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5895.21369, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5895.21369\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5894.23080, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.5894.23080\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.MetadirectoryServicesEx">
+      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcmaCmdlets.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Database\DisconnectAcmaEngine.cs" />
+    <Compile Include="Enums\AcmaPSAttributeTypes.cs" />
+    <Compile Include="SchemaReferenceBackLink\RemoveAcmaSchemaReferenceBackLink.cs" />
+    <Compile Include="SchemaReferenceBackLink\AddAcmaSchemaReferenceBackLink.cs" />
+    <Compile Include="SchemaObject\RemoveAcmaSchemaObjectClass.cs" />
+    <Compile Include="SchemaObject\SetAcmaSchemaObjectClass.cs" />
+    <Compile Include="SchemaObject\AddAcmaSchemaObjectClass.cs" />
+    <Compile Include="Sequences\RemoveAcmaSequence.cs" />
+    <Compile Include="Sequences\GetAcmaSequenceValue.cs" />
+    <Compile Include="Sequences\SetAcmaSequence.cs" />
+    <Compile Include="Sequences\AddAcmaSequence.cs" />
+    <Compile Include="ShadowObjectLink\RemoveAcmaShadowObjectLink.cs" />
+    <Compile Include="ShadowObjectLink\AddAcmaShadowObjectLink.cs" />
+    <Compile Include="Wrappers\AcmaObjectAttributeCollection.cs" />
+    <Compile Include="Wrappers\AcmaPSObject.cs" />
+    <Compile Include="SchemaAttributes\SetAcmaSchemaAttribute.cs" />
+    <Compile Include="Database\UpdateAcmaDatabase.cs" />
+    <Compile Include="Database\NewAcmaDatabase.cs" />
+    <Compile Include="SchemaAttributes\RenameAcmaSchemaAttribute.cs" />
+    <Compile Include="Constants\SetAcmaConstantValue.cs" />
+    <Compile Include="Constants\GetAcmaConstantValue.cs" />
+    <Compile Include="Constants\GetAcmaConstant.cs" />
+    <Compile Include="Constants\RemoveAcmaConstant.cs" />
+    <Compile Include="Constants\AddAcmaConstant.cs" />
+    <Compile Include="SchemaAttributes\GetAcmaSchemaAttribute.cs" />
+    <Compile Include="SchemaAttributes\RemoveAcmaSchemaAttribute.cs" />
+    <Compile Include="SchemaBindings\RemoveAcmaSchemaBinding.cs" />
+    <Compile Include="SchemaBindings\AddAcmaSchemaBinding.cs" />
+    <Compile Include="SchemaAttributes\AddAcmaSchemaAttribute.cs" />
+    <Compile Include="Database\ConnectAcmaEngine.cs" />
+    <Compile Include="AcmaObjects\ExportAcmaObjects.cs" />
+    <Compile Include="UnitTests\InvokeUnitTests.cs" />
+    <Compile Include="QueryObjects\NewAcmaPresenceQueryCmdLet.cs" />
+    <Compile Include="QueryObjects\NewAcmaQueryGroupCmdLet.cs" />
+    <Compile Include="QueryObjects\NewAcmaQueryCmdLet.cs" />
+    <Compile Include="AcmaObjects\ImportAcmaObjects.cs" />
+    <Compile Include="AcmaObjects\AddAcmaObject.cs" />
+    <Compile Include="AcmaObjects\RemoveAcmaObject.cs" />
+    <Compile Include="AcmaObjects\GetAcmaObject.cs" />
+    <Compile Include="AcmaObjects\GetAcmaObjects.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ACMA Module for Windows PowerShell.lnk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="FodyWeavers.xml" />
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj">
+      <Project>{04cd3287-e3e0-4b53-ad70-0452c1cc1621}</Project>
+      <Name>Lithnet.Acma.TestEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
+      <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
+      <Name>Lithnet.Acma</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

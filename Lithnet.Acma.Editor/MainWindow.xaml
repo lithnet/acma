@@ -1,0 +1,165 @@
+﻿<Window x:Class="Lithnet.Acma.Editor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:p="clr-namespace:Lithnet.Acma.Presentation;assembly=Lithnet.Acma.Presentation"
+        Title="{Binding Path=DisplayName}"
+        Height="600"
+        Width="800"
+        Cursor="{Binding Path=Cursor}"
+        Icon="{Binding Path=DisplayIcon}">
+
+    <Window.Resources>
+        <CollectionViewSource Source="{Binding Path=MRUItems}"
+                              x:Key="MRUMenuItems" />
+
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="S"
+                    Modifiers="Control"
+                    Command="{Binding Path=Commands.Save}" />
+        <KeyBinding Key="O"
+                    Modifiers="Control"
+                    Command="{Binding Path=Commands.Open}" />
+        <KeyBinding Key="A"
+                    Modifiers="Control"
+                    Command="{Binding Path=Commands.SaveAs}" />
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="325" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0"
+                   Grid.ColumnSpan="3">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem.ItemsSource>
+                        <CompositeCollection>
+                            <MenuItem Header="_New"
+                                      Command="{Binding Path=Commands.New}" />
+                            <MenuItem Header="_Open..."
+                                      Command="{Binding Path=Commands.Open}" />
+                            <MenuItem Header="_Save"
+                                      Command="{Binding Path=Commands.Save}" />
+                            <MenuItem Header="Save _As..."
+                                      Command="{Binding Path=Commands.SaveAs}" />
+                            <Separator />
+                            <MenuItem Header="Export config as _docx"
+                                      Command="{Binding Path=Commands.ExportAsDocX}" />
+                            <MenuItem Header="Export unit tests as docx"
+                                      Command="{Binding Path=Commands.ExportUnitTestAsDocX}" />
+                            <Separator />
+                            <CollectionContainer Collection="{Binding Source={StaticResource MRUMenuItems}}" />
+
+                            <Separator />
+
+                            <MenuItem Header="_Close"
+                                      Command="{Binding Path=Commands.Close}" />
+
+                        </CompositeCollection>
+                    </MenuItem.ItemsSource>
+                    <MenuItem.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="MenuItem.Header"
+                                    Value="{Binding Path=Name}" />
+                            <Setter Property="MenuItem.Command"
+                                    Value="{Binding Path=Command}" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
+            </Menu>
+            <StackPanel></StackPanel>
+        </DockPanel>
+
+        <GridSplitter Grid.Column="0"
+                      Grid.Row="1"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Stretch"
+                      ShowsPreview="True"
+                      Width="2" />
+
+        <DockPanel Grid.Column="0"
+                   Grid.Row="1"
+                   Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="24" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TreeView Name="TreeViewMain"
+                          Height="Auto"
+                          Grid.Column="0"
+                          TreeViewItem.Selected="TreeViewItem_Selected"
+                          ItemsSource="{Binding ChildNodes}">
+                    <TreeView.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/ResourceDictionaries/TreeViewResourceDictionary.xaml" />
+                                <ResourceDictionary Source="pack://application:,,,/Lithnet.Transforms.Presentation;component/ResourceDictionaries/TreeViewResourceDictionary.xaml" />
+                                <ResourceDictionary>
+                                    <Style TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsSelected"
+                                                Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                                        <Setter Property="IsExpanded"
+                                                Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                                    </Style>
+                                </ResourceDictionary>
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
+                    </TreeView.Resources>
+                </TreeView>
+                <StackPanel Grid.Column="1"
+                            Grid.Row="1">
+
+                    <Button Content="↑"
+                            DataContext="{Binding Path=SelectedItem, ElementName=TreeViewMain}"
+                            Command="{Binding Commands.MoveUp}"
+                            Margin="2 5 2 2" />
+
+                    <Button Content="↓"
+                            DataContext="{Binding Path=SelectedItem, ElementName=TreeViewMain}"
+                            Command="{Binding Commands.MoveDown}"
+                            Margin="2" />
+
+                </StackPanel>
+            </Grid>
+
+        </DockPanel>
+
+        <DockPanel Grid.Column="1"
+                   Grid.Row="1"
+                   Margin="5"
+                   LastChildFill="true">
+
+            <StackPanel DockPanel.Dock="Bottom">
+                <TextBlock Text="{Binding Path=SelectedItem.Error, ElementName=TreeViewMain, Mode=OneWay}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+
+            <ContentControl Content="{Binding Path=SelectedItem, ElementName=TreeViewMain}"
+                            DockPanel.Dock="Top">
+                <ContentControl.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/Lithnet.Transforms.Presentation;component/Views/TransformView.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/Lithnet.Transforms.Presentation;component/Views/TransformCollectionView.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/ResourceDictionaries/ItemViewDictionary.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </ContentControl.Resources>
+            </ContentControl>
+        </DockPanel>
+
+    </Grid>
+</Window>
+

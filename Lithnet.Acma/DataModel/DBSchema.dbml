@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Lithnet.Acma" Class="DBSchemaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=Lithnet.Acma;Integrated Security=True" SettingsObjectName="Lithnet.Acma.Properties.Settings" SettingsPropertyName="AttributeConstructorMAConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.MA_SchemaObjectClasses" Member="AcmaSchemaObjectClasses">
+    <Type Name="AcmaSchemaObjectClass">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ShadowFromObjectClassID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AllowResurrection" Type="System.Boolean" DbType="bit NOT NULL" CanBeNull="false" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaObjectClass" Member="ShadowChildren" Storage="_MASchemaObjects" ThisKey="ID" OtherKey="ShadowFromObjectClassID" Type="AcmaSchemaObjectClass" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaMapping" Member="Mappings" Storage="_MASchemaMappings" ThisKey="ID" OtherKey="ObjectClassID" Type="AcmaSchemaMapping" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaMapping1" Member="InheritanceSources" ThisKey="ID" OtherKey="InheritanceSourceObjectClassID" Type="AcmaSchemaMapping" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaReferenceLink" Member="BackLinks" Storage="_ReferenceTargetLinks" ThisKey="ID" OtherKey="BackLinkObjectClassID" Type="AcmaSchemaReferenceLink" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaReferenceLink1" Member="ForwardLinks" Storage="_ReferenceSourceLinks" ThisKey="ID" OtherKey="ForwardLinkObjectClassID" Type="AcmaSchemaReferenceLink" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaShadowObjectLink" Member="ShadowLinks" ThisKey="ID" OtherKey="ShadowObjectClassID" Type="AcmaSchemaShadowObjectLink" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaShadowObjectLink1" Member="ShadowChildLinks" ThisKey="ID" OtherKey="ParentObjectClassID" Type="AcmaSchemaShadowObjectLink" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaObjectClass" Member="ShadowFromObjectClass" Storage="_MA_SchemaObject1" ThisKey="ShadowFromObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MA_SchemaAttributes" Member="AcmaSchemaAttributes">
+    <Type Name="AcmaSchemaAttribute">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="global::Lithnet.MetadirectoryServices.ExtendedAttributeType" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsMultivalued" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Operation" Type="global::Lithnet.Acma.AcmaAttributeOperation" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsIndexable" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsIndexed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsBuiltIn" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TableName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ColumnName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaMapping" Member="Mappings" Storage="_MA_SchemaMappings" ThisKey="ID" OtherKey="AttributeID" Type="AcmaSchemaMapping" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaMapping1" Member="InheritanceMappingSources" Storage="_MA_SchemaMappings1" ThisKey="ID" OtherKey="InheritanceSourceAttributeID" Type="AcmaSchemaMapping" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaMapping2" Member="InheritanceMappingValues" Storage="_MASchemaMappings" ThisKey="ID" OtherKey="InheritedAttributeID" Type="AcmaSchemaMapping" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaReferenceLink" Member="BackLinks" Storage="_TargetReferenceLinks" ThisKey="ID" OtherKey="BackLinkAttributeID" Type="AcmaSchemaReferenceLink" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaReferenceLink1" Member="ForwardLinks" Storage="_SourceReferenceLinks" ThisKey="ID" OtherKey="ForwardLinkAttributeID" Type="AcmaSchemaReferenceLink" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaShadowObjectLink" Member="ShadowObjectProvisioningLinks" ThisKey="ID" OtherKey="ProvisioningAttributeID" Type="AcmaSchemaShadowObjectLink" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaShadowObjectLink1" Member="ShadowObjectReferenceLinks" ThisKey="ID" OtherKey="ReferenceAttributeID" Type="AcmaSchemaShadowObjectLink" />
+    </Type>
+    <DeleteFunction FunctionId="FunctionId1">
+      <Argument Parameter="iD" Member="ID" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.MA_SchemaMapping" Member="AcmaSchemaMappings">
+    <Type Name="AcmaSchemaMapping">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ObjectClassID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AttributeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InheritanceSourceAttributeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InheritedAttributeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsBuiltIn" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="InheritanceSourceObjectClassID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AcmaSchemaMapping_SafetyRule" Member="SafetyRules" ThisKey="ID" OtherKey="MappingID" Type="SafetyRule" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaMapping" Member="Attribute" Storage="_MA_SchemaAttribute" ThisKey="AttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" DeleteOnNull="true" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaMapping1" Member="InheritanceSourceAttribute" Storage="_MA_SchemaAttribute1" ThisKey="InheritanceSourceAttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaMapping2" Member="InheritedAttribute" Storage="_MASchemaAttribute" ThisKey="InheritedAttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaMapping" Member="ObjectClass" Storage="_MASchemaObject" ThisKey="ObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" DeleteOnNull="true" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaMapping1" Member="InheritanceSourceObjectClass" ThisKey="InheritanceSourceObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MA_SchemaReferenceLinks" Member="AcmaSchemaReferenceLinks">
+    <Type Name="AcmaSchemaReferenceLink">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SourceObjectClassID" Member="ForwardLinkObjectClassID" Storage="_SourceObjectClassID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SourceAttributeID" Member="ForwardLinkAttributeID" Storage="_SourceAttributeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TargetAttributeID" Member="BackLinkAttributeID" Storage="_TargetAttributeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TargetObjectClassID" Member="BackLinkObjectClassID" Storage="_TargetObjectClassID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaReferenceLink" Member="BackLinkAttribute" Storage="_TargetAttribute" ThisKey="BackLinkAttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaReferenceLink1" Member="ForwardLinkAttribute" Storage="_SourceAttribute" ThisKey="ForwardLinkAttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaReferenceLink" Member="BackLinkObjectClass" Storage="_TargetObjectClass" ThisKey="BackLinkObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaReferenceLink1" Member="ForwardLinkObjectClass" Storage="_SourceObjectClass" ThisKey="ForwardLinkObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MA_SchemaShadowObjectLinks" Member="AcmaSchemaShadowObjectLinks">
+    <Type Name="AcmaSchemaShadowObjectLink">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ParentObjectClassID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShadowObjectClassID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ProvisioningAttributeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReferenceAttributeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="nvarchar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaShadowObjectLink" Member="ProvisioningAttribute" ThisKey="ProvisioningAttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" />
+      <Association Name="AcmaSchemaAttribute_AcmaSchemaShadowObjectLink1" Member="ReferenceAttribute" ThisKey="ReferenceAttributeID" OtherKey="ID" Type="AcmaSchemaAttribute" IsForeignKey="true" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaShadowObjectLink" Member="ShadowObjectClass" ThisKey="ShadowObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" />
+      <Association Name="AcmaSchemaObjectClass_AcmaSchemaShadowObjectLink1" Member="ParentObjectClass" ThisKey="ParentObjectClassID" OtherKey="ID" Type="AcmaSchemaObjectClass" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_Sequences" Member="AcmaSequences">
+    <Type Name="AcmaSequence">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IsCycleEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="StartValue" Type="System.Int64" DbType="bigint NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="MinValue" Type="long?" DbType="bigint" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="MaxValue" Type="long?" DbType="bigint" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="CurrentValue" Type="System.Int64" DbType="bigint NOT NULL" IsReadOnly="true" CanBeNull="false" />
+      <Column Name="Increment" Type="System.Int64" DbType="bigint NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId2">
+      <Argument Parameter="sequenceName" Member="Name" />
+      <Argument Parameter="startsWith" Member="StartValue" />
+      <Argument Parameter="incrementBy" Member="Increment" />
+      <Argument Parameter="minValue" Member="MinValue" />
+      <Argument Parameter="maxValue" Member="MaxValue" />
+      <Argument Parameter="cycle" Member="IsCycleEnabled" />
+    </InsertFunction>
+    <UpdateFunction FunctionId="FunctionId3">
+      <Argument Parameter="sequenceName" Member="Name" Version="Original" />
+      <Argument Parameter="newSequenceName" Member="Name" />
+      <Argument Parameter="restartWith" Member="StartValue" />
+      <Argument Parameter="incrementBy" Member="Increment" />
+      <Argument Parameter="minValue" Member="MinValue" />
+      <Argument Parameter="maxValue" Member="MaxValue" />
+      <Argument Parameter="cycle" Member="IsCycleEnabled" />
+    </UpdateFunction>
+    <DeleteFunction FunctionId="FunctionId4">
+      <Argument Parameter="sequenceName" Member="Name" Version="Original" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.MA_SafetyRules" Member="SafetyRules">
+    <Type Name="SafetyRule">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MappingID" Storage="_AttributeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pattern" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="NullAllowed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="nvarchar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="AcmaSchemaMapping_SafetyRule" Member="AcmaSchemaMapping" ThisKey="MappingID" OtherKey="ID" Type="AcmaSchemaMapping" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DB_Version" Member="AcmaDBVersions">
+    <Type Name="AcmaDBVersion">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MajorReleaseNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MinorReleaseNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PointReleaseNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ScriptName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DateApplied" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MA_Settings" Member="AcmaSettings">
+    <Type Name="AcmaSetting">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(400)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MA_Constants" Member="AcmaConstants">
+    <Type Name="AcmaConstant">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.spSchemaCreateIndex" Method="spSchemaCreateIndex">
+    <Parameter Name="attributeName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSchemaDeleteIndex" Method="spSchemaDeleteIndex">
+    <Parameter Name="attributeName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSchemaRenameAttribute" Method="spSchemaRenameAttribute">
+    <Parameter Name="attributeName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="newAttributeName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSchemaRenameObjectClass" Method="spSchemaRenameObjectClass">
+    <Parameter Name="className" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="newClassName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSchemaSetupNewAttribute" Method="spSchemaSetupNewAttribute">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId2" Name="dbo.spSequenceCreate" Method="spSequenceCreate">
+    <Parameter Name="sequenceName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="startsWith" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="incrementBy" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="minValue" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="maxValue" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="cycle" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId4" Name="dbo.spSequenceDelete" Method="spSequenceDelete">
+    <Parameter Name="sequenceName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSequenceGet" Method="spSequenceGet">
+    <ElementType Name="spSequenceGetResult">
+      <Column Name="[Sequence Name]" Member="Sequence_Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="NumericPrecision" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StartValue" Type="System.Object" DbType="Variant NOT NULL" CanBeNull="false" />
+      <Column Name="IncrementValue" Type="System.Object" DbType="Variant NOT NULL" CanBeNull="false" />
+      <Column Name="MinValue" Type="System.Object" DbType="Variant NOT NULL" CanBeNull="false" />
+      <Column Name="MaxValue" Type="System.Object" DbType="Variant NOT NULL" CanBeNull="false" />
+      <Column Name="IsCycleEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CacheSize" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentValue" Type="System.Object" DbType="Variant NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Id="FunctionId3" Name="dbo.spSequenceModify" Method="spSequenceModify">
+    <Parameter Name="sequenceName" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="newSequenceName" Type="System.String" DbType="NVarChar(128)" />
+    <Parameter Name="restartWith" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="incrementBy" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="minValue" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="maxValue" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="cycle" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSequenceGetNextValue" Method="spSequenceGetNextValue">
+    <Parameter Name="sequenceName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId1" Name="dbo.spSchemaDeleteAttribute" Method="spSchemaDeleteAttribute">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

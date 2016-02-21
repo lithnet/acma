@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:c="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <Style TargetType="{x:Type TreeViewItem}"
+           BasedOn="{StaticResource {x:Type TreeViewItem}}">
+        <Setter Property="IsSelected"
+                Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Setter Property="IsExpanded"
+                Value="{Binding IsExpanded, Mode=TwoWay}" />
+    </Style>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:XmlConfigFileViewModel}"
+                              ItemsSource="{Binding Path=ChildNodes}">
+        <p:TreeViewItemControl />
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>
