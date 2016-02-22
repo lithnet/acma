@@ -56,7 +56,7 @@ namespace Lithnet.Acma.UnitTests
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
-                csentry.DN = maObject.Id.ToString();
+                csentry.DN = maObject.ObjectID.ToString();
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.ObjectType = maObject.ObjectClass.Name;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("accountName", "mytestvalue"));
@@ -126,7 +126,7 @@ namespace Lithnet.Acma.UnitTests
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
-                csentry.DN = maObject.Id.ToString();
+                csentry.DN = maObject.ObjectID.ToString();
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.ObjectType = maObject.ObjectClass.Name;
 
@@ -165,7 +165,7 @@ namespace Lithnet.Acma.UnitTests
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
-                csentry.DN = maObject.Id.ToString();
+                csentry.DN = maObject.ObjectID.ToString();
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.ObjectType = maObject.ObjectClass.Name;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeUpdate("accountName", "mytestvalue"));
@@ -234,7 +234,7 @@ namespace Lithnet.Acma.UnitTests
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
-                csentry.DN = maObject.Id.ToString();
+                csentry.DN = maObject.ObjectID.ToString();
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.ObjectType = maObject.ObjectClass.Name;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeReplace("accountName", "mytestvalue"));
@@ -305,7 +305,7 @@ namespace Lithnet.Acma.UnitTests
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
-                csentry.DN = maObject.Id.ToString();
+                csentry.DN = maObject.ObjectID.ToString();
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.ObjectType = maObject.ObjectClass.Name;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeDelete("accountName"));

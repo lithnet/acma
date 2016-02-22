@@ -5,14 +5,15 @@ using System.Text;
 using Lithnet.Acma;
 using Lithnet.Acma.DataModel;
 using Lithnet.Logging;
+using System.Management.Automation;
+using Lithnet.MetadirectoryServices;
+using System.Collections;
 
 namespace Lithnet.Acma.PS
 {
-    public class AcmaPSObject : IDisposable
+    public class AcmaPSObject : PSObject, IDisposable
     {
         private MAObjectHologram hologram;
-
-        private AcmaObjectAttributeCollection attributes;
 
         internal AcmaPSObject(MAObjectHologram hologram)
         {
@@ -21,12 +22,54 @@ namespace Lithnet.Acma.PS
                 throw new ArgumentNullException("hologram");
             }
 
-            this.Events = new List<string>();
             this.hologram = hologram;
-            this.attributes = new AcmaObjectAttributeCollection(hologram);
+            this.LoadProperties();
         }
 
-        internal MAObjectHologram InternalHologram
+        private void LoadProperties()
+        {
+            foreach (AcmaSchemaAttribute attribute in this.hologram.ObjectClass.Attributes.OrderBy(t => t.Name))
+            {
+                PSNoteProperty prop = null;
+
+                if (attribute.IsMultivalued)
+                {
+                    object[] values = this.hologram.GetMVAttributeValues(attribute).Values.Select(t => t.Value).ToArray();
+
+                    if (values.Length == 0)
+                    {
+                        prop = new PSNoteProperty(attribute.Name, new AttributeValueArrayList());
+                    }
+                    //if (values.Length == 1)
+                    //{
+                    //    prop = new PSNoteProperty(attribute.Name, values.First());
+                    //}
+                    else 
+                    {
+                        prop = new PSNoteProperty(attribute.Name, new AttributeValueArrayList(values));
+                    }
+                }
+                else
+                {
+                    AttributeValue value = this.hologram.GetSVAttributeValue(attribute);
+                    if (value.IsNull)
+                    {
+                        prop = new PSNoteProperty(attribute.Name, null);
+                    }
+                    else
+                    {
+                        prop = new PSNoteProperty(attribute.Name, value.Value);
+                    }
+                }
+
+                if (prop != null)
+                {
+                    this.Properties.Add(prop);
+                }
+            }
+        }
+
+        internal MAObjectHologram Hologram
         {
             get
             {
@@ -34,123 +77,84 @@ namespace Lithnet.Acma.PS
             }
         }
 
-        public string ObjectClass
+        internal MAObjectHologram GetResourceWithAppliedChanges()
         {
-            get
+            foreach (var property in this.Properties)
             {
-                return this.hologram.ObjectClass.Name;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return this.hologram.DisplayText;
-            }
-        }
-
-        public bool Deleted
-        {
-            get
-            {
-                return this.hologram.DeletedTimestamp > 0;
-            }
-        }
-
-        public bool IsShadowObject
-        {
-            get
-            {
-                return this.hologram.ShadowParent != null;
-            }
-        }
-
-        public Guid ShadowParentID
-        {
-            get
-            {
-                return this.hologram.ShadowParent == null ? Guid.Empty : this.hologram.ShadowParent.Id;
-            }
-        }
-
-        public Guid ObjectID
-        {
-            get
-            {
-                return this.hologram.Id;
-            }
-        }
-
-        public AcmaObjectAttributeCollection Attributes
-        {
-            get
-            {
-                return this.attributes;
-            }
-        }
-
-        private List<string> Events { get; set; }
-
-        public override string ToString()
-        {
-            return this.hologram.AttributeDataToString();
-        }
-
-        public void AddEvent(string addEvent)
-        {
-            this.Events.Add(addEvent);
-        }
-
-        public void Commit()
-        {
-            if (this.hologram.AcmaModificationType == TriggerEvents.Unconfigured)
-            {
-                this.hologram.SetObjectModificationType(TriggerEvents.Update);
-            }
-
-            try
-            {
-                this.hologram.CommitCSEntryChange(this.RaiseEvents());
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteException(ex);
-            }
-            finally
-            {
-                this.Events.Clear();
-            }
-        }
-
-        public void Commit(string[] constructorOverrides)
-        {
-            if (this.hologram.AcmaModificationType == TriggerEvents.Unconfigured)
-            {
-                this.hologram.SetObjectModificationType(TriggerEvents.Update);
-            }
-
-            this.hologram.CommitCSEntryChange(constructorOverrides.ToList(), this.RaiseEvents());
-            this.Events.Clear();
-        }
-
-        private IList<RaisedEvent> RaiseEvents()
-        {
-            List<RaisedEvent> raisedEvents = new List<RaisedEvent>();
-
-            if (this.Events != null)
-            {
-                foreach (string eventName in this.Events)
+                if (ActiveConfig.DB.GetAttribute(property.Name).IsReadOnlyInClass(this.Hologram.ObjectClass))
                 {
-                    AcmaInternalExitEvent internalEvent = new AcmaInternalExitEvent();
-                    internalEvent.AllowDuplicateIDs = true;
-                    internalEvent.ID = eventName;
-                    RaisedEvent raisedEvent = new RaisedEvent(internalEvent);
-                    raisedEvents.Add(raisedEvent);
+                    continue;
+                }
+
+                byte[] byteArray = property.Value as byte[];
+
+                if (byteArray != null)
+                {
+                    this.SetSingleValuedAttribute(property, property.Value);
+                }
+
+                IList resourceValues = property.Value as IList;
+
+                if (resourceValues != null)
+                {
+                    this.SetMultivaluedAttribute(property, resourceValues);
+                }
+                else
+                {
+                    this.SetSingleValuedAttribute(property, property.Value);
                 }
             }
 
-            return raisedEvents;
+            return this.Hologram;
+        }
+
+        private void SetMultivaluedAttribute(PSPropertyInfo property, IList resourceValues)
+        {
+            List<object> newValues = new List<object>();
+
+            foreach (object value in resourceValues)
+            {
+                AcmaPSObject resourceValue = value as AcmaPSObject;
+
+                if (resourceValue != null)
+                {
+                    newValues.Add(resourceValue.Hologram.ObjectID);
+                }
+                else
+                {
+                    newValues.Add(this.UnwrapPSObject(value));
+                }
+            }
+
+            this.Hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute(property.Name), newValues);
+        }
+
+        private void SetSingleValuedAttribute(PSPropertyInfo property, object value)
+        {
+            AcmaPSObject resourceValue = property.Value as AcmaPSObject;
+
+            if (resourceValue != null)
+            {
+                this.Hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute(property.Name), resourceValue.Hologram.ObjectID);
+            }
+            else
+            {
+                this.Hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute(property.Name), value);
+            }
+        }
+
+        private object UnwrapPSObject(object value)
+        {
+            PSObject psObject = value as PSObject;
+
+            if (psObject != null)
+            {
+                return psObject.BaseObject;
+            }
+            else
+            {
+                return value;
+            }
         }
 
         private bool disposed = false;

@@ -440,7 +440,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -603,7 +603,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -688,7 +688,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -772,7 +772,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -913,7 +913,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (result.Id != sourceId)
+                    if (result.ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -956,7 +956,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1012,7 +1012,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1068,7 +1068,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1124,7 +1124,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1180,7 +1180,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1228,7 +1228,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1317,7 +1317,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1376,7 +1376,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1435,7 +1435,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1491,7 +1491,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1535,7 +1535,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1580,7 +1580,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1625,7 +1625,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }
@@ -1670,7 +1670,7 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    if (results.First().Id != sourceId)
+                    if (results.First().ObjectID != sourceId)
                     {
                         Assert.Fail("The wrong object was returned by the search");
                     }

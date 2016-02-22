@@ -1025,7 +1025,7 @@ namespace Lithnet.Acma.UnitTests
         {
             foreach (AcmaSchemaAttribute attribute in uniqueAllocationAttributes.Select(t => ActiveConfig.DB.GetAttribute(t)))
             {
-                if (maObject.MADataContext.DoesAttributeValueExist(attribute, valueToTest, maObject.Id))
+                if (maObject.MADataContext.DoesAttributeValueExist(attribute, valueToTest, maObject.ObjectID))
                 {
                     return false;
                 }

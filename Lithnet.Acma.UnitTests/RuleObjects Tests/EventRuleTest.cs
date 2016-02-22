@@ -112,7 +112,7 @@ namespace Lithnet.Acma.UnitTests
                 MAObjectHologram targetObject = UnitTestControl.DataContext.CreateMAObject(targetId, "person");
 
                 AcmaSchemaAttribute supervisorAttribute = ActiveConfig.DB.GetAttribute("supervisor");
-                targetObject.SetAttributeValue(supervisorAttribute, supervisorObject.Id);
+                targetObject.SetAttributeValue(supervisorAttribute, supervisorObject.ObjectID);
                 targetObject.CommitCSEntryChange();
 
                 AcmaEvent maevent = GetAccountNameChangedEvent();

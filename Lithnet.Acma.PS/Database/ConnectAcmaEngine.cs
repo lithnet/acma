@@ -10,11 +10,10 @@ using Lithnet.Logging;
 namespace Lithnet.Acma.PS
 {
     [Cmdlet(VerbsCommunications.Connect, "AcmaEngine")]
-    public class ConnectAcmaEngine: Cmdlet 
+    public class ConnectAcmaEngine: AcmaCmdletConnected 
     {
         public ConnectAcmaEngine()
         {
-            Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
             this.LogLevel = Logging.LogLevel.Info;
         }
 
@@ -57,23 +56,8 @@ namespace Lithnet.Acma.PS
 
                 Logger.LogPath = this.LogFile;
                 Logger.LogLevel = this.LogLevel;
-                Logger.WriteLine("Connecting to {0} on {1}", this.DatabaseName, this.ServerName);
-                ActiveConfig.OpenDatabase(this.ServerName, this.DatabaseName);
 
-                if (this.ConfigFile != null)
-                {
-                    Logger.WriteLine("Opening {0}", this.ConfigFile);
-                    ActiveConfig.LoadXml(this.ConfigFile);
-                }
-                else
-                {
-                    ActiveConfig.XmlConfig = new XmlConfigFile();
-                }
-
-                Global.Connected = true;
-                Global.DataContext = ActiveConfig.DB.MADataConext;
-                ActiveConfig.DB.CanCache = true;
-                WriteCommandDetail("Connected to server");
+                this.Connect(this.DatabaseName, this.ServerName, this.ConfigFile, true);
             }
             catch (Exception ex)
             {

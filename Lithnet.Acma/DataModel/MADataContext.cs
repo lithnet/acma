@@ -696,7 +696,7 @@ namespace Lithnet.Acma
 
                 if (shadowParent != null)
                 {
-                    command.Parameters.AddWithValue("@shadowParent", shadowParent.Id);
+                    command.Parameters.AddWithValue("@shadowParent", shadowParent.ObjectID);
                 }
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -812,7 +812,7 @@ namespace Lithnet.Acma
 
         public Dictionary<Guid, IList<string>> GetReferencingObjects(MAObjectHologram hologram)
         {
-            return this.GetReferencingObjects(hologram.Id);
+            return this.GetReferencingObjects(hologram.ObjectID);
         }
 
         public Dictionary<Guid, IList<string>> GetReferencingObjects(Guid referencedObjectId)

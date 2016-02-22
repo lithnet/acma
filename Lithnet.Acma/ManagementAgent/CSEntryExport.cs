@@ -128,13 +128,13 @@ namespace Lithnet.Acma
                 }
                 else
                 {
-                    Logger.WriteLine("Resurrecting object with ID: " + hologram.Id.ToString());
+                    Logger.WriteLine("Resurrecting object with ID: " + hologram.ObjectID.ToString());
                     isUndeleting = true;
 
-                    if (hologram.Id != guidFromDn)
+                    if (hologram.ObjectID != guidFromDn)
                     {
                         Logger.WriteLine("Re-anchoring object with new ID: " + csentry.DN);
-                        dc.ChangeMAObjectId(hologram.Id, guidFromDn, true);
+                        dc.ChangeMAObjectId(hologram.ObjectID, guidFromDn, true);
                         hologram = dc.GetMAObject(guidFromDn, objectClass);
                     }
 
@@ -166,7 +166,7 @@ namespace Lithnet.Acma
             AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
 
             MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc, objectClass);
-            csentryChange.DN = maObject.Id.ToString();
+            csentryChange.DN = maObject.ObjectID.ToString();
             maObject.CommitCSEntryChange(csentryChange, false);
         }
 
@@ -180,7 +180,7 @@ namespace Lithnet.Acma
         {
             AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
             MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc, objectClass);
-            csentryChange.DN = maObject.Id.ToString();
+            csentryChange.DN = maObject.ObjectID.ToString();
             maObject.CommitCSEntryChange(csentryChange, false);
             referenceRetryRequired = maObject.ReferenceRetryRequired;
         }
@@ -195,7 +195,7 @@ namespace Lithnet.Acma
         {
             AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
             MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc, objectClass);
-            csentryChange.DN = maObject.Id.ToString();
+            csentryChange.DN = maObject.ObjectID.ToString();
             csentryChange.ObjectType = maObject.ObjectClass.Name;
             csentryChange = csentryChange.ConvertCSEntryChangeReplaceToUpdate(maObject);
             maObject.CommitCSEntryChange(csentryChange, false);
@@ -278,7 +278,7 @@ namespace Lithnet.Acma
             {
                 throw new ShadowObjectExportException(string.Format(
                     "The specified parent object '{0}' was of the object type '{1}', however the link '{2}' defines '{3}' as the expected parent object type",
-                    parentHologram.Id, parentHologram.ObjectClass.Name, link.Name, link.ParentObjectClass.Name));
+                    parentHologram.ObjectID, parentHologram.ObjectClass.Name, link.Name, link.ParentObjectClass.Name));
             }
 
             AttributeValue provisioningAttribute = parentHologram.GetSVAttributeValue(link.ProvisioningAttribute);

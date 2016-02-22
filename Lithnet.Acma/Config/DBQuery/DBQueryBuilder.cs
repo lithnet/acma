@@ -89,7 +89,7 @@ namespace Lithnet.Acma
         public DBQueryBuilder(DBQueryGroup queryGroup, int maximumResults, MAObjectHologram hologram)
             : this()
         {
-            this.SourceObjectId = hologram.Id;
+            this.SourceObjectId = hologram.ObjectID;
             WhereClause whereClause = queryGroup.CreateWhereClause(this, hologram);
             this.QueryString = this.BuildQuery(whereClause, maximumResults);
         }

@@ -66,7 +66,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -112,7 +112,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -158,7 +158,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -204,7 +204,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -250,7 +250,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -295,7 +295,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -341,7 +341,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -357,7 +357,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -403,7 +403,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -449,7 +449,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -465,7 +465,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -511,7 +511,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -556,7 +556,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -601,7 +601,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -647,7 +647,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -693,7 +693,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -739,7 +739,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -755,7 +755,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -800,7 +800,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -845,7 +845,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -861,7 +861,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -906,7 +906,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -952,7 +952,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -997,7 +997,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1043,7 +1043,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1089,7 +1089,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1134,7 +1134,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1180,7 +1180,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1196,7 +1196,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1242,7 +1242,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1288,7 +1288,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1304,7 +1304,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1350,7 +1350,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1395,7 +1395,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1441,7 +1441,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1487,7 +1487,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1533,7 +1533,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1549,7 +1549,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1594,7 +1594,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1639,7 +1639,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1655,7 +1655,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -1700,7 +1700,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != newId)
+                if (results.First().ObjectID != newId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }

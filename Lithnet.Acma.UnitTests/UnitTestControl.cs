@@ -43,7 +43,7 @@ namespace Lithnet.Acma.UnitTests
             byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjects();
             foreach (MAObjectHologram hologram in UnitTestControl.DataContext.GetMAObjects(watermark))
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(hologram.Id);
+                UnitTestControl.DataContext.DeleteMAObjectPermanent(hologram.ObjectID);
             }
         }
 

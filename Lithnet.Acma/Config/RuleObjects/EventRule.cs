@@ -85,7 +85,7 @@ namespace Lithnet.Acma
             else
             {
                 AttributeValues sources = sourceObject.GetAttributeValues(this.EventSource);
-                if (sourceObject.IncomingEvents.Any(t => t.EventID.Equals(this.EventName, StringComparison.CurrentCultureIgnoreCase) && sources.HasValue(t.Source.Id)))
+                if (sourceObject.IncomingEvents.Any(t => t.EventID.Equals(this.EventName, StringComparison.CurrentCultureIgnoreCase) && sources.HasValue(t.Source.ObjectID)))
                 {
                     return true;
                 }

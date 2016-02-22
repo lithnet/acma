@@ -267,22 +267,22 @@ namespace Lithnet.Acma
 
                             if (string.IsNullOrWhiteSpace(text))
                             {
-                                this.objectDisplayText = this.Id.ToString();
+                                this.objectDisplayText = this.ObjectID.ToString();
                             }
                             else
                             {
-                                this.objectDisplayText = string.Format("{2}:{1}:{0}", this.Id, text, this.ObjectClass.Name);
+                                this.objectDisplayText = string.Format("{2}:{1}:{0}", this.ObjectID, text, this.ObjectClass.Name);
                             }
                         }
                         else
                         {
-                            this.objectDisplayText = string.Format("{1}:{0}", this.Id, this.ObjectClass.Name);
+                            this.objectDisplayText = string.Format("{1}:{0}", this.ObjectID, this.ObjectClass.Name);
                         }
                     }
 
                     if (this.objectDisplayText == null)
                     {
-                        this.objectDisplayText = this.Id.ToString();
+                        this.objectDisplayText = this.ObjectID.ToString();
                     }
                 }
 
@@ -794,7 +794,7 @@ namespace Lithnet.Acma
                                     referenceValue.ValueGuid,
                                     link.ReferenceAttribute.Name,
                                     link.Name,
-                                    this.Id)
+                                    this.ObjectID)
                                 );
                         }
 
@@ -822,13 +822,13 @@ namespace Lithnet.Acma
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendFormat("Object ID: {0}\n", this.Id);
+            builder.AppendFormat("Object ID: {0}\n", this.ObjectID);
             builder.AppendFormat("Object class: {0}\n", this.ObjectClass.Name);
             builder.AppendFormat("Deleted: {0}\n", this.DeletedTimestamp == 0 ? "No" : new DateTime(this.DeletedTimestamp).ToString());
 
             if (this.ObjectClass.IsShadowObject)
             {
-                builder.AppendFormat("Shadow parent: {0}\n", this.ShadowParentId);
+                builder.AppendFormat("Shadow parent: {0}\n", this.ShadowParentID);
                 builder.AppendFormat("Shadow link: {0}\n", this.ShadowLinkName);
             }
 
@@ -861,7 +861,7 @@ namespace Lithnet.Acma
 
             if (maObject != null)
             {
-                return this.Id == maObject.Id;
+                return this.ObjectID == maObject.ObjectID;
             }
             else
             {
@@ -875,7 +875,7 @@ namespace Lithnet.Acma
         /// <returns>The hash code for this instance</returns>
         public override int GetHashCode()
         {
-            return this.Id.GetHashCode();
+            return this.ObjectID.GetHashCode();
         }
 
         /// <summary>
@@ -942,11 +942,11 @@ namespace Lithnet.Acma
             }
 
             this.DBUpdateAttribute(shadowLink.ProvisioningAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(true) });
-            this.DBUpdateAttribute(shadowLink.ReferenceAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(shadowObject.Id) });
+            this.DBUpdateAttribute(shadowLink.ReferenceAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(shadowObject.ObjectID) });
             this.Commit();
 
             shadowObject.ShadowLink = shadowLink;
-            shadowObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("shadowParent"), this.Id);
+            shadowObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("shadowParent"), this.ObjectID);
             IList<AttributeChange> changes = this.CreateSyntheticAttributeChangesForShadowChild(shadowLink, true);
 
             if (csentry != null)
@@ -1442,7 +1442,7 @@ namespace Lithnet.Acma
         /// </summary>
         private void DereferenceShadowParent()
         {
-            if (this.ShadowParentId != Guid.Empty)
+            if (this.ShadowParentID != Guid.Empty)
             {
                 if (this.ShadowLink != null)
                 {
@@ -1458,7 +1458,7 @@ namespace Lithnet.Acma
                     Logger.WriteLine(
                         "Dereferenced shadow object '{0}' for parent '{1}' referenced by {{{2}}} and using {{{3}}} as the provisioning indicator",
                         this.DisplayText,
-                        this.ShadowParentId.ToString(),
+                        this.ShadowParentID.ToString(),
                         this.ShadowLink.ReferenceAttribute.Name,
                         this.ShadowLink.ProvisioningAttribute.Name);
                 }
@@ -1476,7 +1476,7 @@ namespace Lithnet.Acma
                 return;
             }
 
-            List<MAObjectHologram> shadowObjects = this.MADataContext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("shadowParent"), ValueOperator.Equals, this.Id).ToList();
+            List<MAObjectHologram> shadowObjects = this.MADataContext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("shadowParent"), ValueOperator.Equals, this.ObjectID).ToList();
 
             if (shadowObjects.Count > 0)
             {
@@ -1521,7 +1521,7 @@ namespace Lithnet.Acma
             }
             else
             {
-                this.MADataContext.DeleteMAObjectPermanent(this.Id);
+                this.MADataContext.DeleteMAObjectPermanent(this.ObjectID);
             }
 
             Logger.WriteLine("Deleted {0} object: {1}", this.ObjectClass.Name, this.DisplayText);
@@ -1543,7 +1543,7 @@ namespace Lithnet.Acma
             Logger.WriteLine("Performing discovery for objects referencing this object ({0})",
                             LogLevel.Debug, this.DisplayText);
 
-            ValueChange valuechange = ValueChange.CreateValueDelete(this.Id);
+            ValueChange valuechange = ValueChange.CreateValueDelete(this.ObjectID);
             List<ValueChange> valueChanges = new List<ValueChange>() { valuechange };
             Dictionary<MAObjectHologram, List<AttributeChange>> referrerChanges = new Dictionary<MAObjectHologram, List<AttributeChange>>();
 
@@ -1568,7 +1568,7 @@ namespace Lithnet.Acma
                 {
                     if (this.ObjectClass.IsShadowObject &&
                         this.ObjectClass.AllowResurrection &&
-                        this.ShadowParentId == kvp.Key &&
+                        this.ShadowParentID == kvp.Key &&
                         this.ShadowLink.ReferenceAttribute.Name == attribute)
                     {
                         // This object class allows objects to be undeleted, so the reference needs to be left on the 
@@ -1634,14 +1634,14 @@ namespace Lithnet.Acma
                     {
                         DBQueryGroup queryGroup = new DBQueryGroup(GroupOperator.All);
                         queryGroup.DBQueries.Add(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, mapping.ObjectClass.Name));
-                        queryGroup.DBQueries.Add(new DBQueryByValue(mapping.InheritanceSourceAttribute, ValueOperator.Equals, this.Id));
-                        queryGroup.DBQueries.Add(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectId"), ValueOperator.NotEquals, this.Id));
+                        queryGroup.DBQueries.Add(new DBQueryByValue(mapping.InheritanceSourceAttribute, ValueOperator.Equals, this.ObjectID));
+                        queryGroup.DBQueries.Add(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectId"), ValueOperator.NotEquals, this.ObjectID));
                         queryResultCache.Add(key, this.MADataContext.GetMAObjectsFromDBQuery(queryGroup).ToList());
                     }
 
                     foreach (MAObjectHologram maObject in queryResultCache[key])
                     {
-                        if (maObject.Id == this.Id)
+                        if (maObject.ObjectID == this.ObjectID)
                         {
                             continue;
                         }

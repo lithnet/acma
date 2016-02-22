@@ -129,7 +129,7 @@ namespace Lithnet.Acma
             }
             catch (Exception ex)
             {
-                throw new ConstructorExecutionException(this.ID, hologram.Id, ex);
+                throw new ConstructorExecutionException(this.ID, hologram.ObjectID, ex);
             }
         }
 

@@ -155,17 +155,17 @@ namespace Lithnet.Acma.PS
             {
                 try
                 {
-                    obj.InternalHologram.PreLoadAVPs();
-                    CSEntryChangeXmlExport.ExportToXml(obj.InternalHologram, writer);
+                    obj.Hologram.PreLoadAVPs();
+                    CSEntryChangeXmlExport.ExportToXml(obj.Hologram, writer);
                     MAStatistics.AddImportOperation();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error exporting object {0}: {1}: {2}", this.currentObjectCount, obj.ObjectID, ex.Message);
+                    Console.WriteLine("Error exporting object {0}: {1}: {2}", this.currentObjectCount, obj.Hologram.ObjectID, ex.Message);
                 }
 
                 //progress.PercentComplete = Convert.ToInt32(((decimal)this.currentObjectCount / this.totalObjectCount) * 100);
-                progress.StatusDescription = string.Format("Importing {0}/{1}... {2} ({3} objects/sec)", this.currentObjectCount, this.totalObjectCount, obj.ObjectID, this.sampleOpsSec);
+                progress.StatusDescription = string.Format("Importing {0}/{1}... {2} ({3} objects/sec)", this.currentObjectCount, this.totalObjectCount, obj.Hologram.ObjectID, this.sampleOpsSec);
                 progress.CurrentOperation = string.Format("Average rate: {0} objects/sec", this.averageOpsSec);
                 progress.SecondsRemaining = this.secondsRemaining;
 

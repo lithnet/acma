@@ -58,12 +58,12 @@ namespace Lithnet.Acma.PS
                     ThrowTerminatingError(error);
                 }
 
-                maobject.InternalHologram.SetObjectModificationType(TriggerEvents.Delete);
-                maobject.InternalHologram.CommitCSEntryChange();
+                maobject.Hologram.SetObjectModificationType(TriggerEvents.Delete);
+                maobject.Hologram.CommitCSEntryChange();
 
                 if (this.ForceDelete)
                 {
-                    Global.DataContext.DeleteMAObjectPermanent(maobject.InternalHologram.Id);
+                    Global.DataContext.DeleteMAObjectPermanent(maobject.Hologram.ObjectID);
                 }
             }
             catch (Exception ex)

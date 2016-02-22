@@ -192,7 +192,7 @@ namespace Lithnet.Acma
             }
             catch (Exception ex)
             {
-                throw new DeclarationExpansionException(this.Declaration, hologram.Id.ToString(), ex);
+                throw new DeclarationExpansionException(this.Declaration, hologram.ObjectID.ToString(), ex);
             }
         }
 

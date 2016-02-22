@@ -1,0 +1,1 @@
+﻿[Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver]::RegisterResolver();

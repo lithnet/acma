@@ -124,17 +124,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(reference.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -174,17 +174,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(shadowLink.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -199,17 +199,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    subShadowID = subShadowObject.Id;
+                    subShadowID = subShadowObject.ObjectID;
                 }
 
-                if (subShadowObject.ShadowParentId != shadowObject.Id)
+                if (subShadowObject.ShadowParentID != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue subShadowChildId = shadowObject.GetSVAttributeValue(subShadowLink.ReferenceAttribute);
 
-                if (subShadowChildId != subShadowObject.Id)
+                if (subShadowChildId != subShadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -254,17 +254,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(shadowLink.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -279,17 +279,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    subShadowID = subShadowObject.Id;
+                    subShadowID = subShadowObject.ObjectID;
                 }
 
-                if (subShadowObject.ShadowParentId != shadowObject.Id)
+                if (subShadowObject.ShadowParentID != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue subShadowChildId = shadowObject.GetSVAttributeValue(subShadowLink.ReferenceAttribute);
 
-                if (subShadowChildId != subShadowObject.Id)
+                if (subShadowChildId != subShadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -350,17 +350,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(shadowLink.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -375,17 +375,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    subShadowID = subShadowObject.Id;
+                    subShadowID = subShadowObject.ObjectID;
                 }
 
-                if (subShadowObject.ShadowParentId != shadowObject.Id)
+                if (subShadowObject.ShadowParentID != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue subShadowChildId = shadowObject.GetSVAttributeValue(subShadowLink.ReferenceAttribute);
 
-                if (subShadowChildId != subShadowObject.Id)
+                if (subShadowChildId != subShadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -440,17 +440,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(shadowLink.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -465,17 +465,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    subShadowID = subShadowObject.Id;
+                    subShadowID = subShadowObject.ObjectID;
                 }
 
-                if (subShadowObject.ShadowParentId != shadowObject.Id)
+                if (subShadowObject.ShadowParentID != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue subShadowChildId = shadowObject.GetSVAttributeValue(subShadowLink.ReferenceAttribute);
 
-                if (subShadowChildId != subShadowObject.Id)
+                if (subShadowChildId != subShadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -529,17 +529,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(shadowLink.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -554,17 +554,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    subShadowID = subShadowObject.Id;
+                    subShadowID = subShadowObject.ObjectID;
                 }
 
-                if (subShadowObject.ShadowParentId != shadowObject.Id)
+                if (subShadowObject.ShadowParentID != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue subShadowChildId = shadowObject.GetSVAttributeValue(subShadowLink.ReferenceAttribute);
 
-                if (subShadowChildId != subShadowObject.Id)
+                if (subShadowChildId != subShadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -616,17 +616,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(reference.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -681,17 +681,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(reference.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -749,10 +749,10 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
@@ -804,17 +804,17 @@ namespace Lithnet.Acma.UnitTests
                 }
                 else
                 {
-                    shadowId = shadowObject.Id;
+                    shadowId = shadowObject.ObjectID;
                 }
 
-                if (shadowObject.ShadowParentId != sourceObject.Id)
+                if (shadowObject.ShadowParentID != sourceObject.ObjectID)
                 {
                     Assert.Fail("The shadow object's parent ID was not set correctly");
                 }
 
                 AttributeValue shadowChildId = sourceObject.GetSVAttributeValue(reference.ReferenceAttribute);
 
-                if (shadowChildId != shadowObject.Id)
+                if (shadowChildId != shadowObject.ObjectID)
                 {
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
@@ -839,7 +839,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.CommitCSEntryChange();
                 shadowObject = sourceObject.ProvisionShadowObject(reference);
 
-                if (shadowObject.Id != shadowId)
+                if (shadowObject.ObjectID != shadowId)
                 {
                     Assert.Fail("The provisioning process created a new object instead of undeleting the old object");
                 }

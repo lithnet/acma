@@ -15,12 +15,10 @@ namespace Lithnet.Acma.PS
 
         static Global()
         {
-            Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
         }
 
         public static void ThrowIfNotConnected(Cmdlet cmdlet)
         {
-
             if (!Global.Connected)
             {
                 cmdlet.ThrowTerminatingError(new ErrorRecord(new NotConnectedException(), "Call Connect-AcmaEngine before using this cmdlet", ErrorCategory.OpenError, null));

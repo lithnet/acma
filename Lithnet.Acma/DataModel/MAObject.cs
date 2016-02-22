@@ -69,7 +69,7 @@ namespace Lithnet.Acma
         /// <summary>
         /// Gets the object ID
         /// </summary>
-        public Guid Id
+        public Guid ObjectID
         {
             get
             {
@@ -243,7 +243,7 @@ namespace Lithnet.Acma
         /// <summary>
         /// Gets or sets the shadow parent of this object
         /// </summary>
-        public Guid ShadowParentId
+        public Guid ShadowParentID
         {
             get
             {
@@ -325,7 +325,7 @@ namespace Lithnet.Acma
         /// <returns>A string that represents the current object</returns>
         public override string ToString()
         {
-            return this.Id.ToString();
+            return this.ObjectID.ToString();
         }
 
         internal void PreLoadAVPs()
@@ -335,7 +335,7 @@ namespace Lithnet.Acma
 
         internal void PreLoadAVPs(IEnumerable<AcmaSchemaAttribute> attributes)
         {
-            IList<DBAttributeValues> valueSets = DBAttributeValues.GetAttributeValues(attributes, this.Id, this.MADataContext);
+            IList<DBAttributeValues> valueSets = DBAttributeValues.GetAttributeValues(attributes, this.ObjectID, this.MADataContext);
 
             foreach (var valueSet in valueSets)
             {
@@ -463,7 +463,7 @@ namespace Lithnet.Acma
         {
             if (!this.attributeValuesCache.ContainsKey(attribute.Name))
             {
-                this.attributeValuesCache.Add(attribute.Name, DBAttributeValues.GetAttributeValues(attribute, this.Id, this.MADataContext));
+                this.attributeValuesCache.Add(attribute.Name, DBAttributeValues.GetAttributeValues(attribute, this.ObjectID, this.MADataContext));
             }
 
             return this.attributeValuesCache[attribute.Name];

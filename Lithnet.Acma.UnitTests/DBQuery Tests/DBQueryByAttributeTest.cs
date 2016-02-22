@@ -67,7 +67,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != searchObjectId)
+                if (results.First().ObjectID != searchObjectId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -118,7 +118,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != searchObjectId)
+                if (results.First().ObjectID != searchObjectId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -169,7 +169,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != searchObjectId)
+                if (results.First().ObjectID != searchObjectId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -221,7 +221,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != searchObjectId)
+                if (results.First().ObjectID != searchObjectId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -273,7 +273,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != searchObjectId)
+                if (results.First().ObjectID != searchObjectId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }
@@ -325,7 +325,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The incorrect number of results were returned");
                 }
 
-                if (results.First().Id != searchObjectId)
+                if (results.First().ObjectID != searchObjectId)
                 {
                     Assert.Fail("The incorrect object was returned");
                 }

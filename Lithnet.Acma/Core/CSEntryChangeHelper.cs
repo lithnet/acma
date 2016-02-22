@@ -42,7 +42,7 @@ namespace Lithnet.Acma
             AcmaCSEntryChange csentry = new AcmaCSEntryChange();
 
             csentry.ObjectModificationType = objectModificationType;
-            csentry.DN = maObject.Id.ToString();
+            csentry.DN = maObject.ObjectID.ToString();
             csentry.ObjectType = maObject.ObjectClass.Name;
 
             if (objectModificationType != ObjectModificationType.Delete)

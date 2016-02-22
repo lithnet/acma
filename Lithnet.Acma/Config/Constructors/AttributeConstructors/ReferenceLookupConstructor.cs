@@ -63,11 +63,11 @@ namespace Lithnet.Acma
                             throw new MultipleMatchException(string.Format("The reference lookup constructor for attribute {0} returned more than one result", this.Attribute));
                         }
 
-                        hologram.SetAttributeValue(this.Attribute, matchedObjects.Select(t => (object)t.Id).ToList());
+                        hologram.SetAttributeValue(this.Attribute, matchedObjects.Select(t => (object)t.ObjectID).ToList());
                         break;
 
                     case MultipleResultAction.UseFirst:
-                        hologram.SetAttributeValue(this.Attribute, matchedObjects.First().Id);
+                        hologram.SetAttributeValue(this.Attribute, matchedObjects.First().ObjectID);
                         break;
 
                     case MultipleResultAction.UseNone:
@@ -77,7 +77,7 @@ namespace Lithnet.Acma
                         }
                         else
                         {
-                            hologram.SetAttributeValue(this.Attribute, matchedObjects.First().Id);
+                            hologram.SetAttributeValue(this.Attribute, matchedObjects.First().ObjectID);
                         }
 
                         break;

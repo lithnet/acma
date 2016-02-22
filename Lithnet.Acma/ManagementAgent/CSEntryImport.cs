@@ -38,7 +38,7 @@ namespace Lithnet.Acma
 
                 if (objectClassName == null)
                 {
-                    throw new ArgumentNullException("objectClassName", string.Format("The object class for the object {0} was not present", maObject.Id));
+                    throw new ArgumentNullException("objectClassName", string.Format("The object class for the object {0} was not present", maObject.ObjectID));
                 }
 
                 if (!requestedTypes.Any(t => t.Key.Name == objectClassName))
@@ -103,24 +103,24 @@ namespace Lithnet.Acma
                 case "add":
                     csentry.ObjectModificationType = ObjectModificationType.Add;
                     csentry.ObjectType = maObject.ObjectClass.Name;
-                    csentry.DN = maObject.Id.ToString();
-                    csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("objectId", maObject.Id.ToString()));
+                    csentry.DN = maObject.ObjectID.ToString();
+                    csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("objectId", maObject.ObjectID.ToString()));
                     GetObject(maObject, csentry);
                     break;
 
                 case "delete":
                     csentry.ObjectModificationType = ObjectModificationType.Delete;
-                    csentry.DN = maObject.Id.ToString();
+                    csentry.DN = maObject.ObjectID.ToString();
                     csentry.ObjectType = maObject.ObjectClass == null ? maObject.DeltaObjectClassName : maObject.ObjectClass.Name;
-                    csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", maObject.Id.ToString()));
+                    csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", maObject.ObjectID.ToString()));
                     break;
 
                 case "modify":
                 case "attrmodify":
                     csentry.ObjectModificationType = ObjectModificationType.Replace;
                     csentry.ObjectType = maObject.ObjectClass.Name;
-                    csentry.DN = maObject.Id.ToString();
-                    csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", maObject.Id.ToString()));
+                    csentry.DN = maObject.ObjectID.ToString();
+                    csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", maObject.ObjectID.ToString()));
                     GetObject(maObject, csentry);
                     break;
 

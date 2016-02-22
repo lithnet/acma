@@ -70,7 +70,7 @@ namespace Lithnet.Acma.DataModel
         {
             if (this.BackLinkAttribute.IsMultivalued)
             {
-                targetObject.UpdateAttributeValue(this.BackLinkAttribute, new List<ValueChange>() { ValueChange.CreateValueDelete(sourceObject.Id) });
+                targetObject.UpdateAttributeValue(this.BackLinkAttribute, new List<ValueChange>() { ValueChange.CreateValueDelete(sourceObject.ObjectID) });
             }
             else
             {
@@ -87,14 +87,14 @@ namespace Lithnet.Acma.DataModel
         {
             if (this.BackLinkAttribute.IsMultivalued)
             {
-                if (!targetObject.HasAttributeValue(this.BackLinkAttribute, sourceObject.Id))
+                if (!targetObject.HasAttributeValue(this.BackLinkAttribute, sourceObject.ObjectID))
                 {
-                    targetObject.UpdateAttributeValue(this.BackLinkAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(sourceObject.Id) });
+                    targetObject.UpdateAttributeValue(this.BackLinkAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(sourceObject.ObjectID) });
                 }
             }
             else
             {
-                targetObject.SetAttributeValue(this.BackLinkAttribute, sourceObject.Id);
+                targetObject.SetAttributeValue(this.BackLinkAttribute, sourceObject.ObjectID);
             }
         }
 

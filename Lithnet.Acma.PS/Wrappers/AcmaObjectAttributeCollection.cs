@@ -132,7 +132,7 @@ namespace Lithnet.Acma.PS
 
                             IEnumerable<AcmaPSObject> unwrappedObjects = value.Cast<PSObject>().Select(t => t.BaseObject).Cast<AcmaPSObject>();
 
-                            values.AddRange(unwrappedObjects.Select(t => t.ObjectID as object));
+                            values.AddRange(unwrappedObjects.Select(t => t.Hologram.ObjectID as object));
                         }
                         else if (value.First() is AcmaPSObject)
                         {
@@ -141,7 +141,7 @@ namespace Lithnet.Acma.PS
                                 throw new InvalidOperationException("The values of a reference attribute must be a list of GUIDs or an AcmaPSObject");
                             }
 
-                            values.AddRange(value.Select(t => ((AcmaPSObject)t).ObjectID as object));
+                            values.AddRange(value.Select(t => ((AcmaPSObject)t).Hologram.ObjectID as object));
                         }
                         else
                         {

@@ -6,39 +6,110 @@ using System.Threading.Tasks;
 using System.Management.Automation;
 using Lithnet.Acma;
 using Lithnet.MetadirectoryServices;
+using System.Collections;
+using Lithnet.Acma.DataModel;
 
 namespace Lithnet.Acma.PS
 {
-    [Cmdlet(VerbsCommon.Get, "AcmaObject")]
-    public class GetAcmaObjectCmdLet : Cmdlet 
+    [Cmdlet(VerbsCommon.Get, "AcmaObject", DefaultParameterSetName = "GetResourceByKey")]
+    public class GetAcmaObjectCmdLet : AcmaCmdletConnected
     {
-        [Parameter(Mandatory=true,
-            HelpMessage="The ID of the AcmaObject",
-            HelpMessageBaseName="ID",
-            Position=0,
-            ValueFromPipeline=true)]
-        public Guid ID { get; set; }
+        [Parameter(ParameterSetName = "GetResource", ValueFromPipeline = true, Mandatory = true, Position = 1)]
+        public object ID { get; set; }
+
+        [Parameter(ParameterSetName = "GetResourceByKey", Mandatory = true, ValueFromPipeline = true, Position = 1)]
+        [Parameter(ParameterSetName = "GetResourceByKeys", Mandatory = true, ValueFromPipeline = true, Position = 1)]
+        public string ObjectType { get; set; }
+
+        [Parameter(ParameterSetName = "GetResourceByKey", Mandatory = true, Position = 2)]
+        public string AttributeName { get; set; }
+
+        [Parameter(ParameterSetName = "GetResourceByKey", Mandatory = true, Position = 3)]
+        public object AttributeValue { get; set; }
+
+        [Parameter(ParameterSetName = "GetResourceByKeys", Mandatory = true, Position = 2)]
+        public Hashtable AttributeValuePairs { get; set; }
 
         protected override void ProcessRecord()
         {
-            Global.ThrowIfNotConnected(this);
-
-            try
+            if (!this.IsConnectionStatusOk(false))
             {
-                MAObjectHologram maobject = Global.DataContext.GetMAObjectOrDefault(this.ID);
+                return;
+            }
+
+            if (this.ID != null)
+            {
+                Guid? guidID;
+                string stringID = this.ID as string;
+                if (stringID != null)
+                {
+                    guidID = new Guid(stringID);
+                }
+                else
+                {
+                    guidID = this.ID as Guid?;
+
+                    if (guidID == null)
+                    {
+                        throw new ArgumentException("The ID must be a GUID object or a GUID in string format");
+                    }
+                }
+
+                MAObjectHologram maobject = Global.DataContext.GetMAObjectOrDefault(new Guid(stringID));
 
                 if (maobject == null)
                 {
-                    ErrorRecord error = new ErrorRecord(new NotFoundException(), "ObjectNotFound", ErrorCategory.ObjectNotFound, this.ID);
-                    ThrowTerminatingError(error);
+                    throw new NotFoundException();
                 }
 
-                WriteObject(new AcmaPSObject(maobject));
+                this.WriteObject(new AcmaPSObject(maobject));
+                return;
             }
-            catch (Exception ex)
+            else if (this.AttributeValuePairs != null)
             {
-                ErrorRecord error = new ErrorRecord(ex, "UnknownError", ErrorCategory.NotSpecified, this.ID);
-                ThrowTerminatingError(error);
+                DBQueryGroup group = new DBQueryGroup(GroupOperator.All);
+
+                foreach (object key in this.AttributeValuePairs.Keys)
+                {
+                    DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute((string)key), ValueOperator.Equals, this.AttributeValuePairs[key]);
+                    group.AddChildQueryObjects(query);
+                }
+
+                IList<MAObjectHologram> results = Global.DataContext.GetMAObjectsFromDBQuery(group).ToList();
+
+                if (results.Count == 0)
+                {
+                    throw new NotFoundException();
+                }
+                else if (results.Count > 1)
+                {
+                    throw new InvalidOperationException("More than one object matched the given criteria. Use Get-AcmaObjects for returning multiple results");
+                }
+                else
+                {
+                    this.WriteObject(new AcmaPSObject(results.First()));
+                    return;
+                }
+            }
+            else
+            {
+                DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(this.AttributeName), ValueOperator.Equals, this.AttributeValue);
+
+                IList<MAObjectHologram> results = Global.DataContext.GetMAObjectsFromDBQuery(query).ToList();
+
+                if (results.Count == 0)
+                {
+                    throw new NotFoundException();
+                }
+                else if (results.Count > 1)
+                {
+                    throw new InvalidOperationException("More than one object matched the given criteria. Use Get-AcmaObjects for returning multiple results");
+                }
+                else
+                {
+                    this.WriteObject(new AcmaPSObject(results.First()));
+                    return;
+                }
             }
         }
     }
