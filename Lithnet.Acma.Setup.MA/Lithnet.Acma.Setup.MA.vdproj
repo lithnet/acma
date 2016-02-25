@@ -196,6 +196,18 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_906580C082FB8739488C6BB564263F05"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2F193F4B33C1D62CDA3A44DB314D0163"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1F9166CA38154D78AC9160ABDA7517C1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -251,18 +263,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_5C1DAE081CFC67C431D8E9CF6DB38509"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2F193F4B33C1D62CDA3A44DB314D0163"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_906580C082FB8739488C6BB564263F05"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -836,7 +836,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Lithnet.Acma, Version=1.0.5895.37238, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Lithnet.Acma, Version=1.1.5899.31774, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_F074684843B22B6D1B40CB3E4D0A59C6"
@@ -1016,15 +1016,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ACMA Management Agent"
-        "ProductCode" = "8:{07E2FDE9-A150-49A7-8629-23AF83EEF07A}"
-        "PackageCode" = "8:{7D5C1C87-D0F7-47F7-AF85-37A056174B84}"
+        "ProductCode" = "8:{AE786215-B246-4007-8A69-825F009A1EDC}"
+        "PackageCode" = "8:{5887A32A-3BFB-489D-8016-76AD12626C47}"
         "UpgradeCode" = "8:{C7B376D9-3C6A-4B13-98CA-9C4190419DE4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.5895"
+        "ProductVersion" = "8:1.1.5899"
         "Manufacturer" = "8:Lithnet"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://acma.codeplex.com"

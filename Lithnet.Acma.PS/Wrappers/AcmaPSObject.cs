@@ -92,16 +92,18 @@ namespace Lithnet.Acma.PS
                 {
                     this.SetSingleValuedAttribute(property, property.Value);
                 }
-
-                IList resourceValues = property.Value as IList;
-
-                if (resourceValues != null)
-                {
-                    this.SetMultivaluedAttribute(property, resourceValues);
-                }
                 else
                 {
-                    this.SetSingleValuedAttribute(property, property.Value);
+                    IList resourceValues = property.Value as IList;
+
+                    if (resourceValues != null)
+                    {
+                        this.SetMultivaluedAttribute(property, resourceValues);
+                    }
+                    else
+                    {
+                        this.SetSingleValuedAttribute(property, property.Value);
+                    }
                 }
             }
 

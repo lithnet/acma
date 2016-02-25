@@ -78,7 +78,7 @@ namespace Lithnet.Acma
 
             if (!attribute.IsMultivalued && values.Count > 1)
             {
-                throw new TooManyValuesException();
+                throw new TooManyValuesException(attribute.Name);
             }
 
             TypeConverter.ThrowOnAnyInvalidDataType(values);
@@ -108,7 +108,7 @@ namespace Lithnet.Acma
 
             if (!attribute.IsMultivalued && valueChanges.Count(t => t.ModificationType == ValueModificationType.Add) > 1)
             {
-                throw new TooManyValuesException();
+                throw new TooManyValuesException(attribute.Name);
             }
 
             valueChanges = RemoveDuplicateValueChanges(attribute, valueChanges);
