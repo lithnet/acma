@@ -2,10 +2,14 @@
 PRINT N'Altering [dbo].[MA_Objects_Delta]...';
 
 GO
-ALTER TABLE [dbo].[MA_Objects_Delta]
-    ADD [objectClass] NVARCHAR (50) NULL;
 
+IF NOT EXISTS (
+  SELECT * FROM   sys.columns WHERE  object_id = OBJECT_ID(N'[dbo].[MA_Objects_Delta]') AND name = 'objectClass')
+	BEGIN
+		ALTER TABLE [dbo].[MA_Objects_Delta] ADD [objectClass] NVARCHAR (50) NULL;
+	END
 GO
+
 PRINT N'Altering [dbo].[spCreateDeltaEntry]...';
 
 GO
@@ -35,7 +39,7 @@ BEGIN
 				WHEN (@changeType = 'add' AND @existingChangeType = 'delete') THEN 'modify'
 				WHEN (@changeType = 'modify' AND @existingChangeType = 'add') THEN 'add'
 				WHEN (@changeType = 'modify' AND @existingChangeType = 'modify') THEN 'modify'
-				WHEN (@changeType = 'modify' AND @existingChangeType = 'delete') THEN 'modify'
+				WHEN (@changeType = 'modify' AND @existingChangeType = 'delete') THEN 'delete'
 				WHEN (@changeType = 'delete' AND @existingChangeType = 'add') THEN NULL
 				WHEN (@changeType = 'delete' AND @existingChangeType = 'modify') THEN 'delete'
 				WHEN (@changeType = 'delete' AND @existingChangeType = 'delete') THEN 'delete'
@@ -121,7 +125,7 @@ BEGIN
     BEGIN
         DECLARE @changeType nvarchar(10) =
             CASE
-                WHEN (@oldDeleted = 0 AND @newDeleted > 0) THEN N'delete'
+                WHEN (@oldDeleted >= 0 AND @newDeleted > 0) THEN N'delete'
                 WHEN (@oldDeleted > 0 AND @newDeleted = 0) THEN N'add'
                 ELSE N'modify'
             END;
@@ -270,4 +274,4 @@ PRINT N'Update complete.';
 GO
 
 INSERT INTO [dbo].[DB_Version] ([MajorReleaseNumber], [MinorReleaseNumber], [PointReleaseNumber], [ScriptName], [DateApplied])
-VALUES (1, 7, 0, 'Updates to spCreateDeltaEntry', GETDATE())
+VALUES (1, 7, 2, 'Fixes to version 1.7.0 and 1.7.1 inconsistencies', GETDATE())

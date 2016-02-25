@@ -24,7 +24,7 @@ BEGIN
 				WHEN (@changeType = 'add' AND @existingChangeType = 'delete') THEN 'modify'
 				WHEN (@changeType = 'modify' AND @existingChangeType = 'add') THEN 'add'
 				WHEN (@changeType = 'modify' AND @existingChangeType = 'modify') THEN 'modify'
-				WHEN (@changeType = 'modify' AND @existingChangeType = 'delete') THEN 'modify'
+				WHEN (@changeType = 'modify' AND @existingChangeType = 'delete') THEN 'delete'
 				WHEN (@changeType = 'delete' AND @existingChangeType = 'add') THEN NULL
 				WHEN (@changeType = 'delete' AND @existingChangeType = 'modify') THEN 'delete'
 				WHEN (@changeType = 'delete' AND @existingChangeType = 'delete') THEN 'delete'

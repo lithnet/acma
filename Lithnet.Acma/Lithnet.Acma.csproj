@@ -316,8 +316,9 @@
     <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_10.sql" />
     <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_11.sql" />
     <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_6_12.sql" />
-    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_0.sql" />
     <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_1.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_0.sql" />
+    <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_2.sql" />
     <Content Include="FodyWeavers.xml" />
     <EmbeddedResource Include="strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

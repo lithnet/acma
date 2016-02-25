@@ -16,7 +16,7 @@ DECLARE @scriptName nvarchar(20);
 
 SET @majorReleaseNumber=1;
 SET @minorReleaseNumber=7;
-SET	@pointReleaseNumber=1;
+SET	@pointReleaseNumber=2;
 SET @scriptName=N'Setup';
 
 IF NOT EXISTS(

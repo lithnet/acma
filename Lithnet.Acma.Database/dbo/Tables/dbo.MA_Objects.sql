@@ -88,7 +88,7 @@ BEGIN
     BEGIN
         DECLARE @changeType nvarchar(10) =
             CASE
-                WHEN (@oldDeleted = 0 AND @newDeleted > 0) THEN N'delete'
+                WHEN (@oldDeleted >= 0 AND @newDeleted > 0) THEN N'delete'
                 WHEN (@oldDeleted > 0 AND @newDeleted = 0) THEN N'add'
                 ELSE N'modify'
             END;

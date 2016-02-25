@@ -404,60 +404,6 @@ CREATE UNIQUE NONCLUSTERED INDEX [IX_MA_SafetyRules_Name]
 
 
 GO
-PRINT N'Creating [dbo].[MA_Objects]...';
-
-
-GO
-CREATE TABLE [dbo].[MA_Objects] (
-    [id]              INT              IDENTITY (1, 1) NOT NULL,
-    [objectId]        UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL,
-    [objectClass]     NVARCHAR (50)    NOT NULL,
-    [deleted]         BIGINT           NOT NULL,
-    [inheritedUpdate] BIT              NOT NULL,
-    [shadowLink]      NVARCHAR (50)    NULL,
-    [shadowParent]    UNIQUEIDENTIFIER NULL,
-    [rowversion]      ROWVERSION       NOT NULL,
-    CONSTRAINT [PK_MA_Objects] PRIMARY KEY NONCLUSTERED ([objectId] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_ID]...';
-
-
-GO
-CREATE UNIQUE CLUSTERED INDEX [IX_MA_Objects_ID]
-    ON [dbo].[MA_Objects]([id] ASC);
-
-
-GO
-PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_mvDeleted]...';
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_MA_Objects_mvDeleted]
-    ON [dbo].[MA_Objects]([deleted] ASC);
-
-
-GO
-PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_shadowParent]...';
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_MA_Objects_shadowParent]
-    ON [dbo].[MA_Objects]([shadowParent] ASC);
-
-
-GO
-PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_objectClass]...';
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_MA_Objects_objectClass]
-    ON [dbo].[MA_Objects]([objectClass] ASC);
-
-
-GO
 PRINT N'Creating [dbo].[MA_SchemaShadowObjectLinks]...';
 
 
@@ -536,6 +482,60 @@ CREATE TABLE [dbo].[MA_Settings] (
     [Value] NVARCHAR (400) NULL,
     CONSTRAINT [PK_MA_Settings] PRIMARY KEY CLUSTERED ([Name] ASC)
 );
+
+
+GO
+PRINT N'Creating [dbo].[MA_Objects]...';
+
+
+GO
+CREATE TABLE [dbo].[MA_Objects] (
+    [id]              INT              IDENTITY (1, 1) NOT NULL,
+    [objectId]        UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL,
+    [objectClass]     NVARCHAR (50)    NOT NULL,
+    [deleted]         BIGINT           NOT NULL,
+    [inheritedUpdate] BIT              NOT NULL,
+    [shadowLink]      NVARCHAR (50)    NULL,
+    [shadowParent]    UNIQUEIDENTIFIER NULL,
+    [rowversion]      ROWVERSION       NOT NULL,
+    CONSTRAINT [PK_MA_Objects] PRIMARY KEY NONCLUSTERED ([objectId] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_ID]...';
+
+
+GO
+CREATE UNIQUE CLUSTERED INDEX [IX_MA_Objects_ID]
+    ON [dbo].[MA_Objects]([id] ASC);
+
+
+GO
+PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_objectClass]...';
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_MA_Objects_objectClass]
+    ON [dbo].[MA_Objects]([objectClass] ASC);
+
+
+GO
+PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_mvDeleted]...';
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_MA_Objects_mvDeleted]
+    ON [dbo].[MA_Objects]([deleted] ASC);
+
+
+GO
+PRINT N'Creating [dbo].[MA_Objects].[IX_MA_Objects_shadowParent]...';
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_MA_Objects_shadowParent]
+    ON [dbo].[MA_Objects]([shadowParent] ASC);
 
 
 GO
@@ -755,24 +755,6 @@ ALTER TABLE [dbo].[MA_SafetyRules]
 
 
 GO
-PRINT N'Creating [dbo].[FK_MA_Objects_MA_SchemaObjects]...';
-
-
-GO
-ALTER TABLE [dbo].[MA_Objects]
-    ADD CONSTRAINT [FK_MA_Objects_MA_SchemaObjects] FOREIGN KEY ([objectClass]) REFERENCES [dbo].[MA_SchemaObjectClasses] ([Name]) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-GO
-PRINT N'Creating [dbo].[FK_ShadowObjectLinkName]...';
-
-
-GO
-ALTER TABLE [dbo].[MA_Objects]
-    ADD CONSTRAINT [FK_ShadowObjectLinkName] FOREIGN KEY ([shadowLink]) REFERENCES [dbo].[MA_SchemaShadowObjectLinks] ([Name]) ON UPDATE CASCADE;
-
-
-GO
 PRINT N'Creating [dbo].[FK_MA_SchemaShadowObjectLinks_MA_SchemaAttributes]...';
 
 
@@ -824,6 +806,24 @@ PRINT N'Creating [dbo].[FK_MA_References_MA_SchemaAttributes]...';
 GO
 ALTER TABLE [dbo].[MA_References]
     ADD CONSTRAINT [FK_MA_References_MA_SchemaAttributes] FOREIGN KEY ([attributeName]) REFERENCES [dbo].[MA_SchemaAttributes] ([Name]) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_MA_Objects_MA_SchemaObjects]...';
+
+
+GO
+ALTER TABLE [dbo].[MA_Objects]
+    ADD CONSTRAINT [FK_MA_Objects_MA_SchemaObjects] FOREIGN KEY ([objectClass]) REFERENCES [dbo].[MA_SchemaObjectClasses] ([Name]) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_ShadowObjectLinkName]...';
+
+
+GO
+ALTER TABLE [dbo].[MA_Objects]
+    ADD CONSTRAINT [FK_ShadowObjectLinkName] FOREIGN KEY ([shadowLink]) REFERENCES [dbo].[MA_SchemaShadowObjectLinks] ([Name]) ON UPDATE CASCADE;
 
 
 GO
@@ -1049,6 +1049,24 @@ BEGIN
 	FROM
 		[sys].sequences AS seq
 
+END
+GO
+PRINT N'Creating [dbo].[spDeleteMAObject]...';
+
+
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[spDeleteMAObject]
+@id uniqueidentifier
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	DELETE FROM [dbo].[MA_Objects] WHERE [dbo].[MA_Objects].[objectId]=@id;
 END
 GO
 PRINT N'Creating [dbo].[spGetHighWatermarkMAObjects]...';
@@ -1385,67 +1403,6 @@ BEGIN
         COMMIT TRANSACTION
 END
 GO
-PRINT N'Creating [dbo].[spCreateDeltaEntry]...';
-
-
-GO
--- =============================================
--- Author:		Ryan Newington
--- Create date: 11/1/2014
--- Description:	Creates or updates a record in the delta change table
--- =============================================
-CREATE PROCEDURE [dbo].[spCreateDeltaEntry]
-	@objectId uniqueidentifier,
-	@changeType nvarchar(10),
-	@objectClass nvarchar(50) = null
-AS
-BEGIN
-	SET NOCOUNT ON;
-	DECLARE @existingChangeType nvarchar(10);
-    
-	SET @existingChangeType = (SELECT TOP 1 [delta].[operation] FROM [dbo].[MA_Objects_Delta] as [delta]
-	WHERE [delta].[objectId] = @objectId);
-
-	SET @changeType = (
-		SELECT 
-			CASE
-				WHEN (@existingChangeType IS NULL) THEN @changeType
-				WHEN (@changeType = 'add' AND @existingChangeType = 'add') THEN 'add'
-				WHEN (@changeType = 'add' AND @existingChangeType = 'modify') THEN 'modify'
-				WHEN (@changeType = 'add' AND @existingChangeType = 'delete') THEN 'modify'
-				WHEN (@changeType = 'modify' AND @existingChangeType = 'add') THEN 'add'
-				WHEN (@changeType = 'modify' AND @existingChangeType = 'modify') THEN 'modify'
-				WHEN (@changeType = 'modify' AND @existingChangeType = 'delete') THEN 'modify'
-				WHEN (@changeType = 'delete' AND @existingChangeType = 'add') THEN NULL
-				WHEN (@changeType = 'delete' AND @existingChangeType = 'modify') THEN 'delete'
-				WHEN (@changeType = 'delete' AND @existingChangeType = 'delete') THEN 'delete'
-				ELSE 'modify'
-			END
-			);
-
-	IF (@changeType IS NULL AND @existingChangeType IS NOT NULL) 
-		BEGIN
-			DELETE FROM [dbo].[MA_Objects_Delta] WHERE [dbo].[MA_Objects_Delta].[objectId] = @objectId;
-			RETURN;
-		END
-
-	IF (@changeType IS NULL AND @existingChangeType IS NULL)
-		RETURN;
-
-	IF (@existingChangeType IS NULL)
-		INSERT INTO [dbo].[MA_Objects_Delta]
-			([dbo].[MA_Objects_Delta].[objectId], [dbo].[MA_Objects_Delta].[operation], [dbo].[MA_Objects_Delta].[objectClass])
-		VALUES 
-			(@objectId, @changeType, @objectClass);
-	ELSE
-		UPDATE [dbo].[MA_Objects_Delta]
-		SET 
-		[dbo].[MA_Objects_Delta].[operation]=@changeType,
-		[dbo].[MA_Objects_Delta].[objectClass]=@objectClass
-		WHERE
-		([dbo].[MA_Objects_Delta].[objectId] = @objectId);
-END
-GO
 PRINT N'Creating [dbo].[spSequenceModify]...';
 
 
@@ -1578,22 +1535,65 @@ BEGIN
             WHERE	   d.[rowversion] <= @watermark
 END
 GO
-PRINT N'Creating [dbo].[spDeleteMAObject]...';
+PRINT N'Creating [dbo].[spCreateDeltaEntry]...';
 
 
 GO
 -- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
+-- Author:		Ryan Newington
+-- Create date: 11/1/2014
+-- Description:	Creates or updates a record in the delta change table
 -- =============================================
-CREATE PROCEDURE [dbo].[spDeleteMAObject]
-@id uniqueidentifier
+CREATE PROCEDURE [dbo].[spCreateDeltaEntry]
+	@objectId uniqueidentifier,
+	@changeType nvarchar(10),
+	@objectClass nvarchar(50) = null
 AS
 BEGIN
 	SET NOCOUNT ON;
+	DECLARE @existingChangeType nvarchar(10);
+    
+	SET @existingChangeType = (SELECT TOP 1 [delta].[operation] FROM [dbo].[MA_Objects_Delta] as [delta]
+	WHERE [delta].[objectId] = @objectId);
 
-	DELETE FROM [dbo].[MA_Objects] WHERE [dbo].[MA_Objects].[objectId]=@id;
+	SET @changeType = (
+		SELECT 
+			CASE
+				WHEN (@existingChangeType IS NULL) THEN @changeType
+				WHEN (@changeType = 'add' AND @existingChangeType = 'add') THEN 'add'
+				WHEN (@changeType = 'add' AND @existingChangeType = 'modify') THEN 'modify'
+				WHEN (@changeType = 'add' AND @existingChangeType = 'delete') THEN 'modify'
+				WHEN (@changeType = 'modify' AND @existingChangeType = 'add') THEN 'add'
+				WHEN (@changeType = 'modify' AND @existingChangeType = 'modify') THEN 'modify'
+				WHEN (@changeType = 'modify' AND @existingChangeType = 'delete') THEN 'delete'
+				WHEN (@changeType = 'delete' AND @existingChangeType = 'add') THEN NULL
+				WHEN (@changeType = 'delete' AND @existingChangeType = 'modify') THEN 'delete'
+				WHEN (@changeType = 'delete' AND @existingChangeType = 'delete') THEN 'delete'
+				ELSE 'modify'
+			END
+			);
+
+	IF (@changeType IS NULL AND @existingChangeType IS NOT NULL) 
+		BEGIN
+			DELETE FROM [dbo].[MA_Objects_Delta] WHERE [dbo].[MA_Objects_Delta].[objectId] = @objectId;
+			RETURN;
+		END
+
+	IF (@changeType IS NULL AND @existingChangeType IS NULL)
+		RETURN;
+
+	IF (@existingChangeType IS NULL)
+		INSERT INTO [dbo].[MA_Objects_Delta]
+			([dbo].[MA_Objects_Delta].[objectId], [dbo].[MA_Objects_Delta].[operation], [dbo].[MA_Objects_Delta].[objectClass])
+		VALUES 
+			(@objectId, @changeType, @objectClass);
+	ELSE
+		UPDATE [dbo].[MA_Objects_Delta]
+		SET 
+		[dbo].[MA_Objects_Delta].[operation]=@changeType,
+		[dbo].[MA_Objects_Delta].[objectClass]=@objectClass
+		WHERE
+		([dbo].[MA_Objects_Delta].[objectId] = @objectId);
 END
 GO
 PRINT N'Creating [dbo].[trigger_modify_MA_Attributes]...';
@@ -1629,6 +1629,61 @@ PRINT N'Creating [dbo].[trigger_delete_MA_Attributes]...';
 GO
 CREATE TRIGGER [dbo].[trigger_delete_MA_Attributes]
 ON [dbo].[MA_Attributes]
+FOR DELETE AS
+    BEGIN
+        SET NOCOUNT ON
+        DECLARE @objectId uniqueidentifier;
+
+        DECLARE cur CURSOR LOCAL FOR
+        SELECT [deleted].[objectId] FROM [deleted]
+
+        OPEN cur
+        FETCH NEXT FROM cur into @objectId
+
+        WHILE @@FETCH_STATUS = 0 
+        BEGIN
+            EXEC [dbo].[spCreateDeltaEntry] @objectId, N'modify';
+            FETCH NEXT FROM cur INTO @objectId
+        END
+
+        CLOSE cur
+        DEALLOCATE cur
+    END
+GO
+PRINT N'Creating [dbo].[trigger_modify_MA_References]...';
+
+
+GO
+CREATE TRIGGER [dbo].[trigger_modify_MA_References]
+ON [dbo].[MA_References]
+FOR INSERT, UPDATE AS
+    BEGIN
+        SET NOCOUNT ON
+        DECLARE @objectId uniqueidentifier;
+
+        DECLARE cur CURSOR LOCAL FOR
+        SELECT [inserted].[objectId] FROM [inserted]
+
+        OPEN cur
+        FETCH NEXT FROM cur into @objectId
+
+        WHILE @@FETCH_STATUS = 0 
+        BEGIN
+            EXEC [dbo].[spCreateDeltaEntry] @objectId, N'modify';
+            FETCH NEXT FROM cur INTO @objectId
+        END
+
+        CLOSE cur
+        DEALLOCATE cur
+    END
+GO
+PRINT N'Creating [dbo].[trigger_delete_MA_References]...';
+
+
+GO
+
+CREATE TRIGGER [dbo].[trigger_delete_MA_References]
+ON [dbo].[MA_References]
 FOR DELETE AS
     BEGIN
         SET NOCOUNT ON
@@ -1706,7 +1761,7 @@ BEGIN
     BEGIN
         DECLARE @changeType nvarchar(10) =
             CASE
-                WHEN (@oldDeleted = 0 AND @newDeleted > 0) THEN N'delete'
+                WHEN (@oldDeleted >= 0 AND @newDeleted > 0) THEN N'delete'
                 WHEN (@oldDeleted > 0 AND @newDeleted = 0) THEN N'add'
                 ELSE N'modify'
             END;
@@ -1741,61 +1796,6 @@ FOR DELETE AS
         BEGIN
             EXEC [dbo].[spCreateDeltaEntry] @objectId, N'delete', @objectClass;
             FETCH NEXT FROM cur INTO @objectId, @objectClass
-        END
-
-        CLOSE cur
-        DEALLOCATE cur
-    END
-GO
-PRINT N'Creating [dbo].[trigger_modify_MA_References]...';
-
-
-GO
-CREATE TRIGGER [dbo].[trigger_modify_MA_References]
-ON [dbo].[MA_References]
-FOR INSERT, UPDATE AS
-    BEGIN
-        SET NOCOUNT ON
-        DECLARE @objectId uniqueidentifier;
-
-        DECLARE cur CURSOR LOCAL FOR
-        SELECT [inserted].[objectId] FROM [inserted]
-
-        OPEN cur
-        FETCH NEXT FROM cur into @objectId
-
-        WHILE @@FETCH_STATUS = 0 
-        BEGIN
-            EXEC [dbo].[spCreateDeltaEntry] @objectId, N'modify';
-            FETCH NEXT FROM cur INTO @objectId
-        END
-
-        CLOSE cur
-        DEALLOCATE cur
-    END
-GO
-PRINT N'Creating [dbo].[trigger_delete_MA_References]...';
-
-
-GO
-
-CREATE TRIGGER [dbo].[trigger_delete_MA_References]
-ON [dbo].[MA_References]
-FOR DELETE AS
-    BEGIN
-        SET NOCOUNT ON
-        DECLARE @objectId uniqueidentifier;
-
-        DECLARE cur CURSOR LOCAL FOR
-        SELECT [deleted].[objectId] FROM [deleted]
-
-        OPEN cur
-        FETCH NEXT FROM cur into @objectId
-
-        WHILE @@FETCH_STATUS = 0 
-        BEGIN
-            EXEC [dbo].[spCreateDeltaEntry] @objectId, N'modify';
-            FETCH NEXT FROM cur INTO @objectId
         END
 
         CLOSE cur
@@ -2594,7 +2594,7 @@ DECLARE @scriptName nvarchar(20);
 
 SET @majorReleaseNumber=1;
 SET @minorReleaseNumber=7;
-SET	@pointReleaseNumber=1;
+SET	@pointReleaseNumber=2;
 SET @scriptName=N'Setup';
 
 IF NOT EXISTS(

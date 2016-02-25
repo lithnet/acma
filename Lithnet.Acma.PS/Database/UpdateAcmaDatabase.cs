@@ -16,7 +16,6 @@ namespace Lithnet.Acma.PS
     {
         public UpdateAcmaDatabase()
         {
-            Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
         }
 
         [Parameter(
