@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*"
+           Name="Lithnet ACMA"
+           Language="1033"
+           Version="1.1.5902"
+           Manufacturer="Lithnet"
+           UpgradeCode="bcb559bd-8b3a-4a77-9d30-df3fa44b7a13">
+    
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  InstallPrivileges="elevated" Manufacturer="Lithnet"/>
+    <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes"/>
+    <MajorUpgrade Schedule="afterInstallInitialize"
+                DowngradeErrorMessage="A later version of [ProductName] is already installed" />
+
+    <!-- Old standalone installers -->
+    <Upgrade Id="{95AF15CE-7C42-4EC9-B3CB-B4AAED903378}"  >
+      <UpgradeVersion OnlyDetect="no" Property="REMOVEDOLDEDITOR" Minimum="1.0.0"/>
+    </Upgrade>
+    <Upgrade Id="{C7B376D9-3C6A-4B13-98CA-9C4190419DE4}"  >
+      <UpgradeVersion OnlyDetect="no" Property="REMOVEDOLDMA" Minimum="1.0.0"/>
+    </Upgrade>
+    
+    <!-- Prerequisites -->
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
+    <PropertyRef Id="NETFRAMEWORK40FULLINSTALLROOTDIR64"/>
+
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again. Contact support at support@Swiftposter.com if you have further issues.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
+    </Condition>
+
+    <Property Id="FIMINSTALLDIR" Secure="yes">
+      <RegistrySearch Id="FimInstallDirFromRegistry"
+                      Root="HKLM"
+                      Key="SYSTEM\CurrentControlSet\services\FIMSynchronizationService\Parameters"
+                      Name="Path"
+                      Type="directory" />
+    </Property>
+
+    <Property Id="SYNCSERVICEACCOUNT" Secure="yes">
+      <RegistrySearch Id="FimSyncServiceAccount"
+                      Root="HKLM"
+                      Key="SYSTEM\CurrentControlSet\services\FIMSynchronizationService"
+                      Name="ObjectName"
+                      Type="raw" />
+    </Property>
+
+    <Property Id="DBNAME" Value="Lithnet.Acma" Secure="yes">
+      <RegistrySearch Id="DBNameFromRegistry"
+                      Root="HKLM"
+                      Key="Software\Lithnet\ACMA"
+                      Name="DatabaseName"
+                      Type="raw" />
+    </Property>
+
+    <Property Id="SQLSERVERNAME" Value="localhost" Secure="yes">
+      <RegistrySearch Id="SqlServerNameFromRegistry"
+                      Root="HKLM"
+                      Key="Software\Lithnet\ACMA"
+                      Name="ServerName"
+                      Type="raw" />
+    </Property>
+
+    <Property Id="CREATEDB" Secure="yes" Value="1"/>
+
+    <Property Id="SYNCVERSION" Secure="yes">
+      <DirectorySearch Id="MiiserverVersion" Path="[FIMINSTALLDIR]">
+        <DirectorySearch Id="binFolder" AssignToProperty="no" Path="bin">
+          <FileSearch Name="miiserver.exe" MinVersion="4.1.3441.0"/>
+        </DirectorySearch>
+      </DirectorySearch>
+    </Property>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="APPROOT" />
+    <Property Id="INSTALLLEVEL" Value="2" />
+
+    <!-- Installation Paths -->
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="FIMINSTALLDIR" ComponentGuidGenerationSeed="10a8647b-1425-414e-8c4b-f1211951c549">
+        <Directory Id="FIMEXTENSIONS" Name="Extensions"/>
+        <Directory Id="FIMUISHELL" Name="UIShell">
+          <Directory Id="FIMXMLS" Name="XMLs">
+            <Directory Id="PACKAGEDMAS" Name="PackagedMAs"/>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramFiles64Folder" >
+        <Directory Id="LITHNETROOT" Name="Lithnet">
+          <Directory Id="APPROOT" Name="ACMA">
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Lithnet ACMA"/>
+      </Directory>
+      <Directory Id="System64Folder">
+        <Directory Id="PSROOT" Name="WindowsPowerShell">
+          <Directory Id="PSV1ROOT" Name ="v1.0">
+            <Directory Id ="PSMODULESROOT" Name="Modules">
+              <Directory Id="PSMODULEPATH" Name="AcmaPS" />
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="INETPUB" Name="Inetpub">
+        <Directory Id="ACMAWSPATH" Name="acmaws" >
+          <Directory Id="ACMWSBINPATH" Name="bin"/>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Features -->
+
+    <Feature Id="ACMA" Title="Lithnet ACMA" Level="1" AllowAdvertise="no" Display="expand"  TypicalDefault="install" ConfigurableDirectory="APPROOT">
+      <Feature Id="FeatureManagementAgent" Title="Management Agent" Level="0" AllowAdvertise="no"  TypicalDefault="install">
+        <Condition Level="2">
+          <![CDATA[Installed OR SYNCVERSION]]>
+        </Condition>
+        <ComponentGroupRef Id="ManagementAgent" />
+        <ComponentRef Id="EventSource"/>
+      </Feature>
+
+      <Feature Id="FeatureAcmaEditor" Title ="ACMA Editor" Level="2" AllowAdvertise="no"  TypicalDefault="install" >
+        <ComponentGroupRef Id="AcmaEditor"/>
+        <ComponentGroupRef Id="AcmaCore"/>
+        <ComponentRef Id="ApplicationShortcut"/>
+        <ComponentRef Id="EventSource"/>
+      </Feature>
+
+      <Feature Id="FeatureAcmaPS" Title ="ACMA PowerShell Module" Level="2" AllowAdvertise="no"  TypicalDefault="install">
+        <ComponentGroupRef Id="AcmaCore"/>
+        <ComponentGroupRef Id="AcmaPS"/>
+        <ComponentRef Id="EventSource"/>
+      </Feature>
+
+      <!--<Feature Id="FeatureAcmWS" Title ="ACMA Web Service" Level="3" AllowAdvertise="no"  TypicalDefault="install" ConfigurableDirectory="ACMAWSPATH">
+        <ComponentGroupRef Id="AcmaCore"/>
+        <ComponentRef Id="EventSource"/>
+      </Feature>-->
+
+    </Feature>
+
+    <UI>
+      <UIRef Id="WixUI_FeatureTree" />
+      <DialogRef Id="DBDetailsDlg" />
+
+      <Publish Dialog="WelcomeDlg"
+                Control="Next"
+                Event="NewDialog"
+                Value="CustomizeDlg"
+                Order="2">1</Publish>
+      <Publish Dialog="CustomizeDlg"
+                Control="Back"
+                Event="NewDialog"
+                Value="WelcomeDlg"
+                Order="3">1</Publish>
+
+      <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="DBDetailsDlg"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+      <Publish Dialog="DBDetailsDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+      <Publish Dialog="DBDetailsDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DBDetailsDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+
+    </UI>
+    
+    <InstallExecuteSequence>
+      <Custom Action="SetPSModuleCustomActionDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureAcmaPS=3) AND NOT(!FeatureAcmaPS=3)]]></Custom>
+      <Custom Action="ReplaceModuleVariableCustomAction" After="SetPSModuleCustomActionDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureAcmaPS=3) AND NOT(!FeatureAcmaPS=3)]]></Custom>
+      <Custom Action="SetInstallUpgradeDBCustomActionDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3) AND CREATEDB]]></Custom>
+      <Custom Action="InstallUpgradeDBCustomAction" After="SetInstallUpgradeDBCustomActionDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3) AND CREATEDB]]></Custom>
+    </InstallExecuteSequence>
+  </Product>
+</Wix>

@@ -13,6 +13,7 @@ namespace Lithnet.Acma.WS
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
             Logger.LogPath = ConfigurationManager.AppSettings["logfile"];
         }
     }

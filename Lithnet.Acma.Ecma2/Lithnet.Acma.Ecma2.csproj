@@ -81,7 +81,9 @@
     <Content Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Lithnet.Acma.PackagedMA.xml" />
+    <Content Include="Lithnet.Acma.PackagedMA.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="MAPackageInformation.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +93,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>D:\tools\ilmerge\ilmerge /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) /lib:"D:\TFS\Monash.IdM\Lithnet.Fim.Core\References" *.dll
+    <PostBuildEvent>D:\tools\ilmerge\ilmerge /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) /lib:"..\..\..\lib" *.dll
 copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) $(TargetPath)
 copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetName).pdb $(TargetDir)$(TargetName).pdb 
-</PostBuildEvent>
+"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(TargetDir)."   -var var.$(TargetName).TargetDir -dr FIMEXTENSIONS -cg $(TargetName).Binaries -ag -scom -sreg -sfrag –srd -o "$(SolutionDir)$(SolutionName).Installer\$(ProjectName).Binaries.wxs"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>del $(ProjectDir)Lithnet.Acma.PackagedMA.xml /f
