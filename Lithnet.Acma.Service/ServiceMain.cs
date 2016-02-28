@@ -10,6 +10,7 @@ using Lithnet.Acma;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Configuration;
+using Lithnet.MetadirectoryServices;
 
 namespace Lithnet.Acma.Service
 {
@@ -37,6 +38,15 @@ namespace Lithnet.Acma.Service
             }
 
             this.serviceHost = new ServiceHost(typeof(AcmaWCF));
+
+            foreach (var endpoint in this.serviceHost.Description.Endpoints)
+            {
+                foreach (var operation in endpoint.Contract.Operations)
+                {
+                    operation.Behaviors.Find<DataContractSerializerOperationBehavior>().DataContractSurrogate = new SerializationSurrogate();
+                }
+            }
+
             this.serviceHost.Authorization.ServiceAuthorizationManager = new ServiceAuthorizationManager();
             this.serviceHost.Open();
         }

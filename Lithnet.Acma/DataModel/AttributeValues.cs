@@ -276,5 +276,22 @@ namespace Lithnet.Acma
         {
             return this.InternalValues.GetEnumerator();
         }
+
+        /// <summary>
+        /// Gets the values of the attribute converted to strings for serialization
+        /// </summary>
+        /// <returns></returns>
+        internal IList<string> GetSerializationValues()
+        {
+            List<string> values = new List<string>();
+
+
+            foreach (object value in this.Values.Select(t => t.Value))
+            {
+                values.Add(value.ToSmartString());
+            }
+
+            return values;
+        }
     }
 }

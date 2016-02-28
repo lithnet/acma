@@ -21,6 +21,7 @@ namespace Lithnet.Acma
     using Lithnet.Common.ObjectModel;
     using System.Collections.Specialized;
     using System.Text;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Represents an MAObject from the ACMA database, overlayed with a CSEntryChange containing changes to apply to the underlying database.
@@ -29,7 +30,9 @@ namespace Lithnet.Acma
     /// underlying database when the Commit operation is called. Requests for attribute values will always return the proposed value if present, otherwise it will return the 
     /// current value in the database. Certain methods support requesting either the proposed or current version of an attribute.
     /// </summary>
-    public class MAObjectHologram : MAObject
+    [Serializable]
+    [KnownType(typeof(List<string>))]
+    public class MAObjectHologram : MAObject, ISerializable
     {
         /// <summary>
         /// Gets or sets a value indicating if a referenced object was not found during processing of constructors for this object
@@ -2047,5 +2050,44 @@ namespace Lithnet.Acma
             return this.hologramCache[id];
         }
 
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            foreach (KeyValuePair<string, IList<string>> kvp in this.GetSerializationValues())
+            {
+                if (kvp.Value.Count > 1)
+                {
+                    info.AddValue(kvp.Key, kvp.Value, typeof(List<object>));
+                }
+                else if (kvp.Value.Count == 1)
+                {
+                    info.AddValue(kvp.Key, kvp.Value.First(), typeof(object));
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of attributes and values for the resource in a string format suitable for serialization
+        /// </summary>
+        /// <returns></returns>
+        internal Dictionary<string, IList<string>> GetSerializationValues()
+        {
+            Dictionary<string, IList<string>> values = new Dictionary<string, IList<string>>();
+
+            foreach (AcmaSchemaAttribute attribute in this.ObjectClass.Attributes)
+            {
+                AttributeValues value = this.GetAttributeValues(attribute);
+
+                if (!value.IsEmptyOrNull)
+                {
+                    values.Add(attribute.Name, this.GetAttributeValues(attribute).GetSerializationValues());
+                }
+            }
+
+            return values;
+        }
     }
 }

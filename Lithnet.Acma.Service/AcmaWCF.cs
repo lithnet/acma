@@ -3,44 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Lithnet.Acma;
+using System.Runtime.Serialization;
+using Lithnet.MetadirectoryServices;
+using Microsoft.MetadirectoryServices;
 
 namespace Lithnet.Acma.Service
 {
+    [KnownType(typeof(MAObjectHologram))]
+    [KnownType(typeof(List<string>))]
     public class AcmaWCF : IAcmaWCF
     {
-        public AcmaCSEntryChange GetObject(Guid ID)
+        public MAObjectHologram Get(string ID)
         {
-            MAObjectHologram hologram = ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(ID);
-
-            if (hologram == null)
-            {
-                return null;
-            }
-
-            return hologram.CreateCSEntryChangeFromMAObjectHologram();
+            return ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(ID));
         }
 
-        public AcmaCSEntryChange[] GetObjects(DBQueryObject query)
+        public CSEntryChange GetCSEntryChange(string ID)
         {
-            List<AcmaCSEntryChange> results = new List<AcmaCSEntryChange>();
-
-            foreach (MAObjectHologram hologram in ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query))
-            {
-                results.Add(hologram.CreateCSEntryChangeFromMAObjectHologram());
-            }
-
-            return results.ToArray();
+            return ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(ID)).CreateCSEntryChangeFromMAObjectHologram();
         }
 
-        public void ExportObject(AcmaCSEntryChange csentry)
+        public CSEntryChange GetCSEntryChange(string objectType, string key, string keyValue)
         {
-            bool refRetryRequired;
-            CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetryRequired);
+            DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue);
+            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault().CreateCSEntryChangeFromMAObjectHologram();
+        }
 
-            if (refRetryRequired)
+        public MAObjectHologram GetResourceByKey(string objectType, string key, string keyValue)
+        {
+            DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue);
+            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault();
+        }
+
+        public string GetCurrentWatermark()
+        {
+            return ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjects().ToSmartStringOrNull();
+        }
+
+        public MAObjectHologram[] GetObjects(string watermark)
+        {
+            byte[] byteWaterMark = null;
+
+            if (watermark != null)
             {
-                throw new ReferencedObjectNotPresentException();
+                byteWaterMark = Convert.FromBase64String(watermark);
             }
+
+            return ActiveConfig.DB.MADataConext.GetMAObjects(byteWaterMark).ToArray();
+        }
+
+        public MAObjectHologram[] GetObjectsByClass(string objectType)
+        {
+            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, objectType).ToArray();
         }
     }
 }

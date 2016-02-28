@@ -25,9 +25,10 @@ namespace Lithnet.Acma.Service
             {
                 ServiceBase[] ServicesToRun;
                 ServicesToRun = new ServiceBase[] 
-            { 
-                new ServiceMain() 
-            };
+                { 
+                    new ServiceMain() 
+                };
+
                 ServiceBase.Run(ServicesToRun);
             }
         }

@@ -9,9 +9,11 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Linq.Expressions;
 using System.Xml.Schema;
+using System.Runtime.Serialization;
 
 namespace Lithnet.Acma
 {
+    [Serializable]
     public class AcmaCSEntryChange : CSEntryChangeDetached, IXmlSerializable
     {
         public AcmaCSEntryChange()
@@ -20,7 +22,7 @@ namespace Lithnet.Acma
         }
 
         public AcmaCSEntryChange(CSEntryChange csentry)
-            :this()
+            : this()
         {
             AcmaCSEntryChange.CloneCSEntryChange(csentry, this);
         }
