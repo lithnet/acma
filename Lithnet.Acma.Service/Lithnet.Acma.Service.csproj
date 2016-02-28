@@ -45,8 +45,12 @@
       <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5902.34446, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5902.34446\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5902.40373, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5902.40373\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5894.23080, Culture=neutral, processorArchitecture=MSIL">
@@ -67,6 +71,7 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -80,7 +85,14 @@
   <ItemGroup>
     <Compile Include="AcmaWCF.cs" />
     <Compile Include="AuthorizationManager.cs" />
+    <Compile Include="MessageObjects\ExportResult.cs" />
+    <Compile Include="MessageObjects\ExportResponse.cs" />
+    <Compile Include="MessageObjects\ExportRequest.cs" />
+    <Compile Include="MessageObjects\PageRequest.cs" />
+    <Compile Include="MessageObjects\ImportResponse.cs" />
+    <Compile Include="MessageObjects\ImportRequest.cs" />
     <Compile Include="IAcmaWCF.cs" />
+    <Compile Include="MessageObjects\ImportType.cs" />
     <Compile Include="WindowsServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -21,6 +21,111 @@ namespace Lithnet.Acma
     /// </summary>
     public static class CSEntryChangeExtensions
     {
+        public static CSEntryChange ToCSEntryChange(this MAObjectHologram hologram, SchemaType type)
+        {
+            string objectClassName = hologram.ObjectClass == null ? hologram.DeltaObjectClassName : hologram.ObjectClass.Name;
+
+            if (objectClassName == null)
+            {
+                throw new ArgumentNullException("objectClassName", string.Format("The object class for the object {0} was not present", hologram.ObjectID));
+            }
+
+            if (hologram.DeltaChangeType != "delete")
+            {
+                hologram.PreLoadAVPs();
+            }
+
+            return GetCSEntry(hologram, type);
+
+        }
+
+        /// <summary>
+        /// Creates a CSEntryChange for the specified MAObjectHologram
+        /// </summary>
+        /// <param name="maObject">The MAObjectHologram to construct the CSEntry for</param>
+        /// <returns>The newly created CSEntryChange</returns>
+        private static CSEntryChange GetCSEntry(MAObjectHologram hologram, SchemaType type)
+        {
+            CSEntryChange csentry = CSEntryChange.Create();
+
+            switch (hologram.DeltaChangeType)
+            {
+                case null:
+                case "add":
+                    csentry.ObjectModificationType = ObjectModificationType.Add;
+                    csentry.ObjectType = hologram.ObjectClass.Name;
+                    csentry.DN = hologram.ObjectID.ToString();
+                    csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("objectId", hologram.ObjectID.ToString()));
+                    GetObject(hologram, csentry, type);
+                    break;
+
+                case "delete":
+                    csentry.ObjectModificationType = ObjectModificationType.Delete;
+                    csentry.DN = hologram.ObjectID.ToString();
+                    csentry.ObjectType = hologram.ObjectClass == null ? hologram.DeltaObjectClassName : hologram.ObjectClass.Name;
+                    csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", hologram.ObjectID.ToString()));
+                    break;
+
+                case "modify":
+                case "attrmodify":
+                    csentry.ObjectModificationType = ObjectModificationType.Replace;
+                    csentry.ObjectType = hologram.ObjectClass.Name;
+                    csentry.DN = hologram.ObjectID.ToString();
+                    csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", hologram.ObjectID.ToString()));
+                    GetObject(hologram, csentry, type);
+                    break;
+
+                default:
+                    throw new InvalidOperationException(string.Format("The change type {0} is unknown", hologram.DeltaChangeType));
+            }
+
+            return csentry;
+        }
+
+
+        /// <summary>
+        /// Contributes to a CSEntryChange for the specified MA_Delta_Object by populating newly added object and its attributes
+        /// </summary>
+        /// <param name="maObject">The MAObject to construct the CSEntry for</param>
+        /// <param name="csentry">The CSEntryChange object to contribute to</param>
+        private static void GetObject(MAObjectHologram maObject, CSEntryChange csentry, SchemaType type)
+        {
+            try
+            {
+                // maObject.PreLoadAVPs();
+
+                foreach (AcmaSchemaAttribute maAttribute in type.Attributes.Where(t => !t.Name.Equals("objectId", StringComparison.CurrentCultureIgnoreCase)).Select(u => ActiveConfig.DB.GetAttribute(u.Name)))
+                {
+                    List<object> values = new List<object>();
+                    AttributeValues dbvalues = maObject.GetAttributeValues(maAttribute);
+                    values.AddRange(dbvalues.Where(t => !t.IsNull).Select(t => t.Value));
+
+                    if (values.Count > 0)
+                    {
+                        if (maAttribute.Type == ExtendedAttributeType.Reference)
+                        {
+                            csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(maAttribute.Name, values.Select(t => t.ToString()).ToList<object>()));
+                        }
+                        else if (maAttribute.Type == ExtendedAttributeType.DateTime)
+                        {
+                            csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(maAttribute.Name, values.Select(t => ((DateTime)t).ToResourceManagementServiceDateFormat()).ToList<object>()));
+                        }
+                        else
+                        {
+                            csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(maAttribute.Name, values));
+                        }
+                    }
+                }
+            }
+            catch (SafetyRuleViolationException ex)
+            {
+                csentry.ErrorCodeImport = MAImportError.ImportErrorCustomContinueRun;
+                csentry.ErrorName = ex.Message;
+                csentry.ErrorDetail = ex.Message + "\n" + ex.StackTrace;
+            }
+        }
+
+
         /// <summary>
         /// Creates a CSEntryChange of the type 'add' for the supplied MAObjectHologram
         /// </summary>

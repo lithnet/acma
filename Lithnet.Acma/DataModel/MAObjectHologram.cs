@@ -52,7 +52,7 @@ namespace Lithnet.Acma
         /// </summary>
         private Dictionary<Guid, MAObjectHologram> hologramCache;
 
-        private ObjectModificationType CSEntryModificationType
+        public ObjectModificationType CSEntryModificationType
         {
             get
             {

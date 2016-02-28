@@ -24,11 +24,7 @@ namespace Lithnet.Acma.Service
         [OperationContract]
         [WebGet(UriTemplate = "/resources/{objectType}/{key}/{keyValue}/")]
         MAObjectHologram GetResourceByKey(string objectType, string key, string keyValue);
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/watermark")]
-        string GetCurrentWatermark();
-
+       
         [OperationContract]
         [WebGet(UriTemplate = "/resources/?watermark={watermark}")]
         MAObjectHologram[] GetObjects(string watermark);
@@ -36,5 +32,25 @@ namespace Lithnet.Acma.Service
         [OperationContract]
         [WebGet(UriTemplate = "/resources/{objectType}/")]
         MAObjectHologram[] GetObjectsByClass(string objectType);
+
+        // Sync engine operations
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/sync/watermark")]
+        string GetCurrentWatermark();
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/sync/export", Method = "PUT")]
+        ExportResponse ExportObjects(ExportRequest request);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/sync/import", Method = "POST")]
+        ImportResponse Import(ImportRequest request);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/sync/import/page", Method = "POST")]
+        ImportResponse ImportPage(PageRequest request);
+
+        // Need a release operation 
     }
 }

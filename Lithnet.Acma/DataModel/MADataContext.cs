@@ -83,7 +83,7 @@ namespace Lithnet.Acma
             get
             {
                 return this.sharedHologramSqlConnection;
-          }
+            }
         }
 
         /// <summary>
@@ -121,32 +121,32 @@ namespace Lithnet.Acma
             //{
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             ////{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.Text;
-                command.CommandText = string.Format("SELECT {0} FROM [dbo].[{1}] WHERE objectId=@id AND objectClass=@class", objectClass.ColumnListForSelectQuery, AcmaDatabase.ObjectTableName);
-                command.Parameters.AddWithValue("@id", objectId);
-                command.Parameters.AddWithValue("@class", objectClass.Name);
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.Text;
+            command.CommandText = string.Format("SELECT {0} FROM [dbo].[{1}] WHERE objectId=@id AND objectClass=@class", objectClass.ColumnListForSelectQuery, AcmaDatabase.ObjectTableName);
+            command.Parameters.AddWithValue("@id", objectId);
+            command.Parameters.AddWithValue("@class", objectClass.Name);
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
 
-                if (adapter.Fill(dataset) == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    return new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this);
+            if (adapter.Fill(dataset) == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this);
 
-                    //this.hologramCache.Add(objectId, new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this));
-                }
+                //this.hologramCache.Add(objectId, new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this));
+            }
             //}
 
             //return this.hologramCache[objectId];
@@ -168,31 +168,31 @@ namespace Lithnet.Acma
             //{
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = string.Format("[dbo].[spGetMAObject]");
-                command.Parameters.AddWithValue("@id", objectId);
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = string.Format("[dbo].[spGetMAObject]");
+            command.Parameters.AddWithValue("@id", objectId);
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
 
-                if (adapter.Fill(dataset) == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    return new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this);
+            if (adapter.Fill(dataset) == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this);
 
-                    //this.hologramCache.Add(objectId, new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this));
-                }
+                //this.hologramCache.Add(objectId, new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this));
+            }
             //}
 
 
@@ -256,7 +256,7 @@ namespace Lithnet.Acma
             return this.GetMAObjectsDelta(watermark, true);
         }
 
-        public IEnumerable<MAObjectHologram>  GetDeltaMAObjects(long lastVersion)
+        public IEnumerable<MAObjectHologram> GetDeltaMAObjects(long lastVersion)
         {
             return this.GetMAObjectsDelta(lastVersion);
         }
@@ -687,38 +687,38 @@ namespace Lithnet.Acma
         {
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[spCreateMAObject]";
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@objectClass", objectClass);
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "[dbo].[spCreateMAObject]";
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@objectClass", objectClass);
 
-                if (shadowParent != null)
-                {
-                    command.Parameters.AddWithValue("@shadowParent", shadowParent.ObjectID);
-                }
+            if (shadowParent != null)
+            {
+                command.Parameters.AddWithValue("@shadowParent", shadowParent.ObjectID);
+            }
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
 
-                if (adapter.Fill(dataset) == 0)
-                {
-                    throw new DataException("The record could not be added to the database");
-                }
-                else
-                {
-                    MAObjectHologram hologram = new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this);
-                    hologram.SetObjectModificationType(modificationType, false);
-                    return hologram;
-                }
-           // }
+            if (adapter.Fill(dataset) == 0)
+            {
+                throw new DataException("The record could not be added to the database");
+            }
+            else
+            {
+                MAObjectHologram hologram = new MAObjectHologram(dataset.Tables[0].Rows[0], adapter, this);
+                hologram.SetObjectModificationType(modificationType, false);
+                return hologram;
+            }
+            // }
         }
 
         /// <summary>
@@ -864,37 +864,130 @@ namespace Lithnet.Acma
         {
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[spGetMAObjects]";
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "[dbo].[spGetMAObjects]";
 
-                if (watermark != null)
-                {
-                    command.Parameters.AddWithValue("@watermark", watermark);
-                }
+            if (watermark != null)
+            {
+                command.Parameters.AddWithValue("@watermark", watermark);
+            }
 
-                if (getDeleted)
-                {
-                    command.Parameters.AddWithValue("@deleted", true);
-                }
+            if (getDeleted)
+            {
+                command.Parameters.AddWithValue("@deleted", true);
+            }
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
-                adapter.Fill(dataset);
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
+            adapter.Fill(dataset);
 
-                foreach (DataRow row in dataset.Tables[0].Rows)
-                {
-                    yield return new MAObjectHologram(row, adapter, this);
-                }
-           // }
+            foreach (DataRow row in dataset.Tables[0].Rows)
+            {
+                yield return new MAObjectHologram(row, adapter, this);
+            }
+            // }
         }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the database using the specified parameters
+        /// </summary>
+        /// <param name="watermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public ResultEnumerator EnumerateMAObjects(IList<string> objectTypes, byte[] lowWatermark, byte[] highWatermark)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.Text;
+            command.CommandText = "SELECT * FROM [dbo].[MA_Objects] WHERE ([deleted] = 0) AND ";
+
+            if (lowWatermark != null)
+            {
+                command.CommandText += " ([rowversion] > @p0) AND ";
+                command.Parameters.AddWithValue("@p0", lowWatermark);
+            }
+
+            if (highWatermark != null)
+            {
+                command.CommandText += " ([rowversion] <= @p1) AND ";
+                command.Parameters.AddWithValue("@p1", highWatermark);
+            }
+
+            string paramPlaceholders = string.Empty;
+
+            for (int i = 0; i < objectTypes.Count; i++)
+            {
+                string paramId = string.Format("@o{0}", i);
+                if (i < objectTypes.Count - 1)
+                {
+                    paramPlaceholders += string.Format("{0},", paramId);
+                }
+                else
+                {
+                    paramPlaceholders += paramId;
+                }
+
+                command.Parameters.AddWithValue(paramId, objectTypes[i]);
+            }
+
+            command.CommandText += string.Format(" objectClass IN ({0})", paramPlaceholders);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
+
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
+            adapter.Fill(dataset);
+
+            return new ResultEnumerator(dataset.Tables[0].Rows, adapter, this);
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the delta table of the database using the specified parameters
+        /// </summary>
+        /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public ResultEnumerator EnumerateMAObjectsDelta(byte[] highWatermark = null)
+        {
+            //using (SqlConnection connection = this.dbc.GetSqlConnection())
+            //{
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "[dbo].[spGetMAObjectsDelta]";
+
+            if (highWatermark != null)
+            {
+                command.Parameters.AddWithValue("@watermark", highWatermark);
+            }
+
+            command.Parameters.AddWithValue("@deleted", true);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
+
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
+            adapter.Fill(dataset);
+
+            return new ResultEnumerator(dataset.Tables[0].Rows, adapter, this);
+        }
+
 
         /// <summary>
         /// Gets one or more MAObjects from the delta table of the database using the specified parameters
@@ -906,36 +999,36 @@ namespace Lithnet.Acma
         {
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[spGetMAObjectsDelta]";
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "[dbo].[spGetMAObjectsDelta]";
 
-                if (highWatermark != null)
-                {
-                    command.Parameters.AddWithValue("@watermark", highWatermark);
-                }
+            if (highWatermark != null)
+            {
+                command.Parameters.AddWithValue("@watermark", highWatermark);
+            }
 
-                if (getDeleted)
-                {
-                    command.Parameters.AddWithValue("@deleted", true);
-                }
+            if (getDeleted)
+            {
+                command.Parameters.AddWithValue("@deleted", true);
+            }
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
-                adapter.Fill(dataset);
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
+            adapter.Fill(dataset);
 
-                foreach (DataRow row in dataset.Tables[0].Rows)
-                {
-                    yield return new MAObjectHologram(row, adapter, this);
-                }
-           // }
+            foreach (DataRow row in dataset.Tables[0].Rows)
+            {
+                yield return new MAObjectHologram(row, adapter, this);
+            }
+            // }
         }
 
         /// <summary>
@@ -948,27 +1041,27 @@ namespace Lithnet.Acma
         {
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "[dbo].[spGetDeltaChanges]";
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "[dbo].[spGetDeltaChanges]";
 
-                command.Parameters.AddWithValue("@changeVersion", lastVersion);
+            command.Parameters.AddWithValue("@changeVersion", lastVersion);
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
-                adapter.Fill(dataset);
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
+            adapter.Fill(dataset);
 
-                foreach (DataRow row in dataset.Tables[0].Rows)
-                {
-                    yield return new MAObjectHologram(row, adapter, this);
-                }
+            foreach (DataRow row in dataset.Tables[0].Rows)
+            {
+                yield return new MAObjectHologram(row, adapter, this);
+            }
             //}
         }
 
@@ -1044,31 +1137,31 @@ namespace Lithnet.Acma
 
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
-                SqlCommand command = new SqlCommand();
-                command.Connection = this.sharedHologramSqlConnection;
-                command.CommandType = CommandType.Text;
-                command.CommandText = queryBuilder.QueryString;
-                command.Parameters.AddRange(queryBuilder.Parameters.ToArray());
+            SqlCommand command = new SqlCommand();
+            command.Connection = this.sharedHologramSqlConnection;
+            command.CommandType = CommandType.Text;
+            command.CommandText = queryBuilder.QueryString;
+            command.Parameters.AddRange(queryBuilder.Parameters.ToArray());
 
-                Logger.WriteLine("Running query: {0}", LogLevel.Debug, command.CommandText);
-                Logger.WriteLine("Parameters: {0}", LogLevel.Debug, queryBuilder.Parameters.Select(t => t.ParameterName + ":" + t.Value.ToSmartStringOrNull()).ToCommaSeparatedString());
+            Logger.WriteLine("Running query: {0}", LogLevel.Debug, command.CommandText);
+            Logger.WriteLine("Parameters: {0}", LogLevel.Debug, queryBuilder.Parameters.Select(t => t.ParameterName + ":" + t.Value.ToSmartStringOrNull()).ToCommaSeparatedString());
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                builder.ConflictOption = ConflictOption.OverwriteChanges;
-                builder.QuotePrefix = "[";
-                builder.QuoteSuffix = "]";
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            builder.ConflictOption = ConflictOption.OverwriteChanges;
+            builder.QuotePrefix = "[";
+            builder.QuoteSuffix = "]";
 
-                DataSet dataset = new DataSet();
-                adapter.AcceptChangesDuringUpdate = true;
-                int count = adapter.Fill(dataset);
+            DataSet dataset = new DataSet();
+            adapter.AcceptChangesDuringUpdate = true;
+            int count = adapter.Fill(dataset);
 
-                Logger.WriteLine("Query returned {0} objects", LogLevel.Debug, count);
+            Logger.WriteLine("Query returned {0} objects", LogLevel.Debug, count);
 
-                foreach (DataRow row in dataset.Tables[0].Rows)
-                {
-                    yield return new MAObjectHologram(row, adapter, this);
-                }
+            foreach (DataRow row in dataset.Tables[0].Rows)
+            {
+                yield return new MAObjectHologram(row, adapter, this);
+            }
             //}
         }
     }
