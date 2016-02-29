@@ -21,7 +21,19 @@ namespace Lithnet.Acma
     /// </summary>
     public static class CSEntryChangeExtensions
     {
+        public static CSEntryChange ToCSEntryChange(this MAObjectHologram hologram)
+        {
+            return hologram.ToCSEntryChange(hologram.ObjectClass.Attributes);
+        }
+
         public static CSEntryChange ToCSEntryChange(this MAObjectHologram hologram, SchemaType type)
+        {
+            IEnumerable<AcmaSchemaAttribute> requiredAttributes = type.Attributes.Where(t => !t.Name.Equals("objectId", StringComparison.CurrentCultureIgnoreCase)).Select(u => ActiveConfig.DB.GetAttribute(u.Name));
+
+            return hologram.ToCSEntryChange(requiredAttributes);
+        }
+
+        public static CSEntryChange ToCSEntryChange(this MAObjectHologram hologram, IEnumerable<AcmaSchemaAttribute> requiredAttributes)
         {
             string objectClassName = hologram.ObjectClass == null ? hologram.DeltaObjectClassName : hologram.ObjectClass.Name;
 
@@ -35,8 +47,7 @@ namespace Lithnet.Acma
                 hologram.PreLoadAVPs();
             }
 
-            return GetCSEntry(hologram, type);
-
+            return GetCSEntry(hologram, requiredAttributes);
         }
 
         /// <summary>
@@ -44,7 +55,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="maObject">The MAObjectHologram to construct the CSEntry for</param>
         /// <returns>The newly created CSEntryChange</returns>
-        private static CSEntryChange GetCSEntry(MAObjectHologram hologram, SchemaType type)
+        private static CSEntryChange GetCSEntry(MAObjectHologram hologram, IEnumerable<AcmaSchemaAttribute> requiredAttributes)
         {
             CSEntryChange csentry = CSEntryChange.Create();
 
@@ -56,7 +67,7 @@ namespace Lithnet.Acma
                     csentry.ObjectType = hologram.ObjectClass.Name;
                     csentry.DN = hologram.ObjectID.ToString();
                     csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("objectId", hologram.ObjectID.ToString()));
-                    GetObject(hologram, csentry, type);
+                    GetObject(hologram, csentry, requiredAttributes);
                     break;
 
                 case "delete":
@@ -72,7 +83,7 @@ namespace Lithnet.Acma
                     csentry.ObjectType = hologram.ObjectClass.Name;
                     csentry.DN = hologram.ObjectID.ToString();
                     csentry.AnchorAttributes.Add(AnchorAttribute.Create("objectId", hologram.ObjectID.ToString()));
-                    GetObject(hologram, csentry, type);
+                    GetObject(hologram, csentry, requiredAttributes);
                     break;
 
                 default:
@@ -88,13 +99,11 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="maObject">The MAObject to construct the CSEntry for</param>
         /// <param name="csentry">The CSEntryChange object to contribute to</param>
-        private static void GetObject(MAObjectHologram maObject, CSEntryChange csentry, SchemaType type)
+        private static void GetObject(MAObjectHologram maObject, CSEntryChange csentry, IEnumerable<AcmaSchemaAttribute> requiredAttributes)
         {
             try
             {
-                // maObject.PreLoadAVPs();
-
-                foreach (AcmaSchemaAttribute maAttribute in type.Attributes.Where(t => !t.Name.Equals("objectId", StringComparison.CurrentCultureIgnoreCase)).Select(u => ActiveConfig.DB.GetAttribute(u.Name)))
+                foreach (AcmaSchemaAttribute maAttribute in requiredAttributes)
                 {
                     List<object> values = new List<object>();
                     AttributeValues dbvalues = maObject.GetAttributeValues(maAttribute);
@@ -131,6 +140,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="maObject">The MAObjectHologram to create the CSEntryChange from</param>
         /// <returns>A new CSEntryChange object representing the current state of the specified MAObjectHologram </returns>
+        [Obsolete]
         public static AcmaCSEntryChange CreateCSEntryChangeFromMAObjectHologram(this MAObjectHologram maObject)
         {
             return CSEntryChangeExtensions.CreateCSEntryChangeFromMAObjectHologram(maObject, ObjectModificationType.Add);
@@ -142,6 +152,7 @@ namespace Lithnet.Acma
         /// <param name="maObject">The MAObjectHologram to create the CSEntryChange from</param>
         /// <param name="objectModificationType">The object modification type to apply</param>
         /// <returns>A new CSEntryChange object representing the current state of the specified MAObjectHologram </returns>
+        [Obsolete]
         public static AcmaCSEntryChange CreateCSEntryChangeFromMAObjectHologram(this MAObjectHologram maObject, ObjectModificationType objectModificationType)
         {
             AcmaCSEntryChange csentry = new AcmaCSEntryChange();
@@ -173,6 +184,15 @@ namespace Lithnet.Acma
                         csentry.AttributeChanges.Add(AttributeChange.CreateAttributeReplace(attribute.Name, values.ToObjectList()));
                     }
                 }
+            }
+
+            if (csentry.ErrorCodeImport == MAImportError.Success)
+            {
+                MAStatistics.AddImportOperation();
+            }
+            else
+            {
+                MAStatistics.AddImportError();
             }
 
             return csentry;

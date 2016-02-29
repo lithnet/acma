@@ -8,18 +8,25 @@ using Lithnet.MetadirectoryServices;
 using Microsoft.MetadirectoryServices;
 using System.Runtime.Caching;
 using Lithnet.Acma.DataModel;
+using System.ServiceModel;
+using Lithnet.Acma.ServiceModel;
+using Lithnet.Logging;
+using System.Threading;
 
 namespace Lithnet.Acma.Service
 {
     [MmsSurrogateBehavior]
     [MmsSurrogateExporter]
+    [ServiceBehavior(Namespace = Constants.Namespace)]
     public class AcmaWCF : IAcmaWCF
     {
         private static MemoryCache cache = new MemoryCache("SearchResultEnumeratorCache");
 
-        public MAObjectHologram Get(string ID)
+        internal static ManualResetEvent ConfigLock = new ManualResetEvent(true);
+
+        public AcmaResource Get(string ID)
         {
-            return ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(ID));
+            return ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(ID)).ToAcmaResource();
         }
 
         public CSEntryChange GetCSEntryChange(string ID)
@@ -33,10 +40,10 @@ namespace Lithnet.Acma.Service
             return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault().CreateCSEntryChangeFromMAObjectHologram();
         }
 
-        public MAObjectHologram GetResourceByKey(string objectType, string key, string keyValue)
+        public AcmaResource GetResourceByKey(string objectType, string key, string keyValue)
         {
             DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue);
-            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault();
+            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault().ToAcmaResource();
         }
 
         public string GetCurrentWatermark()
@@ -44,7 +51,7 @@ namespace Lithnet.Acma.Service
             return ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjects().ToSmartStringOrNull();
         }
 
-        public MAObjectHologram[] GetObjects(string watermark)
+        public AcmaResource[] GetObjects(string watermark)
         {
             byte[] byteWaterMark = null;
 
@@ -53,64 +60,161 @@ namespace Lithnet.Acma.Service
                 byteWaterMark = Convert.FromBase64String(watermark);
             }
 
-            return ActiveConfig.DB.MADataConext.GetMAObjects(byteWaterMark).ToArray();
+            return ActiveConfig.DB.MADataConext.GetMAObjects(byteWaterMark).Select(t => t.ToAcmaResource()).ToArray();
         }
 
-        public MAObjectHologram[] GetObjectsByClass(string objectType)
+        public AcmaResource[] GetObjectsByClass(string objectType)
         {
-            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, objectType).ToArray();
+            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, objectType).Select(t => t.ToAcmaResource()).ToArray();
         }
 
-        public ExportResponse ExportObjects(ExportRequest request)
+        public void ExportStart()
+        {
+            Logger.WriteSeparatorLine('*');
+            Logger.WriteLine("Starting Export");
+            AcmaWCF.ConfigLock.Reset();
+
+            MAStatistics.StartOperation(MAOperationType.Export);
+            this.ProcessOperationEvents(AcmaEventOperationType.Export);
+        }
+
+        public ExportResponse ExportPage(ExportRequest request)
         {
             ExportResponse response = new ExportResponse();
-            response.Results = new List<ExportResult>();
+            response.Results = new List<CSEntryChangeResult>();
+            IList<AttributeChange> anchorchanges;
 
-            foreach (CSEntryChange csentry in request.CSEntryChanges)
+            foreach (CSEntryChange csentryChange in request.CSEntryChanges)
             {
-                ExportResult result = new ExportResult();
-                result.CSEntryChangeID = csentry.Identifier;
-
                 try
                 {
-                    bool referenceRetryRequired = false;
-                    CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out referenceRetryRequired);
+                    bool referenceRetryRequired;
+                    anchorchanges = CSEntryExport.PutExportEntry(csentryChange, ActiveConfig.DB.MADataConext, out referenceRetryRequired);
+
                     if (referenceRetryRequired)
                     {
-                        result.ExportError = MAExportError.ExportActionRetryReferenceAttribute;
+                        Logger.WriteLine(string.Format("Reference attribute not available for csentry {0}. Flagging for retry", csentryChange.DN));
+                        response.Results.Add(CSEntryChangeResult.Create(csentryChange.Identifier, anchorchanges, MAExportError.ExportActionRetryReferenceAttribute));
+                    }
+                    else
+                    {
+                        response.Results.Add(CSEntryChangeResult.Create(csentryChange.Identifier, anchorchanges, MAExportError.Success));
                     }
                 }
                 catch (Exception ex)
                 {
-                    result.ExportError = MAExportError.ExportErrorCustomContinueRun;
-                    result.Message = ex.Message;
-                }
+                    MAStatistics.AddExportError();
 
-                response.Results.Add(result);
+                    response.Results.Add(this.GetExportChangeResultFromException(csentryChange, ex));
+                }
             }
 
             return response;
         }
 
-        public ImportResponse Import(ImportRequest request)
+        public void ExportEnd()
         {
-            ImportResponse response = new ImportResponse();
+            Logger.WriteLine("Export Complete");
+            Logger.WriteSeparatorLine('*');
 
-            if (request.ImportType == OperationType.Delta)
+            if (AcmaWCF.ConfigLock != null)
             {
-                request.Enumerator = ActiveConfig.DB.MADataConext.EnumerateMAObjectsDelta();
+                AcmaWCF.ConfigLock.Set();
+            }
+
+            MAStatistics.StopOperation();
+            Logger.WriteLine(MAStatistics.ToString());
+        }
+
+        /// <summary>
+        /// Constructs a CSEntryChangeResult object appropriate to the specified exception
+        /// </summary>
+        /// <param name="csentryChange">The CSEntryChange object that triggered the exception</param>
+        /// <param name="ex">The exception that was caught</param>
+        /// <returns>A CSEntryChangeResult object with the correct error code for the exception that was encountered</returns>
+        private CSEntryChangeResult GetExportChangeResultFromException(CSEntryChange csentryChange, Exception ex)
+        {
+            if (ex is NoSuchObjectException)
+            {
+                return CSEntryChangeResult.Create(csentryChange.Identifier, null, MAExportError.ExportErrorConnectedDirectoryMissingObject);
+            }
+            else if (ex is ReferencedObjectNotPresentException)
+            {
+                Logger.WriteLine(string.Format("Reference attribute not available for csentry {0}. Flagging for retry", csentryChange.DN));
+                return CSEntryChangeResult.Create(csentryChange.Identifier, null, MAExportError.ExportActionRetryReferenceAttribute);
             }
             else
             {
-                request.Enumerator = ActiveConfig.DB.MADataConext.EnumerateMAObjects(request.Schema.Types.Select(t => t.Name).ToList(), null, null);
+                Logger.WriteLine(string.Format("An unexpected exception occurred for csentry change {0} with DN {1}. ", csentryChange.Identifier.ToString(), csentryChange.DN ?? string.Empty));
+                Logger.WriteException(ex);
+                return CSEntryChangeResult.Create(csentryChange.Identifier, null, MAExportError.ExportErrorCustomContinueRun, ex.Message, ex.StackTrace);
+            }
+        }
+
+        public ImportResponse ImportStart(ImportStartRequest request)
+        {
+            Logger.WriteLine("Import request received");
+            MAStatistics.StartOperation(MAOperationType.Import);
+            
+            ImportResponse response = new ImportResponse();
+            CachedImportRequest cachedRequest = new CachedImportRequest();
+            cachedRequest.Request = request;
+
+            byte[] watermark = ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjectsDelta();
+            response.Watermark = watermark == null ? null : Convert.ToBase64String(watermark);
+            cachedRequest.HighWatermark = watermark;
+
+            Logger.WriteLine("Got delta watermark: {0}", response.Watermark);
+
+            if (cachedRequest.Request.ImportType == OperationType.Delta)
+            {
+                this.ProcessOperationEvents(AcmaEventOperationType.DeltaImport);
+                cachedRequest.Enumerator = ActiveConfig.DB.MADataConext.EnumerateMAObjectsDelta(watermark);
+            }
+            else
+            {
+                this.ProcessOperationEvents(AcmaEventOperationType.FullImport);
+                cachedRequest.Enumerator = ActiveConfig.DB.MADataConext.EnumerateMAObjects(cachedRequest.Request.Schema.Types.Select(t => t.Name).ToList(), null, null);
             }
 
             response.Context = Guid.NewGuid().ToString();
 
-            this.AddToCache(response.Context, request);
+            this.AddToCache(response.Context, cachedRequest);
             this.GetResultPage(response, request.PageSize);
 
             return response;
+        }
+
+        private void ProcessOperationEvents(AcmaEventOperationType operationType)
+        {
+            AcmaEvents events = ActiveConfig.XmlConfig.OperationEvents;
+            if (events == null || events.Count == 0)
+            {
+                return;
+            }
+
+            Logger.WriteSeparatorLine('-');
+            Logger.WriteLine("Processing pre-operation events");
+
+            foreach (AcmaOperationEvent e in events.OfType<AcmaOperationEvent>().Where(t => t.OperationTypes.HasFlag(operationType)))
+            {
+                foreach (MAObjectHologram hologram in e.GetQueryRecipients(ActiveConfig.DB.MADataConext))
+                {
+                    Logger.WriteLine("Sending event {0} to {1}", e.ID, hologram.DisplayText);
+                    try
+                    {
+                        Logger.IncreaseIndent();
+                        hologram.ProcessEvents(new List<RaisedEvent>() { new RaisedEvent(e) });
+                    }
+                    finally
+                    {
+                        Logger.DecreaseIndent();
+                    }
+                }
+            }
+
+            Logger.WriteLine("Event distribution completed");
+            Logger.WriteSeparatorLine('-');
         }
 
         public ImportResponse ImportPage(PageRequest request)
@@ -121,6 +225,42 @@ namespace Lithnet.Acma.Service
             this.GetResultPage(response, request.PageSize);
 
             return response;
+        }
+
+        public void ImportEnd(ImportReleaseRequest request)
+        {
+            try
+            {
+                CachedImportRequest originalRequest;
+
+                try
+                {
+                    originalRequest = GetFromCache(request.Context);
+                }
+                catch(InvalidOperationException)
+                {
+                    Logger.WriteLine("Could not release the request as it was not found in the cache");
+                    return;
+                }
+
+                if (originalRequest.HighWatermark != null)
+                {
+                    if (request.NormalTermination)
+                    {
+                        ActiveConfig.DB.MADataConext.ClearDeltas(originalRequest.HighWatermark);
+                    }
+                }
+
+                RemoveFromCache(request.Context);
+
+                MAStatistics.StopOperation();
+                Logger.WriteLine(MAStatistics.ToString());
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine("Could not release the request");
+                Logger.WriteException(ex);
+            }
         }
 
         public Schema GetMmsSchema()
@@ -157,43 +297,79 @@ namespace Lithnet.Acma.Service
 
         private void GetResultPage(ImportResponse response, int pageSize)
         {
-            ImportRequest originalRequest = this.GetFromCache(response.Context);
+            CachedImportRequest cachedRequest = this.GetFromCache(response.Context);
 
             int itemCount = 0;
             response.Objects = new List<CSEntryChange>();
-            response.TotalItems = originalRequest.Enumerator.TotalCount;
+            response.TotalItems = cachedRequest.Enumerator.TotalCount;
 
-            foreach (MAObjectHologram item in originalRequest.Enumerator)
+            if (pageSize > 0)
             {
-                itemCount++;
-
-                SchemaType type = originalRequest.Schema.Types.FirstOrDefault(t => t.Name == item.ObjectClass.Name);
-
-                if (type == null)
+                foreach (MAObjectHologram item in cachedRequest.Enumerator)
                 {
-                    continue;
-                }
+                    itemCount++;
+                    string objectClassName = item.ObjectClass == null ? item.DeltaObjectClassName : item.ObjectClass.Name;
+                    SchemaType type = cachedRequest.Request.Schema.Types.FirstOrDefault(t => t.Name == objectClassName);
 
-                response.Objects.Add(item.ToCSEntryChange(type));
+                    if (type == null)
+                    {
+                        continue;
+                    }
 
-                if (itemCount >= pageSize)
-                {
-                    break;
+                    CSEntryChange csentry = null;
+
+                    try
+                    {
+                        csentry = item.ToCSEntryChange(type);
+                        MAStatistics.AddImportOperation();
+                    }
+                    catch (Exception ex)
+                    {
+                        MAStatistics.AddImportError();
+
+                        if (csentry == null)
+                        {
+                            csentry = CSEntryChange.Create();
+                        }
+
+                        if (string.IsNullOrWhiteSpace(csentry.DN))
+                        {
+                            csentry.ErrorCodeImport = MAImportError.ImportErrorCustomStopRun;
+                        }
+                        else
+                        {
+                            csentry.ErrorCodeImport = MAImportError.ImportErrorCustomContinueRun;
+                        }
+
+                        csentry.ErrorName = ex.Message;
+                        csentry.ErrorDetail = ex.StackTrace;
+                    }
+
+                    response.Objects.Add(csentry);
+
+                    if (itemCount >= pageSize)
+                    {
+                        break;
+                    }
                 }
             }
 
-            if (originalRequest.Enumerator.CurrentIndex >= originalRequest.Enumerator.TotalCount - 1)
+            if (cachedRequest.Enumerator.CurrentIndex >= cachedRequest.Enumerator.TotalCount)
             {
-                this.RemoveFromCache(response.Context);
+                response.HasMoreItems = false;
+            }
+            else
+            {
+                response.HasMoreItems = true;
             }
         }
 
-        private void AddToCache(string context, ImportRequest request)
+        private void AddToCache(string context, CachedImportRequest request)
         {
             AcmaWCF.cache.Add(context, request, new CacheItemPolicy() { SlidingExpiration = new TimeSpan(0, 10, 0) });
         }
 
-        private ImportRequest GetFromCache(string context)
+        private CachedImportRequest GetFromCache(string context)
         {
             object item = AcmaWCF.cache.Get(context);
 
@@ -202,7 +378,7 @@ namespace Lithnet.Acma.Service
                 throw new InvalidOperationException("Unknown search context");
             }
 
-            return (ImportRequest)item;
+            return (CachedImportRequest)item;
         }
 
         private void RemoveFromCache(string context)

@@ -15,6 +15,7 @@ namespace Lithnet.Acma
     using Lithnet.MetadirectoryServices;
     using System.Runtime.Serialization;
     using Lithnet.Acma.DataModel;
+    using Lithnet.Acma.ServiceModel;
 
     /// <summary>
     /// Defines a rule that can be used to determine the presence of an attribute

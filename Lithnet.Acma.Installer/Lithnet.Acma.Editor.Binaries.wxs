@@ -23,6 +23,9 @@
             <Component Id="cmp80E1DC5EAA1144D00C3AA8B2B017545D" Guid="*">
                 <File Id="fil42CBA899862B5ABBDF5BAB09854D48AF" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.Presentation.dll" />
             </Component>
+            <Component Id="cmpC9392BCC9D3B2DD1390044DACA99D70D" Guid="*">
+                <File Id="filFABECD03A8EAC4A3DCBD84F4D247E08F" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.ServiceModel.dll" />
+            </Component>
             <Component Id="cmp28A2074CA2896DBD40F6DE19A155E261" Guid="*">
                 <File Id="fil88FA520ED8E4BB97F9EB6C38013E052B" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.TestEngine.dll" />
             </Component>
@@ -67,6 +70,7 @@
             <ComponentRef Id="cmpF4C07DAACC817524687F292B6A3A5E06" />
             <ComponentRef Id="cmp00289C1A1640FCF9D7F73175FBAEE2DF" />
             <ComponentRef Id="cmp80E1DC5EAA1144D00C3AA8B2B017545D" />
+            <ComponentRef Id="cmpC9392BCC9D3B2DD1390044DACA99D70D" />
             <ComponentRef Id="cmp28A2074CA2896DBD40F6DE19A155E261" />
             <ComponentRef Id="cmpEE98A02D8239B72F4DF50EA8A5641C3B" />
             <ComponentRef Id="cmp487C7D86558BEB64FEDF037632A65BE9" />

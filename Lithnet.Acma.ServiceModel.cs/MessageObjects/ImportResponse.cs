@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.MetadirectoryServices;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
     [DataContract]
     public class ImportResponse
@@ -18,5 +18,11 @@ namespace Lithnet.Acma.Service
 
         [DataMember]
         public int TotalItems { get; set; }
+
+        [DataMember]
+        public bool HasMoreItems { get; set; }
+
+        [DataMember]
+        public string Watermark { get; set; }
     }
 }

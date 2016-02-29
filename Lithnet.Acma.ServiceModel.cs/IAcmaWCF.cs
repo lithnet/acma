@@ -8,16 +8,16 @@ using Lithnet.Acma;
 using System.ServiceModel.Web;
 using Microsoft.MetadirectoryServices;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
-    [ServiceContract]
+    [ServiceContract(Namespace = Constants.Namespace)]
     [MmsSurrogateExporter]
     [MmsSurrogateBehavior]
     public interface IAcmaWCF
     {
         [OperationContract]
         [WebGet(UriTemplate = "/resources/{id}")]
-        MAObjectHologram Get(string id);
+        AcmaResource Get(string id);
 
         [OperationContract]
         [WebGet(UriTemplate = "/csentry/{id}")]
@@ -25,15 +25,15 @@ namespace Lithnet.Acma.Service
 
         [OperationContract]
         [WebGet(UriTemplate = "/resources/{objectType}/{key}/{keyValue}/")]
-        MAObjectHologram GetResourceByKey(string objectType, string key, string keyValue);
+        AcmaResource GetResourceByKey(string objectType, string key, string keyValue);
        
         [OperationContract]
         [WebGet(UriTemplate = "/resources/?watermark={watermark}")]
-        MAObjectHologram[] GetObjects(string watermark);
+        AcmaResource[] GetObjects(string watermark);
 
         [OperationContract]
         [WebGet(UriTemplate = "/resources/{objectType}/")]
-        MAObjectHologram[] GetObjectsByClass(string objectType);
+        AcmaResource[] GetObjectsByClass(string objectType);
 
         // Sync engine operations
 
@@ -42,16 +42,28 @@ namespace Lithnet.Acma.Service
         string GetCurrentWatermark();
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/sync/export", Method = "PUT")]
-        ExportResponse ExportObjects(ExportRequest request);
+        [WebInvoke(UriTemplate = "/sync/export/page", Method = "PUT")]
+        ExportResponse ExportPage(ExportRequest request);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/sync/export")]
+        void ExportStart();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/sync/export/release")]
+        void ExportEnd();
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/sync/import", Method = "POST")]
-        ImportResponse Import(ImportRequest request);
+        ImportResponse ImportStart(ImportStartRequest request);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/sync/import/page", Method = "POST")]
         ImportResponse ImportPage(PageRequest request);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/sync/import/release", Method = "POST")]
+        void ImportEnd(ImportReleaseRequest request);
 
         [OperationContract]
         [WebGet(UriTemplate = "/sync/schema")]

@@ -9,6 +9,7 @@ using Lithnet.Acma;
 using System.Runtime.Serialization;
 using System.ComponentModel;
 using Lithnet.Acma.DataModel;
+using Lithnet.Acma.ServiceModel;
 
 namespace Lithnet.Acma.TestEngine
 {

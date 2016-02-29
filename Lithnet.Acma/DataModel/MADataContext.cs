@@ -956,10 +956,10 @@ namespace Lithnet.Acma
         /// <summary>
         /// Gets one or more MAObjects from the delta table of the database using the specified parameters
         /// </summary>
-        /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="watermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public ResultEnumerator EnumerateMAObjectsDelta(byte[] highWatermark = null)
+        public ResultEnumerator EnumerateMAObjectsDelta(byte[] watermark = null)
         {
             //using (SqlConnection connection = this.dbc.GetSqlConnection())
             //{
@@ -968,9 +968,9 @@ namespace Lithnet.Acma
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "[dbo].[spGetMAObjectsDelta]";
 
-            if (highWatermark != null)
+            if (watermark != null)
             {
-                command.Parameters.AddWithValue("@watermark", highWatermark);
+                command.Parameters.AddWithValue("@watermark", watermark);
             }
 
             command.Parameters.AddWithValue("@deleted", true);

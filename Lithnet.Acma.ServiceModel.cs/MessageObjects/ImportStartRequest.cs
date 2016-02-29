@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.MetadirectoryServices;
+using System.Collections;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
     [DataContract]
-    public class ImportRequest
+    public class ImportStartRequest
     {
         [DataMember]
         public Schema Schema { get; set; }
@@ -17,14 +18,9 @@ namespace Lithnet.Acma.Service
         public int PageSize { get; set; }
 
         [DataMember]
-        public byte[] HighWatermark { get; set; }
-
-        [DataMember]
-        public byte[] LowWatermark { get; set; }
+        public string FromWatermark { get; set; }
 
         [DataMember]
         public OperationType ImportType { get; set; }
-
-        internal ResultEnumerator Enumerator { get; set; }
     }
 }

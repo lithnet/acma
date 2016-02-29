@@ -49,8 +49,8 @@
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.19004, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.19004\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.32830, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.32830\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5894.23080, Culture=neutral, processorArchitecture=MSIL">
@@ -85,16 +85,13 @@
   <ItemGroup>
     <Compile Include="AcmaWCF.cs" />
     <Compile Include="AuthorizationManager.cs" />
-    <Compile Include="MessageObjects\ExportResult.cs" />
-    <Compile Include="MessageObjects\ExportResponse.cs" />
-    <Compile Include="MessageObjects\ExportRequest.cs" />
-    <Compile Include="MessageObjects\PageRequest.cs" />
-    <Compile Include="MessageObjects\ImportResponse.cs" />
-    <Compile Include="MessageObjects\ImportRequest.cs" />
-    <Compile Include="IAcmaWCF.cs" />
-    <Compile Include="MessageObjects\ImportType.cs" />
-    <Compile Include="MmsSurrogateExporter.cs" />
-    <Compile Include="MmsSurrogateBehavior.cs" />
+    <Compile Include="CachedImportRequest.cs" />
+    <Compile Include="AcmaServiceInstallerClass.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AcmaServiceInstallerClass.Designer.cs">
+      <DependentUpon>AcmaServiceInstallerClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowsServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -111,6 +108,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.cs\Lithnet.Acma.ServiceModel.csproj">
+      <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
+      <Name>Lithnet.Acma.ServiceModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
       <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
       <Name>Lithnet.Acma</Name>
@@ -124,6 +125,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AcmaServiceInstallerClass.resx">
+      <DependentUpon>AcmaServiceInstallerClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServiceMain.resx">
+      <DependentUpon>ServiceMain.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />

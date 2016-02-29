@@ -16,7 +16,8 @@ namespace Lithnet.Acma
     using Microsoft.MetadirectoryServices;
     using Lithnet.MetadirectoryServices;
     using Lithnet.Acma.DataModel;
-
+    using Lithnet.Acma.ServiceModel;
+    
     /// <summary>
     /// Represents an object from the ACMA database
     /// </summary>

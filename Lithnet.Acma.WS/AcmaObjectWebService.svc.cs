@@ -11,6 +11,7 @@ using Microsoft.MetadirectoryServices;
 using System.Configuration;
 using Lithnet.Acma.DataModel;
 using Lithnet.Logging;
+using Lithnet.Acma.ServiceModel;
 
 namespace Lithnet.Acma.WS
 {

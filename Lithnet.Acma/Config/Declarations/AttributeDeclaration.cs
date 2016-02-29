@@ -14,6 +14,7 @@ namespace Lithnet.Acma
     using Lithnet.MetadirectoryServices;
     using Lithnet.Transforms;
     using Microsoft.MetadirectoryServices;
+    using Lithnet.Acma.ServiceModel;
 
     /// <summary>
     /// Represents an attribute in a declaration string

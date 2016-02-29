@@ -5,12 +5,12 @@ using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.MetadirectoryServices;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
     [DataContract]
-    public class ExportResponse
+    public class ExportRequest
     {
         [DataMember]
-        public IList<ExportResult> Results { get; set; }
+        public IList<CSEntryChange> CSEntryChanges { get; set; }
     }
 }

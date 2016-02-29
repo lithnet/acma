@@ -7,7 +7,7 @@ using System.ServiceModel.Description;
 using Lithnet.MetadirectoryServices;
 using System.Runtime.Serialization;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class MmsSurrogateExporter : Attribute, IWsdlExportExtension, IContractBehavior

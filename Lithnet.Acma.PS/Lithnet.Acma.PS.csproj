@@ -69,8 +69,8 @@
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.19004, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.19004\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.32830, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.32830\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5894.23080, Culture=neutral, processorArchitecture=MSIL">
@@ -161,6 +161,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.cs\Lithnet.Acma.ServiceModel.csproj">
+      <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
+      <Name>Lithnet.Acma.ServiceModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj">
       <Project>{04cd3287-e3e0-4b53-ad70-0452c1cc1621}</Project>
       <Name>Lithnet.Acma.TestEngine</Name>

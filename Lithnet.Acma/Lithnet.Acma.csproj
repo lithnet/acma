@@ -83,8 +83,8 @@
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.19004, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.19004\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.32830, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.32830\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Lithnet.Transforms, Version=1.5.5895.32224, Culture=neutral, processorArchitecture=MSIL">
@@ -161,7 +161,6 @@
     <Compile Include="Config\Constructors\ExecutableConstructorObject.cs" />
     <Compile Include="Core\RaisedEvent.cs" />
     <Compile Include="Config\Events\AcmaEvent.cs" />
-    <Compile Include="Core\AcmaExtensions.cs" />
     <Compile Include="DataModel\AcmaSchemaMapping.cs" />
     <Compile Include="DataModel\AcmaSequence.cs" />
     <Compile Include="Core\ActiveConfig.cs" />
@@ -178,12 +177,6 @@
     <Compile Include="DataModel\MissingAttributeEventArgs.cs" />
     <Compile Include="DataModel\ResultEnumerator.cs" />
     <Compile Include="DataModel\SafetyRule.cs" />
-    <Compile Include="DBManagement\DBInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DBManagement\DBInstaller.Designer.cs">
-      <DependentUpon>DBInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="DBManagement\DBInstallUpgrader.cs" />
     <Compile Include="Enums\AcmaAttributeModificationType.cs" />
     <Compile Include="Enums\AcmaEventOperationType.cs" />
@@ -214,10 +207,8 @@
     <Compile Include="Exceptions\DeletedObjectModificationException.cs" />
     <Compile Include="Exceptions\CircularUpdateException.cs" />
     <Compile Include="Exceptions\SafetyRuleViolationException.cs" />
-    <Compile Include="Exceptions\LdifFormatException.cs" />
     <Compile Include="Exceptions\QueryValueNullException.cs" />
     <Compile Include="Exceptions\InvalidDeclarationStringException.cs" />
-    <Compile Include="Core\MADiagnostics.cs" />
     <Compile Include="Enums\AcmaAttributeOperation.cs" />
     <Compile Include="Exceptions\MaximumAllocationAttemptsExceededException.cs" />
     <Compile Include="Exceptions\MissingCSEntryChangeException.cs" />
@@ -227,14 +218,6 @@
     <Compile Include="Config\Declarations\AttributeDeclaration.cs" />
     <Compile Include="Config\Declarations\ValueDeclaration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="ImportExport\LdifAttributeValuePair.cs" />
-    <Compile Include="ImportExport\LdifReader.cs" />
-    <Compile Include="Installers\AcmaInstallerActions.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Installers\AcmaInstallerActions.Designer.cs">
-      <DependentUpon>AcmaInstallerActions.cs</DependentUpon>
-    </Compile>
     <Compile Include="Interfaces\IAttributeScopeProvider.cs" />
     <Compile Include="Interfaces\IObjectClassScopeProvider.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -268,8 +251,6 @@
     <Compile Include="Enums\GroupOperator.cs" />
     <Compile Include="Config\RuleObjects\RuleGroup.cs" />
     <Compile Include="ManagementAgent\CSEntryExport.cs" />
-    <Compile Include="ManagementAgent\CSEntryImport.cs" />
-    <Compile Include="Exceptions\ReferencedObjectNotPresentException.cs" />
     <Compile Include="strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -298,7 +279,12 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.cs\Lithnet.Acma.ServiceModel.csproj">
+      <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
+      <Name>Lithnet.Acma.ServiceModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DBManagement\Scripts\New\CreateDB.sql" />
     <EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_5_4.sql" />

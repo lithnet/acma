@@ -29,18 +29,6 @@ namespace Lithnet.Acma
         /// <param name="dbc">The DBDataContext for the current thread</param>
         /// <param name="referenceRetryRequired">A value indicating whether one or more referenced objects were not found</param>
         /// <returns>A list of anchor attributes if the object was added to the database, otherwise returns an empty list</returns>
-        public static IList<AttributeChange> PutExportEntry(AcmaCSEntryChange csentry, MADataContext dbc, out bool referenceRetryRequired)
-        {
-            return CSEntryExport.PutExportEntry(csentry as CSEntryChange, dbc, out referenceRetryRequired);
-        }
-
-        /// <summary>
-        /// Exports a single entry
-        /// </summary>
-        /// <param name="csentry">The entry to export</param>
-        /// <param name="dbc">The DBDataContext for the current thread</param>
-        /// <param name="referenceRetryRequired">A value indicating whether one or more referenced objects were not found</param>
-        /// <returns>A list of anchor attributes if the object was added to the database, otherwise returns an empty list</returns>
         public static IList<AttributeChange> PutExportEntry(CSEntryChange csentry, MADataContext dbc, out bool referenceRetryRequired)
         {
             IList<AttributeChange> anchorchanges = new List<AttributeChange>();

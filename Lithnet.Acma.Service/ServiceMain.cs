@@ -12,70 +12,119 @@ using System.ServiceModel.Description;
 using System.Configuration;
 using Lithnet.MetadirectoryServices;
 using Lithnet.Logging;
+using System.IO;
 
 namespace Lithnet.Acma.Service
 {
     public partial class ServiceMain : ServiceBase
     {
-        ServiceHost serviceHost = null;
+        private ServiceHost serviceHost = null;
+        private FileSystemWatcher configFileWatcher = null;
 
         public ServiceMain()
         {
             InitializeComponent();
         }
 
+        internal string ConfigFile
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["configfile"];
+            }
+        }
+
+        internal string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["acmadb"].ConnectionString;
+            }
+        }
+
         protected override void OnStart(string[] args)
         {
             Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
 
-            if (ActiveConfig.DB == null)
-            {
-                ActiveConfig.DB = new AcmaDatabase(ConfigurationManager.ConnectionStrings["acmadb"].ConnectionString);
-            }
-
-            ActiveConfig.LoadXml(ConfigurationManager.AppSettings["configfile"]);
-
             Logger.LogPath = ConfigurationManager.AppSettings["logFile"];
             Logger.LogLevel = LogLevel.Debug;
 
-            this.serviceHost = new ServiceHost(typeof(AcmaWCF));
-            //this.LoadSerializerSurrogate();
 
-            this.serviceHost.Authorization.ServiceAuthorizationManager = new ServiceAuthorizationManager();
+            this.ConnectToDatabase();
+            this.LoadConfiguration();
+
+            Logger.WriteLine("Service starting");
+
+
+            this.serviceHost = new ServiceHost(typeof(AcmaWCF));
+
+            this.serviceHost.Authorization.ServiceAuthorizationManager = new AuthorizationManager();
             this.serviceHost.Open();
+
+            this.StartFileSystemWatcher();
+            AcmaExternalExitEvent.StartEventQueue();
         }
 
-        //private void LoadSerializerSurrogate()
-        //{
-        //    foreach (ServiceEndpoint ep in this.serviceHost.Description.Endpoints)
-        //    {
-        //        foreach (OperationDescription op in ep.Contract.Operations)
-        //        {
-        //            DataContractSerializerOperationBehavior dataContractBehavior =
-        //                op.Behaviors.Find<DataContractSerializerOperationBehavior>()
-        //                as DataContractSerializerOperationBehavior;
-        //            if (dataContractBehavior != null)
+        private void LoadConfiguration()
+        {
+            if (!System.IO.File.Exists(this.ConfigFile))
+            {
+                throw new FileNotFoundException(string.Format("The configuration file '{0}' could not be found. Ensure the file is accessible by the service and the path specified in the app.config file is correct", this.ConfigFile));
+            }
 
-        //            {
-        //                dataContractBehavior.DataContractSurrogate = new MmsSerializationSurrogate();
-        //            }
-        //            else
-        //            {
-        //                dataContractBehavior = new DataContractSerializerOperationBehavior(op);
-        //                dataContractBehavior.DataContractSurrogate = new MmsSerializationSurrogate();
-        //                op.Behaviors.Add(dataContractBehavior);
-        //            }
-        //        }
-        //    }
-        //}
+            ActiveConfig.LoadXml(this.ConfigFile);
+
+            Logger.WriteLine("Loaded configuration from {0}", this.ConfigFile);
+
+        }
+
+        private void ConnectToDatabase()
+        {
+            if (this.ConnectionString == null)
+            {
+                throw new InvalidOperationException("The connection string was not specified");
+            }
+
+            ActiveConfig.DB = new AcmaDatabase(this.ConnectionString);
+            ActiveConfig.DB.CanCache = true;
+
+            Logger.WriteLine("Connected to {0}", ActiveConfig.DB.ServerName);
+        }
+
+        private void StartFileSystemWatcher()
+        {
+            this.configFileWatcher = new FileSystemWatcher();
+            this.configFileWatcher.Path = Path.GetDirectoryName(this.ConfigFile);
+            this.configFileWatcher.Filter = Path.GetFileName(this.ConfigFile);
+            this.configFileWatcher.NotifyFilter = NotifyFilters.LastWrite;
+            this.configFileWatcher.Changed += configFileWatcher_Changed;
+            this.configFileWatcher.EnableRaisingEvents = true;
+        }
+
+        private void configFileWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            Logger.WriteLine("Detected config file change. Will reloading when no export is in progress");
+            AcmaWCF.ConfigLock.WaitOne();
+
+            this.LoadConfiguration();
+        }
 
         protected override void OnStop()
         {
+            Logger.WriteLine("Service shutting down");
+
             if (this.serviceHost != null)
             {
                 this.serviceHost.Close();
                 this.serviceHost = null;
             }
+
+            if (this.configFileWatcher != null)
+            {
+                this.configFileWatcher.EnableRaisingEvents = false;
+            }
+
+            AcmaExternalExitEvent.CompleteEventQueue();
         }
 
         internal void Start(string[] args)

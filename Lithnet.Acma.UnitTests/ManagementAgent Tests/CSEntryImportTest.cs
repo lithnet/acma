@@ -27,7 +27,6 @@ namespace Lithnet.Acma.UnitTests
         [TestMethod()]
         public void ImportCSEntryChangeTest()
         {
-            Dictionary<AcmaSchemaObjectClass, IEnumerable<AcmaSchemaAttribute>> types = new Dictionary<AcmaSchemaObjectClass, IEnumerable<AcmaSchemaAttribute>>();
             List<AcmaSchemaAttribute> attributes = new List<AcmaSchemaAttribute>();
             attributes.Add(ActiveConfig.DB.GetAttribute("mail"));
             attributes.Add(ActiveConfig.DB.GetAttribute("unixUid"));
@@ -41,7 +40,6 @@ namespace Lithnet.Acma.UnitTests
             attributes.Add(ActiveConfig.DB.GetAttribute("dateTimeSV"));
             attributes.Add(ActiveConfig.DB.GetAttribute("dateTimeMV"));
 
-            types.Add(ActiveConfig.DB.GetObjectClass("person"), attributes);
 
             Guid id = Guid.NewGuid();
             CSEntryChange csentry = CSEntryChange.Create();
@@ -67,7 +65,7 @@ namespace Lithnet.Acma.UnitTests
                 CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
 
                 MAObjectHologram sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
-                CSEntryChange generatedCSEntry = CSEntryImport.GetCSEntry(sourceObject, types);
+                CSEntryChange generatedCSEntry = sourceObject.ToCSEntryChange();
 
                 if (generatedCSEntry.ErrorCodeImport != MAImportError.Success)
                 {

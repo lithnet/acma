@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ServiceModel;
+using System.ServiceModel.Description;
+using System.Security.Principal;
 
 namespace Lithnet.Acma.Service
 {
@@ -10,29 +12,17 @@ namespace Lithnet.Acma.Service
     {
         protected override bool CheckAccessCore(OperationContext operationContext)
         {
-            
-            if ((operationContext.ServiceSecurityContext.IsAnonymous) ||
-              (operationContext.ServiceSecurityContext.PrimaryIdentity == null))
+            // Allow MEX requests through. 
+            if (operationContext.EndpointDispatcher.ContractName == ServiceMetadataBehavior.MexContractName &&
+                operationContext.EndpointDispatcher.ContractNamespace == "http://schemas.microsoft.com/2006/04/mex" &&
+                operationContext.IncomingMessageHeaders.Action == "http://schemas.xmlsoap.org/ws/2004/09/transfer/Get")
             {
-                //_logger.Error("WcfWindowsSecurityApplied = true but no credentials have been supplied");
-                return false;
+                return true;
             }
+ 
+ 			var contextUser = operationContext.ServiceSecurityContext.WindowsIdentity;
 
-            string username = operationContext.ServiceSecurityContext.WindowsIdentity.Name;
-
-            //if (operationContext.ServiceSecurityContext.PrimaryIdentity.Name.ToLower() == Global.WcfCredentialsDomain.ToLower() + "\\" + Global.WcfCredentialsUserName.ToLower())
-            //{
-            //    // _logger.Debug("WcfOnlyAuthorizedForWcfCredentials = true and the valid user (" + operationContext.ServiceSecurityContext.PrimaryIdentity.Name + ") has been supplied and access allowed");
-            //    return true;
-            //}
-            //else
-            //{
-            //    //_logger.Error("WcfOnlyAuthorizedForWcfCredentials = true and an invalid user (" + operationContext.ServiceSecurityContext.PrimaryIdentity.Name + ") has been supplied and access denied");
-            //    return false;
-            //}
-
-            return false;
+            return contextUser.Name == "FIM-DEV1\\idm-us-fim-ss";
         }
     }
-
 }

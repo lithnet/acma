@@ -128,40 +128,5 @@ namespace Lithnet.Acma
 
             return ActiveConfig.XmlConfig;
         }
-
-        //public static void Save(string filename, XmlConfigFile configFile)
-        //{
-        //    if (configFile == null)
-        //    {
-        //        throw new ArgumentNullException("configFile");
-        //    }
-
-        //    string tempFile = filename + ".tmp";
-
-        //    if (System.IO.File.Exists(tempFile))
-        //    {
-        //        System.IO.File.Delete(tempFile);
-        //    }
-
-        //    Serializer.Save<XmlConfigFile>(tempFile, configFile);
-
-        //    string backupName = filename + ".backup";
-
-        //    if (System.IO.File.Exists(backupName))
-        //    {
-        //        System.IO.File.Delete(backupName);
-        //    }
-
-        //    if (System.IO.File.Exists(filename))
-        //    {
-        //        System.IO.File.Move(filename, backupName);
-        //    }
-
-        //    System.IO.File.Move(tempFile, filename);
-
-        //    System.IO.File.Delete(backupName);
-
-        //    configFile.FileName = filename;
-        //}
     }
 }

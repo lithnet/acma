@@ -17,26 +17,6 @@ namespace Lithnet.Acma.Ecma2
     public static class MAParameterNames
     {
         /// <summary>
-        /// The SQL server name parameter name
-        /// </summary>
-        public const string SqlServerName = "SQL Server";
-
-        /// <summary>
-        /// The database name parameter name
-        /// </summary>
-        public const string DatabaseName = "Database Name";
-
-        /// <summary>
-        /// The multi-threaded export parameter name
-        /// </summary>
-        public const string MultithreadedExport = "Enable multithreaded export";
-
-        /// <summary>
-        /// The configuration file parameter name
-        /// </summary>
-        public const string MAConfigurationFile = "MA configuration file";
-
-        /// <summary>
         /// The log file path parameter name
         /// </summary>
         public const string LogPath = "Log path";

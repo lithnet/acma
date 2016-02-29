@@ -22,6 +22,7 @@ namespace Lithnet.Acma
     using System.Collections.Specialized;
     using System.Text;
     using System.Runtime.Serialization;
+    using Lithnet.Acma.ServiceModel;
 
     /// <summary>
     /// Represents an MAObject from the ACMA database, overlayed with a CSEntryChange containing changes to apply to the underlying database.
@@ -663,6 +664,12 @@ namespace Lithnet.Acma
                 Logger.IncreaseIndent();
                 Logger.WriteSeparatorLine('>', true);
 
+
+                if (attributeChanges != null && attributeChanges.Count > 0)
+                {
+                    this.AddAttributeChanges(attributeChanges);
+                }
+
                 if (triggeringObject == null)
                 {
                     Logger.WriteLine(string.Format("Processing CSEntryChange for object {0} ", this.DisplayText));
@@ -688,11 +695,6 @@ namespace Lithnet.Acma
                         "Change details (triggering object): Modification type: {0}; Changed attributes: {1}",
                         triggeringObject.AcmaModificationType.ToString(),
                         triggeringObject.ChangedAttributeNames.ToCommaSeparatedString());
-                }
-
-                if (attributeChanges != null && attributeChanges.Count > 0)
-                {
-                    this.AddAttributeChanges(attributeChanges);
                 }
 
                 if (incomingEvents != null)
@@ -2050,7 +2052,7 @@ namespace Lithnet.Acma
             return this.hologramCache[id];
         }
 
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             foreach (KeyValuePair<string, IList<string>> kvp in this.GetSerializationValues())
             {
@@ -2088,6 +2090,17 @@ namespace Lithnet.Acma
             }
 
             return values;
+        }
+
+        public AcmaResource ToAcmaResource()
+        {
+            AcmaResource r = new AcmaResource();
+
+            r.ObjectID = this.ObjectID;
+            r.ObjectType = this.ObjectClass.Name;
+            r.Attributes = this.GetSerializationValues();
+
+            return r;
         }
     }
 }

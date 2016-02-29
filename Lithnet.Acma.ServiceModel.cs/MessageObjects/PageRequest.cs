@@ -5,18 +5,15 @@ using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.MetadirectoryServices;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
     [DataContract]
-    public class ExportResult
+    public class PageRequest
     {
         [DataMember]
-        public Guid CSEntryChangeID { get; set; }
+        public int PageSize { get; set; }
 
         [DataMember]
-        public string Message { get; set; }
-
-        [DataMember]
-        public MAExportError ExportError { get; set; }
+        public string Context { get; set; }
     }
 }

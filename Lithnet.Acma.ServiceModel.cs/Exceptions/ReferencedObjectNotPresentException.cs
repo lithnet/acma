@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Lithnet.Acma
+namespace Lithnet.Acma.ServiceModel
 {
     using System;
     using System.Collections.Generic;

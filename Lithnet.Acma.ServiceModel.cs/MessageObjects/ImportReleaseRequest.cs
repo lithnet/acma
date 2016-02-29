@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using Microsoft.MetadirectoryServices;
+using System.Collections;
 
-namespace Lithnet.Acma.Service
+namespace Lithnet.Acma.ServiceModel
 {
     [DataContract]
-    public class PageRequest
+    public class ImportReleaseRequest
     {
         [DataMember]
-        public int PageSize { get; set; }
+        public string Context { get; set; }
 
         [DataMember]
-        public string Context { get; set; }
+        public bool NormalTermination { get; set; }
     }
 }

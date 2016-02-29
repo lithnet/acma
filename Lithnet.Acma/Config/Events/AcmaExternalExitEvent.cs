@@ -106,6 +106,7 @@ namespace Lithnet.Acma
         {
             AcmaExternalExitEvent.waitHandle = new ManualResetEvent(false);
             Logger.WriteLine("Starting loop thread for external event processing", LogLevel.Debug);
+            AcmaExternalExitEvent.EventQueue = new BlockingCollection<RaisedEvent>();
 
             Thread thread = new Thread(() =>
             {
