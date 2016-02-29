@@ -49,8 +49,8 @@
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5902.40373, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5902.40373\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.19004, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.19004\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5894.23080, Culture=neutral, processorArchitecture=MSIL">
@@ -93,6 +93,8 @@
     <Compile Include="MessageObjects\ImportRequest.cs" />
     <Compile Include="IAcmaWCF.cs" />
     <Compile Include="MessageObjects\ImportType.cs" />
+    <Compile Include="MmsSurrogateExporter.cs" />
+    <Compile Include="MmsSurrogateBehavior.cs" />
     <Compile Include="WindowsServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

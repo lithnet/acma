@@ -383,11 +383,11 @@ namespace Lithnet.Acma.Ecma2
 
                     if (attribute.IsMultivalued)
                     {
-                        schemaType.Attributes.Add(SchemaAttribute.CreateMultiValuedAttribute(attribute.Name, attribute.MmsType, ConvertAcmaAttributeOperationToAttributeOperation(attribute.Operation)));
+                        schemaType.Attributes.Add(SchemaAttribute.CreateMultiValuedAttribute(attribute.Name, attribute.MmsType, attribute.MmsOperationType));
                     }
                     else
                     {
-                        schemaType.Attributes.Add(SchemaAttribute.CreateSingleValuedAttribute(attribute.Name, attribute.MmsType, ConvertAcmaAttributeOperationToAttributeOperation(attribute.Operation)));
+                        schemaType.Attributes.Add(SchemaAttribute.CreateSingleValuedAttribute(attribute.Name, attribute.MmsType, attribute.MmsOperationType));
                     }
                 }
 
@@ -395,31 +395,6 @@ namespace Lithnet.Acma.Ecma2
             }
 
             return schema;
-        }
-
-        /// <summary>
-        /// Converts an ACMA attribute operation enumeration into its equivalent FIM AttributeOperation value
-        /// </summary>
-        /// <param name="operation">The ACMA operation value</param>
-        /// <returns>An AttributeOperation value</returns>
-        public static AttributeOperation ConvertAcmaAttributeOperationToAttributeOperation(AcmaAttributeOperation operation)
-        {
-            switch (operation)
-            {
-                case AcmaAttributeOperation.ImportExport:
-                    return AttributeOperation.ImportExport;
-
-                case AcmaAttributeOperation.ExportOnly:
-                    return AttributeOperation.ExportOnly;
-
-                case AcmaAttributeOperation.ImportOnly:
-                    return AttributeOperation.ImportOnly;
-
-                case AcmaAttributeOperation.AcmaInternal:
-                case AcmaAttributeOperation.AcmaInternalTemp:
-                default:
-                    throw new ArgumentException(string.Format("The ACMA operation type '{0}' does not have an equivalent FIM operation type", operation.ToString()));
-            }
         }
 
         /// <summary>

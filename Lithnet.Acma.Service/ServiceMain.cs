@@ -39,23 +39,35 @@ namespace Lithnet.Acma.Service
             Logger.LogLevel = LogLevel.Debug;
 
             this.serviceHost = new ServiceHost(typeof(AcmaWCF));
-            this.LoadSerializerSurrogate();
+            //this.LoadSerializerSurrogate();
 
             this.serviceHost.Authorization.ServiceAuthorizationManager = new ServiceAuthorizationManager();
             this.serviceHost.Open();
         }
 
-        private void LoadSerializerSurrogate()
-        {
+        //private void LoadSerializerSurrogate()
+        //{
+        //    foreach (ServiceEndpoint ep in this.serviceHost.Description.Endpoints)
+        //    {
+        //        foreach (OperationDescription op in ep.Contract.Operations)
+        //        {
+        //            DataContractSerializerOperationBehavior dataContractBehavior =
+        //                op.Behaviors.Find<DataContractSerializerOperationBehavior>()
+        //                as DataContractSerializerOperationBehavior;
+        //            if (dataContractBehavior != null)
 
-            foreach (var endpoint in this.serviceHost.Description.Endpoints)
-            {
-                foreach (var operation in endpoint.Contract.Operations)
-                {
-                    operation.Behaviors.Find<DataContractSerializerOperationBehavior>().DataContractSurrogate = new MmsSerializationSurrogate();
-                }
-            }
-        }
+        //            {
+        //                dataContractBehavior.DataContractSurrogate = new MmsSerializationSurrogate();
+        //            }
+        //            else
+        //            {
+        //                dataContractBehavior = new DataContractSerializerOperationBehavior(op);
+        //                dataContractBehavior.DataContractSurrogate = new MmsSerializationSurrogate();
+        //                op.Behaviors.Add(dataContractBehavior);
+        //            }
+        //        }
+        //    }
+        //}
 
         protected override void OnStop()
         {

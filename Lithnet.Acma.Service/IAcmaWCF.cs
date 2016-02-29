@@ -11,6 +11,8 @@ using Microsoft.MetadirectoryServices;
 namespace Lithnet.Acma.Service
 {
     [ServiceContract]
+    [MmsSurrogateExporter]
+    [MmsSurrogateBehavior]
     public interface IAcmaWCF
     {
         [OperationContract]
@@ -50,6 +52,10 @@ namespace Lithnet.Acma.Service
         [OperationContract]
         [WebInvoke(UriTemplate = "/sync/import/page", Method = "POST")]
         ImportResponse ImportPage(PageRequest request);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/sync/schema")]
+        Schema GetMmsSchema();
 
         // Need a release operation 
     }

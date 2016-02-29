@@ -81,6 +81,29 @@ namespace Lithnet.Acma.DataModel
             }
         }
 
+        public AttributeOperation MmsOperationType
+        {
+            get
+            {
+                switch (this.Operation)
+                {
+                    case AcmaAttributeOperation.ImportExport:
+                        return AttributeOperation.ImportExport;
+
+                    case AcmaAttributeOperation.ExportOnly:
+                        return AttributeOperation.ExportOnly;
+
+                    case AcmaAttributeOperation.ImportOnly:
+                        return AttributeOperation.ImportOnly;
+
+                    case AcmaAttributeOperation.AcmaInternal:
+                    case AcmaAttributeOperation.AcmaInternalTemp:
+                    default:
+                        throw new ArgumentException(string.Format("The ACMA operation type '{0}' does not have an equivalent FIM operation type", this.Operation.ToString()));
+                }
+            }
+        }
+
         public bool IsInheritanceSourceCandidate
         {
             get

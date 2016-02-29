@@ -43,8 +43,8 @@
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5902.40373, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5902.40373\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.19004, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.19004\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.MetadirectoryServicesEx">
@@ -90,6 +90,9 @@
     <None Include="CreatePackagedMA.bat" />
     <None Include="empty.acmax" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

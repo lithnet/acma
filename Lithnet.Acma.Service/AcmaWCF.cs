@@ -7,11 +7,12 @@ using System.Runtime.Serialization;
 using Lithnet.MetadirectoryServices;
 using Microsoft.MetadirectoryServices;
 using System.Runtime.Caching;
+using Lithnet.Acma.DataModel;
 
 namespace Lithnet.Acma.Service
 {
-    [KnownType(typeof(MAObjectHologram))]
-    [KnownType(typeof(List<string>))]
+    [MmsSurrogateBehavior]
+    [MmsSurrogateExporter]
     public class AcmaWCF : IAcmaWCF
     {
         private static MemoryCache cache = new MemoryCache("SearchResultEnumeratorCache");
@@ -82,7 +83,7 @@ namespace Lithnet.Acma.Service
                 catch (Exception ex)
                 {
                     result.ExportError = MAExportError.ExportErrorCustomContinueRun;
-                        result.Message = ex.Message;
+                    result.Message = ex.Message;
                 }
 
                 response.Results.Add(result);
@@ -105,7 +106,7 @@ namespace Lithnet.Acma.Service
             }
 
             response.Context = Guid.NewGuid().ToString();
-            
+
             this.AddToCache(response.Context, request);
             this.GetResultPage(response, request.PageSize);
 
@@ -120,6 +121,38 @@ namespace Lithnet.Acma.Service
             this.GetResultPage(response, request.PageSize);
 
             return response;
+        }
+
+        public Schema GetMmsSchema()
+        {
+            Schema schema = Schema.Create();
+
+            foreach (AcmaSchemaObjectClass schemaObject in ActiveConfig.DB.ObjectClassesBindingList)
+            {
+                SchemaType schemaType = SchemaType.Create(schemaObject.Name, true);
+                schemaType.Attributes.Add(SchemaAttribute.CreateAnchorAttribute("objectId", AttributeType.String, AttributeOperation.ImportOnly));
+
+                foreach (AcmaSchemaAttribute attribute in schemaObject.Attributes.Where(t => t.Name != "objectId"))
+                {
+                    if (attribute.Operation == AcmaAttributeOperation.AcmaInternal || attribute.Operation == AcmaAttributeOperation.AcmaInternalTemp)
+                    {
+                        continue;
+                    }
+
+                    if (attribute.IsMultivalued)
+                    {
+                        schemaType.Attributes.Add(SchemaAttribute.CreateMultiValuedAttribute(attribute.Name, attribute.MmsType, attribute.MmsOperationType));
+                    }
+                    else
+                    {
+                        schemaType.Attributes.Add(SchemaAttribute.CreateSingleValuedAttribute(attribute.Name, attribute.MmsType, attribute.MmsOperationType));
+                    }
+                }
+
+                schema.Types.Add(schemaType);
+            }
+
+            return schema;
         }
 
         private void GetResultPage(ImportResponse response, int pageSize)
