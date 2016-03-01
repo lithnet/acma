@@ -37,7 +37,7 @@ namespace Lithnet.Acma.ServiceModel
 
         // Sync engine operations
 
-        [OperationContract]
+        [OperationContract ]
         [WebGet(UriTemplate = "/sync/watermark")]
         string GetCurrentWatermark();
 
@@ -69,6 +69,5 @@ namespace Lithnet.Acma.ServiceModel
         [WebGet(UriTemplate = "/sync/schema")]
         Schema GetMmsSchema();
 
-        // Need a release operation 
     }
 }

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AcmaResource.cs" />
     <Compile Include="AcmaWcfClient.cs" />
+    <Compile Include="ServiceConfig.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Exceptions\ReferencedObjectNotPresentException.cs" />
     <Compile Include="IAcmaWCF.cs" />

@@ -13,6 +13,8 @@ using System.Configuration;
 using Lithnet.MetadirectoryServices;
 using Lithnet.Logging;
 using System.IO;
+using Lithnet.Acma.ServiceModel;
+
 
 namespace Lithnet.Acma.Service
 {
@@ -87,11 +89,7 @@ namespace Lithnet.Acma.Service
                 this.ConnectToDatabase();
                 this.LoadConfiguration();
 
-
-                this.serviceHost = new ServiceHost(typeof(AcmaWCF));
-
-                this.serviceHost.Authorization.ServiceAuthorizationManager = new AuthorizationManager();
-                this.serviceHost.Open();
+                this.StartServiceHost();
 
                 this.StartFileSystemWatcher();
 
@@ -103,6 +101,24 @@ namespace Lithnet.Acma.Service
                 Logger.WriteLine("An error occurred while starting the service");
                 Logger.WriteException(ex);
             }
+        }
+
+        private void StartServiceHost()
+        {
+            this.serviceHost = new ServiceHost(typeof(AcmaWCF));
+            this.serviceHost.AddServiceEndpoint(typeof(IAcmaWCF), ServiceConfig.NetNamedPipeBinding, ServiceConfig.NamedPipeUri);
+            if (this.serviceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
+            {
+                this.serviceHost.Description.Behaviors.Add(ServiceConfig.ServiceMetadataDisabledBehavior);
+            }
+
+            if (this.serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
+            {
+                this.serviceHost.Description.Behaviors.Add(ServiceConfig.ServiceDebugBehavior);
+            }
+
+            this.serviceHost.Authorization.ServiceAuthorizationManager = new AuthorizationManager();
+            this.serviceHost.Open();
         }
 
         private void LoadConfiguration()

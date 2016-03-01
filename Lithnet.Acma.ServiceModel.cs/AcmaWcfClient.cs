@@ -13,6 +13,7 @@ namespace Lithnet.Acma.ServiceModel
     public class AcmaWcfClient : ClientBase<IAcmaWCF>, IAcmaWCF
     {
         public AcmaWcfClient()
+            : base(ServiceConfig.NetNamedPipeBinding, ServiceConfig.NetNamedPipeEndpointAddress)
         {
             foreach (OperationDescription op in this.ChannelFactory.Endpoint.Contract.Operations)
             {
