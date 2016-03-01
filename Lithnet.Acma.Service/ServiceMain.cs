@@ -20,6 +20,7 @@ namespace Lithnet.Acma.Service
     {
         private ServiceHost serviceHost = null;
         private FileSystemWatcher configFileWatcher = null;
+        private bool configUpdateQueued = false;
 
         public ServiceMain()
         {
@@ -62,7 +63,8 @@ namespace Lithnet.Acma.Service
             this.serviceHost.Open();
 
             this.StartFileSystemWatcher();
-            AcmaExternalExitEvent.StartEventQueue();
+
+           AcmaExternalExitEvent.StartEventQueue();
         }
 
         private void LoadConfiguration()
@@ -73,7 +75,7 @@ namespace Lithnet.Acma.Service
             }
 
             ActiveConfig.LoadXml(this.ConfigFile);
-
+            this.configUpdateQueued = false;
             Logger.WriteLine("Loaded configuration from {0}", this.ConfigFile);
 
         }
@@ -103,10 +105,18 @@ namespace Lithnet.Acma.Service
 
         private void configFileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            Logger.WriteLine("Detected config file change. Will reloading when no export is in progress");
-            AcmaWCF.ConfigLock.WaitOne();
+            if (!this.configUpdateQueued)
+            {
+                this.configUpdateQueued = true;
+                Logger.WriteLine("Detected config file change. Will reload when no export is in progress");
+                AcmaWCF.ConfigLock.WaitOne();
 
-            this.LoadConfiguration();
+                this.LoadConfiguration();
+            }
+            else
+            {
+                Logger.WriteLine("Detected config file change. Reload already queued");
+            }
         }
 
         protected override void OnStop()

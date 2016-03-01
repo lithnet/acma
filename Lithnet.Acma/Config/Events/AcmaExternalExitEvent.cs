@@ -111,25 +111,70 @@ namespace Lithnet.Acma
             Thread thread = new Thread(() =>
             {
                 Logger.StartThreadLog();
-                Parallel.ForEach(AcmaExternalExitEvent.EventQueue.GetConsumingEnumerable(), e =>
-                    {
-                        try
-                        {
-                            Logger.StartThreadLog();
-                            Logger.WriteLine("Executing async event: " + e.EventID);
+                foreach (RaisedEvent e in AcmaExternalExitEvent.EventQueue.GetConsumingEnumerable())
+                {
+                    /* Parallel foreach is causing a thread-leak in this configuration. Overnight it ran up 32k threads and 1.9GB of memory
+                     * WinDbg shows the same call stack for each thread. Thread count will continue to grow from the moment the service
+                     * is started.
+                     *
+                        00000000`23e5e058 000007fe`fd821420 ntdll!NtWaitForMultipleObjects+0xa
+                        00000000`23e5e060 00000000`77821753 KERNELBASE!WaitForMultipleObjectsEx+0xe8
+                        00000000`23e5e160 000007fe`f31d8976 kernel32!WaitForMultipleObjectsExImplementation+0xb3
+                        00000000`23e5e1f0 000007fe`f31d877a clr!WaitForMultipleObjectsEx_SO_TOLERANT+0x62
+                        00000000`23e5e250 000007fe`f31d8591 clr!Thread::DoAppropriateWaitWorker+0x1d0
+                        00000000`23e5e350 000007fe`f31d883d clr!Thread::DoAppropriateWait+0x7d
+                        00000000`23e5e3d0 000007fe`f31f3ed6 clr!CLREventBase::WaitEx+0xc0
+                        00000000`23e5e460 000007fe`f31f3dea clr!AwareLock::EnterEpilogHelper+0xc6
+                        00000000`23e5e520 000007fe`f31f4521 clr!AwareLock::EnterEpilog+0x62
+                        00000000`23e5e580 000007fe`f31f4293 clr!AwareLock::Contention+0x1e3
+                        00000000`23e5e640 000007fe`f27dd095 clr!JITutil_MonContention+0xaf
+                        00000000`23e5e7d0 000007fe`f27dc601 mscorlib_ni+0xdbd095
+                        00000000`23e5e870 000007fe`f27bae42 mscorlib_ni+0xdbc601
+                        00000000`23e5e8b0 000007fe`f279b672 mscorlib_ni+0xd9ae42
+                        00000000`23e5e980 000007fe`f2952e01 mscorlib_ni+0xd7b672
+                        00000000`23e5e9b0 000007fe`f1f3611e mscorlib_ni+0xf32e01
+                        00000000`23e5ea50 000007fe`f1ec39a5 mscorlib_ni+0x51611e
+                        00000000`23e5eac0 000007fe`f1ec3719 mscorlib_ni+0x4a39a5
+                        00000000`23e5ec20 000007fe`f1f363f5 mscorlib_ni+0x4a3719
+                        00000000`23e5ec50 000007fe`f1f35a95 mscorlib_ni+0x5163f5
+                        00000000`23e5ed30 000007fe`f1ef136a mscorlib_ni+0x515a95
+                        00000000`23e5ed70 000007fe`f30ba7f3 mscorlib_ni+0x4d136a
+                        00000000`23e5ee30 000007fe`f30ba6de clr!CallDescrWorkerInternal+0x83
+                        00000000`23e5ee70 000007fe`f30bae76 clr!CallDescrWorkerWithHandler+0x4a
+                        00000000`23e5eeb0 000007fe`f3140221 clr!MethodDescCallSite::CallTargetWorker+0x251
+                        00000000`23e5f060 000007fe`f30bc121 clr!QueueUserWorkItemManagedCallback+0x2a
+                        00000000`23e5f150 000007fe`f30bc0a8 clr!ManagedThreadBase_DispatchInner+0x2d
+                        00000000`23e5f190 000007fe`f30bc019 clr!ManagedThreadBase_DispatchMiddle+0x6c
+                        00000000`23e5f290 000007fe`f30bc15f clr!ManagedThreadBase_DispatchOuter+0x75
+                        00000000`23e5f320 000007fe`f31401ae clr!ManagedThreadBase_FullTransitionWithAD+0x2f
+                        00000000`23e5f380 000007fe`f313f046 clr!ManagedPerAppDomainTPCount::DispatchWorkItem+0xa2
+                        00000000`23e5f510 000007fe`f313ef3a clr!ThreadpoolMgr::ExecuteWorkRequest+0x46
+                        00000000`23e5f540 000007fe`f31ffcb6 clr!ThreadpoolMgr::WorkerThreadStart+0xf4
+                        00000000`23e5f5d0 00000000`778159ed clr!Thread::intermediateThreadProc+0x7d
+                        00000000`23e5f910 00000000`7794b371 kernel32!BaseThreadInitThunk+0xd
+                        00000000`23e5f940 00000000`00000000 ntdll!RtlUserThreadStart+0x1d
+                    */
 
-                            ((AcmaExternalExitEvent)e.Event).ExecuteInternal(e);
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.WriteLine("The exit event {0} threw an exception", e.EventID);
-                            Logger.WriteException(ex);
-                        }
-                        finally
-                        {
-                            Logger.EndThreadLog();
-                        }
-                    });
+                    //Parallel.ForEach(AcmaExternalExitEvent.EventQueue.GetConsumingEnumerable(), e =>
+                    //{
+                    try
+                    {
+                        Logger.StartThreadLog();
+                        Logger.WriteLine("Executing event: " + e.EventID);
+
+                        ((AcmaExternalExitEvent)e.Event).ExecuteInternal(e);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.WriteLine("The exit event {0} threw an exception", e.EventID);
+                        Logger.WriteException(ex);
+                    }
+                    finally
+                    {
+                        Logger.EndThreadLog();
+                    }
+                    //});
+                }
 
                 Logger.EndThreadLog();
                 Logger.WriteLine("Event queue completed. Signaling wait handle", LogLevel.Debug);
