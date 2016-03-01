@@ -17,7 +17,7 @@
     <CustomAction Id="SetInstallUpgradeDBCustomActionDataValue"
               Return="check"
               Property="InstallUpgradeDBCustomAction"
-              Value="SqlServerName=[SQLSERVERNAME];DBName=[DBNAME];SyncServiceAccount=[SYNCSERVICEACCOUNT]" />
+              Value="SqlServerName=[SQLSERVERNAME];DBName=[DBNAME];AcmaServiceAccount=[SERVICE_USERNAME]" />
 
     <CustomAction Id="InstallUpgradeDBCustomAction"
                   BinaryKey="CustomActionBinary"
@@ -25,5 +25,18 @@
                   Execute="deferred"
                   Return="check"
                   Impersonate ="yes"/>
+  
+    <CustomAction Id="SetCreateAcmaGroupsDataValue"
+              Return="check"
+              Property="CreateAcmaGroupsAction"
+              Value="SyncServiceAccount=[SYNCSERVICEACCOUNT];" />
+
+    <CustomAction Id="CreateAcmaGroupsAction"
+                  BinaryKey="CustomActionBinary"
+                  DllEntry="CreateAcmaGroups"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate ="yes"/>
+  
   </Fragment>
 </Wix>

@@ -27,11 +27,42 @@ namespace Lithnet.Acma.Service
             InitializeComponent();
         }
 
+        internal string ServicePath
+        {
+            get
+            {
+                return Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            }
+        }
+
+
         internal string ConfigFile
         {
             get
             {
-                return ConfigurationManager.AppSettings["configfile"];
+                string configFile = ConfigurationManager.AppSettings["configfile"];
+
+                if (configFile == null)
+                {
+                    configFile = Path.Combine(this.ServicePath, "config.acmax");
+                }
+
+                return configFile;
+            }
+        }
+
+        internal string LogFile
+        {
+            get
+            {
+                string logFile = ConfigurationManager.AppSettings["logFile"];
+
+                if (logFile == null)
+                {
+                    logFile = Path.Combine(this.ServicePath, @"Logs\acma-service.log");
+                }
+
+                return logFile;
             }
         }
 
@@ -47,24 +78,31 @@ namespace Lithnet.Acma.Service
         {
             Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
 
-            Logger.LogPath = ConfigurationManager.AppSettings["logFile"];
-            Logger.LogLevel = LogLevel.Debug;
+            try
+            {
+                Logger.LogPath = this.LogFile;
+                Logger.LogLevel = LogLevel.Debug;
+                Logger.WriteLine("Service starting");
+
+                this.ConnectToDatabase();
+                this.LoadConfiguration();
 
 
-            this.ConnectToDatabase();
-            this.LoadConfiguration();
+                this.serviceHost = new ServiceHost(typeof(AcmaWCF));
 
-            Logger.WriteLine("Service starting");
+                this.serviceHost.Authorization.ServiceAuthorizationManager = new AuthorizationManager();
+                this.serviceHost.Open();
 
+                this.StartFileSystemWatcher();
 
-            this.serviceHost = new ServiceHost(typeof(AcmaWCF));
-
-            this.serviceHost.Authorization.ServiceAuthorizationManager = new AuthorizationManager();
-            this.serviceHost.Open();
-
-            this.StartFileSystemWatcher();
-
-           AcmaExternalExitEvent.StartEventQueue();
+                AcmaExternalExitEvent.StartEventQueue();
+                Logger.WriteLine("Service started");
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine("An error occurred while starting the service");
+                Logger.WriteException(ex);
+            }
         }
 
         private void LoadConfiguration()

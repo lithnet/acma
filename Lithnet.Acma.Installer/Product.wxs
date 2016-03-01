@@ -7,7 +7,7 @@
            Version="1.1.5902"
            Manufacturer="Lithnet"
            UpgradeCode="bcb559bd-8b3a-4a77-9d30-df3fa44b7a13">
-    
+
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  InstallPrivileges="elevated" Manufacturer="Lithnet"/>
     <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes"/>
     <MajorUpgrade Schedule="afterInstallInitialize"
@@ -20,7 +20,7 @@
     <Upgrade Id="{C7B376D9-3C6A-4B13-98CA-9C4190419DE4}"  >
       <UpgradeVersion OnlyDetect="no" Property="REMOVEDOLDMA" Minimum="1.0.0"/>
     </Upgrade>
-    
+
     <!-- Prerequisites -->
 
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
@@ -29,6 +29,9 @@
     <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again. Contact support at support@Swiftposter.com if you have further issues.">
       <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
     </Condition>
+
+    <Property Id="SERVICE_PASSWORD" Hidden="yes" Secure="yes"/>
+    <Property Id="SERVICE_NAME" Secure="yes" Value="acma"/>
 
     <Property Id="FIMINSTALLDIR" Secure="yes">
       <RegistrySearch Id="FimInstallDirFromRegistry"
@@ -42,6 +45,14 @@
       <RegistrySearch Id="FimSyncServiceAccount"
                       Root="HKLM"
                       Key="SYSTEM\CurrentControlSet\services\FIMSynchronizationService"
+                      Name="ObjectName"
+                      Type="raw" />
+    </Property>
+
+    <Property Id="SERVICE_USERNAME" Secure="yes">
+      <RegistrySearch Id="AcmaServiceAccount"
+                      Root="HKLM"
+                      Key="SYSTEM\CurrentControlSet\services\Acma"
                       Name="ObjectName"
                       Type="raw" />
     </Property>
@@ -89,6 +100,7 @@
       <Directory Id="ProgramFiles64Folder" >
         <Directory Id="LITHNETROOT" Name="Lithnet">
           <Directory Id="APPROOT" Name="ACMA">
+            <Directory Id="ACMALOGS" Name="Logs"/>
           </Directory>
         </Directory>
       </Directory>
@@ -119,6 +131,7 @@
           <![CDATA[Installed OR SYNCVERSION]]>
         </Condition>
         <ComponentGroupRef Id="ManagementAgent" />
+        <ComponentGroupRef Id ="AcmaService"/>
         <ComponentRef Id="EventSource"/>
       </Feature>
 
@@ -159,16 +172,24 @@
 
       <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="DBDetailsDlg"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
       <Publish Dialog="DBDetailsDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
-      <Publish Dialog="DBDetailsDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
-      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="DBDetailsDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+      <Publish Dialog="DBDetailsDlg" Control="Next" Event="NewDialog" Value="ServiceDetailsDialog" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+
+      <Publish Dialog="ServiceDetailsDialog" Control="Back" Event="NewDialog" Value="DBDetailsDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+      <Publish Dialog="ServiceDetailsDialog" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
+
+
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="ServiceDetailsDialog" Order="1"><![CDATA[(&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Publish>
 
     </UI>
-    
+
     <InstallExecuteSequence>
       <Custom Action="SetPSModuleCustomActionDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureAcmaPS=3) AND NOT(!FeatureAcmaPS=3)]]></Custom>
       <Custom Action="ReplaceModuleVariableCustomAction" After="SetPSModuleCustomActionDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureAcmaPS=3) AND NOT(!FeatureAcmaPS=3)]]></Custom>
       <Custom Action="SetInstallUpgradeDBCustomActionDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3) AND CREATEDB]]></Custom>
       <Custom Action="InstallUpgradeDBCustomAction" After="SetInstallUpgradeDBCustomActionDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3) AND CREATEDB]]></Custom>
+      <Custom Action="SetCreateAcmaGroupsDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Custom>
+      <Custom Action="CreateAcmaGroupsAction" After="SetCreateAcmaGroupsDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Custom>
     </InstallExecuteSequence>
   </Product>
 </Wix>

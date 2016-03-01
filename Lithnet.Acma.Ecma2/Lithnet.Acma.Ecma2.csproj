@@ -86,7 +86,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="CreatePackagedMA.bat" />
-    <None Include="empty.acmax" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

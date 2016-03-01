@@ -31,7 +31,7 @@
             // 
             // ServiceMain
             // 
-            this.ServiceName = "Service1";
+            this.ServiceName = "Acma";
 
         }
 

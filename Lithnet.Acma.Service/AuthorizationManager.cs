@@ -5,11 +5,16 @@ using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Security.Principal;
+using System.DirectoryServices.AccountManagement;
 
 namespace Lithnet.Acma.Service
 {
     public class AuthorizationManager : ServiceAuthorizationManager
     {
+        private const string AdminGroupName = "AcmaAdministrators";
+
+        private const string SyncUsersGroupName = "AcmaSyncUsers";
+
         protected override bool CheckAccessCore(OperationContext operationContext)
         {
             // Allow MEX requests through. 
@@ -19,10 +24,10 @@ namespace Lithnet.Acma.Service
             {
                 return true;
             }
- 
- 			var contextUser = operationContext.ServiceSecurityContext.WindowsIdentity;
 
-            return contextUser.Name == "FIM-DEV1\\idm-us-fim-ss";
+            IPrincipal wp = new WindowsPrincipal(operationContext.ServiceSecurityContext.WindowsIdentity);
+
+            return wp.IsInRole(AuthorizationManager.AdminGroupName) || wp.IsInRole(AuthorizationManager.SyncUsersGroupName);
         }
     }
 }

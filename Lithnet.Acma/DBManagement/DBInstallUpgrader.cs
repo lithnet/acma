@@ -174,6 +174,11 @@ namespace Lithnet.Acma
             string createScript = this.GetSqlScript("DBManagement.Scripts.New.CreateDB.sql");
             this.ExecuteSql(databaseName, createScript, "master", false);
 
+            GrantDBRights(databaseName, syncServiceAccount);
+        }
+
+        public void GrantDBRights(string databaseName, string syncServiceAccount)
+        {
             if (!string.IsNullOrWhiteSpace(syncServiceAccount))
             {
                 string grantScript = this.GetSqlScript("DBManagement.Scripts.Other.GrantSyncServicePermissions.sql");
