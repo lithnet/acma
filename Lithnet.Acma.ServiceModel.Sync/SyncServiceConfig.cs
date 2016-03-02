@@ -8,9 +8,9 @@ using System.ServiceModel.Description;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    public class ServiceConfig
+    public class SyncServiceConfig
     {
-        public const string NamedPipeUri = "net.pipe://localhost/acma";
+        public const string NamedPipeUri = "net.pipe://localhost/acma/sync";
 
         public static ServiceMetadataBehavior ServiceMetadataDisabledBehavior
         {
@@ -60,7 +60,7 @@ namespace Lithnet.Acma.ServiceModel
         {
             get
             {
-                return new EndpointAddress(ServiceConfig.NamedPipeUri);
+                return new EndpointAddress(SyncServiceConfig.NamedPipeUri);
             }
         }
     }

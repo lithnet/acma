@@ -20,7 +20,8 @@ namespace Lithnet.Acma.Service
 {
     public partial class ServiceMain : ServiceBase
     {
-        private ServiceHost serviceHost = null;
+        private ServiceHost syncServiceHost = null;
+        private ServiceHost acmaServiceHost = null;
         private FileSystemWatcher configFileWatcher = null;
         private bool configUpdateQueued = false;
 
@@ -89,7 +90,8 @@ namespace Lithnet.Acma.Service
                 this.ConnectToDatabase();
                 this.LoadConfiguration();
 
-                this.StartServiceHost();
+                this.StartSyncServiceHost();
+                this.StartAcmaServiceHost();
 
                 this.StartFileSystemWatcher();
 
@@ -103,23 +105,42 @@ namespace Lithnet.Acma.Service
             }
         }
 
-        private void StartServiceHost()
+        private void StartSyncServiceHost()
         {
-            this.serviceHost = new ServiceHost(typeof(AcmaWCF));
-            this.serviceHost.AddServiceEndpoint(typeof(IAcmaWCF), ServiceConfig.NetNamedPipeBinding, ServiceConfig.NamedPipeUri);
-            if (this.serviceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
+            this.syncServiceHost = new ServiceHost(typeof(AcmaSyncService));
+            this.syncServiceHost.AddServiceEndpoint(typeof(IAcmaSyncService), SyncServiceConfig.NetNamedPipeBinding, SyncServiceConfig.NamedPipeUri);
+            if (this.syncServiceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
             {
-                this.serviceHost.Description.Behaviors.Add(ServiceConfig.ServiceMetadataDisabledBehavior);
+                this.syncServiceHost.Description.Behaviors.Add(SyncServiceConfig.ServiceMetadataDisabledBehavior);
             }
 
-            if (this.serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
+            if (this.syncServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
             {
-                this.serviceHost.Description.Behaviors.Add(ServiceConfig.ServiceDebugBehavior);
+                this.syncServiceHost.Description.Behaviors.Add(SyncServiceConfig.ServiceDebugBehavior);
             }
 
-            this.serviceHost.Authorization.ServiceAuthorizationManager = new AuthorizationManager();
-            this.serviceHost.Open();
+            this.syncServiceHost.Authorization.ServiceAuthorizationManager = new SyncServiceAuthorizationManager();
+            this.syncServiceHost.Open();
         }
+
+        private void StartAcmaServiceHost()
+        {
+            this.acmaServiceHost = new ServiceHost(typeof(AcmaService), new Uri(AcmaServiceConfig.NetTcpUri));
+            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaService), AcmaServiceConfig.NetTcpBinding,"");
+            if (this.acmaServiceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
+            {
+                this.acmaServiceHost.Description.Behaviors.Add(AcmaServiceConfig.ServiceMetadataDisabledBehavior);
+            }
+
+            if (this.acmaServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
+            {
+                this.acmaServiceHost.Description.Behaviors.Add(AcmaServiceConfig.ServiceDebugBehavior);
+            }
+            
+            this.acmaServiceHost.Authorization.ServiceAuthorizationManager = new AcmaServiceAuthorizationManager();
+            this.acmaServiceHost.Open();
+        }
+
 
         private void LoadConfiguration()
         {
@@ -163,7 +184,7 @@ namespace Lithnet.Acma.Service
             {
                 this.configUpdateQueued = true;
                 Logger.WriteLine("Detected config file change. Will reload when no export is in progress");
-                AcmaWCF.ConfigLock.WaitOne();
+                AcmaSyncService.ConfigLock.WaitOne();
 
                 this.LoadConfiguration();
             }
@@ -177,10 +198,16 @@ namespace Lithnet.Acma.Service
         {
             Logger.WriteLine("Service shutting down");
 
-            if (this.serviceHost != null)
+            if (this.syncServiceHost != null)
             {
-                this.serviceHost.Close();
-                this.serviceHost = null;
+                this.syncServiceHost.Close();
+                this.syncServiceHost = null;
+            }
+
+            if (this.acmaServiceHost != null)
+            {
+                this.acmaServiceHost.Close();
+                this.acmaServiceHost = null;
             }
 
             if (this.configFileWatcher != null)

@@ -10,10 +10,10 @@ using Lithnet.MetadirectoryServices;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    public class AcmaWcfClient : ClientBase<IAcmaWCF>, IAcmaWCF
+    public class AcmaSyncServiceClient : ClientBase<IAcmaSyncService>, IAcmaSyncService
     {
-        public AcmaWcfClient()
-            : base(ServiceConfig.NetNamedPipeBinding, ServiceConfig.NetNamedPipeEndpointAddress)
+        public AcmaSyncServiceClient()
+            : base(SyncServiceConfig.NetNamedPipeBinding, SyncServiceConfig.NetNamedPipeEndpointAddress)
         {
             foreach (OperationDescription op in this.ChannelFactory.Endpoint.Contract.Operations)
             {
@@ -32,32 +32,7 @@ namespace Lithnet.Acma.ServiceModel
                 }
             }
         }
-
-        public AcmaResource Get(string id)
-        {
-            return this.Channel.Get(id);
-        }
-
-        public CSEntryChange GetCSEntryChange(string id)
-        {
-            return this.Channel.GetCSEntryChange(id);
-        }
-
-        public AcmaResource GetResourceByKey(string objectType, string key, string keyValue)
-        {
-            return this.Channel.GetResourceByKey(objectType, key, keyValue);
-        }
-
-        public AcmaResource[] GetObjects(string watermark)
-        {
-            return this.Channel.GetObjects(watermark);
-        }
-
-        public AcmaResource[] GetObjectsByClass(string objectType)
-        {
-            return this.Channel.GetObjectsByClass(objectType);
-        }
-
+       
         public string GetCurrentWatermark()
         {
             return this.Channel.GetCurrentWatermark();

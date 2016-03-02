@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}</ProjectGuid>
+    <ProjectGuid>{753364AA-9E05-4389-91D2-DC86EE453DEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lithnet.Acma.ServiceModel</RootNamespace>
-    <AssemblyName>Lithnet.Acma.ServiceModel</AssemblyName>
+    <RootNamespace>Lithnet.Acma.ServiceModel.Client</RootNamespace>
+    <AssemblyName>Lithnet.Acma.ServiceModel.Client</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,14 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5903.32830, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5903.32830\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.MetadirectoryServicesEx, Version=4.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -51,23 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcmaResource.cs" />
-    <Compile Include="AcmaWcfClient.cs" />
-    <Compile Include="ServiceConfig.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Exceptions\ReferencedObjectNotPresentException.cs" />
-    <Compile Include="IAcmaWCF.cs" />
-    <Compile Include="MessageObjects\ExportRequest.cs" />
-    <Compile Include="MessageObjects\ExportResponse.cs" />
-    <Compile Include="MessageObjects\ImportReleaseRequest.cs" />
-    <Compile Include="MessageObjects\ImportStartRequest.cs" />
-    <Compile Include="MessageObjects\ImportResponse.cs" />
-    <Compile Include="MessageObjects\PageRequest.cs" />
-    <Compile Include="MmsSurrogateBehavior.cs" />
-    <Compile Include="MmsSurrogateExporter.cs" />
+    <Compile Include="AcmaServiceClient.cs" />
+    <Compile Include="AcmaServiceConstants.cs" />
+    <Compile Include="IAcmaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="AcmaServiceConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

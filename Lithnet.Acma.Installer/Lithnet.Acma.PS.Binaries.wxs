@@ -17,11 +17,17 @@
             <Component Id="cmpC22E3A66FBFD6DC5DCBAA73C4DE9B0BE" Guid="*">
                 <File Id="filAC1523F36659ACF293B24A91E08F7309" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.PS.pdb" />
             </Component>
-            <Component Id="cmpC9392BCC9D3B2DD1390044DACA99D70D" Guid="*">
-                <File Id="filFABECD03A8EAC4A3DCBD84F4D247E08F" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.ServiceModel.dll" />
+            <Component Id="cmp32B2228AA3A40A7D58BE14624D597190" Guid="*">
+                <File Id="fil3575AA5996126CEBD6C1918D1FED728C" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.ServiceModel.Client.dll" />
             </Component>
-            <Component Id="cmpF6AFF10DCC4D8776E211DB55D5191032" Guid="*">
-                <File Id="filB551DFE94E9FA595ACD4B06F2650A408" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.ServiceModel.pdb" />
+            <Component Id="cmpE0D431951F8309BF671D53503FE7A2C9" Guid="*">
+                <File Id="fil502DB2B8413C8BAA8E1C41A9F361CF94" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.ServiceModel.Client.pdb" />
+            </Component>
+            <Component Id="cmpBCCC5F5354BA80F5F4C4AE7285FD2285" Guid="*">
+                <File Id="filB2CBD4D9A65E7449C0A37B8BDFEA5839" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.ServiceModel.Sync.dll" />
+            </Component>
+            <Component Id="cmp211D4A526D35014312DED39025C749AD" Guid="*">
+                <File Id="fil39684869EDB9AFCE9F68E5D7F73DC702" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.ServiceModel.Sync.pdb" />
             </Component>
             <Component Id="cmp28A2074CA2896DBD40F6DE19A155E261" Guid="*">
                 <File Id="fil88FA520ED8E4BB97F9EB6C38013E052B" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.TestEngine.dll" />
@@ -59,8 +65,10 @@
             <ComponentRef Id="cmpF2A0C30AC8F37F2FDEBE635EDD83C23F" />
             <ComponentRef Id="cmpEA98ECA6542AE98A97CEF740AFF54B12" />
             <ComponentRef Id="cmpC22E3A66FBFD6DC5DCBAA73C4DE9B0BE" />
-            <ComponentRef Id="cmpC9392BCC9D3B2DD1390044DACA99D70D" />
-            <ComponentRef Id="cmpF6AFF10DCC4D8776E211DB55D5191032" />
+            <ComponentRef Id="cmp32B2228AA3A40A7D58BE14624D597190" />
+            <ComponentRef Id="cmpE0D431951F8309BF671D53503FE7A2C9" />
+            <ComponentRef Id="cmpBCCC5F5354BA80F5F4C4AE7285FD2285" />
+            <ComponentRef Id="cmp211D4A526D35014312DED39025C749AD" />
             <ComponentRef Id="cmp28A2074CA2896DBD40F6DE19A155E261" />
             <ComponentRef Id="cmp4AA8C7B702BC54614A70A077A0359561" />
             <ComponentRef Id="cmpEE98A02D8239B72F4DF50EA8A5641C3B" />

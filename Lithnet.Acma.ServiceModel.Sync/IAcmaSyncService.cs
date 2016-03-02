@@ -10,34 +10,12 @@ using Microsoft.MetadirectoryServices;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    [ServiceContract(Namespace = Constants.Namespace)]
+    [ServiceContract(Namespace = AcmaSyncServiceConstants.Namespace)]
     [MmsSurrogateExporter]
     [MmsSurrogateBehavior]
-    public interface IAcmaWCF
+    public interface IAcmaSyncService
     {
         [OperationContract]
-        [WebGet(UriTemplate = "/resources/{id}")]
-        AcmaResource Get(string id);
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/csentry/{id}")]
-        CSEntryChange GetCSEntryChange(string id);
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/resources/{objectType}/{key}/{keyValue}/")]
-        AcmaResource GetResourceByKey(string objectType, string key, string keyValue);
-       
-        [OperationContract]
-        [WebGet(UriTemplate = "/resources/?watermark={watermark}")]
-        AcmaResource[] GetObjects(string watermark);
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/resources/{objectType}/")]
-        AcmaResource[] GetObjectsByClass(string objectType);
-
-        // Sync engine operations
-
-        [OperationContract ]
         [WebGet(UriTemplate = "/sync/watermark")]
         string GetCurrentWatermark();
 
@@ -68,6 +46,5 @@ namespace Lithnet.Acma.ServiceModel
         [OperationContract]
         [WebGet(UriTemplate = "/sync/schema")]
         Schema GetMmsSchema();
-
     }
 }

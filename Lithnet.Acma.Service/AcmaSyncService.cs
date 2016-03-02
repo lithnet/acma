@@ -17,62 +17,23 @@ namespace Lithnet.Acma.Service
 {
     [MmsSurrogateBehavior]
     [MmsSurrogateExporter]
-    [ServiceBehavior(Namespace = Constants.Namespace)]
-    public class AcmaWCF : IAcmaWCF
+    [ServiceBehavior(Namespace = AcmaSyncServiceConstants.Namespace)]
+    public class AcmaSyncService : IAcmaSyncService
     {
         private static MemoryCache cache = new MemoryCache("SearchResultEnumeratorCache");
 
         internal static ManualResetEvent ConfigLock = new ManualResetEvent(true);
-
-        public AcmaResource Get(string ID)
-        {
-            return ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(ID)).ToAcmaResource();
-        }
-
-        public CSEntryChange GetCSEntryChange(string ID)
-        {
-            return ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(ID)).CreateCSEntryChangeFromMAObjectHologram();
-        }
-
-        public CSEntryChange GetCSEntryChange(string objectType, string key, string keyValue)
-        {
-            DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue);
-            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault().CreateCSEntryChangeFromMAObjectHologram();
-        }
-
-        public AcmaResource GetResourceByKey(string objectType, string key, string keyValue)
-        {
-            DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue);
-            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query).FirstOrDefault().ToAcmaResource();
-        }
 
         public string GetCurrentWatermark()
         {
             return ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjects().ToSmartStringOrNull();
         }
 
-        public AcmaResource[] GetObjects(string watermark)
-        {
-            byte[] byteWaterMark = null;
-
-            if (watermark != null)
-            {
-                byteWaterMark = Convert.FromBase64String(watermark);
-            }
-
-            return ActiveConfig.DB.MADataConext.GetMAObjects(byteWaterMark).Select(t => t.ToAcmaResource()).ToArray();
-        }
-
-        public AcmaResource[] GetObjectsByClass(string objectType)
-        {
-            return ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, objectType).Select(t => t.ToAcmaResource()).ToArray();
-        }
-
         public void ExportStart()
         {
             Logger.WriteSeparatorLine('*');
             Logger.WriteLine("Starting Export");
-            AcmaWCF.ConfigLock.Reset();
+            AcmaSyncService.ConfigLock.Reset();
 
             MAStatistics.StartOperation(MAOperationType.Export);
             this.ProcessOperationEvents(AcmaEventOperationType.Export);
@@ -117,9 +78,9 @@ namespace Lithnet.Acma.Service
             Logger.WriteLine("Export Complete");
             Logger.WriteSeparatorLine('*');
 
-            if (AcmaWCF.ConfigLock != null)
+            if (AcmaSyncService.ConfigLock != null)
             {
-                AcmaWCF.ConfigLock.Set();
+                AcmaSyncService.ConfigLock.Set();
             }
 
             MAStatistics.StopOperation();
@@ -366,12 +327,12 @@ namespace Lithnet.Acma.Service
 
         private void AddToCache(string context, CachedImportRequest request)
         {
-            AcmaWCF.cache.Add(context, request, new CacheItemPolicy() { SlidingExpiration = new TimeSpan(0, 10, 0) });
+            AcmaSyncService.cache.Add(context, request, new CacheItemPolicy() { SlidingExpiration = new TimeSpan(0, 10, 0) });
         }
 
         private CachedImportRequest GetFromCache(string context)
         {
-            object item = AcmaWCF.cache.Get(context);
+            object item = AcmaSyncService.cache.Get(context);
 
             if (item == null)
             {
@@ -383,7 +344,7 @@ namespace Lithnet.Acma.Service
 
         private void RemoveFromCache(string context)
         {
-            AcmaWCF.cache.Remove(context);
+            AcmaSyncService.cache.Remove(context);
         }
     }
 }

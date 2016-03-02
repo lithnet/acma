@@ -9,7 +9,7 @@ using System.DirectoryServices.AccountManagement;
 
 namespace Lithnet.Acma.Service
 {
-    public class AuthorizationManager : ServiceAuthorizationManager
+    public class SyncServiceAuthorizationManager : ServiceAuthorizationManager
     {
         private const string AdminGroupName = "AcmaAdministrators";
 
@@ -27,7 +27,7 @@ namespace Lithnet.Acma.Service
 
             IPrincipal wp = new WindowsPrincipal(operationContext.ServiceSecurityContext.WindowsIdentity);
 
-            return wp.IsInRole(AuthorizationManager.AdminGroupName) || wp.IsInRole(AuthorizationManager.SyncUsersGroupName);
+            return wp.IsInRole(SyncServiceAuthorizationManager.SyncUsersGroupName);
         }
     }
 }

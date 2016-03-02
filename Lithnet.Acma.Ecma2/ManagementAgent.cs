@@ -62,7 +62,7 @@ namespace Lithnet.Acma.Ecma2
         /// </summary>
         private KeyedCollection<string, ConfigParameter> suppliedConfigParameters;
 
-        private AcmaWcfClient client = new AcmaWcfClient();
+        private AcmaSyncServiceClient client = new AcmaSyncServiceClient();
 
         /// <summary>
         /// Initializes a new instance of the ManagementAgent class
@@ -212,7 +212,7 @@ namespace Lithnet.Acma.Ecma2
         {
             try
             {
-                this.client = new AcmaWcfClient();
+                this.client = new AcmaSyncServiceClient();
                 return this.client.GetMmsSchema();
             }
             catch (Exception ex)
@@ -243,7 +243,7 @@ namespace Lithnet.Acma.Ecma2
                 Logger.WriteLine("Starting Import");
                 Logger.WriteLine("Import data from sync engine: " + importRunStep.CustomData);
 
-                this.client = new AcmaWcfClient();
+                this.client = new AcmaSyncServiceClient();
                 this.client.Open();
 
                 ImportStartRequest request = new ImportStartRequest();
@@ -362,7 +362,7 @@ namespace Lithnet.Acma.Ecma2
                 Logger.WriteSeparatorLine('*');
                 Logger.WriteLine("Starting Export");
 
-                this.client = new AcmaWcfClient();
+                this.client = new AcmaSyncServiceClient();
                 this.client.Open();
 
                 this.client.ExportStart();
@@ -383,7 +383,7 @@ namespace Lithnet.Acma.Ecma2
         {
             try
             {
-                this.client = new AcmaWcfClient();
+                this.client = new AcmaSyncServiceClient();
 
                 PutExportEntriesResults exportEntriesResults = new PutExportEntriesResults();
                 IList<AttributeChange> anchorchanges = new List<AttributeChange>();

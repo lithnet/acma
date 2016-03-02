@@ -136,10 +136,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.cs\Lithnet.Acma.ServiceModel.csproj">
-      <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
-      <Name>Lithnet.Acma.ServiceModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
       <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
       <Name>Lithnet.Acma</Name>

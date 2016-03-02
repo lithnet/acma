@@ -33,7 +33,9 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Lithnet.Acma.Installer", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Installer.CustomActions", "Lithnet.Acma.Installer.CustomActions\Lithnet.Acma.Installer.CustomActions.csproj", "{25F78609-0F2D-4139-8DB5-6A4CDFC18EAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.ServiceModel", "Lithnet.Acma.ServiceModel.cs\Lithnet.Acma.ServiceModel.csproj", "{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.ServiceModel.Sync", "Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj", "{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.ServiceModel.Client", "Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj", "{753364AA-9E05-4389-91D2-DC86EE453DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -217,6 +219,18 @@ Global
 		{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}.Release|x64.ActiveCfg = Release|Any CPU
 		{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}.Release|x86.ActiveCfg = Release|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Release|x64.ActiveCfg = Release|Any CPU
+		{753364AA-9E05-4389-91D2-DC86EE453DEB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

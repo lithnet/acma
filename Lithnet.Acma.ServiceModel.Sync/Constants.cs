@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    public class Constants
+    public class AcmaSyncServiceConstants
     {
-        public const string Namespace = "http://lithnet.local/acma/";
+        public const string Namespace = "http://lithnet.local/acma/sync";
     }
 }

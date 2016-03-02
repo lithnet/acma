@@ -97,6 +97,11 @@ namespace Lithnet.Acma
         /// <returns>A list of anchor attributes for the new object</returns>
         private static IList<AttributeChange> PerformCSEntryExportAdd(CSEntryChange csentry, MADataContext dc, out bool referenceRetryRequired)
         {
+            if (csentry.ObjectType == null)
+            {
+                throw new InvalidOperationException("No object class was specified for CSEntryChange with DN " + csentry.DN);
+            }
+
             AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentry.ObjectType);
             bool isUndeleting = false;
             MAObjectHologram hologram;
@@ -108,7 +113,7 @@ namespace Lithnet.Acma
             }
             else
             {
-                hologram = GetResurrectionObject(csentry, dc, objectClass);
+                hologram = GetResurrectionObject(csentry, dc);
 
                 if (hologram == null)
                 {
@@ -151,9 +156,7 @@ namespace Lithnet.Acma
         /// <param name="dc">The DBDataContext in use on this thread</param>
         private static void PerformCSEntryExportDelete(CSEntryChange csentryChange, MADataContext dc)
         {
-            AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
-
-            MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc, objectClass);
+            MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc);
             csentryChange.DN = maObject.ObjectID.ToString();
             maObject.CommitCSEntryChange(csentryChange, false);
         }
@@ -166,8 +169,8 @@ namespace Lithnet.Acma
         /// <param name="referenceRetryRequired">A value indicating whether a reference update failed due to a missing object and needs to be retried after all other CSEntryChanges have been processed</param>
         private static void PerformCSEntryExportUpdate(CSEntryChange csentryChange, MADataContext dc, out bool referenceRetryRequired)
         {
-            AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
-            MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc, objectClass);
+
+            MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc);
             csentryChange.DN = maObject.ObjectID.ToString();
             maObject.CommitCSEntryChange(csentryChange, false);
             referenceRetryRequired = maObject.ReferenceRetryRequired;
@@ -181,8 +184,7 @@ namespace Lithnet.Acma
         /// <param name="referenceRetryRequired">A value indicating whether a reference update failed due to a missing object and needs to be retried after all other CSEntryChanges have been processed</param>
         private static void PerformCSEntryExportReplace(CSEntryChange csentryChange, MADataContext dc, out bool referenceRetryRequired)
         {
-            AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
-            MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc, objectClass);
+            MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange, dc);
             csentryChange.DN = maObject.ObjectID.ToString();
             csentryChange.ObjectType = maObject.ObjectClass.Name;
             csentryChange = csentryChange.ConvertCSEntryChangeReplaceToUpdate(maObject);
@@ -232,7 +234,7 @@ namespace Lithnet.Acma
                 throw new ShadowObjectExportException(string.Format("The shadow parent {0} for object {1} was not found", shadowParentID, csentry.DN));
             }
 
-            ValueChange shadowLinkValueChange = csentry.AttributeChanges["shadowLink"].ValueChanges.FirstOrDefault( t=> t.ModificationType == ValueModificationType.Add);
+            ValueChange shadowLinkValueChange = csentry.AttributeChanges["shadowLink"].ValueChanges.FirstOrDefault(t => t.ModificationType == ValueModificationType.Add);
 
             if (shadowLinkValueChange == null)
             {
@@ -277,7 +279,7 @@ namespace Lithnet.Acma
             }
 
             return parentHologram.ProvisionShadowObject(link, csentry);
-            
+
         }
 
         /// <summary>
@@ -286,8 +288,15 @@ namespace Lithnet.Acma
         /// <param name="csentryChange">The CSEntryChange object representing the object being added to the database</param>
         /// <param name="dc">The DBDataContext in use on this thread</param>
         /// <returns>An MAObject matching the resurrection criteria, or null if no matching object was found</returns>
-        private static MAObjectHologram GetResurrectionObject(CSEntryChange csentryChange, MADataContext dc, AcmaSchemaObjectClass objectClass)
+        private static MAObjectHologram GetResurrectionObject(CSEntryChange csentryChange, MADataContext dc)
         {
+            AcmaSchemaObjectClass objectClass = null;
+
+            if (csentryChange.ObjectType != null)
+            {
+                objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
+            }
+
             MAObjectHologram existingObject = dc.GetMAObjectOrDefault(csentryChange.DN, objectClass);
 
             if (existingObject != null)
@@ -315,30 +324,39 @@ namespace Lithnet.Acma
             return dc.GetResurrectionObject(parameters, csentryChange);
         }
 
-        private static MAObjectHologram GetObjectFromDnOrAnchor(CSEntryChange csentryChange, MADataContext dc, AcmaSchemaObjectClass objectClass)
+        private static MAObjectHologram GetObjectFromDnOrAnchor(CSEntryChange csentryChange, MADataContext dc)
         {
             MAObjectHologram maObject = null;
-            AcmaSchemaObjectClass schemaObject = null;
+
+            AcmaSchemaObjectClass objectClass = null;
+
+            if (csentryChange.ObjectType != null)
+            {
+                objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
+            }
 
             if (!string.IsNullOrWhiteSpace(csentryChange.DN))
             {
-                maObject = dc.GetMAObjectOrDefault(new Guid(csentryChange.DN), objectClass);
+                if (objectClass != null)
+                {
+                    maObject = dc.GetMAObjectOrDefault(new Guid(csentryChange.DN), objectClass);
+                }
+                else
+                {
+                    maObject = dc.GetMAObjectOrDefault(new Guid(csentryChange.DN));
+                }
+
                 if (maObject != null)
                 {
                     return maObject;
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(csentryChange.ObjectType))
-            {
-                schemaObject = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
-            }
-
             DBQueryGroup anchorGroupSearch = new DBQueryGroup(GroupOperator.Any);
 
             foreach (AnchorAttribute anchor in csentryChange.AnchorAttributes)
             {
-                AcmaSchemaAttribute attribute = ActiveConfig.DB.GetAttribute(anchor.Name, schemaObject.Name);
+                AcmaSchemaAttribute attribute = ActiveConfig.DB.GetAttribute(anchor.Name);
                 DBQueryByValue query = new DBQueryByValue(attribute, ValueOperator.Equals, new ValueDeclaration(anchor.Value.ToSmartString()));
                 anchorGroupSearch.DBQueries.Add(query);
             }
@@ -347,10 +365,10 @@ namespace Lithnet.Acma
             {
                 DBQueryGroup parentGroup;
 
-                if (schemaObject != null)
+                if (objectClass != null)
                 {
                     parentGroup = new DBQueryGroup(GroupOperator.All);
-                    DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, new ValueDeclaration(schemaObject.Name));
+                    DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, new ValueDeclaration(objectClass.Name));
                     parentGroup.DBQueries.Add(query);
                     parentGroup.DBQueries.Add(anchorGroupSearch);
                 }
