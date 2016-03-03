@@ -10,7 +10,7 @@ namespace Lithnet.Acma.ServiceModel
 {
     public class AcmaServiceConfig
     {
-        public const string NetTcpUri = "net.tcp://*:44889/acma/client";
+        public const string NetTcpUri = "net.tcp://localhost:44889/acma/client";
 
         public const string NetTcpHostnamePlaceHolderUri = "net.tcp://{0}:44889/acma/client";
 
@@ -54,8 +54,9 @@ namespace Lithnet.Acma.ServiceModel
                 binding.TransactionFlow = false;
                 binding.HostNameComparisonMode = HostNameComparisonMode.StrongWildcard;
                 binding.Security.Mode = SecurityMode.Transport;
-                binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
+                binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
                 binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+                
                 return binding;
             }
         }

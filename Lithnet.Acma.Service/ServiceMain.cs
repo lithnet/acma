@@ -14,7 +14,7 @@ using Lithnet.MetadirectoryServices;
 using Lithnet.Logging;
 using System.IO;
 using Lithnet.Acma.ServiceModel;
-
+using System.Threading;
 
 namespace Lithnet.Acma.Service
 {
@@ -25,6 +25,8 @@ namespace Lithnet.Acma.Service
         private FileSystemWatcher configFileWatcher = null;
         private bool configUpdateQueued = false;
 
+        internal static object Lock = new object();
+        
         public ServiceMain()
         {
             InitializeComponent();
@@ -126,7 +128,7 @@ namespace Lithnet.Acma.Service
         private void StartAcmaServiceHost()
         {
             this.acmaServiceHost = new ServiceHost(typeof(AcmaService), new Uri(AcmaServiceConfig.NetTcpUri));
-            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaService), AcmaServiceConfig.NetTcpBinding,"");
+            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaService), AcmaServiceConfig.NetTcpBinding, "");
             if (this.acmaServiceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
             {
                 this.acmaServiceHost.Description.Behaviors.Add(AcmaServiceConfig.ServiceMetadataDisabledBehavior);
@@ -136,7 +138,7 @@ namespace Lithnet.Acma.Service
             {
                 this.acmaServiceHost.Description.Behaviors.Add(AcmaServiceConfig.ServiceDebugBehavior);
             }
-            
+
             this.acmaServiceHost.Authorization.ServiceAuthorizationManager = new AcmaServiceAuthorizationManager();
             this.acmaServiceHost.Open();
         }
@@ -184,9 +186,16 @@ namespace Lithnet.Acma.Service
             {
                 this.configUpdateQueued = true;
                 Logger.WriteLine("Detected config file change. Will reload when no export is in progress");
-                AcmaSyncService.ConfigLock.WaitOne();
 
-                this.LoadConfiguration();
+                try
+                {
+                    Monitor.Enter(ServiceMain.Lock);
+                    this.LoadConfiguration();
+                }
+                finally
+                {
+                    Monitor.Exit(ServiceMain.Lock);
+                }
             }
             else
             {

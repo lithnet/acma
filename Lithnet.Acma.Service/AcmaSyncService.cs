@@ -22,8 +22,6 @@ namespace Lithnet.Acma.Service
     {
         private static MemoryCache cache = new MemoryCache("SearchResultEnumeratorCache");
 
-        internal static ManualResetEvent ConfigLock = new ManualResetEvent(true);
-
         public string GetCurrentWatermark()
         {
             return ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjects().ToSmartStringOrNull();
@@ -33,7 +31,6 @@ namespace Lithnet.Acma.Service
         {
             Logger.WriteSeparatorLine('*');
             Logger.WriteLine("Starting Export");
-            AcmaSyncService.ConfigLock.Reset();
 
             MAStatistics.StartOperation(MAOperationType.Export);
             this.ProcessOperationEvents(AcmaEventOperationType.Export);
@@ -41,48 +38,53 @@ namespace Lithnet.Acma.Service
 
         public ExportResponse ExportPage(ExportRequest request)
         {
-            ExportResponse response = new ExportResponse();
-            response.Results = new List<CSEntryChangeResult>();
-            IList<AttributeChange> anchorchanges;
-
-            foreach (CSEntryChange csentryChange in request.CSEntryChanges)
+            try
             {
-                try
-                {
-                    bool referenceRetryRequired;
-                    anchorchanges = CSEntryExport.PutExportEntry(csentryChange, ActiveConfig.DB.MADataConext, out referenceRetryRequired);
+                Monitor.Enter(ServiceMain.Lock);
 
-                    if (referenceRetryRequired)
+                ExportResponse response = new ExportResponse();
+                response.Results = new List<CSEntryChangeResult>();
+                IList<AttributeChange> anchorchanges;
+
+                foreach (CSEntryChange csentryChange in request.CSEntryChanges)
+                {
+                    try
                     {
-                        Logger.WriteLine(string.Format("Reference attribute not available for csentry {0}. Flagging for retry", csentryChange.DN));
-                        response.Results.Add(CSEntryChangeResult.Create(csentryChange.Identifier, anchorchanges, MAExportError.ExportActionRetryReferenceAttribute));
+                        bool referenceRetryRequired;
+                        anchorchanges = CSEntryExport.PutExportEntry(csentryChange, ActiveConfig.DB.MADataConext, out referenceRetryRequired);
+
+                        if (referenceRetryRequired)
+                        {
+                            Logger.WriteLine(string.Format("Reference attribute not available for csentry {0}. Flagging for retry", csentryChange.DN));
+                            response.Results.Add(CSEntryChangeResult.Create(csentryChange.Identifier, anchorchanges, MAExportError.ExportActionRetryReferenceAttribute));
+                        }
+                        else
+                        {
+                            response.Results.Add(CSEntryChangeResult.Create(csentryChange.Identifier, anchorchanges, MAExportError.Success));
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        response.Results.Add(CSEntryChangeResult.Create(csentryChange.Identifier, anchorchanges, MAExportError.Success));
+                        MAStatistics.AddExportError();
+
+                        response.Results.Add(this.GetExportChangeResultFromException(csentryChange, ex));
                     }
                 }
-                catch (Exception ex)
-                {
-                    MAStatistics.AddExportError();
 
-                    response.Results.Add(this.GetExportChangeResultFromException(csentryChange, ex));
-                }
+                return response;
+            }
+            finally
+            {
+                Monitor.Exit(ServiceMain.Lock);
             }
 
-            return response;
         }
 
         public void ExportEnd()
         {
             Logger.WriteLine("Export Complete");
             Logger.WriteSeparatorLine('*');
-
-            if (AcmaSyncService.ConfigLock != null)
-            {
-                AcmaSyncService.ConfigLock.Set();
-            }
-
+          
             MAStatistics.StopOperation();
             Logger.WriteLine(MAStatistics.ToString());
         }
@@ -116,7 +118,7 @@ namespace Lithnet.Acma.Service
         {
             Logger.WriteLine("Import request received");
             MAStatistics.StartOperation(MAOperationType.Import);
-            
+
             ImportResponse response = new ImportResponse();
             CachedImportRequest cachedRequest = new CachedImportRequest();
             cachedRequest.Request = request;
@@ -198,7 +200,7 @@ namespace Lithnet.Acma.Service
                 {
                     originalRequest = GetFromCache(request.Context);
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                     Logger.WriteLine("Could not release the request as it was not found in the cache");
                     return;

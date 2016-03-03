@@ -83,63 +83,97 @@ namespace Lithnet.Acma.Service
 
         public void ReplaceResource(string id, AcmaResource resource)
         {
-            CSEntryChange csentry = CSEntryChangeDetached.Create();
-            csentry.ObjectModificationType = ObjectModificationType.Replace;
-            csentry.DN = id;
-
-            foreach (var item in resource.Attributes)
+            try
             {
-                csentry.AttributeChanges.Add(this.AvpToAttributeChange(item, AttributeModificationType.Add));
-            }
+                Monitor.Enter(ServiceMain.Lock);
+                CSEntryChange csentry = CSEntryChangeDetached.Create();
+                csentry.ObjectModificationType = ObjectModificationType.Replace;
+                csentry.DN = id;
 
-            bool refRetry;
-            CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                foreach (var item in resource.Attributes)
+                {
+                    csentry.AttributeChanges.Add(this.AvpToAttributeChange(item, AttributeModificationType.Add));
+                }
+
+                bool refRetry;
+                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+            }
+            finally
+            {
+                Monitor.Exit(ServiceMain.Lock);
+            }
         }
 
         public void PatchResource(string id, AcmaResource resource)
         {
-            CSEntryChange csentry = CSEntryChangeDetached.Create();
-            csentry.ObjectModificationType = ObjectModificationType.Update;
-            csentry.DN = id;
-
-            foreach (var item in resource.Attributes)
+            try
             {
-                csentry.AttributeChanges.Add(this.AvpToAttributeChange(item, AttributeModificationType.Replace));
-            }
+                Monitor.Enter(ServiceMain.Lock);
+                CSEntryChange csentry = CSEntryChangeDetached.Create();
+                csentry.ObjectModificationType = ObjectModificationType.Update;
+                csentry.DN = id;
 
-            bool refRetry;
-            CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                foreach (var item in resource.Attributes)
+                {
+                    csentry.AttributeChanges.Add(this.AvpToAttributeChange(item, AttributeModificationType.Replace));
+                }
+
+                bool refRetry;
+                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+            }
+            finally
+            {
+                Monitor.Exit(ServiceMain.Lock);
+            }
         }
 
         public void DeleteResource(string id)
         {
-            CSEntryChange csentry = CSEntryChangeDetached.Create();
-            csentry.ObjectModificationType = ObjectModificationType.Delete;
-            csentry.DN = id;
+            try
+            {
+                Monitor.Enter(ServiceMain.Lock);
+                CSEntryChange csentry = CSEntryChangeDetached.Create();
+                csentry.ObjectModificationType = ObjectModificationType.Delete;
+                csentry.DN = id;
 
-            bool refRetry;
-            CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                bool refRetry;
+                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+            }
+            finally
+            {
+                Monitor.Exit(ServiceMain.Lock);
+            }
+
         }
 
         public void CreateResource(AcmaResource resource)
         {
-            if (resource.ObjectID == Guid.Empty)
+            try
             {
-                resource.ObjectID = new Guid();
+                Monitor.Enter(ServiceMain.Lock);
+
+                if (resource.ObjectID == Guid.Empty)
+                {
+                    resource.ObjectID = new Guid();
+                }
+
+                CSEntryChange csentry = CSEntryChangeDetached.Create();
+                csentry.ObjectModificationType = ObjectModificationType.Add;
+                csentry.DN = resource.ObjectID.ToString();
+                csentry.ObjectType = resource.ObjectType;
+
+                foreach (var item in resource.Attributes)
+                {
+                    csentry.AttributeChanges.Add(this.AvpToAttributeChange(item, AttributeModificationType.Add));
+                }
+
+                bool refRetry;
+                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
             }
-
-            CSEntryChange csentry = CSEntryChangeDetached.Create();
-            csentry.ObjectModificationType = ObjectModificationType.Add;
-            csentry.DN = resource.ObjectID.ToString();
-            csentry.ObjectType = resource.ObjectType;
-
-            foreach (var item in resource.Attributes)
+            finally
             {
-                csentry.AttributeChanges.Add(this.AvpToAttributeChange(item, AttributeModificationType.Add));
+                Monitor.Exit(ServiceMain.Lock);
             }
-
-            bool refRetry;
-            CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
         }
 
 

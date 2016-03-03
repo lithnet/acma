@@ -16,7 +16,9 @@ namespace Lithnet.Acma.ServiceModel
         }
 
         public AcmaServiceClient(string hostname)
-            : base(AcmaServiceConfig.NetTcpBinding, new EndpointAddress(string.Format(AcmaServiceConfig.NetTcpHostnamePlaceHolderUri, hostname)))
+            : base(AcmaServiceConfig.NetTcpBinding,
+                new EndpointAddress(
+                        new Uri(string.Format(AcmaServiceConfig.NetTcpHostnamePlaceHolderUri, hostname))))
         {
         }
 
