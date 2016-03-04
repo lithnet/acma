@@ -13,8 +13,6 @@ namespace Lithnet.Acma.Service
     {
         private const string AdminGroupName = "AcmaAdministrators";
 
-        private const string SyncUsersGroupName = "AcmaSyncUsers";
-
         protected override bool CheckAccessCore(OperationContext operationContext)
         {
             // Allow MEX requests through. 

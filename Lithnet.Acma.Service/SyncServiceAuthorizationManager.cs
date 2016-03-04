@@ -6,14 +6,31 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Security.Principal;
 using System.DirectoryServices.AccountManagement;
+using Microsoft.Win32;
 
 namespace Lithnet.Acma.Service
 {
     public class SyncServiceAuthorizationManager : ServiceAuthorizationManager
     {
-        private const string AdminGroupName = "AcmaAdministrators";
-
         private const string SyncUsersGroupName = "AcmaSyncUsers";
+
+        private static IdentityReference syncServiceAccount;
+
+        static SyncServiceAuthorizationManager()
+        {
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\services\FIMSynchronizationService");
+
+            if (key != null)
+            {
+                string syncAccountName = (string)key.GetValue("ObjectName", null);
+
+                if (syncAccountName != null)
+                {
+                    NTAccount t = new NTAccount(syncAccountName);
+                    syncServiceAccount = t.Translate(typeof(SecurityIdentifier));
+                }
+            }
+        }
 
         protected override bool CheckAccessCore(OperationContext operationContext)
         {
@@ -25,9 +42,11 @@ namespace Lithnet.Acma.Service
                 return true;
             }
 
-            IPrincipal wp = new WindowsPrincipal(operationContext.ServiceSecurityContext.WindowsIdentity);
+            return (operationContext.ServiceSecurityContext.WindowsIdentity.User == syncServiceAccount);
 
-            return wp.IsInRole(SyncServiceAuthorizationManager.SyncUsersGroupName);
+            //IPrincipal wp = new WindowsPrincipal(operationContext.ServiceSecurityContext.WindowsIdentity);
+
+            //return wp.IsInRole(SyncServiceAuthorizationManager.SyncUsersGroupName);
         }
     }
 }

@@ -133,6 +133,7 @@
         <ComponentGroupRef Id="ManagementAgent" />
         <ComponentGroupRef Id ="AcmaService"/>
         <ComponentRef Id="EventSource"/>
+        <ComponentGroupRef Id="AcmaCore"/>
       </Feature>
 
       <Feature Id="FeatureAcmaEditor" Title ="ACMA Editor" Level="2" AllowAdvertise="no"  TypicalDefault="install" >

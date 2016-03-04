@@ -74,15 +74,15 @@ namespace Lithnet.Acma.Installer
         {
             CustomActions.CreateAcmaAdministratorsGroup(session);
 
-            string syncServiceAccount = session.CustomActionData["SyncServiceAccount"];
+            //string syncServiceAccount = session.CustomActionData["SyncServiceAccount"];
 
-            if (syncServiceAccount == null)
-            {
-                session.Log("The sync service account parameter was not provided");
-                throw new ArgumentException("The sync service account parameter was not provided");
-            }
+            //if (syncServiceAccount == null)
+            //{
+            //    session.Log("The sync service account parameter was not provided");
+            //    throw new ArgumentException("The sync service account parameter was not provided");
+            //}
 
-            CustomActions.CreateAcmaSyncUsersGroup(session, syncServiceAccount);
+            //CustomActions.CreateAcmaSyncUsersGroup(session, syncServiceAccount);
 
             return ActionResult.Success;
         }
