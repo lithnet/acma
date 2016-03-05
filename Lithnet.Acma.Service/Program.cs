@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using Lithnet.Logging;
 
 namespace Lithnet.Acma.Service
 {
@@ -15,6 +16,8 @@ namespace Lithnet.Acma.Service
         /// </summary>
         static void Main()
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 Program.service = new ServiceMain();
@@ -31,6 +34,12 @@ namespace Lithnet.Acma.Service
 
                 ServiceBase.Run(ServicesToRun);
             }
+        }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.WriteLine("Unhandled exception");
+            Logger.WriteException((Exception)e.ExceptionObject);
         }
     }
 }

@@ -79,6 +79,21 @@ namespace Lithnet.Acma.Service
             }
         }
 
+        internal bool AutoConfigReload
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["autoconfigreload"] == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return Convert.ToBoolean(ConfigurationManager.AppSettings["autoconfigreload"]);
+                }
+            }
+        }
+
         protected override void OnStart(string[] args)
         {
             Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
@@ -172,12 +187,15 @@ namespace Lithnet.Acma.Service
 
         private void StartFileSystemWatcher()
         {
-            this.configFileWatcher = new FileSystemWatcher();
-            this.configFileWatcher.Path = Path.GetDirectoryName(this.ConfigFile);
-            this.configFileWatcher.Filter = Path.GetFileName(this.ConfigFile);
-            this.configFileWatcher.NotifyFilter = NotifyFilters.LastWrite;
-            this.configFileWatcher.Changed += configFileWatcher_Changed;
-            this.configFileWatcher.EnableRaisingEvents = true;
+            if (this.AutoConfigReload)
+            {
+                this.configFileWatcher = new FileSystemWatcher();
+                this.configFileWatcher.Path = Path.GetDirectoryName(this.ConfigFile);
+                this.configFileWatcher.Filter = Path.GetFileName(this.ConfigFile);
+                this.configFileWatcher.NotifyFilter = NotifyFilters.LastWrite;
+                this.configFileWatcher.Changed += configFileWatcher_Changed;
+                this.configFileWatcher.EnableRaisingEvents = true;
+            }
         }
 
         private void configFileWatcher_Changed(object sender, FileSystemEventArgs e)
@@ -185,12 +203,20 @@ namespace Lithnet.Acma.Service
             if (!this.configUpdateQueued)
             {
                 this.configUpdateQueued = true;
-                Logger.WriteLine("Detected config file change. Will reload when no export is in progress");
+                Logger.WriteLine("Detected config file change. Queuing reload");
 
                 try
                 {
                     Monitor.Enter(ServiceMain.Lock);
-                    this.LoadConfiguration();
+                    Thread.Sleep(2000);
+                    try
+                    {
+                        this.LoadConfiguration();
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.WriteLine("Automatic config file reload failed: {0}", ex.Message);
+                    }
                 }
                 finally
                 {
