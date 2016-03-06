@@ -45,6 +45,8 @@ namespace Lithnet.Acma.PS
             {
                 hologram.CommitCSEntryChange(this.ConstructorOverrides.ToList(), this.RaiseEvents());
             }
+
+            this.AcmaObject.Refresh();
         }
 
         private IList<RaisedEvent> RaiseEvents()

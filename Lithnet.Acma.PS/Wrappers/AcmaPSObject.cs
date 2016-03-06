@@ -26,6 +26,17 @@ namespace Lithnet.Acma.PS
             this.LoadProperties();
         }
 
+        internal void Refresh()
+        {
+            foreach (var prop in this.Properties)
+            {
+                this.Properties.Remove(prop.Name);
+            }
+
+            this.hologram = Global.DataContext.GetMAObject(this.hologram.ObjectID, this.hologram.ObjectClass);
+            this.LoadProperties();
+        }
+
         private void LoadProperties()
         {
             foreach (AcmaSchemaAttribute attribute in this.hologram.ObjectClass.Attributes.OrderBy(t => t.Name))
