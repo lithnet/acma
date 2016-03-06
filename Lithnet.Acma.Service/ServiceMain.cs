@@ -15,6 +15,7 @@ using Lithnet.Logging;
 using System.IO;
 using Lithnet.Acma.ServiceModel;
 using System.Threading;
+using Microsoft.Win32;
 
 namespace Lithnet.Acma.Service
 {
@@ -26,7 +27,7 @@ namespace Lithnet.Acma.Service
         private bool configUpdateQueued = false;
 
         internal static object Lock = new object();
-        
+
         public ServiceMain()
         {
             InitializeComponent();
@@ -75,7 +76,14 @@ namespace Lithnet.Acma.Service
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["acmadb"].ConnectionString;
+                if (ConfigurationManager.ConnectionStrings["acmadb"] != null)
+                {
+                    return ConfigurationManager.ConnectionStrings["acmadb"].ConnectionString;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -176,10 +184,28 @@ namespace Lithnet.Acma.Service
         {
             if (this.ConnectionString == null)
             {
-                throw new InvalidOperationException("The connection string was not specified");
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Lithnet\Acma");
+
+                if (key == null)
+                {
+                    throw new InvalidOperationException("The database settings were not found in the registry. Re-run the installer, or specify a connection string in the application config file");
+                }
+
+                string dbname = (string)key.GetValue("DatabaseName", null);
+                string serverName = (string)key.GetValue("ServerName", null);
+
+                if (dbname == null || serverName == null)
+                {
+                    throw new InvalidOperationException("The database settings were not found in the registry. Re-run the installer, or specify a connection string in the application config file");
+                }
+
+                ActiveConfig.DB = new AcmaDatabase(serverName, dbname);
+            }
+            else
+            {
+                ActiveConfig.DB = new AcmaDatabase(this.ConnectionString);
             }
 
-            ActiveConfig.DB = new AcmaDatabase(this.ConnectionString);
             ActiveConfig.DB.CanCache = true;
 
             Logger.WriteLine("Connected to {0}", ActiveConfig.DB.ServerName);
@@ -213,7 +239,7 @@ namespace Lithnet.Acma.Service
                     {
                         this.LoadConfiguration();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Logger.WriteLine("Automatic config file reload failed: {0}", ex.Message);
                     }

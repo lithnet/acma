@@ -51,7 +51,7 @@ namespace Lithnet.Acma.Presentation
                 else if (this.EventNone)
                 {
                     verb = "If";
-                    events = "is unchanged";
+                    events = "is not changing";
                 }
                 else
                 {
