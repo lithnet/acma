@@ -23,6 +23,8 @@ namespace Lithnet.Acma
     [System.ComponentModel.Description("Value declaration")]
     public class DeclarativeValueConstructor : AttributeConstructor
     {
+        private ValueChangeComparer valueChangeComparer;
+
         /// <summary>
         /// The conditional presence rules that apply to this object
         /// </summary>
@@ -35,6 +37,19 @@ namespace Lithnet.Acma
             : base()
         {
             this.Initialize();
+        }
+
+        private ValueChangeComparer ValueChangeComparer
+        {
+            get
+            {
+                if (this.valueChangeComparer == null)
+                {
+                    this.valueChangeComparer = new ValueChangeComparer(this.Attribute, true);
+                }
+
+                return this.valueChangeComparer;
+            }
         }
 
         /// <summary>
@@ -175,6 +190,8 @@ namespace Lithnet.Acma
                     }
                 }
             }
+
+            valueChanges = valueChanges.Distinct(this.ValueChangeComparer).ToList();
 
             this.ApplyValueChanges(hologram, valueChanges, modificationType);
             this.RaiseCompletedEvent();

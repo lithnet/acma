@@ -85,6 +85,7 @@
     <ProjectReference Include="..\Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj">
       <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
       <Name>Lithnet.Acma.ServiceModel.Sync</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
