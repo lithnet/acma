@@ -93,7 +93,7 @@ namespace Lithnet.Acma.TestEngine
             return this.Steps.OfType<UnitTestStepObjectCreation>().FirstOrDefault(t => t.Name == testName);
         }
 
-        public UnitTestOutcome Execute(MADataContext dc)
+        public UnitTestOutcome Execute()
         {
             this.RaiseStartEvent();
 
@@ -124,7 +124,7 @@ namespace Lithnet.Acma.TestEngine
                             Logger.WriteLine("Executing step {0}/{1}: {2} ", stepCount, this.steps.Count, step.Name);
 
                             executedSteps.Add(step);
-                            step.Execute(dc);
+                            step.Execute();
 
                         }
                         catch (EvaluationFailedException)
@@ -178,7 +178,7 @@ namespace Lithnet.Acma.TestEngine
                 {
                     try
                     {
-                        step.Cleanup(dc);
+                        step.Cleanup();
                     }
                     catch (Exception ex)
                     {

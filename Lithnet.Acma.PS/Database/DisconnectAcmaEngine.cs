@@ -24,7 +24,7 @@ namespace Lithnet.Acma.PS
                 ActiveConfig.DB = null;
                 ActiveConfig.XmlConfig = null;
                 Global.Connected = false;
-                Global.DataContext = null;
+
                 WriteCommandDetail("Disconnected from server");
             }
             catch (Exception ex)

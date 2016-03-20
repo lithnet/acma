@@ -60,7 +60,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("mailAlternateAddresses");
@@ -85,7 +85,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
 
@@ -125,7 +125,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("mailAlternateAddresses");
@@ -163,7 +163,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -177,7 +177,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("mailAlternateAddresses");
@@ -206,7 +206,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
     }

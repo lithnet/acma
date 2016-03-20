@@ -83,7 +83,7 @@ namespace Lithnet.Acma.PS
             }
 
             Global.Connected = true;
-            Global.DataContext = ActiveConfig.DB.MADataConext;
+
             ActiveConfig.DB.CanCache = true;
 
             if (manualConnection)

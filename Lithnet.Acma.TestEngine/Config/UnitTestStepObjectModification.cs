@@ -126,12 +126,12 @@ namespace Lithnet.Acma.TestEngine
             this.CSEntryChange = new AcmaCSEntryChange();
         }
 
-        public override void Execute(MADataContext dc)
+        public override void Execute()
         {
             bool refRetryRequired = false;
             this.PrepCSEntryChange();
 
-            CSEntryExport.PutExportEntry(this.CSEntryChange, dc, out refRetryRequired);
+            CSEntryExport.PutExportEntry(this.CSEntryChange, out refRetryRequired);
 
             if (refRetryRequired)
             {
@@ -139,7 +139,7 @@ namespace Lithnet.Acma.TestEngine
             }
         }
 
-        public override void Cleanup(MADataContext dc)
+        public override void Cleanup()
         {
         }
 

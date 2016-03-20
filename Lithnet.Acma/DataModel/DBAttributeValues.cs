@@ -105,10 +105,10 @@ namespace Lithnet.Acma
         /// <param name="objectId">The ID of the MAObject to obtain the attributes from</param>
         /// <param name="dataContext">The current data context object used on this thread</param>
         /// <returns>A collection of DBAttributeValues</returns>
-        public static DBAttributeValues GetAttributeValues(AcmaSchemaAttribute attribute, Guid objectId, MADataContext dataContext)
+        public static DBAttributeValues GetAttributeValues(AcmaSchemaAttribute attribute, Guid objectId)
         {
             SqlDataAdapter adapter;
-            return new DBAttributeValues(attribute, GetAttributeValuesDataTable(attribute, objectId, dataContext, out adapter), adapter, objectId);
+            return new DBAttributeValues(attribute, GetAttributeValuesDataTable(attribute, objectId, out adapter), adapter, objectId);
         }
 
         /// <summary>
@@ -118,14 +118,14 @@ namespace Lithnet.Acma
         /// <param name="objectId">The ID of the MAObject to obtain the attributes from</param>
         /// <param name="dataContext">The current data context object used on this thread</param>
         /// <returns>A collection of DBAttributeValues</returns>
-        public static IList<DBAttributeValues> GetAttributeValues(IEnumerable<AcmaSchemaAttribute> attributes, Guid objectId, MADataContext dataContext)
+        public static IList<DBAttributeValues> GetAttributeValues(IEnumerable<AcmaSchemaAttribute> attributes, Guid objectId)
         {
             List<DBAttributeValues> values = new List<DBAttributeValues>();
 
             SqlDataAdapter adapter;
             foreach (string tableName in attributes.Where(t => t.IsInAVPTable).Select(t => t.TableName).Distinct())
             {
-                DataTable table = GetAttributeValuesDataTable(objectId, tableName, dataContext, out adapter);
+                DataTable table = GetAttributeValuesDataTable(objectId, tableName, out adapter);
 
                 foreach (var attribute in attributes.Where(t => t.IsInAVPTable && t.TableName == tableName))
                 {
@@ -251,12 +251,13 @@ namespace Lithnet.Acma
         /// <summary>
         /// Commits all changes to the database
         /// </summary>
-        internal void Commit()
+        internal void Commit(SqlConnection connection)
         {
-            using (this.dataAdapter.SelectCommand.Connection = ActiveConfig.DB.MADataConext.GetSqlConnection())
-            {
-                this.dataAdapter.Update(this.dataTable);
-            }
+            //using (this.dataAdapter.SelectCommand.Connection = ActiveConfig.DB.MADataConext.GetSqlConnection())
+            //{
+            this.dataAdapter.SelectCommand.Connection = connection;
+            this.dataAdapter.Update(this.dataTable);
+            //}
         }
 
         /// <summary>
@@ -285,12 +286,11 @@ namespace Lithnet.Acma
         /// <param name="context">The current data context used on this thread</param>
         /// <param name="adapter">The DataAdapter created for the DataTable returned by the method</param>
         /// <returns>A data table containing the result set</returns>
-        private static DataTable GetAttributeValuesDataTable(AcmaSchemaAttribute attribute, Guid objectId, MADataContext context, out SqlDataAdapter adapter)
+        private static DataTable GetAttributeValuesDataTable(AcmaSchemaAttribute attribute, Guid objectId, out SqlDataAdapter adapter)
         {
-            using (SqlConnection connection  = context.GetSqlConnection())
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
                 SqlCommand command = new SqlCommand();
-                //command.Connection = context.SqlConnection;
                 command.Connection = connection;
                 command.CommandType = CommandType.Text;
                 command.CommandText = string.Format("SELECT t1.[ID], t1.[objectId], t1.[attributeName], t1.[{1}] FROM [dbo].[{0}] t1 WHERE t1.[objectId]=@objectId AND t1.[attributeName]=@attributeName", attribute.TableName, attribute.ColumnName);
@@ -326,9 +326,9 @@ namespace Lithnet.Acma
         /// <param name="context">The current data context used on this thread</param>
         /// <param name="adapter">The DataAdapter created for the DataTable returned by the method</param>
         /// <returns>A data table containing the result set</returns>
-        private static DataTable GetAttributeValuesDataTable(Guid objectId, string tableName, MADataContext context, out SqlDataAdapter adapter)
+        private static DataTable GetAttributeValuesDataTable(Guid objectId, string tableName, out SqlDataAdapter adapter)
         {
-            using (SqlConnection connection = context.GetSqlConnection())
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
                 SqlCommand command = new SqlCommand();
                 //command.Connection = context.SqlConnection;
@@ -358,14 +358,14 @@ namespace Lithnet.Acma
             }
         }
 
-        internal static IList<DBAttributeValues> GetAVPAttributesForObject(Guid objectId, MADataContext context, AcmaSchemaObjectClass objectClass)
+        internal static IList<DBAttributeValues> GetAVPAttributesForObject(Guid objectId, AcmaSchemaObjectClass objectClass)
         {
             List<DBAttributeValues> values = new List<DBAttributeValues>();
 
             foreach (string tableName in objectClass.AvpAttributes.Select(t => t.TableName).Distinct())
             {
                 SqlDataAdapter adapter;
-                DataTable table = DBAttributeValues.GetAttributeValuesDataTable(objectId, tableName, context, out adapter);
+                DataTable table = DBAttributeValues.GetAttributeValuesDataTable(objectId, tableName, out adapter);
                 values.AddRange(DBAttributeValues.GetDBAttributeValuesFromDataTable(table, adapter, objectId));
             }
 

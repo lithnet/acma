@@ -45,7 +45,7 @@ namespace Lithnet.Acma.PS
 
                 if (this.AcmaObject == null)
                 {
-                    maobject = new AcmaPSObject(Global.DataContext.GetMAObjectOrDefault(this.ID));
+                    maobject = new AcmaPSObject(MAObjectHologram.GetMAObjectOrDefault(this.ID));
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Lithnet.Acma.PS
 
                 if (this.ForceDelete)
                 {
-                    Global.DataContext.DeleteMAObjectPermanent(maobject.Hologram.ObjectID);
+                    MAObjectHologram.DeleteMAObjectPermanent(maobject.Hologram.ObjectID);
                 }
             }
             catch (Exception ex)

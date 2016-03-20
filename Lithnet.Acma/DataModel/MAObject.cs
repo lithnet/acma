@@ -17,17 +17,12 @@ namespace Lithnet.Acma
     using Lithnet.MetadirectoryServices;
     using Lithnet.Acma.DataModel;
     using Lithnet.Acma.ServiceModel;
-    
+
     /// <summary>
     /// Represents an object from the ACMA database
     /// </summary>
     public abstract class MAObject
     {
-        /// <summary>
-        /// The parent of the shadow object
-        /// </summary>
-        private MAObjectHologram shadowParent;
-
         /// <summary>
         /// The data row for this object
         /// </summary>
@@ -54,18 +49,12 @@ namespace Lithnet.Acma
         /// <param name="row">The data row for the MAObject</param>
         /// <param name="adapter">The data adapter for the object</param>
         /// <param name="dc">The data context in use on this thread</param>
-        protected MAObject(DataRow row, SqlDataAdapter adapter, MADataContext dc)
+        protected MAObject(DataRow row, SqlDataAdapter adapter)
         {
             this.attributeValuesCache = new Dictionary<string, DBAttributeValues>();
             this.adapter = adapter;
             this.dataRow = row;
-            this.MADataContext = dc;
         }
-
-        /// <summary>
-        /// Gets the data context in use on this thread
-        /// </summary>
-        internal MADataContext MADataContext { get; private set; }
 
         /// <summary>
         /// Gets the object ID
@@ -274,29 +263,6 @@ namespace Lithnet.Acma
         }
 
         /// <summary>
-        /// Gets the shadow parent object for this object
-        /// </summary>
-        public MAObjectHologram ShadowParent
-        {
-            get
-            {
-                if (this.shadowParent == null)
-                {
-                    object value = this.dataRow["shadowParent"];
-
-                    if (value == null)
-                    {
-                        return null;
-                    }
-
-                    this.shadowParent = this.MADataContext.GetMAObjectOrDefault((Guid)value, this.ShadowLink.ParentObjectClass);
-                }
-
-                return this.shadowParent;
-            }
-        }
-
-        /// <summary>
         /// Gets the schema entry for this object type
         /// </summary>
         public AcmaSchemaObjectClass ObjectClass
@@ -336,7 +302,7 @@ namespace Lithnet.Acma
 
         internal void PreLoadAVPs(IEnumerable<AcmaSchemaAttribute> attributes)
         {
-            IList<DBAttributeValues> valueSets = DBAttributeValues.GetAttributeValues(attributes, this.ObjectID, this.MADataContext);
+            IList<DBAttributeValues> valueSets = DBAttributeValues.GetAttributeValues(attributes, this.ObjectID);
 
             foreach (var valueSet in valueSets)
             {
@@ -388,17 +354,21 @@ namespace Lithnet.Acma
         /// </summary>
         protected void Commit()
         {
-            if (this.dataRow.RowState != DataRowState.Unchanged)
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
-                this.adapter.Update(this.dataRow.Table.DataSet);
-            }
+                if (this.dataRow.RowState != DataRowState.Unchanged)
+                {
+                    this.adapter.SelectCommand.Connection = connection;
+                    this.adapter.Update(this.dataRow.Table.DataSet);
+                }
 
-            foreach (KeyValuePair<string, DBAttributeValues> pair in this.attributeValuesCache)
-            {
-                pair.Value.Commit();
-            }
+                foreach (KeyValuePair<string, DBAttributeValues> pair in this.attributeValuesCache)
+                {
+                    pair.Value.Commit(connection);
+                }
 
-            this.attributeValuesCache.Clear();
+                this.attributeValuesCache.Clear();
+            }
         }
 
         protected AttributeValue DBGetSVAttributeValue(AcmaSchemaAttribute attribute)
@@ -464,7 +434,7 @@ namespace Lithnet.Acma
         {
             if (!this.attributeValuesCache.ContainsKey(attribute.Name))
             {
-                this.attributeValuesCache.Add(attribute.Name, DBAttributeValues.GetAttributeValues(attribute, this.ObjectID, this.MADataContext));
+                this.attributeValuesCache.Add(attribute.Name, DBAttributeValues.GetAttributeValues(attribute, this.ObjectID));
             }
 
             return this.attributeValuesCache[attribute.Name];

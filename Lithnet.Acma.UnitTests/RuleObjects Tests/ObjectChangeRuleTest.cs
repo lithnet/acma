@@ -46,7 +46,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person", ObjectModificationType.Add);
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person", ObjectModificationType.Add);
                
                 // Positive Tests
                 ObjectChangeRule target = new ObjectChangeRule();
@@ -74,7 +74,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person", ObjectModificationType.Update);
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person", ObjectModificationType.Update);
 
                 // Positive Tests
                 ObjectChangeRule target = new ObjectChangeRule();
@@ -116,7 +116,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person", ObjectModificationType.Replace);
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person", ObjectModificationType.Replace);
 
                 // Positive Tests
                 ObjectChangeRule target = new ObjectChangeRule();
@@ -156,7 +156,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person", ObjectModificationType.Delete);
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person", ObjectModificationType.Delete);
                 
                 // Positive Tests
                 ObjectChangeRule target = new ObjectChangeRule();
@@ -195,7 +195,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
     }

@@ -114,7 +114,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(reference.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(reference);
 
@@ -141,10 +141,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
             }
         }
@@ -164,7 +164,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(shadowLink.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(shadowLink);
 
@@ -216,15 +216,15 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
 
                 if (subShadowID != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(subShadowID);
+                    MAObjectHologram.DeleteMAObjectPermanent(subShadowID);
                 }
             }
         }
@@ -244,7 +244,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(shadowLink.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(shadowLink);
 
@@ -296,7 +296,7 @@ namespace Lithnet.Acma.UnitTests
 
                 subShadowObject.Delete(true);
 
-                shadowObject = UnitTestControl.DataContext.GetMAObject(shadowId, shadowObjectClass);
+                shadowObject = MAObjectHologram.GetMAObject(shadowId, shadowObjectClass);
 
                 subShadowChildId = shadowObject.GetSVAttributeValue(subShadowLink.ReferenceAttribute);
 
@@ -312,15 +312,15 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
 
                 if (subShadowID != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(subShadowID);
+                    MAObjectHologram.DeleteMAObjectPermanent(subShadowID);
                 }
             }
         }
@@ -340,7 +340,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(shadowLink.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(shadowLink);
 
@@ -393,7 +393,7 @@ namespace Lithnet.Acma.UnitTests
                 shadowObject.Delete(true);
 
 
-               subShadowObject = UnitTestControl.DataContext.GetMAObjectOrDefault(subShadowID);
+               subShadowObject = MAObjectHologram.GetMAObjectOrDefault(subShadowID);
 
                 if (subShadowObject != null)
                 {
@@ -402,15 +402,15 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
 
                 if (subShadowID != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(subShadowID);
+                    MAObjectHologram.DeleteMAObjectPermanent(subShadowID);
                 }
             }
         }
@@ -430,7 +430,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(shadowLink.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(shadowLink);
 
@@ -482,7 +482,7 @@ namespace Lithnet.Acma.UnitTests
 
                 sourceObject.Delete(true);
 
-                subShadowObject = UnitTestControl.DataContext.GetMAObjectOrDefault(subShadowID);
+                subShadowObject = MAObjectHologram.GetMAObjectOrDefault(subShadowID);
 
                 if (subShadowObject != null)
                 {
@@ -491,15 +491,15 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
 
                 if (subShadowID != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(subShadowID);
+                    MAObjectHologram.DeleteMAObjectPermanent(subShadowID);
                 }
             }
         }
@@ -519,7 +519,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(shadowLink.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(shadowLink);
 
@@ -572,7 +572,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(shadowLink.ProvisioningAttribute, false);
                 sourceObject.CommitCSEntryChange();
 
-                subShadowObject = UnitTestControl.DataContext.GetMAObjectOrDefault(subShadowID);
+                subShadowObject = MAObjectHologram.GetMAObjectOrDefault(subShadowID);
 
                 if (subShadowObject != null)
                 {
@@ -581,15 +581,15 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
 
                 if (subShadowID != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(subShadowID);
+                    MAObjectHologram.DeleteMAObjectPermanent(subShadowID);
                 }
             }
         }
@@ -606,7 +606,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(reference.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(reference);
 
@@ -642,7 +642,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The shadow object was not deleted");
                 }
 
-                sourceObject = UnitTestControl.DataContext.GetMAObjectOrDefault(newId);
+                sourceObject = MAObjectHologram.GetMAObjectOrDefault(newId);
                 AttributeValue provisioningId = sourceObject.GetSVAttributeValue(reference.ProvisioningAttribute);
                 if (provisioningId == true)
                 {
@@ -651,10 +651,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
             }
         }
@@ -670,7 +670,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(reference.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(reference);
                 sourceObject.CommitCSEntryChange();
@@ -700,14 +700,14 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.DeprovisionShadowObject(reference);
                 sourceObject.CommitCSEntryChange();
 
-                shadowObject = UnitTestControl.DataContext.GetMAObjectOrDefault(shadowId);
+                shadowObject = MAObjectHologram.GetMAObjectOrDefault(shadowId);
 
                 if (shadowObject.DeletedTimestamp == 0)
                 {
                     Assert.Fail("The shadow object was not deleted");
                 }
 
-                sourceObject = UnitTestControl.DataContext.GetMAObjectOrDefault(newId);
+                sourceObject = MAObjectHologram.GetMAObjectOrDefault(newId);
                 AttributeValue provisioningId = sourceObject.GetSVAttributeValue(reference.ProvisioningAttribute);
                 if (provisioningId == true)
                 {
@@ -716,10 +716,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
             }
         }
@@ -735,7 +735,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObjectHologram));
                 PrivateObject privateSourceObject = new PrivateObject(sourceObject, privateType);
                 MAObjectHologram_Accessor targetSourceObject = new MAObjectHologram_Accessor(privateSourceObject);
@@ -758,14 +758,14 @@ namespace Lithnet.Acma.UnitTests
                 }
 
                 targetSourceObject.Delete(true);
-                shadowObject = UnitTestControl.DataContext.GetMAObjectOrDefault(shadowId);
+                shadowObject = MAObjectHologram.GetMAObjectOrDefault(shadowId);
 
                 if (shadowObject.DeletedTimestamp == 0)
                 {
                     Assert.Fail("The shadow object was not deleted");
                 }
 
-                sourceObject = UnitTestControl.DataContext.GetMAObjectOrDefault(newId);
+                sourceObject = MAObjectHologram.GetMAObjectOrDefault(newId);
                 AttributeValue provisioningId = sourceObject.GetSVAttributeValue(reference.ProvisioningAttribute);
                 if (provisioningId == true)
                 {
@@ -774,10 +774,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
             }
         }
@@ -793,7 +793,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(reference.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(reference);
                 sourceObject.CommitCSEntryChange();
@@ -827,7 +827,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The shadow object was not deleted");
                 }
 
-                sourceObject = UnitTestControl.DataContext.GetMAObjectOrDefault(newId);
+                sourceObject = MAObjectHologram.GetMAObjectOrDefault(newId);
                 AttributeValue provisioningId = sourceObject.GetSVAttributeValue(reference.ProvisioningAttribute);
                 if (provisioningId == true)
                 {
@@ -852,10 +852,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
                 if (shadowId != Guid.Empty)
                 {
-                    UnitTestControl.DataContext.DeleteMAObjectPermanent(shadowId);
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowId);
                 }
             }
         }
@@ -868,14 +868,14 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram childObject = UnitTestControl.DataContext.CreateMAObject(childId, "person");
+                MAObjectHologram childObject = MAObjectHologram.CreateMAObject(childId, "person");
 
-                MAObjectHologram supervisorObject = UnitTestControl.DataContext.CreateMAObject(supervisorId, "person");
+                MAObjectHologram supervisorObject = MAObjectHologram.CreateMAObject(supervisorId, "person");
 
                 childObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
                 childObject.CommitCSEntryChange();
 
-                supervisorObject = UnitTestControl.DataContext.GetMAObjectOrDefault(supervisorId);
+                supervisorObject = MAObjectHologram.GetMAObjectOrDefault(supervisorId);
 
                 if (!supervisorObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("directReports")).Values.All(t => t.ValueGuid == childId))
                 {
@@ -884,8 +884,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(childId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(supervisorId);
+                MAObjectHologram.DeleteMAObjectPermanent(childId);
+                MAObjectHologram.DeleteMAObjectPermanent(supervisorId);
             }
         }
 
@@ -898,9 +898,9 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram child1Object = UnitTestControl.DataContext.CreateMAObject(child1Id, "person");
-                MAObjectHologram child2Object = UnitTestControl.DataContext.CreateMAObject(child2Id, "person");
-                MAObjectHologram supervisorObject = UnitTestControl.DataContext.CreateMAObject(supervisorId, "person");
+                MAObjectHologram child1Object = MAObjectHologram.CreateMAObject(child1Id, "person");
+                MAObjectHologram child2Object = MAObjectHologram.CreateMAObject(child2Id, "person");
+                MAObjectHologram supervisorObject = MAObjectHologram.CreateMAObject(supervisorId, "person");
 
                 child1Object.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
                 child1Object.CommitCSEntryChange();
@@ -908,7 +908,7 @@ namespace Lithnet.Acma.UnitTests
                 child2Object.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
                 child2Object.CommitCSEntryChange();
 
-                supervisorObject = UnitTestControl.DataContext.GetMAObjectOrDefault(supervisorId);
+                supervisorObject = MAObjectHologram.GetMAObjectOrDefault(supervisorId);
 
                 if (!supervisorObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("directReports")).Values.Any(t => t.ValueGuid == child1Id))
                 {
@@ -923,9 +923,9 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(child1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(child2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(supervisorId);
+                MAObjectHologram.DeleteMAObjectPermanent(child1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(child2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(supervisorId);
             }
         }
 
@@ -937,13 +937,13 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram childObject = UnitTestControl.DataContext.CreateMAObject(childId, "person");
-                MAObjectHologram supervisorObject = UnitTestControl.DataContext.CreateMAObject(supervisorId, "person");
+                MAObjectHologram childObject = MAObjectHologram.CreateMAObject(childId, "person");
+                MAObjectHologram supervisorObject = MAObjectHologram.CreateMAObject(supervisorId, "person");
 
                 childObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
                 childObject.CommitCSEntryChange();
 
-                supervisorObject = UnitTestControl.DataContext.GetMAObjectOrDefault(supervisorId);
+                supervisorObject = MAObjectHologram.GetMAObjectOrDefault(supervisorId);
 
                 if (!supervisorObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("directReports")).Values.All(t => t.ValueGuid == childId))
                 {
@@ -954,7 +954,7 @@ namespace Lithnet.Acma.UnitTests
                 childObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), null);
                 childObject.CommitCSEntryChange();
 
-                supervisorObject = UnitTestControl.DataContext.GetMAObjectOrDefault(supervisorId);
+                supervisorObject = MAObjectHologram.GetMAObjectOrDefault(supervisorId);
 
                 if (!supervisorObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("directReports")).IsEmptyOrNull)
                 {
@@ -964,8 +964,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(childId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(supervisorId);
+                MAObjectHologram.DeleteMAObjectPermanent(childId);
+                MAObjectHologram.DeleteMAObjectPermanent(supervisorId);
             }
         }
 
@@ -979,10 +979,10 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram child1Object = UnitTestControl.DataContext.CreateMAObject(child1Id, "person");
-                MAObjectHologram child2Object = UnitTestControl.DataContext.CreateMAObject(child2Id, "person");
-                MAObjectHologram child3Object = UnitTestControl.DataContext.CreateMAObject(child3Id, "person");
-                MAObjectHologram supervisorObject = UnitTestControl.DataContext.CreateMAObject(supervisorId, "person");
+                MAObjectHologram child1Object = MAObjectHologram.CreateMAObject(child1Id, "person");
+                MAObjectHologram child2Object = MAObjectHologram.CreateMAObject(child2Id, "person");
+                MAObjectHologram child3Object = MAObjectHologram.CreateMAObject(child3Id, "person");
+                MAObjectHologram supervisorObject = MAObjectHologram.CreateMAObject(supervisorId, "person");
 
                 child1Object.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
                 child1Object.CommitCSEntryChange();
@@ -993,7 +993,7 @@ namespace Lithnet.Acma.UnitTests
                 child3Object.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
                 child3Object.CommitCSEntryChange();
 
-                supervisorObject = UnitTestControl.DataContext.GetMAObjectOrDefault(supervisorId);
+                supervisorObject = MAObjectHologram.GetMAObjectOrDefault(supervisorId);
 
                 if (!supervisorObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("directReports")).Values.Any(t => t.ValueGuid == child1Id))
                 {
@@ -1018,7 +1018,7 @@ namespace Lithnet.Acma.UnitTests
                 child3Object.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), null);
                 child3Object.CommitCSEntryChange();
 
-                supervisorObject = UnitTestControl.DataContext.GetMAObjectOrDefault(supervisorId);
+                supervisorObject = MAObjectHologram.GetMAObjectOrDefault(supervisorId);
 
                 if (supervisorObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("directReports")).Values.Count != 1)
                 {
@@ -1032,10 +1032,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(child1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(child2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(child3Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(supervisorId);
+                MAObjectHologram.DeleteMAObjectPermanent(child1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(child2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(child3Id);
+                MAObjectHologram.DeleteMAObjectPermanent(supervisorId);
             }
         }
 
@@ -1048,15 +1048,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram linkedAccount1 = UnitTestControl.DataContext.CreateMAObject(linkedAccount1Id, "person");
+                MAObjectHologram linkedAccount1 = MAObjectHologram.CreateMAObject(linkedAccount1Id, "person");
                 linkedAccount1.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "Account1");
                 linkedAccount1.CommitCSEntryChange();
 
-                MAObjectHologram linkedAccount2 = UnitTestControl.DataContext.CreateMAObject(linkedAccount2Id, "person");
+                MAObjectHologram linkedAccount2 = MAObjectHologram.CreateMAObject(linkedAccount2Id, "person");
                 linkedAccount2.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "Account2");
                 linkedAccount2.CommitCSEntryChange();
 
-                MAObjectHologram linkedAccount3 = UnitTestControl.DataContext.CreateMAObject(linkedAccount3Id, "person");
+                MAObjectHologram linkedAccount3 = MAObjectHologram.CreateMAObject(linkedAccount3Id, "person");
                 linkedAccount3.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "account3");
                 linkedAccount3.CommitCSEntryChange();
 
@@ -1073,9 +1073,9 @@ namespace Lithnet.Acma.UnitTests
                 linkedAccount3.CommitCSEntryChange();
 
 
-                linkedAccount1 = UnitTestControl.DataContext.GetMAObjectOrDefault(linkedAccount1Id);
-                linkedAccount2 = UnitTestControl.DataContext.GetMAObjectOrDefault(linkedAccount2Id);
-                linkedAccount3 = UnitTestControl.DataContext.GetMAObjectOrDefault(linkedAccount3Id);
+                linkedAccount1 = MAObjectHologram.GetMAObjectOrDefault(linkedAccount1Id);
+                linkedAccount2 = MAObjectHologram.GetMAObjectOrDefault(linkedAccount2Id);
+                linkedAccount3 = MAObjectHologram.GetMAObjectOrDefault(linkedAccount3Id);
 
                 AttributeValues linkedAccount1Values = linkedAccount1.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("linkedAccounts"));
                 AttributeValues linkedAccount2Values = linkedAccount2.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("linkedAccounts"));
@@ -1098,9 +1098,9 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(linkedAccount1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(linkedAccount2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(linkedAccount3Id);
+                MAObjectHologram.DeleteMAObjectPermanent(linkedAccount1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(linkedAccount2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(linkedAccount3Id);
             }
         }
 
@@ -1254,7 +1254,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceObjectId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceObjectId, "person");
 
                 List<ValueChange> valueChanges = new List<ValueChange>();
                 valueChanges.Add(ValueChange.CreateValueAdd("value1"));
@@ -1305,7 +1305,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceObjectId);
             }
         }
 
@@ -1316,7 +1316,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceObjectId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceObjectId, "person");
 
                 List<ValueChange> valueChanges = new List<ValueChange>();
                 valueChanges.Add(ValueChange.CreateValueAdd("value1"));
@@ -1393,7 +1393,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceObjectId);
             }
         }
         
@@ -1405,7 +1405,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceObjectId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceObjectId, "person");
 
                 sourceObject.SetAttributeValue(attribute, "value1");
                 sourceObject.CommitCSEntryChange();
@@ -1486,7 +1486,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceObjectId);
             }
         }
 
@@ -1498,7 +1498,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceObjectId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceObjectId, "person");
 
                 sourceObject.SetAttributeValue(attribute, "value1");
                 sourceObject.CommitCSEntryChange();
@@ -1579,7 +1579,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceObjectId);
             }
         }
 
@@ -1593,10 +1593,10 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram referencedObject = UnitTestControl.DataContext.CreateMAObject(referencedObjectID, objectClass);
+                MAObjectHologram referencedObject = MAObjectHologram.CreateMAObject(referencedObjectID, objectClass);
                 referencedObject.CommitCSEntryChange();
 
-                MAObjectHologram referencingObject = UnitTestControl.DataContext.CreateMAObject(referencingObjectID, objectClass);
+                MAObjectHologram referencingObject = MAObjectHologram.CreateMAObject(referencingObjectID, objectClass);
                 referencingObject.SetAttributeValue(refAttribute, referencedObjectID.ToString());
                 referencingObject.CommitCSEntryChange();
 
@@ -1608,7 +1608,7 @@ namespace Lithnet.Acma.UnitTests
                 referencedObject.SetObjectModificationType(ObjectModificationType.Delete, false);
                 referencedObject.CommitCSEntryChange();
 
-                referencingObject = UnitTestControl.DataContext.GetMAObject(referencingObjectID, objectClass);
+                referencingObject = MAObjectHologram.GetMAObject(referencingObjectID, objectClass);
 
                 if (!referencingObject.GetSVAttributeValue(refAttribute).IsNull)
                 {
@@ -1618,8 +1618,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(referencedObjectID);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(referencingObjectID);
+                MAObjectHologram.DeleteMAObjectPermanent(referencedObjectID);
+                MAObjectHologram.DeleteMAObjectPermanent(referencingObjectID);
             }
         }
 
@@ -1633,10 +1633,10 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram referencedObject = UnitTestControl.DataContext.CreateMAObject(referencedObjectID, objectClass);
+                MAObjectHologram referencedObject = MAObjectHologram.CreateMAObject(referencedObjectID, objectClass);
                 referencedObject.CommitCSEntryChange();
 
-                MAObjectHologram referencingObject = UnitTestControl.DataContext.CreateMAObject(referencingObjectID, objectClass);
+                MAObjectHologram referencingObject = MAObjectHologram.CreateMAObject(referencingObjectID, objectClass);
                 referencingObject.SetAttributeValue(refAttribute, referencedObjectID.ToString());
                 referencingObject.CommitCSEntryChange();
 
@@ -1648,7 +1648,7 @@ namespace Lithnet.Acma.UnitTests
                 referencedObject.SetObjectModificationType(ObjectModificationType.Delete, false);
                 referencedObject.CommitCSEntryChange();
 
-                referencingObject = UnitTestControl.DataContext.GetMAObject(referencingObjectID, objectClass);
+                referencingObject = MAObjectHologram.GetMAObject(referencingObjectID, objectClass);
 
                 if (!referencingObject.GetMVAttributeValues(refAttribute).IsEmptyOrNull)
                 {
@@ -1658,8 +1658,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(referencedObjectID);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(referencingObjectID);
+                MAObjectHologram.DeleteMAObjectPermanent(referencedObjectID);
+                MAObjectHologram.DeleteMAObjectPermanent(referencingObjectID);
             }
         }
 
@@ -1670,7 +1670,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceObjectId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceObjectId, "person");
 
                 PrivateType privateType = new PrivateType(typeof(MAObjectHologram));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
@@ -1707,7 +1707,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceObjectId);
             }
         }
 
@@ -1719,7 +1719,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 // Set initial value
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(testAttribute, startValues);
                 sourceObject.CommitCSEntryChange();
 
@@ -1808,7 +1808,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1820,7 +1820,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 // Set initial value
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(testAttribute, startValues);
                 sourceObject.CommitCSEntryChange();
 
@@ -1905,7 +1905,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1914,7 +1914,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1941,7 +1941,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1950,7 +1950,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1977,7 +1977,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
     }

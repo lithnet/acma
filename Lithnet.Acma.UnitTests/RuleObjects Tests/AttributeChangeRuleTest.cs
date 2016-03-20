@@ -52,7 +52,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
@@ -111,7 +111,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
@@ -150,7 +150,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -161,7 +161,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
@@ -219,7 +219,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -230,7 +230,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
@@ -290,7 +290,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -301,7 +301,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
                 maObject.CommitCSEntryChange();
 
                 CSEntryChange csentry = CSEntryChange.Create();
@@ -360,7 +360,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
     }

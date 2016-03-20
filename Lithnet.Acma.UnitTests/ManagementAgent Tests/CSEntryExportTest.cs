@@ -67,9 +67,9 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 bool refretry;
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
 
                 if (sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("mail")).ValueString != "test.test@test.com")
                 {
@@ -128,7 +128,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(id);
+                MAObjectHologram.DeleteMAObjectPermanent(id);
             }
         }
 
@@ -166,10 +166,10 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 bool refretry;
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                MAObjectHologram originalObject = UnitTestControl.DataContext.GetMAObject(originalId, objectClass);
+                MAObjectHologram originalObject = MAObjectHologram.GetMAObject(originalId, objectClass);
                 originalObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 originalObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sapPersonId"), 7777L);
                 originalObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), "jesus");
@@ -183,9 +183,9 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("mail", "test.test@test.com"));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("sapPersonId", 7777L));
 
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram newObject = UnitTestControl.DataContext.GetMAObjectOrDefault(replacementId);
+                MAObjectHologram newObject = MAObjectHologram.GetMAObjectOrDefault(replacementId);
 
                 if (newObject == null)
                 {
@@ -202,7 +202,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The object was not undeleted");
                 }
 
-                originalObject = UnitTestControl.DataContext.GetMAObjectOrDefault(originalId);
+                originalObject = MAObjectHologram.GetMAObjectOrDefault(originalId);
 
                 if (originalObject != null)
                 {
@@ -211,8 +211,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(originalId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(replacementId);
+                MAObjectHologram.DeleteMAObjectPermanent(originalId);
+                MAObjectHologram.DeleteMAObjectPermanent(replacementId);
             }
         }
 
@@ -230,7 +230,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 bool refretry;
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
                 csentry = CSEntryChange.Create();
                 csentry.DN = id.ToString();
@@ -238,9 +238,9 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectType = "person";
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
 
                 if (sourceObject.DeletedTimestamp == 0)
                 {
@@ -249,7 +249,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(id);
+                MAObjectHologram.DeleteMAObjectPermanent(id);
             }
         }
 
@@ -266,7 +266,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 bool refretry;
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
                 csentry = CSEntryChange.Create();
                 csentry.DN = id.ToString();
@@ -284,10 +284,10 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("dateTimeMV", new List<object>() { DateTime.Parse("2010-01-01"), DateTime.Parse("2011-01-01") }));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("dateTimeSV", DateTime.Parse("2012-01-01")));
 
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
 
                 if (sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("mail")).ValueString != "test1.test1@test.com")
                 {
@@ -346,7 +346,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(id);
+                MAObjectHologram.DeleteMAObjectPermanent(id);
             }
         }
 
@@ -374,10 +374,10 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 bool refretry;
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
 
                 csentry = CSEntryChange.Create();
                 csentry.DN = id.ToString();
@@ -385,9 +385,9 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectType = "person";
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("mail", "test1.test1@test.com"));
 
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
                 
                 if (sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("mail")).ValueString != "test1.test1@test.com")
                 {
@@ -446,7 +446,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(id);
+                MAObjectHologram.DeleteMAObjectPermanent(id);
             }
         }
     }

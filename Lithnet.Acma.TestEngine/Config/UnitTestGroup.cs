@@ -34,7 +34,7 @@ namespace Lithnet.Acma.TestEngine
             this.Initialize();
         }
 
-        public IList<UnitTestOutcome> Execute(MADataContext dc)
+        public IList<UnitTestOutcome> Execute()
         {
             this.RaiseStartEvent();
 
@@ -42,11 +42,11 @@ namespace Lithnet.Acma.TestEngine
             {
                 if (item is UnitTest)
                 {
-                    this.UnitTestResults.Add(((UnitTest)item).Execute(dc));
+                    this.UnitTestResults.Add(((UnitTest)item).Execute());
                 }
                 else if (item is UnitTestGroup)
                 {
-                    this.UnitTestResults.AddRange(((UnitTestGroup)item).Execute(dc));
+                    this.UnitTestResults.AddRange(((UnitTestGroup)item).Execute());
                 }
                 else
                 {

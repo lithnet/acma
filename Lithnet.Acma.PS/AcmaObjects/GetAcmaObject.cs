@@ -55,7 +55,7 @@ namespace Lithnet.Acma.PS
                     }
                 }
 
-                MAObjectHologram maobject = Global.DataContext.GetMAObjectOrDefault(new Guid(stringID));
+                MAObjectHologram maobject = MAObjectHologram.GetMAObjectOrDefault(new Guid(stringID));
 
                 if (maobject == null)
                 {
@@ -75,7 +75,7 @@ namespace Lithnet.Acma.PS
                     group.AddChildQueryObjects(query);
                 }
 
-                IList<MAObjectHologram> results = Global.DataContext.GetMAObjectsFromDBQuery(group).ToList();
+                IList<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count == 0)
                 {
@@ -95,7 +95,7 @@ namespace Lithnet.Acma.PS
             {
                 DBQueryByValue query = new DBQueryByValue(ActiveConfig.DB.GetAttribute(this.AttributeName), ValueOperator.Equals, this.AttributeValue);
 
-                IList<MAObjectHologram> results = Global.DataContext.GetMAObjectsFromDBQuery(query).ToList();
+                IList<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(query).ToList();
 
                 if (results.Count == 0)
                 {

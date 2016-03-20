@@ -95,7 +95,7 @@ namespace Lithnet.Acma.PS
 
                     try
                     {
-                        CSEntryExport.PutExportEntry(csentry, Global.DataContext, out refretry);
+                        CSEntryExport.PutExportEntry(csentry, out refretry);
                     }
                     catch (Exception ex)
                     {

@@ -52,15 +52,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram searchObject = UnitTestControl.DataContext.CreateMAObject(searchObjectId, "person");
+                MAObjectHologram searchObject = MAObjectHologram.CreateMAObject(searchObjectId, "person");
                 searchObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 searchObject.CommitCSEntryChange();
 
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 valueSourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -76,7 +76,7 @@ namespace Lithnet.Acma.UnitTests
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 valueSourceObject.CommitCSEntryChange();
 
-                results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count != 0)
                 {
@@ -85,8 +85,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(searchObjectId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(searchObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -103,15 +103,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram searchObject = UnitTestControl.DataContext.CreateMAObject(searchObjectId, "person");
+                MAObjectHologram searchObject = MAObjectHologram.CreateMAObject(searchObjectId, "person");
                 searchObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 searchObject.CommitCSEntryChange();
 
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 valueSourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -127,7 +127,7 @@ namespace Lithnet.Acma.UnitTests
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 valueSourceObject.CommitCSEntryChange();
 
-                results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count != 0)
                 {
@@ -136,8 +136,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(searchObjectId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(searchObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -154,15 +154,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram searchObject = UnitTestControl.DataContext.CreateMAObject(searchObjectId, "person");
+                MAObjectHologram searchObject = MAObjectHologram.CreateMAObject(searchObjectId, "person");
                 searchObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
                 searchObject.CommitCSEntryChange();
 
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 valueSourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -179,7 +179,7 @@ namespace Lithnet.Acma.UnitTests
 
                 valueSourceObject.CommitCSEntryChange();
 
-                results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count != 0)
                 {
@@ -188,8 +188,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(searchObjectId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(searchObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -206,15 +206,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram searchObject = UnitTestControl.DataContext.CreateMAObject(searchObjectId, "person");
+                MAObjectHologram searchObject = MAObjectHologram.CreateMAObject(searchObjectId, "person");
                 searchObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
                 searchObject.CommitCSEntryChange();
 
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test4.test4@test.com");
                 valueSourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -231,7 +231,7 @@ namespace Lithnet.Acma.UnitTests
 
                 valueSourceObject.CommitCSEntryChange();
 
-                results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count != 0)
                 {
@@ -240,8 +240,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(searchObjectId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(searchObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -258,15 +258,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram searchObject = UnitTestControl.DataContext.CreateMAObject(searchObjectId, "person");
+                MAObjectHologram searchObject = MAObjectHologram.CreateMAObject(searchObjectId, "person");
                 searchObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 searchObject.CommitCSEntryChange();
 
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test4.test4@test.com", "test.test@test.com" });
                 valueSourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -283,7 +283,7 @@ namespace Lithnet.Acma.UnitTests
 
                 valueSourceObject.CommitCSEntryChange();
 
-                results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count != 0)
                 {
@@ -292,8 +292,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(searchObjectId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(searchObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -310,15 +310,15 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram searchObject = UnitTestControl.DataContext.CreateMAObject(searchObjectId, "person");
+                MAObjectHologram searchObject = MAObjectHologram.CreateMAObject(searchObjectId, "person");
                 searchObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test5.test5@test.com", "test6.test6@test.com", "test7.test7@test.com" });
                 searchObject.CommitCSEntryChange();
 
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 valueSourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -334,7 +334,7 @@ namespace Lithnet.Acma.UnitTests
                 valueSourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test5.test5@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 valueSourceObject.CommitCSEntryChange();
 
-                results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
+                results = MAObjectHologram.GetMAObjectsFromDBQuery(group, valueSourceObject).ToList();
 
                 if (results.Count != 0)
                 {
@@ -343,8 +343,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(searchObjectId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(searchObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -360,7 +360,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.CommitCSEntryChange();
 
                 try
@@ -374,7 +374,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 
@@ -389,7 +389,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram valueSourceObject = UnitTestControl.DataContext.CreateMAObject(valueSourceObjectId, "person");
+                MAObjectHologram valueSourceObject = MAObjectHologram.CreateMAObject(valueSourceObjectId, "person");
                 valueSourceObject.CommitCSEntryChange();
 
                 try
@@ -403,7 +403,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(valueSourceObjectId);
+                MAObjectHologram.DeleteMAObjectPermanent(valueSourceObjectId);
             }
         }
 

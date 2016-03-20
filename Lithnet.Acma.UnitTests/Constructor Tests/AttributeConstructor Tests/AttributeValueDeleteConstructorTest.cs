@@ -57,7 +57,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
                 sourceObject.DiscardPendingChanges();
@@ -73,7 +73,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
                 sourceObject.CommitCSEntryChange();
                 sourceObject.DiscardPendingChanges();
@@ -104,7 +104,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
     }

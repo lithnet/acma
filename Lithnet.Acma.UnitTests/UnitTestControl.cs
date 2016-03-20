@@ -18,8 +18,6 @@ namespace Lithnet.Acma.UnitTests
     {
         private static bool initialized = false;
 
-        public static MADataContext DataContext;
-
         public static void Initialize()
         {
             if (!initialized)
@@ -28,10 +26,6 @@ namespace Lithnet.Acma.UnitTests
                 Logger.LogPath = @"D:\MAData\ACMA\acma-unit-test.log";
                 Logger.LogLevel = LogLevel.Debug;
                 XmlDocument doc = new XmlDocument();
-                string database = "AcmaUnitTestDB2";
-                string server = "localhost";
-                DataContext = new MADataContext(server, database);
-
                 ActiveConfig.OpenDatabase("localhost", "AcmaUnitTestDB2");
                 LoadTestTransforms();
                 initialized = true;
@@ -40,10 +34,10 @@ namespace Lithnet.Acma.UnitTests
 
         public static void DeleteAllMAObjects()
         {
-            byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjects();
-            foreach (MAObjectHologram hologram in UnitTestControl.DataContext.GetMAObjects(watermark))
+            byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjects();
+            foreach (MAObjectHologram hologram in MAObjectHologram.GetMAObjects(watermark))
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(hologram.ObjectID);
+                MAObjectHologram.DeleteMAObjectPermanent(hologram.ObjectID);
             }
         }
 

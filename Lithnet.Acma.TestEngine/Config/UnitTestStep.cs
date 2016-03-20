@@ -15,8 +15,8 @@ namespace Lithnet.Acma.TestEngine
     [KnownType(typeof(UnitTestStepObjectCreation))]
     public abstract class UnitTestStep : UINotifyPropertyChanges, IExtensibleDataObject
     {
-        public abstract void Execute(MADataContext dc);
-        public abstract void Cleanup(MADataContext dc);
+        public abstract void Execute();
+        public abstract void Cleanup();
 
         [DataMember(Name = "test-name")]
         public abstract string Name { get; set; }

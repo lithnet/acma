@@ -62,9 +62,9 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 bool refretry;
-                CSEntryExport.PutExportEntry(csentry, UnitTestControl.DataContext, out refretry);
+                CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
                 CSEntryChange generatedCSEntry = sourceObject.ToCSEntryChange();
 
                 if (generatedCSEntry.ErrorCodeImport != MAImportError.Success)
@@ -143,7 +143,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(id);
+                MAObjectHologram.DeleteMAObjectPermanent(id);
             }
         }
     }

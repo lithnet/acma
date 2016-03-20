@@ -41,11 +41,10 @@ namespace Lithnet.Acma.TestEngine
 
         public ExtensionDataObject ExtensionData { get; set; }
 
-        public UnitTestOutcomes Execute(MADataContext dc)
+        public UnitTestOutcomes Execute()
         {
             UnitTestOutcomes results = new UnitTestOutcomes();
             results.StartTime = DateTime.Now;
-            //results.Database =  dc.SqlConnection.Database;
             results.Server = ActiveConfig.DB.ServerName;
             results.ConfigFile = ActiveConfig.XmlConfig.FileName;
             UniqueValueConstructor.DisableCaching = true;
@@ -56,11 +55,11 @@ namespace Lithnet.Acma.TestEngine
                 {
                     if (item is UnitTest)
                     {
-                        results.Add(((UnitTest)item).Execute(dc));
+                        results.Add(((UnitTest)item).Execute());
                     }
                     else if (item is UnitTestGroup)
                     {
-                        results.AddRange(((UnitTestGroup)item).Execute(dc));
+                        results.AddRange(((UnitTestGroup)item).Execute());
                     }
                     else
                     {
@@ -91,11 +90,6 @@ namespace Lithnet.Acma.TestEngine
             this.Initialize();
         }
 
-        //public void Save(string filename)
-        //{
-        //    UnitTestFile.Save(filename, this);
-        //}
-
         public static UnitTestFile LoadXml(string filename)
         {
             bool canCache = ActiveConfig.DB.CanCache;
@@ -113,40 +107,5 @@ namespace Lithnet.Acma.TestEngine
                 ActiveConfig.DB.CanCache = canCache;
             }
         }
-
-        //public static void Save(string filename, UnitTestFile configFile)
-        //{
-        //    if (configFile == null)
-        //    {
-        //        throw new ArgumentNullException("configFile");
-        //    }
-
-        //    string tempFile = filename + ".tmp";
-
-        //    if (System.IO.File.Exists(tempFile))
-        //    {
-        //        System.IO.File.Delete(tempFile);
-        //    }
-
-        //    Serializer.Save<UnitTestFile>(tempFile, configFile);
-
-        //    string backupName = filename + ".backup";
-
-        //    if (System.IO.File.Exists(backupName))
-        //    {
-        //        System.IO.File.Delete(backupName);
-        //    }
-
-        //    if (System.IO.File.Exists(filename))
-        //    {
-        //        System.IO.File.Move(filename, backupName);
-        //    }
-
-        //    System.IO.File.Move(tempFile, filename);
-
-        //    System.IO.File.Delete(backupName);
-
-        //    configFile.FileName = filename;
-        //}
     }
 }

@@ -48,7 +48,7 @@ namespace Lithnet.Acma.PS
                 UnitTest.UnitTestCompletedEvent += UnitTest_UnitTestCompletedEvent;
                 UnitTestGroup.UnitTestGroupStartingEvent += UnitTestGroup_UnitTestGroupStartingEvent;
                 UnitTestGroup.UnitTestGroupCompletedEvent += UnitTestGroup_UnitTestGroupCompletedEvent;
-                UnitTestOutcomes report = file.Execute(Global.DataContext);
+                UnitTestOutcomes report = file.Execute();
                 MAStatistics.StopOperation();
                 Console.WriteLine();
 

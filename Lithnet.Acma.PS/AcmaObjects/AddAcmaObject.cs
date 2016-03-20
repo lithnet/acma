@@ -25,7 +25,7 @@ namespace Lithnet.Acma.PS
 
             try
             {
-                MAObjectHologram maobject = Global.DataContext.CreateMAObject(Guid.NewGuid(), this.ObjectClass);
+                MAObjectHologram maobject = MAObjectHologram.CreateMAObject(Guid.NewGuid(), this.ObjectClass);
                 WriteObject(new AcmaPSObject(maobject));
             }
             catch (Exception ex)

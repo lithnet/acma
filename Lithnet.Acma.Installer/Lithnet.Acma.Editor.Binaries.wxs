@@ -41,6 +41,9 @@
             <Component Id="cmp096B9BA911D2920052470067AD6F72EB" Guid="*">
                 <File Id="fil360082CC8AED500EE4E9859315F26055" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Logging.dll" />
             </Component>
+            <Component Id="cmpCFEFEDF1AAE26DFFBB9559EBDA10143F" Guid="*">
+                <File Id="filA27AB02C8A04466A25AF02F10099789F" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Logging.log" />
+            </Component>
             <Component Id="cmp82ACD2B420840DB6B9ECFEE0EBDF6B8C" Guid="*">
                 <File Id="fil7921013D6C33256B54DBF95723CE07A9" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.MetadirectoryServices.dll" />
             </Component>
@@ -76,6 +79,7 @@
             <ComponentRef Id="cmpEE98A02D8239B72F4DF50EA8A5641C3B" />
             <ComponentRef Id="cmp487C7D86558BEB64FEDF037632A65BE9" />
             <ComponentRef Id="cmp096B9BA911D2920052470067AD6F72EB" />
+            <ComponentRef Id="cmpCFEFEDF1AAE26DFFBB9559EBDA10143F" />
             <ComponentRef Id="cmp82ACD2B420840DB6B9ECFEE0EBDF6B8C" />
             <ComponentRef Id="cmpC95FE1CA4DE54E6924E487DEAE0009D4" />
             <ComponentRef Id="cmp82268422537F236C81E1159892D7B948" />

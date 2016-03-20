@@ -40,7 +40,7 @@ namespace Lithnet.Acma
 
         public const string ObjectTableName = "MA_Objects";
 
-        private MADataContext objectDataContext;
+        //private MADataContext objectDataContext;
 
         [ThreadStatic]
         private DBSchemaDataContext dc;
@@ -268,19 +268,6 @@ namespace Lithnet.Acma
             }
         }
 
-        public MADataContext MADataConext
-        {
-            get
-            {
-                if (this.objectDataContext == null)
-                {
-                    this.objectDataContext = new MADataContext(this.DataContext.Connection.ConnectionString);
-                }
-
-                return this.objectDataContext;
-            }
-        }
-
         public bool IsConnected
         {
             get
@@ -317,8 +304,6 @@ namespace Lithnet.Acma
             this.constants = null;
         }
 
-        private string connString;
-
         public void ConnectToDatabase(string server, string database)
         {
             this.ConnectToDatabase(string.Format("Data Source={0};Initial Catalog={1};Integrated Security=True", server, database));
@@ -328,10 +313,10 @@ namespace Lithnet.Acma
         {
             this.ThrowOnNullArgument("connectionString", connectionString);
 
-            this.connString = connectionString;
+            this.ConnectionString = connectionString;
             this.dc = new DBSchemaDataContext(connectionString);
-            this.ValidateVersion();
 
+            this.ValidateVersion();
             this.ObjectClassesBindingList = this.DataContext.AcmaSchemaObjectClasses.GetNewBindingList();
             this.AttributesBindingList = this.DataContext.AcmaSchemaAttributes.GetNewBindingList();
             this.MappingsBindingList = this.DataContext.AcmaSchemaMappings.GetNewBindingList();
@@ -340,6 +325,15 @@ namespace Lithnet.Acma
             this.ReferenceLinksBindingList = this.DataContext.AcmaSchemaReferenceLinks.GetNewBindingList();
             this.SafetyRulesBindingList = this.DataContext.SafetyRules.GetNewBindingList();
             this.ConstantsBindingList = this.DataContext.AcmaConstants.GetNewBindingList();
+        }
+
+        internal string ConnectionString { get; private set; }
+
+        internal SqlConnection GetNewConnection()
+        {
+            SqlConnection connection = new SqlConnection(this.ConnectionString);
+            connection.Open();
+            return connection;
         }
 
         private void ValidateVersion()
@@ -792,11 +786,9 @@ namespace Lithnet.Acma
 
                 using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionManager.MaximumTimeout))
                 {
-                    using (SqlConnection connection = this.MADataConext.GetSqlConnection())
+                    using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
                     {
-                        //ActiveConfig.DB.MADataConext.SqlConnection.EnlistTransaction(Transaction.Current);
-
-                        List<MAObjectHologram> holograms = ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(query1).ToList();
+                        List<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(query1).ToList();
                         this.ProgressInfo.MaxValue = holograms.Count;
 
                         foreach (MAObjectHologram hologram in holograms)
@@ -1057,11 +1049,9 @@ namespace Lithnet.Acma
             {
                 using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionManager.MaximumTimeout))
                 {
-                    using (SqlConnection connection = this.MADataConext.GetSqlConnection())
+                    using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
                     {
-
-
-                        List<MAObjectHologram> holograms = ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(group).ToList();
+                        List<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
                         this.ProgressInfo.MaxValue = holograms.Count;
 
                         foreach (MAObjectHologram hologram in holograms)
@@ -1235,14 +1225,14 @@ namespace Lithnet.Acma
 
             try
             {
-                using (SqlConnection connection = this.MADataConext.GetSqlConnection())
+                using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
                 {
 
                     using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionManager.MaximumTimeout))
                     {
                         //ActiveConfig.DB.MADataConext.SqlConnection.EnlistTransaction(Transaction.Current);
 
-                        List<MAObjectHologram> holograms = ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(group).ToList();
+                        List<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
                         this.ProgressInfo.MaxValue = holograms.Count;
 
                         foreach (MAObjectHologram hologram in holograms)

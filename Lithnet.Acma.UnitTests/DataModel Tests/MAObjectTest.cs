@@ -55,7 +55,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 
@@ -85,7 +85,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -138,7 +138,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
         
@@ -150,7 +150,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject); 
@@ -165,7 +165,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -177,7 +177,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -202,7 +202,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -214,7 +214,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -238,7 +238,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -250,7 +250,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -264,7 +264,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -276,7 +276,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -291,7 +291,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
         
@@ -303,7 +303,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -317,7 +317,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -329,7 +329,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -344,7 +344,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -356,7 +356,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -370,7 +370,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -382,7 +382,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -397,7 +397,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -409,7 +409,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -428,7 +428,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -440,7 +440,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -460,7 +460,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
         
@@ -473,7 +473,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -489,7 +489,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -501,7 +501,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -519,7 +519,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -531,7 +531,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -546,7 +546,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -558,7 +558,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -575,7 +575,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -588,7 +588,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -605,7 +605,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -617,7 +617,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -632,7 +632,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -645,7 +645,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -661,7 +661,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -673,7 +673,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -691,7 +691,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -703,7 +703,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -721,7 +721,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -733,7 +733,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -748,7 +748,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -761,7 +761,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -778,7 +778,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -790,7 +790,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -805,7 +805,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -822,11 +822,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram parentObject = UnitTestControl.DataContext.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(targetAttribute, "myaccountName");
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(childId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(childId, "person");
                 sourceObject.SetAttributeValue(referenceAttribute, parentId);
                 sourceObject.CommitCSEntryChange();
 
@@ -837,8 +837,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(parentId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(childId);
+                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                MAObjectHologram.DeleteMAObjectPermanent(childId);
 
             }
         }
@@ -859,11 +859,11 @@ namespace Lithnet.Acma.UnitTests
             List<object> references = new List<object>() { new Guid("14075f8e-f918-4614-8a85-51af25faf582"), new Guid("24075f8e-f918-4614-8a85-51af25faf582"), childId };
             try
             {
-                MAObjectHologram parentObject = UnitTestControl.DataContext.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(targetAttribute, references);
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(childId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(childId, "person");
                 sourceObject.SetAttributeValue(referenceAttribute, parentId);
                 sourceObject.CommitCSEntryChange();
 
@@ -876,8 +876,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(parentId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(childId);
+                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                MAObjectHologram.DeleteMAObjectPermanent(childId);
 
             }
         }
@@ -892,7 +892,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -907,7 +907,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -919,7 +919,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -934,7 +934,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -946,7 +946,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -961,7 +961,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -973,7 +973,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -988,7 +988,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1000,7 +1000,7 @@ namespace Lithnet.Acma.UnitTests
             Guid reference = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1015,7 +1015,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1027,7 +1027,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1042,7 +1042,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1054,7 +1054,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1079,7 +1079,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1091,7 +1091,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1116,7 +1116,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1128,7 +1128,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1153,7 +1153,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1165,7 +1165,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1190,7 +1190,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1205,7 +1205,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
                 MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
@@ -1230,7 +1230,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1242,7 +1242,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
 
@@ -1259,7 +1259,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1271,7 +1271,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 PrivateType privateType = new PrivateType(typeof(MAObject));
                 PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
 
@@ -1288,7 +1288,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
     }

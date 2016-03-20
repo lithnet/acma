@@ -49,7 +49,7 @@ namespace Lithnet.Acma.PS
                         List<AcmaPSObject> objects = new List<AcmaPSObject>();
                         foreach(var value in this.hologram.GetMVAttributeValues(attribute).Values)
                         {
-                            MAObjectHologram maObject = Global.DataContext.GetMAObjectOrDefault(value.ValueGuid);
+                            MAObjectHologram maObject = MAObjectHologram.GetMAObjectOrDefault(value.ValueGuid);
                             if (maObject != null)
                             {
                                 objects.Add(new AcmaPSObject(maObject));
@@ -70,7 +70,7 @@ namespace Lithnet.Acma.PS
 
                     if (attribute.Type == ExtendedAttributeType.Reference)
                     {
-                        MAObjectHologram maObject = Global.DataContext.GetMAObjectOrDefault(value.ValueGuid);
+                        MAObjectHologram maObject = MAObjectHologram.GetMAObjectOrDefault(value.ValueGuid);
                         if (maObject != null)
                         {
                             list.Add(new AcmaPSObject(maObject));

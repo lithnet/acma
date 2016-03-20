@@ -92,7 +92,7 @@ namespace Lithnet.Acma
 
             Guid refGuid = references.First().ValueGuid;
 
-            MAObjectHologram referenceSource = sourceObject.MADataContext.GetMAObjectOrDefault(refGuid);
+            MAObjectHologram referenceSource = MAObjectHologram.GetMAObjectOrDefault(refGuid);
 
             if (referenceSource == null)
             {

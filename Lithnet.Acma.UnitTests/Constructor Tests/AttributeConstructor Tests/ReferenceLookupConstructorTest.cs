@@ -68,20 +68,20 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram object1 = UnitTestControl.DataContext.CreateMAObject(object1Id, "person");
+                MAObjectHologram object1 = MAObjectHologram.CreateMAObject(object1Id, "person");
                 object1.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object1.CommitCSEntryChange();
 
-                MAObjectHologram object2 = UnitTestControl.DataContext.CreateMAObject(object2Id, "person");
+                MAObjectHologram object2 = MAObjectHologram.CreateMAObject(object2Id, "person");
                 object2.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object2.CommitCSEntryChange();
 
-                MAObjectHologram object3 = UnitTestControl.DataContext.CreateMAObject(object3Id, "person");
+                MAObjectHologram object3 = MAObjectHologram.CreateMAObject(object3Id, "person");
                 object3.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 constructor.Execute(object3);
                 object3.CommitCSEntryChange();
 
-                object3 = UnitTestControl.DataContext.GetMAObject(object3Id, objectClass);
+                object3 = MAObjectHologram.GetMAObject(object3Id, objectClass);
                 AttributeValues values = object3.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("displayNameSharers"));
 
                 if (values.IsEmptyOrNull)
@@ -96,9 +96,9 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object3Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object3Id);
             }
         }
 
@@ -117,21 +117,21 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram object1 = UnitTestControl.DataContext.CreateMAObject(object1Id, "person");
+                MAObjectHologram object1 = MAObjectHologram.CreateMAObject(object1Id, "person");
                 object1.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object1.CommitCSEntryChange();
 
-                MAObjectHologram object2 = UnitTestControl.DataContext.CreateMAObject(object2Id, "person");
+                MAObjectHologram object2 = MAObjectHologram.CreateMAObject(object2Id, "person");
                 object2.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object2.CommitCSEntryChange();
 
-                MAObjectHologram object3 = UnitTestControl.DataContext.CreateMAObject(object3Id, "person");
+                MAObjectHologram object3 = MAObjectHologram.CreateMAObject(object3Id, "person");
                 object3.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 constructor.Execute(object3);
                 object3.CommitCSEntryChange();
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                object3 = UnitTestControl.DataContext.GetMAObject(object3Id, objectClass);
+                object3 = MAObjectHologram.GetMAObject(object3Id, objectClass);
                 AttributeValues values = object3.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("displayNameSharers"));
 
                 if (values.IsEmptyOrNull)
@@ -146,9 +146,9 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object3Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object3Id);
             }
         }
 
@@ -167,21 +167,21 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram object1 = UnitTestControl.DataContext.CreateMAObject(object1Id, "person");
+                MAObjectHologram object1 = MAObjectHologram.CreateMAObject(object1Id, "person");
                 object1.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object1.CommitCSEntryChange();
 
-                MAObjectHologram object2 = UnitTestControl.DataContext.CreateMAObject(object2Id, "person");
+                MAObjectHologram object2 = MAObjectHologram.CreateMAObject(object2Id, "person");
                 object2.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object2.CommitCSEntryChange();
 
-                MAObjectHologram object3 = UnitTestControl.DataContext.CreateMAObject(object3Id, "person");
+                MAObjectHologram object3 = MAObjectHologram.CreateMAObject(object3Id, "person");
                 object3.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 constructor.Execute(object3);
                 object3.CommitCSEntryChange();
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                object3 = UnitTestControl.DataContext.GetMAObject(object3Id, objectClass);
+                object3 = MAObjectHologram.GetMAObject(object3Id, objectClass);
                 AttributeValues values = object3.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("displayNameSharers"));
 
                 if (!values.IsEmptyOrNull)
@@ -191,9 +191,9 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object3Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object3Id);
             }
         }
 
@@ -212,17 +212,17 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram object1 = UnitTestControl.DataContext.CreateMAObject(object1Id, "person");
+                MAObjectHologram object1 = MAObjectHologram.CreateMAObject(object1Id, "person");
                 object1.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object1.CommitCSEntryChange();
 
-                MAObjectHologram object2 = UnitTestControl.DataContext.CreateMAObject(object2Id, "person");
+                MAObjectHologram object2 = MAObjectHologram.CreateMAObject(object2Id, "person");
                 object2.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                 object2.CommitCSEntryChange();
 
                 try
                 {
-                    MAObjectHologram object3 = UnitTestControl.DataContext.CreateMAObject(object3Id, "person");
+                    MAObjectHologram object3 = MAObjectHologram.CreateMAObject(object3Id, "person");
                     object3.SetAttributeValue(ActiveConfig.DB.GetAttribute("displayName"), "My Display Name");
                     constructor.Execute(object3);
                     object3.CommitCSEntryChange();
@@ -234,9 +234,9 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object1Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object2Id);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(object3Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object1Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object2Id);
+                MAObjectHologram.DeleteMAObjectPermanent(object3Id);
             }
         }
 

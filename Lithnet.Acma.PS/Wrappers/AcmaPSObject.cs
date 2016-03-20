@@ -33,7 +33,7 @@ namespace Lithnet.Acma.PS
                 this.Properties.Remove(prop.Name);
             }
 
-            this.hologram = Global.DataContext.GetMAObject(this.hologram.ObjectID, this.hologram.ObjectClass);
+            this.hologram = MAObjectHologram.GetMAObject(this.hologram.ObjectID, this.hologram.ObjectClass);
             this.LoadProperties();
         }
 

@@ -103,9 +103,9 @@ namespace Lithnet.Acma.TestEngine
             this.Initialize();
         }
 
-        public override void Execute(MADataContext dc)
+        public override void Execute()
         {
-            MAObjectHologram sourceObject = this.GetObjectFromAlias(dc);
+            MAObjectHologram sourceObject = this.GetObjectFromAlias();
             Rule.RuleFailedEvent += RuleBase_RuleFailedEvent;
             RuleGroup.RuleGroupFailedEvent += RuleGroup_RuleGroupFailedEvent;
 
@@ -124,9 +124,9 @@ namespace Lithnet.Acma.TestEngine
             RuleGroup.RuleGroupFailedEvent -= RuleGroup_RuleGroupFailedEvent;
         }
 
-        private MAObjectHologram GetObjectFromAlias(MADataContext dc)
+        private MAObjectHologram GetObjectFromAlias()
         {
-            return dc.GetMAObject(this.ObjectCreationStep.ObjectId, this.ObjectCreationStep.ObjectClass);
+            return MAObjectHologram.GetMAObject(this.ObjectCreationStep.ObjectId, this.ObjectCreationStep.ObjectClass);
         }
 
         private void RuleGroup_RuleGroupFailedEvent(RuleGroup sender, string failureReason)
@@ -139,7 +139,7 @@ namespace Lithnet.Acma.TestEngine
             failureReasons.AppendLine(string.Format("Rule evaluation failed: {0}", failureReason));
         }
 
-        public override void Cleanup(MADataContext dc)
+        public override void Cleanup()
         {
         }
 

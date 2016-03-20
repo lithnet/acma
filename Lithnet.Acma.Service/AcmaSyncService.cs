@@ -24,7 +24,7 @@ namespace Lithnet.Acma.Service
 
         public string GetCurrentWatermark()
         {
-            return ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjects().ToSmartStringOrNull();
+            return MAObjectHologram.GetHighWatermarkMAObjects().ToSmartStringOrNull();
         }
 
         public void ExportStart()
@@ -51,7 +51,7 @@ namespace Lithnet.Acma.Service
                     try
                     {
                         bool referenceRetryRequired;
-                        anchorchanges = CSEntryExport.PutExportEntry(csentryChange, ActiveConfig.DB.MADataConext, out referenceRetryRequired);
+                        anchorchanges = CSEntryExport.PutExportEntry(csentryChange, out referenceRetryRequired);
 
                         if (referenceRetryRequired)
                         {
@@ -123,7 +123,7 @@ namespace Lithnet.Acma.Service
             CachedImportRequest cachedRequest = new CachedImportRequest();
             cachedRequest.Request = request;
 
-            byte[] watermark = ActiveConfig.DB.MADataConext.GetHighWatermarkMAObjectsDelta();
+            byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
             response.Watermark = watermark == null ? null : Convert.ToBase64String(watermark);
             cachedRequest.HighWatermark = watermark;
 
@@ -132,12 +132,12 @@ namespace Lithnet.Acma.Service
             if (cachedRequest.Request.ImportType == OperationType.Delta)
             {
                 this.ProcessOperationEvents(AcmaEventOperationType.DeltaImport);
-                cachedRequest.Enumerator = ActiveConfig.DB.MADataConext.EnumerateMAObjectsDelta(watermark);
+                cachedRequest.Enumerator = MAObjectHologram.EnumerateMAObjectsDelta(watermark);
             }
             else
             {
                 this.ProcessOperationEvents(AcmaEventOperationType.FullImport);
-                cachedRequest.Enumerator = ActiveConfig.DB.MADataConext.EnumerateMAObjects(cachedRequest.Request.Schema.Types.Select(t => t.Name).ToList(), null, null);
+                cachedRequest.Enumerator = MAObjectHologram.EnumerateMAObjects(cachedRequest.Request.Schema.Types.Select(t => t.Name).ToList(), null, null);
             }
 
             response.Context = Guid.NewGuid().ToString();
@@ -161,7 +161,7 @@ namespace Lithnet.Acma.Service
 
             foreach (AcmaOperationEvent e in events.OfType<AcmaOperationEvent>().Where(t => t.OperationTypes.HasFlag(operationType)))
             {
-                foreach (MAObjectHologram hologram in e.GetQueryRecipients(ActiveConfig.DB.MADataConext))
+                foreach (MAObjectHologram hologram in e.GetQueryRecipients())
                 {
                     Logger.WriteLine("Sending event {0} to {1}", e.ID, hologram.DisplayText);
                     try
@@ -210,7 +210,7 @@ namespace Lithnet.Acma.Service
                 {
                     if (request.NormalTermination)
                     {
-                        ActiveConfig.DB.MADataConext.ClearDeltas(originalRequest.HighWatermark);
+                        MAObjectHologram.ClearDeltas(originalRequest.HighWatermark);
                     }
                 }
 

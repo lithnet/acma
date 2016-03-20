@@ -126,7 +126,7 @@ namespace Lithnet.Acma.TestEngine
             this.Initialize();
         }
 
-        public override void Execute(MADataContext dc)
+        public override void Execute()
         {
             if (this.CSEntryChange.ObjectModificationType != ObjectModificationType.Add)
             {
@@ -142,7 +142,7 @@ namespace Lithnet.Acma.TestEngine
 
             bool refRetryRequired = false;
             
-            CSEntryExport.PutExportEntry(this.CSEntryChange, dc, out refRetryRequired);
+            CSEntryExport.PutExportEntry(this.CSEntryChange, out refRetryRequired);
             
             if (refRetryRequired)
             {
@@ -150,12 +150,12 @@ namespace Lithnet.Acma.TestEngine
             }
         }
 
-        public override void Cleanup(MADataContext dc)
+        public override void Cleanup()
         {
             if (this.CSEntryChange != null)
             {
                 Guid dn = new Guid(this.CSEntryChange.DN);
-                dc.DeleteMAObjectPermanent(dn);
+                MAObjectHologram.DeleteMAObjectPermanent(dn);
             }
         }
 

@@ -37,7 +37,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
 
@@ -57,7 +57,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
                 value = TypeConverter.ConvertData<bool>(value);
@@ -93,7 +93,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
                 value = TypeConverter.ConvertData<bool>(value);
@@ -128,7 +128,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
                 value = TypeConverter.ConvertData<byte[]>(value);
@@ -163,7 +163,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
 
@@ -197,7 +197,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -214,7 +214,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixGid"), 99L);
 
                 object value = target.Expand(sourceObject).First();
@@ -234,7 +234,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -249,7 +249,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("dateTimeSV"), DateTime.Parse("2010-01-01"));
 
                 object value = target.Expand(sourceObject).First();
@@ -269,7 +269,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -285,7 +285,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("connectedToCallista"), true);
 
                 object value = target.Expand(sourceObject).First();
@@ -305,7 +305,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -320,7 +320,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("objectSid"), new byte[] { 0, 1, 2, 3, 4 });
 
                 object value = target.Expand(sourceObject).First();
@@ -340,7 +340,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -355,7 +355,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
                 object value = target.Expand(sourceObject).First();
@@ -375,7 +375,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -390,7 +390,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), new Guid("8c3cbf4e-5216-4a04-9140-b0b11020fa4c"));
 
                 object value = target.Expand(sourceObject).First();
@@ -410,7 +410,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -426,7 +426,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
 
@@ -445,7 +445,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -459,7 +459,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
 
                 object value = target.Expand(sourceObject).First();
 
@@ -478,7 +478,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -495,7 +495,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sapExpiryDate"), 1L);
 
                 object value = target.Expand(sourceObject).First();
@@ -515,7 +515,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -530,7 +530,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
                 object value = target.Expand(sourceObject).First();
@@ -550,7 +550,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -567,7 +567,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object>() { 1L, 2L, 3L, 4L });
 
                 object value = target.Expand(sourceObject);
@@ -587,7 +587,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -602,7 +602,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("dateTimeMV"), new List<object>() { DateTime.Parse("2010-01-01"), DateTime.Parse("2011-01-01") });
 
                 object value = target.Expand(sourceObject);
@@ -622,7 +622,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -637,7 +637,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("connectedToCallista"), true);
 
                 object value = target.Expand(sourceObject).First();
@@ -657,7 +657,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -672,7 +672,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
 
                 object value = target.Expand(sourceObject);
@@ -692,7 +692,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -707,7 +707,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { new Guid("fb116a90-35e3-47e9-92b7-679c4821e648"), new Guid("352285df-3fdc-468e-9412-70d62a62cefe"), new Guid("50ac8dbb-15fe-485c-8f02-87a77ab68a7b") });
 
                 object value = target.Expand(sourceObject);
@@ -727,7 +727,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -744,7 +744,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object>() { 1L, 2L, 3L, 4L });
 
                 object value = target.Expand(sourceObject);
@@ -764,7 +764,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -779,7 +779,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
 
                 object value = target.Expand(sourceObject);
@@ -799,7 +799,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -816,7 +816,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), "test1");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
 
@@ -837,7 +837,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -852,7 +852,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sapExpiryDate"), 44L);
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
 
@@ -873,7 +873,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -888,7 +888,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("objectSid"), new byte[] { 0, 1, 2, 3, 4 });
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
 
@@ -909,7 +909,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -924,7 +924,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("connectedToSap"), true);
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
 
@@ -945,7 +945,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -960,7 +960,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), "test1");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
 
@@ -981,7 +981,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -996,7 +996,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), "test1");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
 
@@ -1017,7 +1017,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1025,7 +1025,7 @@ namespace Lithnet.Acma.UnitTests
         {
             foreach (AcmaSchemaAttribute attribute in uniqueAllocationAttributes.Select(t => ActiveConfig.DB.GetAttribute(t)))
             {
-                if (maObject.MADataContext.DoesAttributeValueExist(attribute, valueToTest, maObject.ObjectID))
+                if (MAObjectHologram.DoesAttributeValueExist(attribute, valueToTest, maObject.ObjectID))
                 {
                     return false;
                 }
@@ -1048,13 +1048,13 @@ namespace Lithnet.Acma.UnitTests
             Guid existingId = Guid.NewGuid();
             try
             {
-                MAObjectHologram existingObject = UnitTestControl.DataContext.CreateMAObject(existingId, "person");
+                MAObjectHologram existingObject = MAObjectHologram.CreateMAObject(existingId, "person");
                 existingObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), newId.ToString() + "test1");
                 existingObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
                 existingObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), newId.ToString() + "test1.test21@test.com");
                 existingObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), newId.ToString() + "test1");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
                 sourceObject.CommitCSEntryChange();
@@ -1076,8 +1076,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(existingId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(existingId);
             }
         }
 
@@ -1095,13 +1095,13 @@ namespace Lithnet.Acma.UnitTests
             Guid existingId = Guid.NewGuid();
             try
             {
-                MAObjectHologram existingObject = UnitTestControl.DataContext.CreateMAObject(existingId, "person");
+                MAObjectHologram existingObject = MAObjectHologram.CreateMAObject(existingId, "person");
                 existingObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), newId.ToString() + "test1");
                 existingObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
                 existingObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), newId.ToString() + "test1.test2@test.com");
                 existingObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), newId.ToString() + "test1");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
                 sourceObject.CommitCSEntryChange();
@@ -1123,8 +1123,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(existingId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(existingId);
             }
         }
 
@@ -1144,7 +1144,7 @@ namespace Lithnet.Acma.UnitTests
             Guid existingId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("firstName"), newId.ToString() + "test1");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "test2");
                 sourceObject.CommitCSEntryChange();
@@ -1166,8 +1166,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newId);
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(existingId);
+                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                MAObjectHologram.DeleteMAObjectPermanent(existingId);
             }
         }
 
@@ -1183,7 +1183,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newGuid, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newGuid, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object>() { 5L, 6L });
 
                 ValueDeclaration target = new ValueDeclaration(declarationString);
@@ -1195,7 +1195,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newGuid);
+                MAObjectHologram.DeleteMAObjectPermanent(newGuid);
             }
         }
 
@@ -1232,7 +1232,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = UnitTestControl.DataContext.CreateMAObject(newGuid, "person");
+                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newGuid, "person");
 
                 ValueDeclaration target = new ValueDeclaration(declarationString);
                 target.Expand(maObject);
@@ -1248,7 +1248,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(newGuid);
+                MAObjectHologram.DeleteMAObjectPermanent(newGuid);
             }
         }
 

@@ -24,7 +24,7 @@ namespace Lithnet.Acma.Service
 
         public AcmaResource GetResourceById(string id)
         {
-            MAObjectHologram hologram = ActiveConfig.DB.MADataConext.GetMAObjectOrDefault(new Guid(id));
+            MAObjectHologram hologram = MAObjectHologram.GetMAObjectOrDefault(new Guid(id));
 
             if (hologram != null)
             {
@@ -42,7 +42,7 @@ namespace Lithnet.Acma.Service
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, objectType));
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue));
 
-            IList<MAObjectHologram> holograms = ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(queryGroup).ToList();
+            IList<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList();
 
             if (holograms.Count == 0)
             {
@@ -65,7 +65,7 @@ namespace Lithnet.Acma.Service
             DBQueryGroup queryGroup = new DBQueryGroup(GroupOperator.All);
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), vo, keyValue));
 
-            IList<MAObjectHologram> holograms = ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(queryGroup).ToList();
+            IList<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList();
 
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }
@@ -76,7 +76,7 @@ namespace Lithnet.Acma.Service
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key1), ValueOperator.Equals, keyValue1));
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key2), ValueOperator.Equals, keyValue2));
 
-            IList<MAObjectHologram> holograms = ActiveConfig.DB.MADataConext.GetMAObjectsFromDBQuery(queryGroup).ToList();
+            IList<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList();
 
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }
@@ -96,7 +96,7 @@ namespace Lithnet.Acma.Service
                 }
 
                 bool refRetry;
-                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                CSEntryExport.PutExportEntry(csentry, out refRetry);
             }
             finally
             {
@@ -119,7 +119,7 @@ namespace Lithnet.Acma.Service
                 }
 
                 bool refRetry;
-                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                CSEntryExport.PutExportEntry(csentry, out refRetry);
             }
             finally
             {
@@ -137,7 +137,7 @@ namespace Lithnet.Acma.Service
                 csentry.DN = id;
 
                 bool refRetry;
-                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                CSEntryExport.PutExportEntry(csentry, out refRetry);
             }
             finally
             {
@@ -168,7 +168,7 @@ namespace Lithnet.Acma.Service
                 }
 
                 bool refRetry;
-                CSEntryExport.PutExportEntry(csentry, ActiveConfig.DB.MADataConext, out refRetry);
+                CSEntryExport.PutExportEntry(csentry, out refRetry);
             }
             finally
             {

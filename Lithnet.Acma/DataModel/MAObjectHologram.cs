@@ -23,6 +23,7 @@ namespace Lithnet.Acma
     using System.Text;
     using System.Runtime.Serialization;
     using Lithnet.Acma.ServiceModel;
+    using Reeb.SqlOM;
 
     /// <summary>
     /// Represents an MAObject from the ACMA database, overlayed with a CSEntryChange containing changes to apply to the underlying database.
@@ -47,11 +48,9 @@ namespace Lithnet.Acma
         private TriggerEvents acmaModificationType = TriggerEvents.Unconfigured;
 
         /// <summary>
-        /// The local hologram cache allows this object to speed up repeating calls to objects it references
-        /// It should be valid only for the life of this object
-        /// Don't try to use this as a static cache for all holograms, as this this not the source of those objects
+        /// The parent of the shadow object
         /// </summary>
-        private Dictionary<Guid, MAObjectHologram> hologramCache;
+        private MAObjectHologram shadowParent;
 
         public ObjectModificationType CSEntryModificationType
         {
@@ -123,17 +122,37 @@ namespace Lithnet.Acma
         }
 
         /// <summary>
+        /// Gets the shadow parent object for this object
+        /// </summary>
+        public MAObjectHologram ShadowParent
+        {
+            get
+            {
+                if (this.shadowParent == null)
+                {
+                    if (this.ShadowParentID == Guid.Empty)
+                    {
+                        return null;
+                    }
+
+                    this.shadowParent = MAObjectHologram.GetMAObjectOrDefault(this.ShadowParentID, this.ShadowLink.ParentObjectClass);
+                }
+
+                return this.shadowParent;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the MAObjectHologram class
         /// </summary>
         /// <param name="row">The data row for the MAObject</param>
         /// <param name="adapter">The data adapter for the object</param>
         /// <param name="dc">The data context in use on this thread</param>
-        public MAObjectHologram(DataRow row, SqlDataAdapter adapter, MADataContext dc)
-            : base(row, adapter, dc)
+        public MAObjectHologram(DataRow row, SqlDataAdapter adapter)
+            : base(row, adapter)
         {
             this.AcmaModificationType = TriggerEvents.Unconfigured;
 
-            this.hologramCache = new Dictionary<Guid, MAObjectHologram>();
             this.InternalAttributeChanges = new AttributeChangeCollection();
             this.InternalAttributeChanges.CollectionChanged += AttributeChanges_CollectionChanged;
         }
@@ -789,7 +808,7 @@ namespace Lithnet.Acma
                         List<AttributeChange> changes = this.CreateSyntheticAttributeChangesForShadowChild(link, false);
                         AttributeValue referenceValue = this.GetSVAttributeValue(link.ReferenceAttribute);
 
-                        MAObjectHologram shadowChild = this.GetMAObjectOrDefault(referenceValue.ValueGuid, link.ShadowObjectClass);
+                        MAObjectHologram shadowChild = MAObjectHologram.GetMAObjectOrDefault(referenceValue.ValueGuid, link.ShadowObjectClass);
 
                         if (shadowChild == null)
                         {
@@ -912,7 +931,7 @@ namespace Lithnet.Acma
             if (shadowObject == null && csentry == null)
             {
                 Guid newId = Guid.NewGuid();
-                shadowObject = this.MADataContext.CreateMAObject(newId, shadowLink.ShadowObjectClass.Name, this, ObjectModificationType.Add);
+                shadowObject = MAObjectHologram.CreateMAObject(newId, shadowLink.ShadowObjectClass.Name, this, ObjectModificationType.Add);
 
                 Logger.WriteLine(
                     "Created new shadow object '{0}' for parent '{1}' referenced by {{{2}}} and using {{{3}}} as the provisioning indicator",
@@ -924,7 +943,7 @@ namespace Lithnet.Acma
             else if (shadowObject == null && csentry != null)
             {
                 Guid newId = new Guid(csentry.DN);
-                shadowObject = this.MADataContext.CreateMAObject(newId, shadowLink.ShadowObjectClass.Name, this, ObjectModificationType.Add);
+                shadowObject = MAObjectHologram.CreateMAObject(newId, shadowLink.ShadowObjectClass.Name, this, ObjectModificationType.Add);
                 shadowObject.SetObjectModificationType(ObjectModificationType.Add, false);
 
                 Logger.WriteLine(
@@ -1015,7 +1034,7 @@ namespace Lithnet.Acma
             {
                 this.DBDeleteAttribute(shadowLink.ProvisioningAttribute);
 
-                MAObjectHologram shadowObject = this.GetMAObjectOrDefault(shadowObjectId.ValueGuid, shadowLink.ShadowObjectClass);
+                MAObjectHologram shadowObject = MAObjectHologram.GetMAObjectOrDefault(shadowObjectId.ValueGuid, shadowLink.ShadowObjectClass);
 
                 if (shadowObject != null)
                 {
@@ -1241,7 +1260,7 @@ namespace Lithnet.Acma
                     continue;
                 }
 
-                IEnumerable<MAObjectHologram> recipients = internalEvent.GetEventRecipients(this.MADataContext, this);
+                IEnumerable<MAObjectHologram> recipients = internalEvent.GetEventRecipients(this);
 
                 foreach (MAObjectHologram recipient in recipients)
                 {
@@ -1427,7 +1446,7 @@ namespace Lithnet.Acma
                 return null;
             }
 
-            MAObjectHologram shadowObject = this.GetMAObjectOrDefault(existingId, link.ShadowObjectClass);
+            MAObjectHologram shadowObject = MAObjectHologram.GetMAObjectOrDefault(existingId, link.ShadowObjectClass);
 
             if (shadowObject != null)
             {
@@ -1481,7 +1500,7 @@ namespace Lithnet.Acma
                 return;
             }
 
-            List<MAObjectHologram> shadowObjects = this.MADataContext.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("shadowParent"), ValueOperator.Equals, this.ObjectID).ToList();
+            List<MAObjectHologram> shadowObjects = MAObjectHologram.GetMAObjectsFromDBQuery(ActiveConfig.DB.GetAttribute("shadowParent"), ValueOperator.Equals, this.ObjectID).ToList();
 
             if (shadowObjects.Count > 0)
             {
@@ -1526,7 +1545,7 @@ namespace Lithnet.Acma
             }
             else
             {
-                this.MADataContext.DeleteMAObjectPermanent(this.ObjectID);
+                MAObjectHologram.DeleteMAObjectPermanent(this.ObjectID);
             }
 
             Logger.WriteLine("Deleted {0} object: {1}", this.ObjectClass.Name, this.DisplayText);
@@ -1552,11 +1571,11 @@ namespace Lithnet.Acma
             List<ValueChange> valueChanges = new List<ValueChange>() { valuechange };
             Dictionary<MAObjectHologram, List<AttributeChange>> referrerChanges = new Dictionary<MAObjectHologram, List<AttributeChange>>();
 
-            Dictionary<Guid, IList<string>> referencingObjects = this.MADataContext.GetReferencingObjects(this);
+            Dictionary<Guid, IList<string>> referencingObjects = MAObjectHologram.GetReferencingObjects(this);
 
             foreach (KeyValuePair<Guid, IList<string>> kvp in referencingObjects)
             {
-                MAObjectHologram referencingObject = this.MADataContext.GetMAObjectOrDefault(kvp.Key);
+                MAObjectHologram referencingObject = MAObjectHologram.GetMAObjectOrDefault(kvp.Key);
 
                 if (referencingObject == null)
                 {
@@ -1641,7 +1660,7 @@ namespace Lithnet.Acma
                         queryGroup.DBQueries.Add(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, mapping.ObjectClass.Name));
                         queryGroup.DBQueries.Add(new DBQueryByValue(mapping.InheritanceSourceAttribute, ValueOperator.Equals, this.ObjectID));
                         queryGroup.DBQueries.Add(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectId"), ValueOperator.NotEquals, this.ObjectID));
-                        queryResultCache.Add(key, this.MADataContext.GetMAObjectsFromDBQuery(queryGroup).ToList());
+                        queryResultCache.Add(key, MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList());
                     }
 
                     foreach (MAObjectHologram maObject in queryResultCache[key])
@@ -1763,7 +1782,7 @@ namespace Lithnet.Acma
 
             foreach (AttributeValue value in values.Where(t => !t.IsNull))
             {
-                MAObjectHologram referencedObject = this.GetMAObjectOrDefault(value.ValueGuid);
+                MAObjectHologram referencedObject = MAObjectHologram.GetMAObjectOrDefault(value.ValueGuid);
                 if (referencedObject == null)
                 {
                     this.MarkMissingReference(value.ValueGuid, attribute);
@@ -1791,7 +1810,7 @@ namespace Lithnet.Acma
 
             foreach (AttributeValue value in values.Where(t => !t.IsNull))
             {
-                MAObjectHologram referencedObject = this.GetMAObjectOrDefault(value.ValueGuid);
+                MAObjectHologram referencedObject = MAObjectHologram.GetMAObjectOrDefault(value.ValueGuid);
                 if (referencedObject == null)
                 {
                     this.MarkMissingReference(value.ValueGuid, attribute);
@@ -1836,7 +1855,7 @@ namespace Lithnet.Acma
             Guid inheritanceSource = this.GetInheritanceSource(attribute);
             AcmaSchemaMapping mapping = ActiveConfig.DB.GetMapping(attribute.Name, this.ObjectClass.Name);
 
-            MAObjectHologram referencedObject = this.GetMAObjectOrDefault(inheritanceSource, mapping.InheritanceSourceObjectClass);
+            MAObjectHologram referencedObject = MAObjectHologram.GetMAObjectOrDefault(inheritanceSource, mapping.InheritanceSourceObjectClass);
 
             if (referencedObject == null)
             {
@@ -2018,40 +2037,6 @@ namespace Lithnet.Acma
             }
         }
 
-        private MAObjectHologram GetMAObjectOrDefault(Guid id)
-        {
-            return this.GetMAObjectOrDefault(id, null);
-        }
-
-        private MAObjectHologram GetMAObjectOrDefault(Guid id, AcmaSchemaObjectClass objectClass)
-        {
-            if (!this.hologramCache.ContainsKey(id))
-            {
-                MAObjectHologram hologram;
-
-                if (objectClass == null)
-                {
-                    hologram = this.MADataContext.GetMAObjectOrDefault(id);
-                }
-                else
-                {
-                    hologram = this.MADataContext.GetMAObjectOrDefault(id, objectClass);
-                }
-
-                if (hologram != null)
-                {
-                    this.hologramCache.Add(id, hologram);
-                }
-                else
-                {
-                    this.MarkMissingReference(id);
-                    return null;
-                }
-            }
-
-            return this.hologramCache[id];
-        }
-
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             foreach (KeyValuePair<string, IList<string>> kvp in this.GetSerializationValues())
@@ -2102,5 +2087,1051 @@ namespace Lithnet.Acma
 
             return r;
         }
+
+        /// <summary>
+        /// Gets an MAObject from the database
+        /// </summary>
+        /// <param name="objectId">The ID of the object to retrieve</param>
+        /// <returns>The MAObject that matches the specified ID</returns>
+        public static MAObjectHologram GetMAObject(Guid objectId, AcmaSchemaObjectClass objectClass)
+        {
+            MAObjectHologram maObject = MAObjectHologram.GetMAObjectOrDefault(objectId, objectClass);
+
+            if (maObject == null)
+            {
+                throw new System.Data.ObjectNotFoundException(string.Format("The object with id '{0}' was not found", objectId.ToString()));
+            }
+            else
+            {
+                return maObject;
+            }
+        }
+
+        /// <summary>
+        /// Gets an MAObject from the database
+        /// </summary>
+        /// <param name="objectId">The ID of the object to retrieve</param>
+        /// <returns>The MAObject that matches the specified ID, or null if the object wasn't found</returns>
+        public static MAObjectHologram GetMAObjectOrDefault(Guid objectId, AcmaSchemaObjectClass objectClass)
+        {
+            if (objectId == Guid.Empty)
+            {
+                return null;
+            }
+
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = string.Format("SELECT {0} FROM [dbo].[{1}] WHERE objectId=@id AND objectClass=@class", objectClass.ColumnListForSelectQuery, AcmaDatabase.ObjectTableName);
+                command.Parameters.AddWithValue("@id", objectId);
+                command.Parameters.AddWithValue("@class", objectClass.Name);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+
+                if (adapter.Fill(dataset) == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new MAObjectHologram(dataset.Tables[0].Rows[0], adapter);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets an MAObject from the database
+        /// </summary>
+        /// <param name="objectId">The ID of the object to retrieve</param>
+        /// <returns>The MAObject that matches the specified ID, or null if the object wasn't found</returns>
+        public static MAObjectHologram GetMAObjectOrDefault(Guid objectId)
+        {
+            if (objectId == Guid.Empty)
+            {
+                return null;
+            }
+
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = string.Format("[dbo].[spGetMAObject]");
+                command.Parameters.AddWithValue("@id", objectId);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+
+                if (adapter.Fill(dataset) == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new MAObjectHologram(dataset.Tables[0].Rows[0], adapter);
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets an MAObject from the database
+        /// </summary>
+        /// <param name="objectId">The ID of the object to retrieve</param>
+        /// <returns>The MAObject that matches the specified ID, or null if the object was not found</returns>
+        public static MAObjectHologram GetMAObjectOrDefault(string objectId, AcmaSchemaObjectClass objectClass)
+        {
+            return MAObjectHologram.GetMAObjectOrDefault(new Guid(objectId), objectClass);
+        }
+
+
+        /// <summary>
+        /// Gets an enumeration of MAObjects from the database
+        /// </summary>
+        /// <param name="objectIds">The IDs of the objects to get</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjects(IEnumerable<string> objectIds)
+        {
+            return MAObjectHologram.GetMAObjects(objectIds.Select(t => new Guid(t)));
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjects from the database
+        /// </summary>
+        /// <param name="objectIds">The IDs of the objects to get</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjects(IEnumerable<Guid> objectIds)
+        {
+            foreach (Guid objectId in objectIds)
+            {
+                MAObjectHologram maObject = MAObjectHologram.GetMAObjectOrDefault(objectId);
+                if (maObject != null)
+                {
+                    yield return maObject;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the MAObjects that are not marked as deleted, up to the specified watermark 
+        /// </summary>
+        /// <param name="watermark">The timestamp value of the highest entry to retrieve</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjects(byte[] watermark)
+        {
+            return MAObjectHologram.GetMAObjects(watermark, false);
+        }
+
+        /// <summary>
+        /// Gets the delta objects from the database, up to the specified watermark
+        /// </summary>
+        /// <param name="watermark">The timestamp value of the highest entry to retrieve</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static IEnumerable<MAObjectHologram> GetDeltaMAObjects(byte[] watermark)
+        {
+            return MAObjectHologram.GetMAObjectsDelta(watermark, true);
+        }
+
+        public static IEnumerable<MAObjectHologram> GetDeltaMAObjects(long lastVersion)
+        {
+            return MAObjectHologram.GetMAObjectsDelta(lastVersion);
+        }
+
+        /// <summary>
+        /// Changes an MAObject's unique identifier
+        /// </summary>
+        /// <param name="oldId">The old object ID</param>
+        /// <param name="newId">The new object Id</param>
+        /// <param name="undelete">A value indicating if the object should be undeleted if it is in a deleted state</param>
+        public static void ChangeMAObjectId(Guid oldId, Guid newId, bool undelete)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spChangeMAObjectId]";
+                command.Parameters.AddWithValue("@oldId", oldId);
+                command.Parameters.AddWithValue("@newId", newId);
+                command.Parameters.AddWithValue("@undelete", undelete);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                if (command.ExecuteNonQuery() == 0)
+                {
+                    throw new System.Data.ObjectNotFoundException(string.Format("The object with ID {0} could not be renamed as it could not be found", oldId));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Searches the MAObjects table for a deleted object matching the specified resurrection criteria
+        /// </summary>
+        /// <param name="resurrectionParameters">The list of ResurrectionParameters used to find the deleted object</param>
+        /// <param name="csentry">The incoming CSEntryChange object with an ObjectModificationType of 'Add'</param>
+        /// <returns>An MAObject that matches the specified resurrection criteria, or null if no matching object was found</returns>
+        public static MAObjectHologram GetResurrectionObject(DBQueryGroup resurrectionParameters, CSEntryChange csentry)
+        {
+            if (csentry.ObjectModificationType != ObjectModificationType.Add)
+            {
+                throw new ArgumentException("Only CSEntryChange objects marked with an ObjectModificationType of 'Add' can be used to search for objects to resurrect");
+            }
+
+            if (string.IsNullOrWhiteSpace(csentry.ObjectType))
+            {
+                throw new InvalidOperationException("The CSEntryChange did not specify an object class");
+            }
+
+            DBQueryGroup parentQuery = new DBQueryGroup();
+            parentQuery.Operator = GroupOperator.All;
+            DBQueryByValue deletedQuery = new DBQueryByValue(ActiveConfig.DB.GetAttribute("deleted"), ValueOperator.GreaterThan, 0);
+            parentQuery.DBQueries.Add(deletedQuery);
+            parentQuery.DBQueries.Add(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, csentry.ObjectType));
+            parentQuery.DBQueries.Add(resurrectionParameters);
+
+            List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(parentQuery, csentry, 2).ToList();
+
+            if (results.Count == 1)
+            {
+                MAObjectHologram hologram = results.First();
+                hologram.SetObjectModificationType(TriggerEvents.Undelete);
+                return hologram;
+            }
+            else if (results.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                Logger.WriteLine("Object with DN '{0}' was matched against the following multiple objects {1}", csentry.DN, results.Select(t => t.DisplayText).ToCommaSeparatedString());
+                Logger.WriteLine("Ensure that any attributes used for resurrection are unique");
+                throw new MultipleMatchException("Multiple objects were returned in the search for a deleted object for resurrection. Ensure any attributes used for resurrection are unique");
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="attribute">The attribute in the database to query</param>
+        /// <param name="valueOperator">The comparison operation to use</param>
+        /// <param name="values">The values to compare</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, IList<ValueDeclaration> values)
+        {
+            DBQueryByValue query = new DBQueryByValue(attribute, valueOperator, values);
+            DBQueryGroup group = new DBQueryGroup();
+            group.Operator = GroupOperator.All;
+            group.AddChildQueryObjects(query);
+
+            DBQueryBuilder queryBuilder = new DBQueryBuilder(group, 0);
+            return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="attribute">The attribute in the database to query</param>
+        /// <param name="valueOperator">The comparison operation to use</param>
+        /// <param name="values">The values to compare</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, IList<object> values)
+        {
+            DBQueryByValue query = new DBQueryByValue(attribute, valueOperator, values);
+            DBQueryGroup group = new DBQueryGroup();
+            group.Operator = GroupOperator.All;
+            group.AddChildQueryObjects(query);
+
+            DBQueryBuilder queryBuilder = new DBQueryBuilder(group, 0);
+            return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="attribute">The attribute in the database to query</param>
+        /// <param name="valueOperator">The comparison operation to use</param>
+        /// <param name="value">The value to compare</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, object value)
+        {
+            DBQueryByValue query = new DBQueryByValue(attribute, valueOperator, value);
+            DBQueryGroup group = new DBQueryGroup();
+            group.Operator = GroupOperator.All;
+            group.AddChildQueryObjects(query);
+
+            DBQueryBuilder queryBuilder = new DBQueryBuilder(group, 0);
+            return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryObject queryObject)
+        {
+            if (queryObject is DBQueryGroup)
+            {
+                return MAObjectHologram.GetMAObjectsFromDBQuery((DBQueryGroup)queryObject);
+            }
+            else if (queryObject is DBQueryByValue)
+            {
+                DBQueryGroup group = new DBQueryGroup(GroupOperator.Any);
+                group.DBQueries.Add(queryObject);
+                return MAObjectHologram.GetMAObjectsFromDBQuery(group);
+            }
+            else
+            {
+                throw new InvalidOperationException("The DBQueryObject type is unknown");
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, OrderByTermCollection orderByTerms)
+        {
+            DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, orderByTerms);
+            return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup)
+        {
+            DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, 0);
+            return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, int maximumResults)
+        {
+            DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, maximumResults);
+            return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <param name="csentry">The object containing the source values for the query</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, CSEntryChange csentry)
+        {
+            try
+            {
+                DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, 0, csentry);
+                return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+            }
+            catch (QueryValueNullException)
+            {
+                Logger.WriteLine("The query could not be built as one or more required values for the query was null", LogLevel.Debug);
+                //Logger.WriteException(ex, LogLevel.Debug);
+                return new List<MAObjectHologram>();
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <param name="maObject">The object containing the source values for the query</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, MAObjectHologram maObject)
+        {
+            try
+            {
+                DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, 0, maObject);
+                return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+            }
+            catch (QueryValueNullException)
+            {
+                Logger.WriteLine("The query could not be built as one or more required values for the query was null", LogLevel.Debug);
+                //Logger.WriteException(ex, LogLevel.Debug);
+                return new List<MAObjectHologram>();
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <param name="csentry">The object containing the source values for the query</param>
+        /// <param name="maximumResults">The maximum number of results to return</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, CSEntryChange csentry, int maximumResults)
+        {
+            try
+            {
+                DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, maximumResults, csentry);
+                return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+            }
+            catch (QueryValueNullException)
+            {
+                Logger.WriteLine("The query could not be built as one or more required values for the query was null", LogLevel.Debug);
+                //Logger.WriteException(ex, LogLevel.Debug);
+                return new List<MAObjectHologram>();
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumeration of MAObjectHolograms from a given dynamic database query
+        /// </summary>
+        /// <param name="queryGroup">The query to evaluate</param>
+        /// <param name="maObject">The object containing the source values for the query</param>
+        /// <param name="maximumResults">The maximum number of results to return</param>
+        /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
+        public static IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, MAObjectHologram maObject, int maximumResults)
+        {
+            try
+            {
+                DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, maximumResults, maObject);
+                return MAObjectHologram.GetMAObjectsFromQueryBuilder(queryBuilder);
+            }
+            catch (QueryValueNullException)
+            {
+                Logger.WriteLine("The query could not be built as one or more required values for the query was null", LogLevel.Debug);
+                /// Logger.WriteException(ex, LogLevel.Debug);
+                return new List<MAObjectHologram>();
+            }
+        }
+
+        /// <summary>
+        /// Determines if an attribute and value pair exist in the database
+        /// </summary>
+        /// <param name="attribute">The MASchemaAttribute object representing the attribute to search for</param>
+        /// <param name="attributeValue">The attribute value</param>
+        /// <returns>A value indicating whether the attribute and value exists on the object</returns>
+        public static bool DoesAttributeValueExist(AcmaSchemaAttribute attribute, object attributeValue, Guid requestingObjectID)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                bool useLike = false;
+
+                string attributeValueString = attributeValue as string;
+                if (attributeValueString != null)
+                {
+                    if (attributeValueString.Contains("%"))
+                    {
+                        useLike = true;
+                    }
+                }
+
+                if (attribute.IsInAVPTable)
+                {
+                    command.CommandText = string.Format("SELECT TOP 1 1 FROM [dbo].[{0}] WHERE [AttributeName] = '{1}' AND [{2}] {3} @value", attribute.TableName, attribute.Name, attribute.ColumnName, useLike ? "LIKE" : "=");
+                }
+                else
+                {
+                    command.CommandText = string.Format("SELECT TOP 1 1 FROM [dbo].[{0}] WHERE [{1}] {2} @value", attribute.TableName, attribute.ColumnName, useLike ? "LIKE" : "=");
+                }
+
+                command.Parameters.AddWithValue("@value", attributeValue);
+
+                if (requestingObjectID != Guid.Empty)
+                {
+                    command.CommandText += " AND [objectid] != @objectID";
+                    command.Parameters.AddWithValue("@objectID", requestingObjectID);
+                }
+
+                if (command.ExecuteScalar() == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determines if an attribute and value pair exist in the database
+        /// </summary>
+        /// <param name="attribute">The MASchemaAttribute object representing the attribute to search for</param>
+        /// <param name="attributeValue">The attribute value</param>
+        /// <returns>A value indicating whether the attribute and value exists on the object</returns>
+        internal static IEnumerable<string> GetAttributeValues(AcmaSchemaAttribute attribute, object wildcardValue, Guid requestingObjectID)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+
+                if (attribute.IsInAVPTable)
+                {
+                    command.CommandText = string.Format("SELECT {2} FROM [dbo].[{0}] WHERE [AttributeName] = '{1}' AND [{2}] like @value", attribute.TableName, attribute.Name, attribute.ColumnName);
+                }
+                else
+                {
+                    command.CommandText = string.Format("SELECT {1} FROM [dbo].[{0}] WHERE [{1}] like @value", attribute.TableName, attribute.ColumnName);
+                }
+
+                command.Parameters.AddWithValue("@value", wildcardValue);
+
+                if (requestingObjectID != Guid.Empty)
+                {
+                    command.CommandText += " AND [objectid] != @objectID";
+                    command.Parameters.AddWithValue("@objectID", requestingObjectID);
+                }
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    yield return ((IDataRecord)reader).GetString(0);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clears all delta changes less than and equal to the specified watermark value
+        /// </summary>
+        /// <param name="watermark">The watermark value</param>
+        public static void ClearDeltas(byte[] watermark)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spClearMAObjectsDelta]";
+                command.Parameters.AddWithValue("@watermark", watermark);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Creates a new MAObject of the specified object class
+        /// </summary>
+        /// <param name="id">The ID of the new MAObject</param>
+        /// <param name="objectClass">The object class to create</param>
+        /// <returns>A newly created MAObject</returns>
+        public static MAObjectHologram CreateMAObject(Guid id, AcmaSchemaObjectClass objectClass)
+        {
+            return MAObjectHologram.CreateMAObject(id, objectClass.Name, null, ObjectModificationType.Add);
+        }
+
+
+        /// <summary>
+        /// Creates a new MAObject of the specified object class
+        /// </summary>
+        /// <param name="id">The ID of the new MAObject</param>
+        /// <param name="objectClass">The object class to create</param>
+        /// <returns>A newly created MAObject</returns>
+        public static MAObjectHologram CreateMAObject(Guid id, string objectClass)
+        {
+            return MAObjectHologram.CreateMAObject(id, objectClass, null, ObjectModificationType.Add);
+        }
+
+        /// <summary>
+        /// Creates a new MAObject of the specified object class
+        /// </summary>
+        /// <param name="id">The ID of the new MAObject</param>
+        /// <param name="objectClass">The object class to create</param>
+        /// <returns>A newly created MAObject</returns>
+        public static MAObjectHologram CreateMAObject(Guid id, string objectClass, ObjectModificationType modificationType)
+        {
+            return MAObjectHologram.CreateMAObject(id, objectClass, null, modificationType);
+        }
+
+        /// <summary>
+        /// Creates a new MAObject of the specified object class
+        /// </summary>
+        /// <param name="id">The ID of the new MAObject</param>
+        /// <param name="objectClass">The object class to create</param>
+        /// <param name="shadowParent">The shadow parent of this object</param>
+        /// <returns>A newly created MAObject</returns>
+        public static MAObjectHologram CreateMAObject(Guid id, string objectClass, MAObject shadowParent, ObjectModificationType modificationType)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spCreateMAObject]";
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@objectClass", objectClass);
+
+                if (shadowParent != null)
+                {
+                    command.Parameters.AddWithValue("@shadowParent", shadowParent.ObjectID);
+                }
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+
+                if (adapter.Fill(dataset) == 0)
+                {
+                    throw new DataException("The record could not be added to the database");
+                }
+                else
+                {
+                    MAObjectHologram hologram = new MAObjectHologram(dataset.Tables[0].Rows[0], adapter);
+                    hologram.SetObjectModificationType(modificationType, false);
+                    return hologram;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Permanently deletes an object and all its attributes from the database
+        /// </summary>
+        /// <param name="id">The ID of the object to delete</param>
+        public static void DeleteMAObjectPermanent(Guid id)
+        {
+            MAObjectHologram hologram = MAObjectHologram.GetMAObjectOrDefault(id);
+
+            if (hologram != null)
+            {
+                foreach (Guid shadowID in hologram.GetShadowObjects())
+                {
+                    MAObjectHologram.DeleteMAObjectPermanent(shadowID);
+                    MAStatistics.AddShadowDelete();
+                }
+            }
+
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spDeleteMAObject]";
+                command.Parameters.AddWithValue("@id", id);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Gets the highest timestamp from the MAObjects table
+        /// </summary>
+        /// <returns>A timestamp byte array</returns>
+        public static byte[] GetHighWatermarkMAObjects()
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetHighWatermarkMAObjects]";
+
+                return (byte[])command.ExecuteScalar();
+            }
+        }
+
+        /// <summary>
+        /// Gets the highest timestamp from the MA_Objects_Delta table
+        /// </summary>
+        /// <returns>A timestamp byte array</returns>
+        public static byte[] GetHighWatermarkMAObjectsDelta()
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetHighWatermarkMAObjectsDelta]";
+
+                return (byte[])command.ExecuteScalar();
+            }
+        }
+
+        public static Dictionary<Guid, IList<string>> GetReferencingObjects(MAObjectHologram hologram)
+        {
+            return MAObjectHologram.GetReferencingObjects(hologram.ObjectID);
+        }
+
+        public static Dictionary<Guid, IList<string>> GetReferencingObjects(Guid referencedObjectId)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetReferences]";
+                command.Parameters.AddWithValue("@id", referencedObjectId);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                Dictionary<Guid, IList<string>> foundReferences = new Dictionary<Guid, IList<string>>();
+
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    Guid referencingObjectId = (Guid)row["objectId"];
+                    string referencingAttribute = (string)row["attributeName"];
+
+                    if (!foundReferences.ContainsKey(referencingObjectId))
+                    {
+                        foundReferences.Add(referencingObjectId, new List<string>());
+                    }
+
+                    foundReferences[referencingObjectId].Add(referencingAttribute);
+                }
+
+                return foundReferences;
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the database using the specified parameters
+        /// </summary>
+        /// <param name="watermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        private static IEnumerable<MAObjectHologram> GetMAObjects(byte[] watermark = null, bool getDeleted = false)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetMAObjects]";
+
+                if (watermark != null)
+                {
+                    command.Parameters.AddWithValue("@watermark", watermark);
+                }
+
+                if (getDeleted)
+                {
+                    command.Parameters.AddWithValue("@deleted", true);
+                }
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    yield return new MAObjectHologram(row, adapter);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the database using the specified parameters
+        /// </summary>
+        /// <param name="watermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static ResultEnumerator EnumerateMAObjects(IList<string> objectTypes, byte[] lowWatermark, byte[] highWatermark)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = "SELECT * FROM [dbo].[MA_Objects] WHERE ([deleted] = 0) AND ";
+
+                if (lowWatermark != null)
+                {
+                    command.CommandText += " ([rowversion] > @p0) AND ";
+                    command.Parameters.AddWithValue("@p0", lowWatermark);
+                }
+
+                if (highWatermark != null)
+                {
+                    command.CommandText += " ([rowversion] <= @p1) AND ";
+                    command.Parameters.AddWithValue("@p1", highWatermark);
+                }
+
+                string paramPlaceholders = string.Empty;
+
+                for (int i = 0; i < objectTypes.Count; i++)
+                {
+                    string paramId = string.Format("@o{0}", i);
+                    if (i < objectTypes.Count - 1)
+                    {
+                        paramPlaceholders += string.Format("{0},", paramId);
+                    }
+                    else
+                    {
+                        paramPlaceholders += paramId;
+                    }
+
+                    command.Parameters.AddWithValue(paramId, objectTypes[i]);
+                }
+
+                command.CommandText += string.Format(" objectClass IN ({0})", paramPlaceholders);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                return new ResultEnumerator(dataset.Tables[0].Rows, adapter);
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the delta table of the database using the specified parameters
+        /// </summary>
+        /// <param name="watermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static ResultEnumerator EnumerateMAObjectsDelta(byte[] watermark = null)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetMAObjectsDelta]";
+
+                if (watermark != null)
+                {
+                    command.Parameters.AddWithValue("@watermark", watermark);
+                }
+
+                command.Parameters.AddWithValue("@deleted", true);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                return new ResultEnumerator(dataset.Tables[0].Rows, adapter);
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the delta table of the database using the specified parameters
+        /// </summary>
+        /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        private static IEnumerable<MAObjectHologram> GetMAObjectsDelta(byte[] highWatermark = null, bool getDeleted = false)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetMAObjectsDelta]";
+
+                if (highWatermark != null)
+                {
+                    command.Parameters.AddWithValue("@watermark", highWatermark);
+                }
+
+                if (getDeleted)
+                {
+                    command.Parameters.AddWithValue("@deleted", true);
+                }
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    yield return new MAObjectHologram(row, adapter);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the delta table of the database using the specified parameters
+        /// </summary>
+        /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        private static IEnumerable<MAObjectHologram> GetMAObjectsDelta(long lastVersion)
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetDeltaChanges]";
+
+                command.Parameters.AddWithValue("@changeVersion", lastVersion);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    yield return new MAObjectHologram(row, adapter);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the delta table of the database using the specified parameters
+        /// </summary>
+        /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static long GetCurrentChangeVersion()
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetChangeTrackingInfo]";
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                return (long)dataset.Tables[0].Rows[0]["CurrentVersion"];
+            }
+        }
+
+        /// <summary>
+        /// Gets one or more MAObjects from the delta table of the database using the specified parameters
+        /// </summary>
+        /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
+        /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
+        /// <returns>An enumeration of MAObjects</returns>
+        public static long GetMinimumChangeVersion()
+        {
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "[dbo].[spGetChangeTrackingInfo]";
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                return (long)dataset.Tables[0].Rows[0]["MinVersion"];
+            }
+        }
+
+        /// <summary>
+        /// Returns the MAObjectHolograms that match the specified query 
+        /// </summary>
+        /// <param name="queryBuilder">The query to use</param>
+        /// <returns>The MAObjectHolograms that match the specified query </returns>
+        private static IEnumerable<MAObjectHologram> GetMAObjectsFromQueryBuilder(DBQueryBuilder queryBuilder)
+        {
+            if (string.IsNullOrWhiteSpace(queryBuilder.QueryString))
+            {
+                yield break;
+            }
+
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = queryBuilder.QueryString;
+                command.Parameters.AddRange(queryBuilder.Parameters.ToArray());
+
+                Logger.WriteLine("Running query: {0}", LogLevel.Debug, command.CommandText);
+                Logger.WriteLine("Parameters: {0}", LogLevel.Debug, queryBuilder.Parameters.Select(t => t.ParameterName + ":" + t.Value.ToSmartStringOrNull()).ToCommaSeparatedString());
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                int count = adapter.Fill(dataset);
+
+                Logger.WriteLine("Query returned {0} objects", LogLevel.Debug, count);
+
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    yield return new MAObjectHologram(row, adapter);
+                }
+            }
+        }
+
     }
 }

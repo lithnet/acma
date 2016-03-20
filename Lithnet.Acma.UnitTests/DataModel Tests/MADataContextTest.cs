@@ -413,7 +413,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -428,7 +428,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute4.Name, incomingValues4));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group3, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group3, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -448,7 +448,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -501,7 +501,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -516,7 +516,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute4.Name, incomingValues4));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group3, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group3, csentry).ToList();
 
                 if (results.Count > 0)
                 {
@@ -525,7 +525,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -576,7 +576,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -591,7 +591,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute4.Name, incomingValues4));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group3, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group3, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -611,7 +611,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -661,7 +661,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -676,7 +676,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute4.Name, incomingValues4));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group3, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group3, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -696,7 +696,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -745,7 +745,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -760,7 +760,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute4.Name, incomingValues4));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group2, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group2, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -780,7 +780,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -849,7 +849,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -862,7 +862,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute2.Name, incomingValues2));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, csentry).ToList();
 
                 if (results.Count != 0)
                 {
@@ -871,7 +871,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -893,7 +893,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValue);
                 sourceObject.CommitCSEntryChange();
                 sourceObject.SetObjectModificationType(ObjectModificationType.Delete, false);
@@ -905,7 +905,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectModificationType = ObjectModificationType.Add;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute1.Name, incomingValues));
 
-                MAObjectHologram result = UnitTestControl.DataContext.GetResurrectionObject(matchGroup, csentry);
+                MAObjectHologram result = MAObjectHologram.GetResurrectionObject(matchGroup, csentry);
 
                 if (result == null)
                 {
@@ -921,7 +921,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -934,17 +934,17 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -969,7 +969,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -983,24 +983,24 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Delete, false);
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1025,7 +1025,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1039,24 +1039,24 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 sourceObject.SetAttributeValue(attribute, "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1081,7 +1081,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1095,24 +1095,24 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 sourceObject.SetAttributeValue(attribute, "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1137,7 +1137,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1151,24 +1151,24 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 sourceObject.SetAttributeValue(attribute, null);
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1193,7 +1193,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1207,16 +1207,16 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1241,7 +1241,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1256,19 +1256,19 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Delete, false);
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count >= 1)
                 {
@@ -1277,7 +1277,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1291,21 +1291,21 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 sourceObject.SetAttributeValue(attribute, "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1330,7 +1330,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1344,27 +1344,27 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
                 sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 sourceObject.SetAttributeValue(attribute, "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Delete, false);
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1389,7 +1389,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1403,27 +1403,27 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                byte[] watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
+                byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
 
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                MAObjectHologram.ClearDeltas(watermark);
 
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(attribute, "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                UnitTestControl.DataContext.ClearDeltas(watermark);
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                MAObjectHologram.ClearDeltas(watermark);
 
                 sourceObject.SetObjectModificationType(ObjectModificationType.Delete, false);
                 sourceObject.CommitCSEntryChange();
 
-                sourceObject = UnitTestControl.DataContext.GetMAObject(sourceId, objectClass);
+                sourceObject = MAObjectHologram.GetMAObject(sourceId, objectClass);
                 sourceObject.SetObjectModificationType(ObjectModificationType.Add, false);
                 sourceObject.DeletedTimestamp = 0;
                 sourceObject.CommitCSEntryChange();
 
-                watermark = UnitTestControl.DataContext.GetHighWatermarkMAObjectsDelta();
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetDeltaMAObjects(watermark).ToList();
+                watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+                List<MAObjectHologram> results = MAObjectHologram.GetDeltaMAObjects(watermark).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1448,7 +1448,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1466,7 +1466,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues1);
                 sourceObject.SetAttributeValue(existingAttribute2, existingValues2);
                 sourceObject.SetAttributeValue(existingAttribute3, existingValues3);
@@ -1479,7 +1479,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute2.Name, incomingValues2));
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute3.Name, incomingValues3));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1499,7 +1499,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1514,7 +1514,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValue);
                 sourceObject.CommitCSEntryChange();
 
@@ -1523,7 +1523,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute1.Name, incomingValues));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1543,7 +1543,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1559,7 +1559,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues);
                 sourceObject.CommitCSEntryChange();
 
@@ -1568,7 +1568,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute1.Name, incomingValues));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1588,7 +1588,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1604,7 +1604,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, existingValues);
                 sourceObject.CommitCSEntryChange();
 
@@ -1613,7 +1613,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute1.Name, incomingValue));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1633,7 +1633,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
 
@@ -1649,7 +1649,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = UnitTestControl.DataContext.CreateMAObject(sourceId, objectClass);
+                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(sourceId, objectClass);
                                 sourceObject.SetAttributeValue(existingAttribute1, matchValue);
                 sourceObject.CommitCSEntryChange();
 
@@ -1658,7 +1658,7 @@ namespace Lithnet.Acma.UnitTests
                 csentry.ObjectModificationType = ObjectModificationType.Update;
                 csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd(incomingAttribute1.Name, matchValue));
 
-                List<MAObjectHologram> results = UnitTestControl.DataContext.GetMAObjectsFromDBQuery(group, csentry).ToList();
+                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group, csentry).ToList();
 
                 if (results.Count == 0)
                 {
@@ -1678,7 +1678,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                UnitTestControl.DataContext.DeleteMAObjectPermanent(sourceId);
+                MAObjectHologram.DeleteMAObjectPermanent(sourceId);
             }
         }
     }

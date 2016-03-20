@@ -13,8 +13,6 @@ namespace Lithnet.Acma
 
         private SqlDataAdapter adapter;
 
-        private MADataContext context;
-
         public int CurrentIndex { get; set; }
 
         public int LastIndex { get; private set; }
@@ -27,12 +25,11 @@ namespace Lithnet.Acma
             }
         }
 
-        public ResultEnumerator(DataRowCollection rows, SqlDataAdapter adapter, MADataContext context)
+        public ResultEnumerator(DataRowCollection rows, SqlDataAdapter adapter)
         {
             this.CurrentIndex = -1;
             this.rows = rows;
             this.adapter = adapter;
-            this.context = context;
         }
 
         public IEnumerator<MAObjectHologram> GetEnumerator()
@@ -49,7 +46,7 @@ namespace Lithnet.Acma
         {
             get
             {
-                return new MAObjectHologram(this.rows[this.CurrentIndex], this.adapter, this.context);
+                return new MAObjectHologram(this.rows[this.CurrentIndex], this.adapter);
             }
         }
 
@@ -61,7 +58,7 @@ namespace Lithnet.Acma
         {
             get
             {
-                return new MAObjectHologram(this.rows[this.CurrentIndex], this.adapter, this.context);
+                return new MAObjectHologram(this.rows[this.CurrentIndex], this.adapter);
             }
         }
 

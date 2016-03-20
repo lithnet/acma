@@ -72,12 +72,12 @@ namespace Lithnet.Acma
         [DataMember(Name = "recipients")]
         public ObservableCollection<AcmaSchemaAttribute> Recipients { get; set; }
 
-        public IEnumerable<MAObjectHologram> GetEventRecipients(MADataContext dc, MAObjectHologram hologram = null)
+        public IEnumerable<MAObjectHologram> GetEventRecipients(MAObjectHologram hologram = null)
         {
             List<MAObjectHologram> recipients = new List<MAObjectHologram>();
 
-            recipients.AddRange(this.GetEventRecipientsFromAttributes(dc, hologram));
-            recipients.AddRange(this.GetEventRecipientsFromQuery(dc, hologram));
+            recipients.AddRange(this.GetEventRecipientsFromAttributes(hologram));
+            recipients.AddRange(this.GetEventRecipientsFromQuery(hologram));
 
             return recipients.Distinct();
         }
@@ -87,7 +87,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="exitEventRecipients">A list of reference attributes to obtain recipients from</param>
         /// <returns>A list of MAObjectHologram to send the specified exit event to</returns>
-        private IList<MAObjectHologram> GetEventRecipientsFromAttributes(MADataContext dc, MAObjectHologram hologram)
+        private IList<MAObjectHologram> GetEventRecipientsFromAttributes(MAObjectHologram hologram)
         {
             List<MAObjectHologram> recipients = new List<MAObjectHologram>();
 
@@ -99,7 +99,7 @@ namespace Lithnet.Acma
                 {
                     foreach (AttributeValue value in values)
                     {
-                        MAObjectHologram recipient = dc.GetMAObjectOrDefault(value.ValueGuid);
+                        MAObjectHologram recipient = MAObjectHologram.GetMAObjectOrDefault(value.ValueGuid);
                         if (recipient == null)
                         {
                             hologram.MarkMissingReference(value.ValueGuid, recipientAttribute);
@@ -115,7 +115,7 @@ namespace Lithnet.Acma
             return recipients;
         }
 
-        private IList<MAObjectHologram> GetEventRecipientsFromQuery(MADataContext dc, MAObjectHologram hologram)
+        private IList<MAObjectHologram> GetEventRecipientsFromQuery(MAObjectHologram hologram)
         {
             List<MAObjectHologram> recipients = new List<MAObjectHologram>();
 
@@ -140,7 +140,7 @@ namespace Lithnet.Acma
 
                 IEnumerable<MAObjectHologram> queryRecipients;
 
-                queryRecipients = dc.GetMAObjectsFromDBQuery(group, hologram);
+                queryRecipients = MAObjectHologram.GetMAObjectsFromDBQuery(group, hologram);
 
                 if (queryRecipients != null)
                 {

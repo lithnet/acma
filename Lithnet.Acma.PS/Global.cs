@@ -11,7 +11,6 @@ namespace Lithnet.Acma.PS
     internal static class Global
     {
         public static bool Connected { get; set; }
-        public static MADataContext DataContext { get; set; }
 
         static Global()
         {

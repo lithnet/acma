@@ -38,7 +38,7 @@ namespace Lithnet.Acma.PS
                 {
                     foreach (Guid id in this.IDs)
                     {
-                        MAObjectHologram maobject = Global.DataContext.GetMAObjectOrDefault(id);
+                        MAObjectHologram maobject = MAObjectHologram.GetMAObjectOrDefault(id);
 
                         if (maobject == null)
                         {
@@ -51,7 +51,7 @@ namespace Lithnet.Acma.PS
                 }
                 else if (this.DBQuery != null)
                 {
-                    IEnumerable<MAObjectHologram> objects = Global.DataContext.GetMAObjectsFromDBQuery(this.DBQuery);
+                    IEnumerable<MAObjectHologram> objects = MAObjectHologram.GetMAObjectsFromDBQuery(this.DBQuery);
                     foreach (MAObjectHologram item in objects)
                     {
                         WriteObject(new AcmaPSObject(item));
@@ -60,7 +60,7 @@ namespace Lithnet.Acma.PS
                 else
                 {
                     this.DBQuery = new DBQueryByValue(ActiveConfig.DB.GetAttribute("deleted"), ValueOperator.Equals, 0);
-                    IEnumerable<MAObjectHologram> objects = Global.DataContext.GetMAObjectsFromDBQuery(this.DBQuery);
+                    IEnumerable<MAObjectHologram> objects = MAObjectHologram.GetMAObjectsFromDBQuery(this.DBQuery);
                     foreach (MAObjectHologram item in objects)
                     {
                         WriteObject(new AcmaPSObject(item));

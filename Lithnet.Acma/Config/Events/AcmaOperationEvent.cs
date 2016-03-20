@@ -50,7 +50,7 @@ namespace Lithnet.Acma
             }
         }
 
-        public IEnumerable<MAObjectHologram> GetQueryRecipients(MADataContext dc)
+        public IEnumerable<MAObjectHologram> GetQueryRecipients()
         {
             List<MAObjectHologram> recipients = new List<MAObjectHologram>();
 
@@ -74,8 +74,8 @@ namespace Lithnet.Acma
                 }
 
                 IEnumerable<MAObjectHologram> queryRecipients;
-                
-                queryRecipients = dc.GetMAObjectsFromDBQuery(group);
+
+                queryRecipients = MAObjectHologram.GetMAObjectsFromDBQuery(group);
 
                 if (queryRecipients != null)
                 {

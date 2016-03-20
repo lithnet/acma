@@ -54,7 +54,7 @@
           </Extension>
         </ProgId>
       </Component>
-      <Component Id="cmp8EE2F8C8E82B4D6744812C8C7A56F437" Guid="*">
+      <Component Id="cmp8EE2F8C8E82B4D6744812C8C7A56F437" NeverOverwrite="yes" Guid="*">
         <File Id="filC4793323B930EF6D1CFE89297A5FEE7D" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.Editor.exe.config" />
       </Component>
       <Component Id="cmpA214335A798018E33B237D9F3B75D6A3" Guid="*">
@@ -116,7 +116,7 @@
           <util:PermissionEx User="[SERVICE_USERNAME]" GenericAll="yes" />
         </CreateFolder>
       </Component>
-      <Component Id="cmp9E15426E9FF35D4DFEE1C00C036B7821" Guid="*">
+      <Component Id="cmp9E15426E9FF35D4DFEE1C00C036B7821" NeverOverwrite="yes" Guid="*">
         <File Id="fil5A78259D6F8A3E67164C079C2DD06EF7" KeyPath="yes" Source="$(var.Lithnet.Acma.Service.TargetDir)\Lithnet.Acma.Service.exe.config" />
       </Component>
       <Component Id="cmpC9392BCC9D3B2DD1390044DACA99D70D" Guid="*">
