@@ -108,10 +108,12 @@ namespace Lithnet.Acma.TestEngine
 
             try
             {
-
                 Logger.IncreaseIndent();
-               // using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required, TransactionManager.MaximumTimeout))
-                //{
+                TransactionOptions op = new TransactionOptions();
+                op.IsolationLevel = IsolationLevel.ReadCommitted;
+                op.Timeout = TransactionManager.MaximumTimeout;
+                using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required, op))
+                {
                     for (int i = 0; i < this.Steps.Count; i++)
                     {
                         UnitTestStep step = this.Steps[i];
@@ -167,7 +169,7 @@ namespace Lithnet.Acma.TestEngine
                             Logger.DecreaseIndent();
                         }
                     }
-                //}
+                }
             }
             finally
             {

@@ -34,10 +34,10 @@ namespace Lithnet.Acma.UnitTests
 
         public static void DeleteAllMAObjects()
         {
-            byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjects();
-            foreach (MAObjectHologram hologram in MAObjectHologram.GetMAObjects(watermark))
+            byte[] watermark = ActiveConfig.DB.GetHighWatermarkMAObjects();
+            foreach (MAObjectHologram hologram in ActiveConfig.DB.GetMAObjects(watermark))
             {
-                MAObjectHologram.DeleteMAObjectPermanent(hologram.ObjectID);
+                ActiveConfig.DB.DeleteMAObjectPermanent(hologram.ObjectID);
             }
         }
 

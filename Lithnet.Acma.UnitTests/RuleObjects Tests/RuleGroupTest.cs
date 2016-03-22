@@ -97,7 +97,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
@@ -117,7 +117,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
@@ -150,7 +150,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -161,7 +161,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
@@ -183,7 +183,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -194,7 +194,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
@@ -219,7 +219,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -230,7 +230,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
@@ -248,7 +248,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 

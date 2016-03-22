@@ -108,25 +108,29 @@ namespace Lithnet.Acma.TestEngine
             MAObjectHologram sourceObject = this.GetObjectFromAlias();
             Rule.RuleFailedEvent += RuleBase_RuleFailedEvent;
             RuleGroup.RuleGroupFailedEvent += RuleGroup_RuleGroupFailedEvent;
-
-            if (!this.SuccessCriteria.Evaluate(sourceObject))
+            try
             {
-                Logger.WriteLine("The unit test evaluation {0} failed", this.Name);
-                Logger.WriteSeparatorLine('-');
-                Logger.WriteLine("MAObject drop");
-                Logger.WriteRaw(sourceObject.AttributeDataToString());
-                Logger.WriteSeparatorLine('-');
+                if (!this.SuccessCriteria.Evaluate(sourceObject))
+                {
+                    Logger.WriteLine("The unit test evaluation {0} failed", this.Name);
+                    Logger.WriteSeparatorLine('-');
+                    Logger.WriteLine("MAObject drop");
+                    Logger.WriteRaw(sourceObject.AttributeDataToString());
+                    Logger.WriteSeparatorLine('-');
 
-                throw new EvaluationFailedException();
+                    throw new EvaluationFailedException();
+                }
             }
-
-            Rule.RuleFailedEvent -= RuleBase_RuleFailedEvent;
-            RuleGroup.RuleGroupFailedEvent -= RuleGroup_RuleGroupFailedEvent;
+            finally
+            {
+                Rule.RuleFailedEvent -= RuleBase_RuleFailedEvent;
+                RuleGroup.RuleGroupFailedEvent -= RuleGroup_RuleGroupFailedEvent;
+            }
         }
 
         private MAObjectHologram GetObjectFromAlias()
         {
-            return MAObjectHologram.GetMAObject(this.ObjectCreationStep.ObjectId, this.ObjectCreationStep.ObjectClass);
+            return ActiveConfig.DB.GetMAObject(this.ObjectCreationStep.ObjectId, this.ObjectCreationStep.ObjectClass);
         }
 
         private void RuleGroup_RuleGroupFailedEvent(RuleGroup sender, string failureReason)

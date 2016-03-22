@@ -12,6 +12,8 @@ using System.ServiceModel;
 using Lithnet.Acma.ServiceModel;
 using Lithnet.Logging;
 using System.Threading;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace Lithnet.Acma.Service
 {
@@ -24,7 +26,7 @@ namespace Lithnet.Acma.Service
 
         public string GetCurrentWatermark()
         {
-            return MAObjectHologram.GetHighWatermarkMAObjects().ToSmartStringOrNull();
+            return ActiveConfig.DB.GetHighWatermarkMAObjects().ToSmartStringOrNull();
         }
 
         public void ExportStart()
@@ -123,22 +125,28 @@ namespace Lithnet.Acma.Service
             CachedImportRequest cachedRequest = new CachedImportRequest();
             cachedRequest.Request = request;
 
-            byte[] watermark = MAObjectHologram.GetHighWatermarkMAObjectsDelta();
+            byte[] watermark = ActiveConfig.DB.GetHighWatermarkMAObjectsDelta();
             response.Watermark = watermark == null ? null : Convert.ToBase64String(watermark);
             cachedRequest.HighWatermark = watermark;
 
             Logger.WriteLine("Got delta watermark: {0}", response.Watermark);
+           
+            ResultEnumerator enumerator;
 
             if (cachedRequest.Request.ImportType == OperationType.Delta)
             {
                 this.ProcessOperationEvents(AcmaEventOperationType.DeltaImport);
-                cachedRequest.Enumerator = MAObjectHologram.EnumerateMAObjectsDelta(watermark);
+                enumerator = ActiveConfig.DB.EnumerateMAObjectsDelta(watermark);
             }
             else
             {
                 this.ProcessOperationEvents(AcmaEventOperationType.FullImport);
-                cachedRequest.Enumerator = MAObjectHologram.EnumerateMAObjects(cachedRequest.Request.Schema.Types.Select(t => t.Name).ToList(), null, null);
+                enumerator = ActiveConfig.DB.EnumerateMAObjects(cachedRequest.Request.Schema.Types.Select(t => t.Name).ToList(), null, null);
             }
+
+            cachedRequest.Queue = new ConcurrentQueue<CSEntryChange>();
+            cachedRequest.Count = enumerator.TotalCount;
+            this.StartProducerThread(enumerator, request.Schema, cachedRequest);
 
             response.Context = Guid.NewGuid().ToString();
 
@@ -210,7 +218,7 @@ namespace Lithnet.Acma.Service
                 {
                     if (request.NormalTermination)
                     {
-                        MAObjectHologram.ClearDeltas(originalRequest.HighWatermark);
+                        ActiveConfig.DB.ClearDeltas(originalRequest.HighWatermark);
                     }
                 }
 
@@ -264,49 +272,15 @@ namespace Lithnet.Acma.Service
 
             int itemCount = 0;
             response.Objects = new List<CSEntryChange>();
-            response.TotalItems = cachedRequest.Enumerator.TotalCount;
+            response.TotalItems = cachedRequest.Count;
 
             if (pageSize > 0)
             {
-                foreach (MAObjectHologram item in cachedRequest.Enumerator)
+                CSEntryChange csentry;
+
+                while (cachedRequest.Queue.TryDequeue(out csentry))
                 {
                     itemCount++;
-                    string objectClassName = item.ObjectClass == null ? item.DeltaObjectClassName : item.ObjectClass.Name;
-                    SchemaType type = cachedRequest.Request.Schema.Types.FirstOrDefault(t => t.Name == objectClassName);
-
-                    if (type == null)
-                    {
-                        continue;
-                    }
-
-                    CSEntryChange csentry = null;
-
-                    try
-                    {
-                        csentry = item.ToCSEntryChange(type);
-                        MAStatistics.AddImportOperation();
-                    }
-                    catch (Exception ex)
-                    {
-                        MAStatistics.AddImportError();
-
-                        if (csentry == null)
-                        {
-                            csentry = CSEntryChange.Create();
-                        }
-
-                        if (string.IsNullOrWhiteSpace(csentry.DN))
-                        {
-                            csentry.ErrorCodeImport = MAImportError.ImportErrorCustomStopRun;
-                        }
-                        else
-                        {
-                            csentry.ErrorCodeImport = MAImportError.ImportErrorCustomContinueRun;
-                        }
-
-                        csentry.ErrorName = ex.Message;
-                        csentry.ErrorDetail = ex.StackTrace;
-                    }
 
                     response.Objects.Add(csentry);
 
@@ -317,7 +291,7 @@ namespace Lithnet.Acma.Service
                 }
             }
 
-            if (cachedRequest.Enumerator.CurrentIndex >= cachedRequest.Enumerator.TotalCount)
+            if (cachedRequest.Queue.IsEmpty && cachedRequest.ProducerComplete)
             {
                 response.HasMoreItems = false;
             }
@@ -347,6 +321,73 @@ namespace Lithnet.Acma.Service
         private void RemoveFromCache(string context)
         {
             AcmaSyncService.cache.Remove(context);
+        }
+
+        private void StartProducerThread(ResultEnumerator results, Schema schema, CachedImportRequest request)
+        {
+            Task t = new Task(() =>
+                {
+                    this.ProduceCSEntryChanges(results, schema, request);
+                });
+
+            t.Start();
+        }
+
+        private void ProduceCSEntryChanges(ResultEnumerator results, Schema schema, CachedImportRequest request)
+        {
+            ParallelOptions op = new ParallelOptions();
+            op.CancellationToken = new CancellationToken();
+            request.CancellationToken = op.CancellationToken;
+            op.MaxDegreeOfParallelism = 1;
+
+            Parallel.ForEach(results, op, item =>
+            {
+                if (op.CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                string objectClassName = item.ObjectClass == null ? item.DeltaObjectClassName : item.ObjectClass.Name;
+                SchemaType type = schema.Types.FirstOrDefault(t => t.Name == objectClassName);
+
+                if (type == null)
+                {
+                    return;
+                }
+
+                CSEntryChange csentry = null;
+
+                try
+                {
+                    csentry = item.ToCSEntryChange(type);
+                    MAStatistics.AddImportOperation();
+                }
+                catch (Exception ex)
+                {
+                    MAStatistics.AddImportError();
+
+                    if (csentry == null)
+                    {
+                        csentry = CSEntryChange.Create();
+                    }
+
+                    if (string.IsNullOrWhiteSpace(csentry.DN))
+                    {
+                        csentry.ErrorCodeImport = MAImportError.ImportErrorCustomStopRun;
+                    }
+                    else
+                    {
+                        csentry.ErrorCodeImport = MAImportError.ImportErrorCustomContinueRun;
+                    }
+
+                    csentry.ErrorName = ex.Message;
+                    csentry.ErrorDetail = ex.StackTrace;
+                }
+
+                request.Queue.Enqueue(csentry);
+            });
+
+            request.ProducerComplete = true;
         }
     }
 }

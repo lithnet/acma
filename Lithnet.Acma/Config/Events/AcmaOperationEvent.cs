@@ -75,7 +75,7 @@ namespace Lithnet.Acma
 
                 IEnumerable<MAObjectHologram> queryRecipients;
 
-                queryRecipients = MAObjectHologram.GetMAObjectsFromDBQuery(group);
+                queryRecipients = ActiveConfig.DB.GetMAObjectsFromDBQuery(group);
 
                 if (queryRecipients != null)
                 {

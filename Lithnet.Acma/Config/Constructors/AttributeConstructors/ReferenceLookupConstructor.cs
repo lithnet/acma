@@ -47,7 +47,7 @@ namespace Lithnet.Acma
         /// <param name="hologram">The object to construct the value for</param>
         internal override void Execute(MAObjectHologram hologram)
         {
-            List<MAObjectHologram> matchedObjects = MAObjectHologram.GetMAObjectsFromDBQuery(this.QueryGroup, hologram).ToList();
+            List<MAObjectHologram> matchedObjects = ActiveConfig.DB.GetMAObjectsFromDBQuery(this.QueryGroup, hologram).ToList();
 
             if (matchedObjects.Count == 0)
             {

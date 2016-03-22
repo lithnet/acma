@@ -47,7 +47,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), "mytestvalue");
 
                 // Positive Tests
@@ -66,7 +66,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), "mytestvalue");
                 maObject.CommitCSEntryChange();
 
@@ -97,7 +97,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), null);
 
                 // Positive Tests
@@ -127,7 +127,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), null);
                 maObject.CommitCSEntryChange();
 
@@ -158,7 +158,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -169,7 +169,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), null);
 
                 // Positive Tests
@@ -189,7 +189,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -200,7 +200,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object> { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() });
 
                 // Positive Tests
@@ -220,7 +220,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -231,7 +231,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), null);
                 maObject.CommitCSEntryChange();
 
@@ -252,7 +252,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -263,7 +263,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 maObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object> { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() });
                 maObject.CommitCSEntryChange();
 
@@ -283,7 +283,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Lithnet.Acma.UnitTests.Constructor_Tests.AttributeConstructor_Tests
                 for (int i = 1; i <= prestage; i++)
                 {
                     Guid newId = Guid.NewGuid();
-                    MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                    MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                     preCreatedIDs.Add(newId);
 
                     sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "yzhu");
@@ -45,7 +45,7 @@ namespace Lithnet.Acma.UnitTests.Constructor_Tests.AttributeConstructor_Tests
                 for (int i = 1; i <= testcount; i++)
                 {
                     Guid newId = Guid.NewGuid();
-                    MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                    MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                     testIDs.Add(newId);
 
                     sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sn"), "yzhu");
@@ -61,12 +61,12 @@ namespace Lithnet.Acma.UnitTests.Constructor_Tests.AttributeConstructor_Tests
             {
                 foreach (Guid id in preCreatedIDs)
                 {
-                    MAObjectHologram.DeleteMAObjectPermanent(id);
+                    ActiveConfig.DB.DeleteMAObjectPermanent(id);
                 }
 
                 foreach (Guid id in testIDs)
                 {
-                    MAObjectHologram.DeleteMAObjectPermanent(id);
+                    ActiveConfig.DB.DeleteMAObjectPermanent(id);
                 }
             }
 

@@ -69,7 +69,7 @@ namespace Lithnet.Acma.UnitTests
                 bool refretry;
                 CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = ActiveConfig.DB.GetMAObject(id, objectClass);
 
                 if (sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("mail")).ValueString != "test.test@test.com")
                 {
@@ -128,7 +128,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id);
             }
         }
 
@@ -169,7 +169,7 @@ namespace Lithnet.Acma.UnitTests
                 CSEntryExport.PutExportEntry(csentry, out refretry);
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                MAObjectHologram originalObject = MAObjectHologram.GetMAObject(originalId, objectClass);
+                MAObjectHologram originalObject = ActiveConfig.DB.GetMAObject(originalId, objectClass);
                 originalObject.SetObjectModificationType(ObjectModificationType.Update, false);
                 originalObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sapPersonId"), 7777L);
                 originalObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), "jesus");
@@ -185,7 +185,7 @@ namespace Lithnet.Acma.UnitTests
 
                 CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram newObject = MAObjectHologram.GetMAObjectOrDefault(replacementId);
+                MAObjectHologram newObject = ActiveConfig.DB.GetMAObjectOrDefault(replacementId);
 
                 if (newObject == null)
                 {
@@ -202,7 +202,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The object was not undeleted");
                 }
 
-                originalObject = MAObjectHologram.GetMAObjectOrDefault(originalId);
+                originalObject = ActiveConfig.DB.GetMAObjectOrDefault(originalId);
 
                 if (originalObject != null)
                 {
@@ -211,8 +211,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(originalId);
-                MAObjectHologram.DeleteMAObjectPermanent(replacementId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(originalId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(replacementId);
             }
         }
 
@@ -240,7 +240,7 @@ namespace Lithnet.Acma.UnitTests
 
                 CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = ActiveConfig.DB.GetMAObject(id, objectClass);
 
                 if (sourceObject.DeletedTimestamp == 0)
                 {
@@ -249,7 +249,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id);
             }
         }
 
@@ -287,7 +287,7 @@ namespace Lithnet.Acma.UnitTests
                 CSEntryExport.PutExportEntry(csentry, out refretry);
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = ActiveConfig.DB.GetMAObject(id, objectClass);
 
                 if (sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("mail")).ValueString != "test1.test1@test.com")
                 {
@@ -346,7 +346,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id);
             }
         }
 
@@ -377,7 +377,7 @@ namespace Lithnet.Acma.UnitTests
                 CSEntryExport.PutExportEntry(csentry, out refretry);
                 AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass("person");
 
-                MAObjectHologram sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
+                MAObjectHologram sourceObject = ActiveConfig.DB.GetMAObject(id, objectClass);
 
                 csentry = CSEntryChange.Create();
                 csentry.DN = id.ToString();
@@ -387,7 +387,7 @@ namespace Lithnet.Acma.UnitTests
 
                 CSEntryExport.PutExportEntry(csentry, out refretry);
 
-                sourceObject = MAObjectHologram.GetMAObject(id, objectClass);
+                sourceObject = ActiveConfig.DB.GetMAObject(id, objectClass);
                 
                 if (sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("mail")).ValueString != "test1.test1@test.com")
                 {
@@ -446,7 +446,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id);
             }
         }
     }

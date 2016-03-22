@@ -349,25 +349,48 @@ namespace Lithnet.Acma
             this.attributeValuesCache.Clear();
         }
 
+        private SqlConnection workingConnection;
+
         /// <summary>
         /// Commits changes made to the object
         /// </summary>
         protected void Commit()
         {
-            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            this.adapter.RowUpdating += adapter_RowUpdating;
+            if (this.dataRow.RowState != DataRowState.Unchanged)
             {
-                if (this.dataRow.RowState != DataRowState.Unchanged)
+                using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
                 {
+                    this.workingConnection = connection;
                     this.adapter.SelectCommand.Connection = connection;
                     this.adapter.Update(this.dataRow.Table.DataSet);
                 }
+                this.workingConnection = null;
+            }
+            
+            foreach (KeyValuePair<string, DBAttributeValues> pair in this.attributeValuesCache)
+            {
+                pair.Value.Commit();
+            }
 
-                foreach (KeyValuePair<string, DBAttributeValues> pair in this.attributeValuesCache)
+            this.attributeValuesCache.Clear();
+        }
+
+        /*
+         The following is a workaround for a bug that is appearing 
+         */
+
+        private void adapter_RowUpdating(object sender, SqlRowUpdatingEventArgs e)
+        {
+            if (e.Command != null)
+            {
+                if (e.Command.Connection == null || string.IsNullOrWhiteSpace(e.Command.Connection.ConnectionString))
                 {
-                    pair.Value.Commit(connection);
+                    if (this.workingConnection != null)
+                    {
+                        e.Command.Connection = this.workingConnection;
+                    }
                 }
-
-                this.attributeValuesCache.Clear();
             }
         }
 

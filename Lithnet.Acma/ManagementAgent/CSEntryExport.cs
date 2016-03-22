@@ -42,17 +42,12 @@ namespace Lithnet.Acma
                 op.Timeout = TransactionManager.MaximumTimeout;
                 using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required, op))
                 {
-                    //if (!hasTransaction)
-                    //{
-                    //    dbc.SharedHologramSqlConnection.EnlistTransaction(Transaction.Current);
-                    //}
-
                     MAStatistics.StartTransaction();
 
                     switch (csentry.ObjectModificationType)
                     {
                         case ObjectModificationType.Add:
-                            anchorchanges = CSEntryExport.PerformCSEntryExportAdd(csentry,  out referenceRetryRequired);
+                            anchorchanges = CSEntryExport.PerformCSEntryExportAdd(csentry, out referenceRetryRequired);
                             break;
 
                         case ObjectModificationType.Delete:
@@ -120,7 +115,7 @@ namespace Lithnet.Acma
 
                 if (hologram == null)
                 {
-                    hologram = MAObjectHologram.CreateMAObject(guidFromDn, csentry.ObjectType);
+                    hologram = ActiveConfig.DB.CreateMAObject(guidFromDn, csentry.ObjectType);
                 }
                 else
                 {
@@ -130,8 +125,8 @@ namespace Lithnet.Acma
                     if (hologram.ObjectID != guidFromDn)
                     {
                         Logger.WriteLine("Re-anchoring object with new ID: " + csentry.DN);
-                        MAObjectHologram.ChangeMAObjectId(hologram.ObjectID, guidFromDn, true);
-                        hologram = MAObjectHologram.GetMAObject(guidFromDn, objectClass);
+                        ActiveConfig.DB.ChangeMAObjectId(hologram.ObjectID, guidFromDn, true);
+                        hologram = ActiveConfig.DB.GetMAObject(guidFromDn, objectClass);
                     }
 
                     csentry = CSEntryChangeExtensions.ConvertCSEntryChangeAddToUpdate(csentry);
@@ -230,7 +225,7 @@ namespace Lithnet.Acma
                 shadowParentID = new Guid(shadowParentValueChange.Value.ToSmartString());
             }
 
-            MAObjectHologram parentHologram = MAObjectHologram.GetMAObjectOrDefault(shadowParentID);
+            MAObjectHologram parentHologram = ActiveConfig.DB.GetMAObjectOrDefault(shadowParentID);
 
             if (parentHologram == null)
             {
@@ -300,7 +295,7 @@ namespace Lithnet.Acma
                 objectClass = ActiveConfig.DB.GetObjectClass(csentryChange.ObjectType);
             }
 
-            MAObjectHologram existingObject = MAObjectHologram.GetMAObjectOrDefault(csentryChange.DN, objectClass);
+            MAObjectHologram existingObject = ActiveConfig.DB.GetMAObjectOrDefault(csentryChange.DN, objectClass);
 
             if (existingObject != null)
             {
@@ -324,7 +319,7 @@ namespace Lithnet.Acma
                 return null;
             }
 
-            return MAObjectHologram.GetResurrectionObject(parameters, csentryChange);
+            return ActiveConfig.DB.GetResurrectionObject(parameters, csentryChange);
         }
 
         private static MAObjectHologram GetObjectFromDnOrAnchor(CSEntryChange csentryChange)
@@ -342,11 +337,11 @@ namespace Lithnet.Acma
             {
                 if (objectClass != null)
                 {
-                    maObject = MAObjectHologram.GetMAObjectOrDefault(new Guid(csentryChange.DN), objectClass);
+                    maObject = ActiveConfig.DB.GetMAObjectOrDefault(new Guid(csentryChange.DN), objectClass);
                 }
                 else
                 {
-                    maObject = MAObjectHologram.GetMAObjectOrDefault(new Guid(csentryChange.DN));
+                    maObject = ActiveConfig.DB.GetMAObjectOrDefault(new Guid(csentryChange.DN));
                 }
 
                 if (maObject != null)
@@ -380,7 +375,7 @@ namespace Lithnet.Acma
                     parentGroup = anchorGroupSearch;
                 }
 
-                IList<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(parentGroup).ToList();
+                IList<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(parentGroup).ToList();
 
                 if (results.Count == 1)
                 {

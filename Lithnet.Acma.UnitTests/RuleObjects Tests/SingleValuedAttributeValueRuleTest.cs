@@ -48,7 +48,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("objectSid");
@@ -68,7 +68,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("mail");
@@ -102,7 +102,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("mail");
@@ -136,7 +136,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("connectedToSap");
@@ -169,7 +169,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -183,7 +183,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("sapExpiryDate");
@@ -202,7 +202,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -216,7 +216,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 ValueComparisonRule target = new ValueComparisonRule();
                 target.Attribute = ActiveConfig.DB.GetAttribute("dateTimeSV");
@@ -235,7 +235,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
     }

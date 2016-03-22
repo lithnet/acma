@@ -47,7 +47,7 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram maObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram maObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 AcmaEvent maevent = GetAccountNameChangedEvent();
 
@@ -74,7 +74,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -108,8 +108,8 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram supervisorObject = MAObjectHologram.CreateMAObject(supervisorId, "person");
-                MAObjectHologram targetObject = MAObjectHologram.CreateMAObject(targetId, "person");
+                MAObjectHologram supervisorObject = ActiveConfig.DB.CreateMAObject(supervisorId, "person");
+                MAObjectHologram targetObject = ActiveConfig.DB.CreateMAObject(targetId, "person");
 
                 AcmaSchemaAttribute supervisorAttribute = ActiveConfig.DB.GetAttribute("supervisor");
                 targetObject.SetAttributeValue(supervisorAttribute, supervisorObject.ObjectID);
@@ -133,8 +133,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(targetId);
-                MAObjectHologram.DeleteMAObjectPermanent(supervisorId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(targetId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(supervisorId);
             }
         }
     }

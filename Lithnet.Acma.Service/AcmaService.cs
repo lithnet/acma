@@ -24,7 +24,7 @@ namespace Lithnet.Acma.Service
 
         public AcmaResource GetResourceById(string id)
         {
-            MAObjectHologram hologram = MAObjectHologram.GetMAObjectOrDefault(new Guid(id));
+            MAObjectHologram hologram = ActiveConfig.DB.GetMAObjectOrDefault(new Guid(id));
 
             if (hologram != null)
             {
@@ -42,7 +42,7 @@ namespace Lithnet.Acma.Service
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute("objectClass"), ValueOperator.Equals, objectType));
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), ValueOperator.Equals, keyValue));
 
-            IList<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList();
+            IList<MAObjectHologram> holograms = ActiveConfig.DB.GetMAObjectsFromDBQuery(queryGroup).ToList();
 
             if (holograms.Count == 0)
             {
@@ -60,12 +60,21 @@ namespace Lithnet.Acma.Service
 
         public IList<AcmaResource> GetResourcesByAttributePair(string key, string keyValue, string op = "Equals")
         {
-            ValueOperator vo = (ValueOperator)Enum.Parse(typeof(ValueOperator), op, true);
+            ValueOperator vo;
+
+            if (!string.IsNullOrWhiteSpace(op))
+            {
+                vo = (ValueOperator)Enum.Parse(typeof(ValueOperator), op, true);
+            }
+            else
+            {
+                vo = ValueOperator.Equals;
+            }
 
             DBQueryGroup queryGroup = new DBQueryGroup(GroupOperator.All);
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key), vo, keyValue));
 
-            IList<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList();
+            IList<MAObjectHologram> holograms = ActiveConfig.DB.GetMAObjectsFromDBQuery(queryGroup).ToList();
 
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }
@@ -76,7 +85,7 @@ namespace Lithnet.Acma.Service
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key1), ValueOperator.Equals, keyValue1));
             queryGroup.AddChildQueryObjects(new DBQueryByValue(ActiveConfig.DB.GetAttribute(key2), ValueOperator.Equals, keyValue2));
 
-            IList<MAObjectHologram> holograms = MAObjectHologram.GetMAObjectsFromDBQuery(queryGroup).ToList();
+            IList<MAObjectHologram> holograms = ActiveConfig.DB.GetMAObjectsFromDBQuery(queryGroup).ToList();
 
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }

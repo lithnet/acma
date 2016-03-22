@@ -297,7 +297,7 @@ namespace Lithnet.Acma
 
                 foreach (AcmaSchemaAttribute attribute in this.UniqueAllocationAttributes)
                 {
-                    this.valueCache[wilcardValue].AddRange(MAObjectHologram.GetAttributeValues(attribute, wilcardValue, hologram.ObjectID).ToList());
+                    this.valueCache[wilcardValue].AddRange(ActiveConfig.DB.GetAttributeValues(attribute, wilcardValue, hologram.ObjectID).ToList());
                 }
             }
         }
@@ -359,7 +359,7 @@ namespace Lithnet.Acma
         {
             foreach (AcmaSchemaAttribute attribute in this.UniqueAllocationAttributes)
             {
-                if (MAObjectHologram.DoesAttributeValueExist(attribute, valueToTest, hologram.ObjectID))
+                if (ActiveConfig.DB.DoesAttributeValueExist(attribute, valueToTest, hologram.ObjectID))
                 {
                     return false;
                 }

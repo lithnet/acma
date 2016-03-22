@@ -36,7 +36,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixGid"), 99L);
 
                 object value = target.Expand(sourceObject).First();
@@ -56,7 +56,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("connectedToCallista"), true);
 
                 object value = target.Expand(sourceObject).First();
@@ -92,7 +92,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("objectSid"), new byte[] { 0, 1, 2, 3, 4 });
 
                 object value = target.Expand(sourceObject).First();
@@ -128,7 +128,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
                 object value = target.Expand(sourceObject).First();
@@ -164,7 +164,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -180,7 +180,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
                 object value = target.Expand(sourceObject).First();
@@ -200,7 +200,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -216,7 +216,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 //sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
                 IList<object> value = target.Expand(sourceObject);
@@ -228,7 +228,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -245,7 +245,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), new Guid("8c3cbf4e-5216-4a04-9140-b0b11020fa4c"));
 
                 object value = target.Expand(sourceObject).First();
@@ -265,7 +265,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -283,7 +283,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("sapExpiryDate"), 1L);
 
                 object value = target.Expand(sourceObject).First();
@@ -303,7 +303,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -319,7 +319,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
 
                 object value = target.Expand(sourceObject).First();
@@ -339,7 +339,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -357,11 +357,11 @@ namespace Lithnet.Acma.UnitTests
             Guid parentId = Guid.NewGuid();
             try
             {
-                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixGid"), 99L);
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parentId);
 
                 object value = target.Expand(sourceObject).First();
@@ -381,8 +381,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
             }
         }
 
@@ -398,11 +398,11 @@ namespace Lithnet.Acma.UnitTests
             Guid parentId = Guid.NewGuid();
             try
             {
-                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("connectedToSap"), true);
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parentId);
 
                 object value = target.Expand(sourceObject).First();
@@ -422,8 +422,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
             }
         }
 
@@ -439,11 +439,11 @@ namespace Lithnet.Acma.UnitTests
             Guid parentId = Guid.NewGuid();
             try
             {
-                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("objectSid"), new byte[] { 0, 1, 2, 3, 4 });
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parentId);
 
                 object value = target.Expand(sourceObject).First();
@@ -463,8 +463,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
             }
         }
 
@@ -480,11 +480,11 @@ namespace Lithnet.Acma.UnitTests
             Guid parentId = Guid.NewGuid();
             try
             {
-                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parentId);
 
                 object value = target.Expand(sourceObject).First();
@@ -504,8 +504,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
             }
         }
 
@@ -521,11 +521,11 @@ namespace Lithnet.Acma.UnitTests
             Guid parentId = Guid.NewGuid();
             try
             {
-                MAObjectHologram parentObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram parentObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                 parentObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), new Guid("6d3ff395-c94d-43df-90ae-c9e03579b7d4"));
                 parentObject.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parentId);
 
                 object value = target.Expand(sourceObject).First();
@@ -545,8 +545,8 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
             }
         }
 
@@ -567,19 +567,19 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram parentObject1 = MAObjectHologram.CreateMAObject(parent1Id, "person");
+                MAObjectHologram parentObject1 = ActiveConfig.DB.CreateMAObject(parent1Id, "person");
                 parentObject1.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parent2Id);
                 parentObject1.CommitCSEntryChange();
 
-                MAObjectHologram parentObject2 = MAObjectHologram.CreateMAObject(parent2Id, "person");
+                MAObjectHologram parentObject2 = ActiveConfig.DB.CreateMAObject(parent2Id, "person");
                 parentObject2.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parent3Id);
                 parentObject2.CommitCSEntryChange();
 
-                MAObjectHologram parentObject3 = MAObjectHologram.CreateMAObject(parent3Id, "person");
+                MAObjectHologram parentObject3 = ActiveConfig.DB.CreateMAObject(parent3Id, "person");
                 parentObject3.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 parentObject3.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), parent1Id);
 
                 object value = target.Expand(sourceObject).First();
@@ -599,10 +599,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(parent1Id);
-                MAObjectHologram.DeleteMAObjectPermanent(parent2Id);
-                MAObjectHologram.DeleteMAObjectPermanent(parent3Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parent1Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parent2Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parent3Id);
             }
         }
 
@@ -623,19 +623,19 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram childObject1 = MAObjectHologram.CreateMAObject(child1Id, "person");
+                MAObjectHologram childObject1 = ActiveConfig.DB.CreateMAObject(child1Id, "person");
                 childObject1.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 childObject1.CommitCSEntryChange();
 
-                MAObjectHologram childObject2 = MAObjectHologram.CreateMAObject(child2Id, "person");
+                MAObjectHologram childObject2 = ActiveConfig.DB.CreateMAObject(child2Id, "person");
                 childObject2.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test2.test2@test.com");
                 childObject2.CommitCSEntryChange();
 
-                MAObjectHologram childObject3 = MAObjectHologram.CreateMAObject(child3Id, "person");
+                MAObjectHologram childObject3 = ActiveConfig.DB.CreateMAObject(child3Id, "person");
                 childObject3.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test3.test3@test.com");
                 childObject3.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child1Id, child2Id, child3Id });
 
                 object value = target.Expand(sourceObject);
@@ -655,10 +655,10 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
-                MAObjectHologram.DeleteMAObjectPermanent(child1Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child2Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child3Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child1Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child2Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child3Id);
             }
         }
 
@@ -691,31 +691,31 @@ namespace Lithnet.Acma.UnitTests
             Guid child6Id = Guid.NewGuid();
             try
             {
-                MAObjectHologram childObject3 = MAObjectHologram.CreateMAObject(child3Id, "person");
+                MAObjectHologram childObject3 = ActiveConfig.DB.CreateMAObject(child3Id, "person");
                 childObject3.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "1test.test@test.com");
                 childObject3.CommitCSEntryChange();
 
-                MAObjectHologram childObject4 = MAObjectHologram.CreateMAObject(child4Id, "person");
+                MAObjectHologram childObject4 = ActiveConfig.DB.CreateMAObject(child4Id, "person");
                 childObject4.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "2test2.test2@test.com");
                 childObject4.CommitCSEntryChange();
 
-                MAObjectHologram childObject5 = MAObjectHologram.CreateMAObject(child5Id, "person");
+                MAObjectHologram childObject5 = ActiveConfig.DB.CreateMAObject(child5Id, "person");
                 childObject5.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "3test3.test3@test.com");
                 childObject5.CommitCSEntryChange();
 
-                MAObjectHologram childObject6 = MAObjectHologram.CreateMAObject(child6Id, "person");
+                MAObjectHologram childObject6 = ActiveConfig.DB.CreateMAObject(child6Id, "person");
                 childObject6.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "4test4.test4@test.com");
                 childObject6.CommitCSEntryChange();
 
-                MAObjectHologram childObject1 = MAObjectHologram.CreateMAObject(child1Id, "person");
+                MAObjectHologram childObject1 = ActiveConfig.DB.CreateMAObject(child1Id, "person");
                 childObject1.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child3Id, child4Id });
                 childObject1.CommitCSEntryChange();
 
-                MAObjectHologram childObject2 = MAObjectHologram.CreateMAObject(child2Id, "person");
+                MAObjectHologram childObject2 = ActiveConfig.DB.CreateMAObject(child2Id, "person");
                 childObject2.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child6Id, child5Id });
                 childObject2.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child1Id, child2Id });
 
                 object value = target.Expand(sourceObject);
@@ -735,13 +735,13 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
-                MAObjectHologram.DeleteMAObjectPermanent(child1Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child2Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child3Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child4Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child5Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child6Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child1Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child2Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child3Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child4Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child5Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child6Id);
             }
         }
 
@@ -759,7 +759,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object>() { 1L, 2L, 3L, 4L });
 
                 object value = target.Expand(sourceObject);
@@ -779,7 +779,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -795,7 +795,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("connectedToCallista"), true);
 
                 object value = target.Expand(sourceObject).First();
@@ -815,7 +815,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -831,7 +831,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
 
                 object value = target.Expand(sourceObject);
@@ -851,7 +851,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -867,7 +867,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { new Guid("fb116a90-35e3-47e9-92b7-679c4821e648"), new Guid("352285df-3fdc-468e-9412-70d62a62cefe"), new Guid("50ac8dbb-15fe-485c-8f02-87a77ab68a7b") });
 
                 object value = target.Expand(sourceObject);
@@ -887,7 +887,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -905,7 +905,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object>() { 1L, 2L, 3L, 4L });
 
                 object value = target.Expand(sourceObject);
@@ -925,7 +925,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -941,7 +941,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "test.test@test.com", "test1.test1@test.com", "test2.test2@test.com" });
 
                 object value = target.Expand(sourceObject);
@@ -961,7 +961,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -994,31 +994,31 @@ namespace Lithnet.Acma.UnitTests
             Guid child6Id = Guid.NewGuid();
             try
             {
-                MAObjectHologram childObject3 = MAObjectHologram.CreateMAObject(child3Id, "person");
+                MAObjectHologram childObject3 = ActiveConfig.DB.CreateMAObject(child3Id, "person");
                 childObject3.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "1test.test@test.com");
                 childObject3.CommitCSEntryChange();
 
-                MAObjectHologram childObject4 = MAObjectHologram.CreateMAObject(child4Id, "person");
+                MAObjectHologram childObject4 = ActiveConfig.DB.CreateMAObject(child4Id, "person");
                 childObject4.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "2test2.test2@test.com");
                 childObject4.CommitCSEntryChange();
 
-                MAObjectHologram childObject5 = MAObjectHologram.CreateMAObject(child5Id, "person");
+                MAObjectHologram childObject5 = ActiveConfig.DB.CreateMAObject(child5Id, "person");
                 childObject5.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "3test3.test3@test.com");
                 childObject5.CommitCSEntryChange();
 
-                MAObjectHologram childObject6 = MAObjectHologram.CreateMAObject(child6Id, "person");
+                MAObjectHologram childObject6 = ActiveConfig.DB.CreateMAObject(child6Id, "person");
                 childObject6.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "4test4.test4@test.com");
                 childObject6.CommitCSEntryChange();
 
-                MAObjectHologram childObject1 = MAObjectHologram.CreateMAObject(child1Id, "person");
+                MAObjectHologram childObject1 = ActiveConfig.DB.CreateMAObject(child1Id, "person");
                 childObject1.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child3Id, child4Id });
                 childObject1.CommitCSEntryChange();
 
-                MAObjectHologram childObject2 = MAObjectHologram.CreateMAObject(child2Id, "person");
+                MAObjectHologram childObject2 = ActiveConfig.DB.CreateMAObject(child2Id, "person");
                 childObject2.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child6Id, child5Id });
                 childObject2.CommitCSEntryChange();
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(parentId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(parentId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("directReports"), new List<object>() { child1Id, child2Id });
 
                 object value = target.Expand(sourceObject);
@@ -1038,13 +1038,13 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(parentId);
-                MAObjectHologram.DeleteMAObjectPermanent(child1Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child2Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child3Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child4Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child5Id);
-                MAObjectHologram.DeleteMAObjectPermanent(child6Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(parentId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child1Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child2Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child3Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child4Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child5Id);
+                ActiveConfig.DB.DeleteMAObjectPermanent(child6Id);
             }
         }
 
@@ -1060,7 +1060,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
@@ -1084,7 +1084,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1100,7 +1100,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
@@ -1124,7 +1124,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
     }

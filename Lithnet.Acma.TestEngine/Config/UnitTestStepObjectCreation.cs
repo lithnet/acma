@@ -155,7 +155,7 @@ namespace Lithnet.Acma.TestEngine
             if (this.CSEntryChange != null)
             {
                 Guid dn = new Guid(this.CSEntryChange.DN);
-                MAObjectHologram.DeleteMAObjectPermanent(dn);
+                ActiveConfig.DB.DeleteMAObjectPermanent(dn);
             }
         }
 

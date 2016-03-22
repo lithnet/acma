@@ -66,7 +66,7 @@ namespace Lithnet.Acma.UnitTests
 
                 ActiveConfig.XmlConfig.ClassConstructors["person"].ExitEvents.Add(e);
 
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 

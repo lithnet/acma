@@ -251,13 +251,12 @@ namespace Lithnet.Acma
         /// <summary>
         /// Commits all changes to the database
         /// </summary>
-        internal void Commit(SqlConnection connection)
+        internal void Commit()
         {
-            //using (this.dataAdapter.SelectCommand.Connection = ActiveConfig.DB.MADataConext.GetSqlConnection())
-            //{
-            this.dataAdapter.SelectCommand.Connection = connection;
-            this.dataAdapter.Update(this.dataTable);
-            //}
+            using (this.dataAdapter.SelectCommand.Connection = ActiveConfig.DB.GetNewConnection())
+            {
+                this.dataAdapter.Update(this.dataTable);
+            }
         }
 
         /// <summary>

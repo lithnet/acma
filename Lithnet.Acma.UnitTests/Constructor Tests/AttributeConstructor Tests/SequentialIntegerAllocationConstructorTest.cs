@@ -56,7 +56,7 @@ namespace Lithnet.Acma.UnitTests
             Guid newId = Guid.NewGuid();
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
 
                 long nextInt = ActiveConfig.DB.GetNextSequenceValue("unixUid") + 1;
 
@@ -77,7 +77,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
     }

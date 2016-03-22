@@ -55,11 +55,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -76,7 +76,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -85,7 +85,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -101,11 +101,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -122,7 +122,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -131,7 +131,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -147,11 +147,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -168,7 +168,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -177,7 +177,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -193,11 +193,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -214,7 +214,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test1.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -223,7 +223,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -239,11 +239,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -259,7 +259,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -268,7 +268,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -284,11 +284,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -304,7 +304,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -314,7 +314,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -330,11 +330,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -350,7 +350,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 99L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -366,7 +366,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -376,7 +376,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -392,11 +392,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -412,7 +412,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -422,7 +422,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -438,11 +438,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 99L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -458,7 +458,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -474,7 +474,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -484,7 +484,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
        
@@ -500,11 +500,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -520,7 +520,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), null);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -529,7 +529,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -545,11 +545,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), null);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -565,7 +565,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -574,7 +574,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -590,11 +590,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -611,7 +611,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -620,7 +620,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -636,11 +636,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test1.test1@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -657,7 +657,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -666,7 +666,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -682,11 +682,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -703,7 +703,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 80L, 85L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -712,7 +712,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -728,11 +728,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -748,7 +748,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 99L, 98L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -764,7 +764,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 80L, 85L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -773,7 +773,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -789,11 +789,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -809,7 +809,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 110L, 120L, 100L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -818,7 +818,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -834,11 +834,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -854,7 +854,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 99L, 100L, 110L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -870,7 +870,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 110L, 120L, 100L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -879,7 +879,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -895,11 +895,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test2.com", "test3.test3@test3.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -916,7 +916,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), "test1.test1@test1.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -925,7 +925,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -941,11 +941,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test2.com", "test3.test3@test3.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -961,7 +961,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.DeleteAttribute(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"));
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -970,7 +970,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -986,11 +986,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 // sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test2.com", "test3.test3@test3.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1006,7 +1006,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test2.com", "test3.test3@test3.com" });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1015,7 +1015,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1032,11 +1032,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1053,7 +1053,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1062,7 +1062,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1078,11 +1078,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1098,7 +1098,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1107,7 +1107,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1123,11 +1123,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1143,7 +1143,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 90L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1153,7 +1153,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1169,11 +1169,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1189,7 +1189,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 99L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1205,7 +1205,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1215,7 +1215,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1231,11 +1231,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1251,7 +1251,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1261,7 +1261,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1277,11 +1277,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 99L);
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1297,7 +1297,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 98L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1313,7 +1313,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("unixUid"), 100L);
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1323,7 +1323,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1339,11 +1339,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1359,7 +1359,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "test1.test1@test1.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1368,7 +1368,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1384,11 +1384,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1405,7 +1405,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), "test1.test1@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1414,7 +1414,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1430,11 +1430,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test1.test1@test.com", "test2.test2@test.com", "test3.test3@test.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1451,7 +1451,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), "test.test@test.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1460,7 +1460,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1476,11 +1476,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1497,7 +1497,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 80L, 85L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1506,7 +1506,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1522,11 +1522,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1542,7 +1542,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 99L, 98L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1558,7 +1558,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 80L, 85L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1567,7 +1567,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1583,11 +1583,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1603,7 +1603,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 110L, 120L, 100L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1612,7 +1612,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1628,11 +1628,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 100L, 110L, 90L });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1648,7 +1648,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 99L, 100L, 110L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1664,7 +1664,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("expiryDates"), new List<object> { 110L, 120L, 100L });
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1673,7 +1673,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 
@@ -1689,11 +1689,11 @@ namespace Lithnet.Acma.UnitTests
 
             try
             {
-                MAObjectHologram sourceObject = MAObjectHologram.CreateMAObject(newId, "person");
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
                                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object> { "test.test@test.com", "test2.test2@test2.com", "test3.test3@test3.com" });
                 sourceObject.CommitCSEntryChange();
 
-                List<MAObjectHologram> results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                List<MAObjectHologram> results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count() != 1)
                 {
@@ -1710,7 +1710,7 @@ namespace Lithnet.Acma.UnitTests
                 sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), "test1.test1@test1.com");
                 sourceObject.CommitCSEntryChange();
 
-                results = MAObjectHologram.GetMAObjectsFromDBQuery(group).ToList();
+                results = ActiveConfig.DB.GetMAObjectsFromDBQuery(group).ToList();
 
                 if (results.Count != 0)
                 {
@@ -1719,7 +1719,7 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                MAObjectHologram.DeleteMAObjectPermanent(newId);
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
 

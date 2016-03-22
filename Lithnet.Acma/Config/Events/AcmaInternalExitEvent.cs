@@ -99,7 +99,7 @@ namespace Lithnet.Acma
                 {
                     foreach (AttributeValue value in values)
                     {
-                        MAObjectHologram recipient = MAObjectHologram.GetMAObjectOrDefault(value.ValueGuid);
+                        MAObjectHologram recipient = ActiveConfig.DB.GetMAObjectOrDefault(value.ValueGuid);
                         if (recipient == null)
                         {
                             hologram.MarkMissingReference(value.ValueGuid, recipientAttribute);
@@ -140,7 +140,7 @@ namespace Lithnet.Acma
 
                 IEnumerable<MAObjectHologram> queryRecipients;
 
-                queryRecipients = MAObjectHologram.GetMAObjectsFromDBQuery(group, hologram);
+                queryRecipients = ActiveConfig.DB.GetMAObjectsFromDBQuery(group, hologram);
 
                 if (queryRecipients != null)
                 {
