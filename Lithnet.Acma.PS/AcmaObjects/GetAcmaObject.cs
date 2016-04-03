@@ -11,7 +11,7 @@ using Lithnet.Acma.DataModel;
 
 namespace Lithnet.Acma.PS
 {
-    [Cmdlet(VerbsCommon.Get, "AcmaObject", DefaultParameterSetName = "GetResourceByKey")]
+    [Cmdlet(VerbsCommon.Get, "AcmaObject", DefaultParameterSetName = "GetResource")]
     public class GetAcmaObjectCmdLet : AcmaCmdletConnected
     {
         [Parameter(ParameterSetName = "GetResource", ValueFromPipeline = true, Mandatory = true, Position = 1)]
@@ -59,7 +59,7 @@ namespace Lithnet.Acma.PS
 
                 if (maobject == null)
                 {
-                    throw new NotFoundException();
+                    return;
                 }
 
                 this.WriteObject(new AcmaPSObject(maobject));
