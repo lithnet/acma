@@ -45,6 +45,8 @@ namespace Lithnet.Acma
 
         private TriggerEvents acmaModificationType = TriggerEvents.Unconfigured;
 
+        private Dictionary<Guid, MAObjectHologram> maObjectCache = new Dictionary<Guid, MAObjectHologram>();
+
         /// <summary>
         /// The parent of the shadow object
         /// </summary>
@@ -1825,9 +1827,17 @@ namespace Lithnet.Acma
         private AttributeValues GetAttributeValuesInherited(AcmaSchemaAttribute attribute)
         {
             Guid inheritanceSource = this.GetInheritanceSource(attribute);
+            MAObjectHologram referencedObject;
             AcmaSchemaMapping mapping = ActiveConfig.DB.GetMapping(attribute.Name, this.ObjectClass.Name);
 
-            MAObjectHologram referencedObject = ActiveConfig.DB.GetMAObjectOrDefault(inheritanceSource, mapping.InheritanceSourceObjectClass);
+            if (!maObjectCache.TryGetValue(inheritanceSource, out referencedObject))
+            {
+                referencedObject = ActiveConfig.DB.GetMAObjectOrDefault(inheritanceSource, mapping.InheritanceSourceObjectClass);
+                if (referencedObject != null)
+                {
+                    maObjectCache.Add(referencedObject.ObjectID, referencedObject);
+                }
+            }
 
             if (referencedObject == null)
             {

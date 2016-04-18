@@ -278,10 +278,10 @@ namespace Lithnet.Acma.Ecma2
                 PageRequest request = new PageRequest();
                 request.PageSize = this.importPageSize;
                 request.Context = this.importResponse.Context;
-                Logger.WriteLine("Requesting page of {0} results", this.importPageSize);
+                Logger.WriteLine("Requesting page of {0} results",  LogLevel.Debug, this.importPageSize);
                 ImportResponse page = this.client.ImportPage(request);
 
-                Logger.WriteLine("Got page of {0} results", this.importPageSize);
+                Logger.WriteLine("Got page of {0} results", LogLevel.Debug, this.importPageSize);
                 foreach (CSEntryChange csentry in page.Objects)
                 {
                     csentries.Add(csentry);
@@ -298,7 +298,7 @@ namespace Lithnet.Acma.Ecma2
                     }
                 }
 
-                Logger.WriteLine("Returning page of {0} results. More to import: {1}", page.Objects.Count, page.HasMoreItems);
+                Logger.WriteLine("Returning page of {0} results. More to import: {1}", LogLevel.Debug, page.Objects.Count, page.HasMoreItems);
 
                 GetImportEntriesResults importReturnInfo = new GetImportEntriesResults();
                 importReturnInfo.MoreToImport = page.HasMoreItems;
