@@ -4,13 +4,13 @@
   <Product Id="*"
            Name="Lithnet ACMA"
            Language="1033"
-           Version="1.1.5952"
+           Version="1.1.5954"
            Manufacturer="Lithnet"
            UpgradeCode="bcb559bd-8b3a-4a77-9d30-df3fa44b7a13">
 
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  InstallPrivileges="elevated" Manufacturer="Lithnet"/>
     <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes"/>
-    <MajorUpgrade Schedule="afterInstallInitialize"
+    <MajorUpgrade Schedule="afterInstallExecute"
                 DowngradeErrorMessage="A later version of [ProductName] is already installed" />
 
     <!-- Old standalone installers -->

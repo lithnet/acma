@@ -13,8 +13,6 @@ namespace Lithnet.Acma.PS
 
         private static bool isAutoConnected;
 
-        private static bool isConfirmed;
-
         private static bool yesToAll;
 
         private static bool noToAll;

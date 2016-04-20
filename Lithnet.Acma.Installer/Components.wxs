@@ -116,7 +116,7 @@
           <util:PermissionEx User="[SERVICE_USERNAME]" GenericAll="yes" />
         </CreateFolder>
       </Component>
-      <Component Id="cmp9E15426E9FF35D4DFEE1C00C036B7821" NeverOverwrite="yes" Guid="*">
+      <Component Id="cmp9E15426E9FF35D4DFEE1C00C036B7821" Guid="*">
         <File Id="fil5A78259D6F8A3E67164C079C2DD06EF7" KeyPath="yes" Source="$(var.Lithnet.Acma.Service.TargetDir)\Lithnet.Acma.Service.exe.config" />
       </Component>
       <Component Id="cmpC9392BCC9D3B2DD1390044DACA99D70D" Guid="*">

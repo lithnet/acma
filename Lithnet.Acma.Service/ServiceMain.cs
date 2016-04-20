@@ -25,6 +25,7 @@ namespace Lithnet.Acma.Service
         private ServiceHost acmaServiceHost = null;
         private FileSystemWatcher configFileWatcher = null;
         private bool configUpdateQueued = false;
+        private string configFile;
 
         internal static object Lock = new object();
 
@@ -41,19 +42,30 @@ namespace Lithnet.Acma.Service
             }
         }
 
-
         internal string ConfigFile
         {
             get
             {
-                string configFile = ConfigurationManager.AppSettings["configfile"];
-
-                if (configFile == null)
+                if (this.configFile == null)
                 {
-                    configFile = Path.Combine(this.ServicePath, "config.acmax");
+                    string configParam = ConfigurationManager.AppSettings["configfile"];
+
+                    if (configParam == null)
+                    {
+                        throw new ConfigurationErrorsException("No configuration file was specified in the service config file");
+                    }
+
+                    if (System.IO.Path.IsPathRooted(configParam))
+                    {
+                        this.configFile = configParam;
+                    }
+                    else
+                    {
+                        this.configFile = System.IO.Path.Combine(this.ServicePath, configParam);
+                    }
                 }
 
-                return configFile;
+                return this.configFile;
             }
         }
 
@@ -69,6 +81,23 @@ namespace Lithnet.Acma.Service
                 }
 
                 return logFile;
+            }
+        }
+
+        internal LogLevel LogLevel
+        {
+            get
+            {
+                string logLevel = ConfigurationManager.AppSettings["logLevel"];
+
+                if (logLevel == null)
+                {
+                    return Logging.LogLevel.Info;
+                }
+                else
+                {
+                    return (LogLevel)Enum.Parse(typeof(LogLevel), logLevel, true);
+                }
             }
         }
 
@@ -109,7 +138,7 @@ namespace Lithnet.Acma.Service
             try
             {
                 Logger.LogPath = this.LogFile;
-                Logger.LogLevel = LogLevel.Debug;
+                Logger.LogLevel = this.LogLevel;
                 Logger.WriteLine("Service starting");
 
                 this.ConnectToDatabase();
@@ -127,6 +156,7 @@ namespace Lithnet.Acma.Service
             {
                 Logger.WriteLine("An error occurred while starting the service");
                 Logger.WriteException(ex);
+                throw;
             }
         }
 
@@ -169,6 +199,11 @@ namespace Lithnet.Acma.Service
 
         private void LoadConfiguration()
         {
+            if (this.ConfigFile == null)
+            {
+                throw new ConfigurationErrorsException("No configuration file was specified in the service config file");
+            }
+
             if (!System.IO.File.Exists(this.ConfigFile))
             {
                 throw new FileNotFoundException(string.Format("The configuration file '{0}' could not be found. Ensure the file is accessible by the service and the path specified in the app.config file is correct", this.ConfigFile));
@@ -177,7 +212,6 @@ namespace Lithnet.Acma.Service
             ActiveConfig.LoadXml(this.ConfigFile);
             this.configUpdateQueued = false;
             Logger.WriteLine("Loaded configuration from {0}", this.ConfigFile);
-
         }
 
         private void ConnectToDatabase()

@@ -56,6 +56,9 @@
             <Component Id="cmp4D62BBEF13161AA300C03ABF053231CF" Guid="*">
                 <File Id="fil23FD43AA46AF594267FDF54DF4FFDC63" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\RegisterResolver.ps1" />
             </Component>
+            <Component Id="cmp0AECCD2094EB98F0F73E23042CBE8EFC" Guid="*">
+                <File Id="filFC692178F6CF4B658DBFEE19F77F757D" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\System.Management.Automation.dll" />
+            </Component>
         </DirectoryRef>
     </Fragment>
     <Fragment>
@@ -78,6 +81,7 @@
             <ComponentRef Id="cmp9904C48B084DB8A407C5A5BA992BACF6" />
             <ComponentRef Id="cmp69EE8EE37FF93F0E7F245D1E593626D5" />
             <ComponentRef Id="cmp4D62BBEF13161AA300C03ABF053231CF" />
+            <ComponentRef Id="cmp0AECCD2094EB98F0F73E23042CBE8EFC" />
         </ComponentGroup>
     </Fragment>
 </Wix>
