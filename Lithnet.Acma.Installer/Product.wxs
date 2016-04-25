@@ -8,7 +8,7 @@
            Manufacturer="Lithnet"
            UpgradeCode="bcb559bd-8b3a-4a77-9d30-df3fa44b7a13">
 
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  InstallPrivileges="elevated" Manufacturer="Lithnet"/>
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"  InstallPrivileges="elevated" Manufacturer="Lithnet" Platform="x64"/>
     <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes"/>
     <MajorUpgrade Schedule="afterInstallExecute"
                 DowngradeErrorMessage="A later version of [ProductName] is already installed" />
@@ -26,7 +26,7 @@
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
     <PropertyRef Id="NETFRAMEWORK40FULLINSTALLROOTDIR64"/>
 
-    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again. Contact support at support@Swiftposter.com if you have further issues.">
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again">
       <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
     </Condition>
 
