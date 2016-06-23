@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OUMappings>
+  <OUMapping sapOUNumber="1234" MDSDisplayName="MyName"/>
+  <OUMapping sapOUNumber="AAEBIQ==" MDSDisplayName="AAEBIg=="/>
+  <OUMapping sapOUNumber="123456789" MDSDisplayName="5"/>
+</OUMappings>

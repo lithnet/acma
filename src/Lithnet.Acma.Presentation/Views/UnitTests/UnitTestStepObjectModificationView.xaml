@@ -1,0 +1,206 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:a="clr-namespace:Lithnet.Acma;assembly=Lithnet.Acma"
+                    xmlns:fim="clr-namespace:Microsoft.MetadirectoryServices;assembly=Microsoft.MetadirectoryServicesEx"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation"
+                    x:Class="Lithnet.Acma.Presentation.UnitTestStepObjectModificationView">
+
+    <DataTemplate  DataType="{x:Type p:UnitTestStepObjectModificationViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Step name"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Margin="2" />
+                <TextBox Text="{Binding Path=Name, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Margin="2" />
+
+                <Label Content="Object to evaluate"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Margin="2" />
+                <TextBox Text="{Binding Path=ObjectCreationStep.Name, Mode=OneWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="2"
+                         IsReadOnly="True" />
+
+                <Label Content="Modification type"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       Margin="2" />
+                <TextBox Text="{Binding Path=ModificationType, Mode=OneWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="2" />
+
+                <Label Content="Attribute changes"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ListView Grid.Row="3"
+                          Grid.Column="1"
+                          Margin="2"
+                          Height="200"
+                          SelectionMode="Single"
+                          DataContext="{Binding Path=AttributeChanges}"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ItemsSource="{Binding Path=.}"
+                          Name="AttributeChangesListView"
+                          MouseDoubleClick="AttributeChangesListView_MouseDoubleClick">
+
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Create attribute change..."
+                                      Command="{Binding Commands.AddAttributeChange}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+
+                    <ListView.Resources>
+                        <ContextMenu x:Key="ItemContextMenu">
+                            <MenuItem Header="Create attribute change..."
+                                      Command="{Binding Commands.AddAttributeChange}" />
+                            <Separator />
+                            <MenuItem Header="Delete attribute change"
+                                      Command="{Binding Commands.DeleteAttributeChange}" />
+                        </ContextMenu>
+                    </ListView.Resources>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="ContextMenu"
+                                    Value="{StaticResource ItemContextMenu}" />
+                            <Setter Property="IsSelected"
+                                    Value="{Binding Path=IsSelected}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="50">
+                                <GridViewColumnHeader Content="Type" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=ModificationType}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="150">
+                                <GridViewColumnHeader Content="Name" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto">
+                                <GridViewColumnHeader Content="Value changes" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=ValueChangesString}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Label Content="Value changes"
+                       Grid.Row="4"
+                       Grid.Column="0"
+                       Margin="2" />
+
+                <ListView Grid.Row="4"
+                          Grid.Column="1"
+                          Margin="2"
+                          Height="200"
+                          SelectionMode="Single"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          DataContext="{Binding Path=SelectedItem.ValueChanges, ElementName=AttributeChangesListView}"
+                          ItemsSource="{Binding Path=., ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          Name="ValueChangesListView"
+                          MouseDoubleClick="ValueChangesListView_MouseDoubleClick">
+
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Create value add..."
+                                      Command="{Binding Commands.AddValueChangeAdd}" />
+                            <MenuItem Header="Create value delete..."
+                                      Command="{Binding Commands.AddValueChangeDelete}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+
+                    <ListView.Resources>
+                        <ContextMenu x:Key="ItemContextMenu">
+                            <MenuItem Header="Create value add..."
+                                      Command="{Binding Commands.AddValueChangeAdd}" />
+                            <MenuItem Header="Create value delete..."
+                                      Command="{Binding Commands.AddValueChangeDelete}" />
+                            <Separator />
+                            <MenuItem Header="Delete value change"
+                                      Command="{Binding Commands.DeleteValueChange}" />
+                        </ContextMenu>
+                    </ListView.Resources>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="ContextMenu"
+                                    Value="{StaticResource ItemContextMenu}" />
+                            <Setter Property="IsSelected"
+                                    Value="{Binding Path=IsSelected}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="50">
+                                <GridViewColumnHeader Content="Type" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=ModificationType}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="150">
+                                <GridViewColumnHeader Content="Value" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=Value}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

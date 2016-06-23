@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="APPROOT">
+            <Directory Id="dir63AACC710991CDF8ABD289F07926FC5C" Name="Debug">
+                <Component Id="cmp8179270D35C50A49D45104B80E4537EF" Guid="*">
+                    <File Id="filD0EB04CF6CABBBA028C202F6B73D6DBC" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\DocX.dll" />
+                </Component>
+                <Component Id="cmpD9D1E375223D5E8B342F5C02905FC647" Guid="*">
+                    <File Id="fil80E3113FFA4E7CD016EB65415E459244" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\ICSharpCode.AvalonEdit.dll" />
+                </Component>
+                <Component Id="cmpCDFD2EAB04FA01B1FD6DC29BD429E87C" Guid="*">
+                    <File Id="fil86C9AC82248D605512272143C0186B57" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.dll" />
+                </Component>
+                <Component Id="cmpF333ECE260D3EF5DEDC69AF79AE8448B" Guid="*">
+                    <File Id="fil03B3B628F47D70E434F5DD80BDE64220" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.Editor.exe" />
+                </Component>
+                <Component Id="cmpA5E524BBE81518285977F45D7D61AEB4" Guid="*">
+                    <File Id="filE4FAC8BD9F34831E277AB88F4C6BF38C" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.Editor.exe.config" />
+                </Component>
+                <Component Id="cmpEB955FF4F96BA72978B7033513164340" Guid="*">
+                    <File Id="fil0F76A00EFC55F4C80D25BD471E34ECE2" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.Editor.pdb" />
+                </Component>
+                <Component Id="cmp5AB0D8EDA5371C2E5CA3536217851112" Guid="*">
+                    <File Id="fil870993C6CCBEFFD35EFADF76CF8A7FAF" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.Presentation.dll" />
+                </Component>
+                <Component Id="cmp011FC9CF4DD034789A93E903AAB459D7" Guid="*">
+                    <File Id="fil1BC54A28A2EB0471FC4232899B89A0F1" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.ServiceModel.Client.dll" />
+                </Component>
+                <Component Id="cmpA735E922F5965E8F384727F04B325B9E" Guid="*">
+                    <File Id="fil52EA9DC40B0F06BF150749688114D4D5" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.ServiceModel.Sync.dll" />
+                </Component>
+                <Component Id="cmpAE398C19DC3F1A9364DDEB552E226E04" Guid="*">
+                    <File Id="fil4A715368BABE709443CB15364D311E3E" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Acma.TestEngine.dll" />
+                </Component>
+                <Component Id="cmpF7A29ABD12C8D2DC2E778656552F3FDF" Guid="*">
+                    <File Id="filDA71013678A143DB3EF8538F251BF1B5" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Common.ObjectModel.dll" />
+                </Component>
+                <Component Id="cmpA1404B877C8B6291321B717D29A22D6C" Guid="*">
+                    <File Id="fil014CA16F30C03ABE317216CBC7D684A4" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Common.Presentation.dll" />
+                </Component>
+                <Component Id="cmpF04B0577B8DC9B06EE157522FEF82974" Guid="*">
+                    <File Id="filB7BFE3A709B8416912CB1EA85BD34BA6" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Logging.dll" />
+                </Component>
+                <Component Id="cmpB27EA2E00D6712683C755113CCF0534B" Guid="*">
+                    <File Id="filE7E84341C0E2FDC61601AEF0915A801D" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.MetadirectoryServices.dll" />
+                </Component>
+                <Component Id="cmpFE35670A115DBD850F133918D5759ADF" Guid="*">
+                    <File Id="fil04B394C9C461CC159E88395F6AAF7F61" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.MetadirectoryServices.Resolver.dll" />
+                </Component>
+                <Component Id="cmp08F14432F6B81FB72CADDD0BBBFAE649" Guid="*">
+                    <File Id="filCA418A03A7B0C610378BC000173612C0" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Transforms.dll" />
+                </Component>
+                <Component Id="cmpAC2E0EA6B6111658D6700FA41DADBD3B" Guid="*">
+                    <File Id="filF766F01EB4F661323B48EAD2CB5E4FE0" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Lithnet.Transforms.Presentation.dll" />
+                </Component>
+                <Component Id="cmpC492D6981432C514E87757AAF8BD9230" Guid="*">
+                    <File Id="fil5CF671A28EF817428717EA2C4C0E5B47" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Microsoft.Expression.Interactions.dll" />
+                </Component>
+                <Component Id="cmp90216C5240C4A0BAE2F2C815EEBCE805" Guid="*">
+                    <File Id="fil84A29A9F6348152AE752F4501A62D56F" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\Reeb.SqlOM.dll" />
+                </Component>
+                <Component Id="cmp35CA4E03CC6E2919566D4482B0DACA96" Guid="*">
+                    <File Id="filAFF11D776E0A6B5D821A73FA630C227F" KeyPath="yes" Source="$(var.Lithnet.Acma.Editor.TargetDir)\System.Windows.Interactivity.dll" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Lithnet.Acma.Editor.Binaries">
+            <ComponentRef Id="cmp8179270D35C50A49D45104B80E4537EF" />
+            <ComponentRef Id="cmpD9D1E375223D5E8B342F5C02905FC647" />
+            <ComponentRef Id="cmpCDFD2EAB04FA01B1FD6DC29BD429E87C" />
+            <ComponentRef Id="cmpF333ECE260D3EF5DEDC69AF79AE8448B" />
+            <ComponentRef Id="cmpA5E524BBE81518285977F45D7D61AEB4" />
+            <ComponentRef Id="cmpEB955FF4F96BA72978B7033513164340" />
+            <ComponentRef Id="cmp5AB0D8EDA5371C2E5CA3536217851112" />
+            <ComponentRef Id="cmp011FC9CF4DD034789A93E903AAB459D7" />
+            <ComponentRef Id="cmpA735E922F5965E8F384727F04B325B9E" />
+            <ComponentRef Id="cmpAE398C19DC3F1A9364DDEB552E226E04" />
+            <ComponentRef Id="cmpF7A29ABD12C8D2DC2E778656552F3FDF" />
+            <ComponentRef Id="cmpA1404B877C8B6291321B717D29A22D6C" />
+            <ComponentRef Id="cmpF04B0577B8DC9B06EE157522FEF82974" />
+            <ComponentRef Id="cmpB27EA2E00D6712683C755113CCF0534B" />
+            <ComponentRef Id="cmpFE35670A115DBD850F133918D5759ADF" />
+            <ComponentRef Id="cmp08F14432F6B81FB72CADDD0BBBFAE649" />
+            <ComponentRef Id="cmpAC2E0EA6B6111658D6700FA41DADBD3B" />
+            <ComponentRef Id="cmpC492D6981432C514E87757AAF8BD9230" />
+            <ComponentRef Id="cmp90216C5240C4A0BAE2F2C815EEBCE805" />
+            <ComponentRef Id="cmp35CA4E03CC6E2919566D4482B0DACA96" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

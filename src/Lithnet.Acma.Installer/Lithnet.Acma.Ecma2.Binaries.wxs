@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="FIMEXTENSIONS">
+            <Directory Id="dirB1DFFC9C6E8ACDBFAA60FA77448CBD39" Name="Debug">
+                <Component Id="cmp02BD630F43DD4CCC2C850AB1C251C66D" Guid="*">
+                    <File Id="filE8791029B38C814A10958E749C485DCD" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.Acma.Ecma2.dll" />
+                </Component>
+                <Component Id="cmp290C31F3B59D33D9B7B9BC5B317EE55F" Guid="*">
+                    <File Id="fil5F0B5173D0D00C526E27A29EBCE746D7" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.Acma.Ecma2.pdb" />
+                </Component>
+                <Component Id="cmpCE59207E64B86E6648CAB7F9739541F2" Guid="*">
+                    <File Id="filDC7C5D540ABC4E22C3D5A1506D398E24" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.Acma.PackagedMA.xml" />
+                </Component>
+                <Component Id="cmpEC45F77D62A8D9DAE059C6E77C0DB817" Guid="*">
+                    <File Id="fil149C9A8ED411DD1F1D6B7B3507759F36" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.Acma.ServiceModel.Sync.dll" />
+                </Component>
+                <Component Id="cmp0E1FA03E8323A4782CCEA723776BEAD4" Guid="*">
+                    <File Id="filD3EC38E01EFC4E24845050F39746EC83" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.Acma.ServiceModel.Sync.pdb" />
+                </Component>
+                <Component Id="cmp98F93D5445348306B4357D61CF30A0A0" Guid="*">
+                    <File Id="fil0EA704032941155215C64063D074DB53" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.Logging.dll" />
+                </Component>
+                <Component Id="cmp766DFC33496256445AD6783610C4EE2D" Guid="*">
+                    <File Id="fil7C65B4C31B8722CB745D46FB7076A2CC" KeyPath="yes" Source="$(var.Lithnet.Acma.Ecma2.TargetDir)\Lithnet.MetadirectoryServices.dll" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Lithnet.Acma.Ecma2.Binaries">
+            <ComponentRef Id="cmp02BD630F43DD4CCC2C850AB1C251C66D" />
+            <ComponentRef Id="cmp290C31F3B59D33D9B7B9BC5B317EE55F" />
+            <ComponentRef Id="cmpCE59207E64B86E6648CAB7F9739541F2" />
+            <ComponentRef Id="cmpEC45F77D62A8D9DAE059C6E77C0DB817" />
+            <ComponentRef Id="cmp0E1FA03E8323A4782CCEA723776BEAD4" />
+            <ComponentRef Id="cmp98F93D5445348306B4357D61CF30A0A0" />
+            <ComponentRef Id="cmp766DFC33496256445AD6783610C4EE2D" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

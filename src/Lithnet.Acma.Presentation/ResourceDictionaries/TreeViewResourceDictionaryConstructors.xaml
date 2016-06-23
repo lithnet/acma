@@ -1,0 +1,230 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:c="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ClassConstructorsViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add new class constructor..."
+                              Command="{Binding Commands.AddConstructor}" />
+                    <Separator />
+                    <MenuItem Header="Paste"
+                              Command="{Binding Commands.Paste}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ClassConstructorViewModel}"
+                              ItemsSource="{Binding Path=ChildNodes}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteConstructor}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ConstructorsViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add">
+
+                        <MenuItem Header="Constructor group"
+                                  Command="{Binding Commands.AddConstructorGroup}" />
+                        <Separator />
+                        <MenuItem Header="Declarative value constructor"
+                                  Command="{Binding Commands.AddDVConstructor}" />
+                        <MenuItem Header="Unique value constructor"
+                                  Command="{Binding Commands.AddUVConstructor}" />
+                        <MenuItem Header="Sequential integer allocator"
+                                  Command="{Binding Commands.AddSIAConstructor}" />
+                        <MenuItem Header="Value delete constructor"
+                                  Command="{Binding Commands.AddVDConstructor}" />
+                        <MenuItem Header="Reference lookup constructor"
+                                  Command="{Binding Commands.AddRLConstructor}" />
+                    </MenuItem>
+
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                    <MenuItem Header="Paste"
+                              Command="{Binding Commands.Paste}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AttributeConstructorGroupViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+                <Binding Path="Constructors" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add execution conditions"
+                              Command="{Binding Commands.AddExecutionConditions}" />
+
+                    <MenuItem Header="Remove execution conditions"
+                              Command="{Binding Commands.RemoveExecutionConditions}" />
+
+                    <Separator />
+
+                    <MenuItem Header="Add constructor">
+                        <MenuItem Header="Declarative value constructor"
+                                  Command="{Binding Commands.AddDVConstructor}" />
+                        <MenuItem Header="Unique value constructor"
+                                  Command="{Binding Commands.AddUVConstructor}" />
+                        <MenuItem Header="Sequential integer allocator"
+                                  Command="{Binding Commands.AddSIAConstructor}" />
+                        <MenuItem Header="Value delete constructor"
+                                  Command="{Binding Commands.AddVDConstructor}" />
+                        <MenuItem Header="Reference lookup constructor"
+                                  Command="{Binding Commands.AddRLConstructor}" />
+                        <Separator />
+
+                        <MenuItem Header="Group"
+                                  Command="{Binding Commands.AddConstructorGroup}" />
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteConstructorGroup}" />
+
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                    <MenuItem Header="Paste"
+                              Command="{Binding Commands.Paste}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:AttributeConstructorViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add execution conditions"
+                              Command="{Binding Commands.AddExecutionConditions}" />
+
+                    <MenuItem Header="Remove execution conditions"
+                              Command="{Binding Commands.RemoveExecutionConditions}" />
+
+                    <Separator />
+
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteConstructor}" />
+
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:DeclarativeValueConstructorViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+                <Binding Path="PresenceConditions" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add execution conditions"
+                              Command="{Binding Commands.AddExecutionConditions}" />
+
+                    <MenuItem Header="Remove execution conditions"
+                              Command="{Binding Commands.RemoveExecutionConditions}" />
+
+                    <Separator />
+
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteConstructor}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ReferenceLookupConstructorViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+                <Binding Path="QueryGroup" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add execution conditions"
+                              Command="{Binding Commands.AddExecutionConditions}" />
+
+                    <MenuItem Header="Remove execution conditions"
+                              Command="{Binding Commands.RemoveExecutionConditions}" />
+
+                    <Separator />
+
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteConstructor}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>

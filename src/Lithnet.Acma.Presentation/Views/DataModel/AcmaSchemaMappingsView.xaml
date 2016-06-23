@@ -1,0 +1,183 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:a="clr-namespace:Lithnet.Acma;assembly=Lithnet.Acma"
+                    xmlns:fim="clr-namespace:Microsoft.MetadirectoryServices;assembly=Microsoft.MetadirectoryServicesEx"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation"
+                    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase">
+
+    <DataTemplate  DataType="{x:Type p:AcmaSchemaMappingsViewModel}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <CollectionViewSource Source="{Binding Path=.,Mode=OneWay}"
+                                      x:Key="sortedAttributes">
+                    <CollectionViewSource.SortDescriptions>
+                        <scm:SortDescription PropertyName="AttributeName" />
+                    </CollectionViewSource.SortDescriptions>
+                </CollectionViewSource>
+
+            </Grid.Resources>
+
+            <ListView Grid.Row="0"
+                      Margin="6"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ItemsSource="{Binding Source={StaticResource sortedAttributes}}"
+                      Name="BindingsListView">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add binding..."
+                                  Command="{Binding Commands.AddMapping}" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.Resources>
+                    <ContextMenu x:Key="ItemContextMenu">
+                        <MenuItem Header="Add binding..."
+                                  Command="{Binding Commands.AddMapping}" />
+                        <MenuItem Header="Delete binding..."
+                                  Command="{Binding Commands.DeleteMapping}" />
+                    </ContextMenu>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu"
+                                Value="{StaticResource ItemContextMenu}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Name" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Path=DisplayIcon}" />
+                                        <TextBlock Text="{Binding Path=AttributeName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Inheritance source" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=InheritanceSourceName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Inheritance source class" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=InheritanceSourceObjectClassName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Inherited from" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=InheritedAttributeName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Built-in" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=IsBuiltIn}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView Grid.Row="1"
+                      Margin="6"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ItemsSource="{Binding Path=SelectedItem.Usage, ElementName=BindingsListView}"
+                      Name="BindingsUsageView">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Goto..."
+                                  Command="{Binding Commands.Goto}" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.Resources>
+                    <ContextMenu x:Key="UsageContextMenu">
+                        <MenuItem Header="Goto..."
+                                  Command="{Binding Commands.Goto}" />
+                    </ContextMenu>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu"
+                                Value="{StaticResource UsageContextMenu}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Object type" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Path=DisplayIcon}" />
+                                        <TextBlock Text="{Binding Path=ObjectType}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Object ID" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=ObjectID}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Path" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=Path}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumnHeader Content="Context" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=Context}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ma-customization-info> 
+     <ma-internal-version>1</ma-internal-version> 
+     <ma-companyname>Lithnet</ma-companyname> 
+     <ma-subtype>ACMA</ma-subtype> 
+     <ma-listname>ACMA rules engine</ma-listname> 
+     <ma-help-text>Lithnet ACMA rules engine</ma-help-text> 
+</ma-customization-info>

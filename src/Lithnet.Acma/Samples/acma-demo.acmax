@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<acma-config xmlns:t="http://lithnet.local/Lithnet.IdM.Transforms/v1/" xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://lithnet.local/Lithnet.Acma/v1/">
+  <acma>
+    <config-version i:nil="true" />
+    <description i:nil="true" />
+    <transforms>
+      <t:transform i:type="t:substring">
+        <t:id>GetFirstLetter</t:id>
+        <t:direction>left</t:direction>
+        <t:length>1</t:length>
+        <t:pad-character i:nil="true" />
+        <t:padding-type>none</t:padding-type>
+        <t:start-index>0</t:start-index>
+      </t:transform>
+      <t:transform i:type="t:substring">
+        <t:id>GetFirstThreeLetters</t:id>
+        <t:direction>left</t:direction>
+        <t:length>3</t:length>
+        <t:pad-character i:nil="true" />
+        <t:padding-type>last-character</t:padding-type>
+        <t:start-index>0</t:start-index>
+      </t:transform>
+      <t:transform i:type="t:substring">
+        <t:id>GetFirstFourLetters</t:id>
+        <t:direction>left</t:direction>
+        <t:length>4</t:length>
+        <t:pad-character i:nil="true" />
+        <t:padding-type>last-character</t:padding-type>
+        <t:start-index>0</t:start-index>
+      </t:transform>
+      <t:transform i:type="t:format-number">
+        <t:id>Format4DigitNumber</t:id>
+        <t:format>D4</t:format>
+      </t:transform>
+    </transforms>
+    <class-constructors>
+      <class-constructor>
+        <constructors>
+          <constructor i:type="attribute-constructor-group">
+            <description>The group generates attribute for new objects, and is only executed on object creation.</description>
+            <disabled>false</disabled>
+            <id>New object constructors</id>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules>
+                <rule-base i:type="object-change-rule">
+                  <description i:nil="true" />
+                  <triggers>add</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <constructors>
+              <constructor i:type="attribute-constructor-group">
+                <description>The group contains two constructors to build an accountName depending on the presence of the firstName attribute.
+
+As this group is set to 'exit after first execution', if USER0001's execution conditions are met, USER0002 is skipped. Only if USER0001 does not execute, will USER0002 execute.</description>
+                <disabled>false</disabled>
+                <id>Account name constructors</id>
+                <rule-group i:nil="true" />
+                <constructors>
+                  <constructor i:type="unique-value-constructor">
+                    <description>Tries to build an account name when firstname and surname are present</description>
+                    <disabled>false</disabled>
+                    <id>USER0001</id>
+                    <rule-group>
+                      <description i:nil="true" />
+                      <operator>all</operator>
+                      <rules>
+                        <rule-base i:type="attribute-presence-rule">
+                          <description i:nil="true" />
+                          <attribute>
+                            <name>firstName</name>
+                          </attribute>
+                          <is-referenced>false</is-referenced>
+                          <operator>IsPresent</operator>
+                          <referenced-object i:nil="true" />
+                          <view>Proposed</view>
+                        </rule-base>
+                        <rule-base i:type="attribute-presence-rule">
+                          <description i:nil="true" />
+                          <attribute>
+                            <name>sn</name>
+                          </attribute>
+                          <is-referenced>false</is-referenced>
+                          <operator>IsPresent</operator>
+                          <referenced-object i:nil="true" />
+                          <view>Proposed</view>
+                        </rule-base>
+                      </rules>
+                    </rule-group>
+                    <attribute>
+                      <name>accountName</name>
+                    </attribute>
+                    <static-declarations>
+                      <value-declaration>
+                        <transform-string i:nil="true" />
+                        <value></value>
+                      </value-declaration>
+                    </static-declarations>
+                    <unique-allocation-attributes>
+                      <attribute>
+                        <name>accountName</name>
+                      </attribute>
+                    </unique-allocation-attributes>
+                    <value-declaration>
+                      <declaration>{firstName&gt;&gt;GetFirstLetter}{sn&gt;&gt;GetFirstThreeLetters}%n&gt;&gt;Format4DigitNumber%</declaration>
+                      <transform-string i:nil="true" />
+                    </value-declaration>
+                  </constructor>
+                  <constructor i:type="unique-value-constructor">
+                    <description>Tries to build an account name when only the surname is present</description>
+                    <disabled>false</disabled>
+                    <id>USER0002</id>
+                    <rule-group>
+                      <description i:nil="true" />
+                      <operator>any</operator>
+                      <rules>
+                        <rule-base i:type="attribute-presence-rule">
+                          <description i:nil="true" />
+                          <attribute>
+                            <name>sn</name>
+                          </attribute>
+                          <is-referenced>false</is-referenced>
+                          <operator>IsPresent</operator>
+                          <referenced-object i:nil="true" />
+                          <view>Proposed</view>
+                        </rule-base>
+                      </rules>
+                    </rule-group>
+                    <attribute>
+                      <name>accountName</name>
+                    </attribute>
+                    <static-declarations>
+                      <value-declaration>
+                        <transform-string i:nil="true" />
+                        <value></value>
+                      </value-declaration>
+                    </static-declarations>
+                    <unique-allocation-attributes>
+                      <attribute>
+                        <name>accountName</name>
+                      </attribute>
+                    </unique-allocation-attributes>
+                    <value-declaration>
+                      <declaration>{sn&gt;&gt;GetFirstFourLetters}%n&gt;&gt;Format4DigitNumber%</declaration>
+                      <transform-string i:nil="true" />
+                    </value-declaration>
+                  </constructor>
+                </constructors>
+                <execution-rule>exit-after-first-success</execution-rule>
+              </constructor>
+              <constructor i:type="sequential-integer-allocation-constructor">
+                <description>Assigns a unix UID to a new user</description>
+                <disabled>false</disabled>
+                <id>USER0003</id>
+                <rule-group i:nil="true" />
+                <attribute>
+                  <name>unixUid</name>
+                </attribute>
+                <sequence>
+                  <name>unixUid</name>
+                </sequence>
+              </constructor>
+            </constructors>
+            <execution-rule>execute-all</execution-rule>
+          </constructor>
+          <constructor i:type="attribute-constructor-group">
+            <description i:nil="true" />
+            <disabled>false</disabled>
+            <id>Mail constructors</id>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>firstName</name>
+                  </attribute>
+                  <triggers>add update delete</triggers>
+                </rule-base>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>sn</name>
+                  </attribute>
+                  <triggers>add update delete</triggers>
+                </rule-base>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>middleName</name>
+                  </attribute>
+                  <triggers>add update delete</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <constructors>
+              <constructor i:type="unique-value-constructor">
+                <description>Attempts to create a mail address using the following preferred order
+1. firstname.surname
+2. firstname.middlename.surname
+3. firstname.middlename.surnameX - where X is a numeric digit</description>
+                <disabled>false</disabled>
+                <id>MAIL0001</id>
+                <rule-group i:nil="true" />
+                <attribute>
+                  <name>mail</name>
+                </attribute>
+                <static-declarations>
+                  <value-declaration>
+                    <transform-string i:nil="true" />
+                    <value>[{firstName}.]{sn}@%mailSuffix%</value>
+                  </value-declaration>
+                </static-declarations>
+                <unique-allocation-attributes>
+                  <attribute>
+                    <name>mail</name>
+                  </attribute>
+                </unique-allocation-attributes>
+                <value-declaration>
+                  <declaration>[{firstName}.][{middleName}.]{sn}%o%@%mailSuffix%</declaration>
+                  <transform-string i:nil="true" />
+                </value-declaration>
+              </constructor>
+            </constructors>
+            <execution-rule>execute-all</execution-rule>
+          </constructor>
+          <constructor i:type="attribute-constructor-group">
+            <description i:nil="true" />
+            <disabled>false</disabled>
+            <id>Admin account constructors</id>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>all</operator>
+              <rules>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>orgUnit</name>
+                  </attribute>
+                  <triggers>add update delete</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <constructors>
+              <constructor i:type="declarative-value-constructor">
+                <description>Sets hasAdminAccount to true if the user is in the IT department (ouNumber 2002). Otherwise, it deletes the value (on a boolean value, this is equivalent to setting it to 'false')</description>
+                <disabled>false</disabled>
+                <id>ADM0001</id>
+                <rule-group i:nil="true" />
+                <attribute>
+                  <name>hasAdminAccount</name>
+                </attribute>
+                <modification-type>conditional</modification-type>
+                <presence-conditions>
+                  <description i:nil="true" />
+                  <operator>any</operator>
+                  <rules>
+                    <rule-base i:type="advanced-comparison-rule">
+                      <description i:nil="true" />
+                      <compare-as>String</compare-as>
+                      <multivalued-condition>any</multivalued-condition>
+                      <operator>Equals</operator>
+                      <source-value>
+                        <transform-string i:nil="true" />
+                        <value>{orgUnit-&gt;ouNumber}</value>
+                      </source-value>
+                      <target-value>
+                        <transform-string i:nil="true" />
+                        <value>2002</value>
+                      </target-value>
+                    </rule-base>
+                  </rules>
+                </presence-conditions>
+                <value-declarations>
+                  <value-declaration>
+                    <transform-string i:nil="true" />
+                    <value>true</value>
+                  </value-declaration>
+                </value-declarations>
+              </constructor>
+            </constructors>
+            <execution-rule>execute-all</execution-rule>
+          </constructor>
+          <constructor i:type="attribute-constructor-group">
+            <description>Updates the homeFolderPath attribute whenever the accountName changes</description>
+            <disabled>false</disabled>
+            <id>Home folder constructors</id>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>accountName</name>
+                  </attribute>
+                  <triggers>add update</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <constructors>
+              <constructor i:type="declarative-value-constructor">
+                <description>Creates the homeFolderPath attribute by appending the homeFolderPathRoot constant with the accountName. Note that backslashes need to be escaped in ACMA DL</description>
+                <disabled>false</disabled>
+                <id>USER0004</id>
+                <rule-group i:nil="true" />
+                <attribute>
+                  <name>homeFolderPath</name>
+                </attribute>
+                <modification-type>replace</modification-type>
+                <presence-conditions>
+                  <description i:nil="true" />
+                  <operator>any</operator>
+                  <rules />
+                </presence-conditions>
+                <value-declarations>
+                  <value-declaration>
+                    <transform-string i:nil="true" />
+                    <value>%homeFolderPathRoot%\\{accountName}</value>
+                  </value-declaration>
+                </value-declarations>
+              </constructor>
+            </constructors>
+            <execution-rule>execute-all</execution-rule>
+          </constructor>
+        </constructors>
+        <disabled>false</disabled>
+        <exit-events>
+          <event i:type="exit-event-external-cmd">
+            <description i:nil="true" />
+            <disabled>false</disabled>
+            <name>eventHomeFolderPathAdded</name>
+            <error-handling-mode>log</error-handling-mode>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>homeFolderPath</name>
+                  </attribute>
+                  <triggers>add</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <run-async>false</run-async>
+            <arguments>
+              <transform-string i:nil="true" />
+              <value>/c mkdir {homeFolderPath}</value>
+            </arguments>
+            <command-line>cmd.exe</command-line>
+          </event>
+          <event i:type="exit-event-external-cmd">
+            <description i:nil="true" />
+            <disabled>false</disabled>
+            <name>eventHomeFolderPathUpdated</name>
+            <error-handling-mode>log</error-handling-mode>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules>
+                <rule-base i:type="attribute-change-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>homeFolderPath</name>
+                  </attribute>
+                  <triggers>update</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <run-async>false</run-async>
+            <arguments>
+              <transform-string i:nil="true" />
+              <value>/c move {#homeFolderPath} {homeFolderPath}   </value>
+            </arguments>
+            <command-line>cmd.exe</command-line>
+          </event>
+          <event i:type="exit-event-external-cmd">
+            <description i:nil="true" />
+            <disabled>false</disabled>
+            <name>eventUserDeleted</name>
+            <error-handling-mode>log</error-handling-mode>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>all</operator>
+              <rules>
+                <rule-base i:type="object-change-rule">
+                  <description i:nil="true" />
+                  <triggers>delete</triggers>
+                </rule-base>
+                <rule-base i:type="attribute-presence-rule">
+                  <description i:nil="true" />
+                  <attribute>
+                    <name>homeFolderPath</name>
+                  </attribute>
+                  <is-referenced>false</is-referenced>
+                  <operator>IsPresent</operator>
+                  <referenced-object i:nil="true" />
+                  <view>Proposed</view>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <run-async>false</run-async>
+            <arguments>
+              <transform-string i:nil="true" />
+              <value>/c rd {homeFolderPath} /q /s   </value>
+            </arguments>
+            <command-line>cmd.exe</command-line>
+          </event>
+        </exit-events>
+        <object-class>
+          <name>person</name>
+        </object-class>
+        <resurrection-parameters>
+          <description>When a user is added, its employee number is checked against deleted items in the database. If a match is found, the existing object is undeleted.</description>
+          <dbqueries>
+            <dbquery i:type="dbquery-byvalue">
+              <description i:nil="true" />
+              <operator>Equals</operator>
+              <search-attribute>
+                <name>employeeNumber</name>
+              </search-attribute>
+              <value-declarations>
+                <value-declaration>
+                  <transform-string i:nil="true" />
+                  <value>{employeeNumber}</value>
+                </value-declaration>
+              </value-declarations>
+            </dbquery>
+          </dbqueries>
+          <display-name i:nil="true" />
+          <operator>any</operator>
+        </resurrection-parameters>
+      </class-constructor>
+      <class-constructor>
+        <constructors>
+          <constructor i:type="declarative-value-constructor">
+            <description i:nil="true" />
+            <disabled>false</disabled>
+            <id>ADMIN0001</id>
+            <rule-group>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules>
+                <rule-base i:type="object-change-rule">
+                  <description i:nil="true" />
+                  <triggers>add</triggers>
+                </rule-base>
+              </rules>
+            </rule-group>
+            <attribute>
+              <name>accountName</name>
+            </attribute>
+            <modification-type>replace</modification-type>
+            <presence-conditions>
+              <description i:nil="true" />
+              <operator>any</operator>
+              <rules />
+            </presence-conditions>
+            <value-declarations>
+              <value-declaration>
+                <transform-string i:nil="true" />
+                <value>a-{shadowParent-&gt;accountName}</value>
+              </value-declaration>
+            </value-declarations>
+          </constructor>
+        </constructors>
+        <disabled>false</disabled>
+        <exit-events />
+        <object-class>
+          <name>shadowAdminAccount</name>
+        </object-class>
+        <resurrection-parameters>
+          <description i:nil="true" />
+          <dbqueries />
+          <display-name i:nil="true" />
+          <operator>any</operator>
+        </resurrection-parameters>
+      </class-constructor>
+    </class-constructors>
+    <operation-events />
+  </acma>
+  <acma-unit-tests>
+    <config-version i:nil="true" />
+    <description i:nil="true" />
+    <unit-tests />
+  </acma-unit-tests>
+</acma-config>

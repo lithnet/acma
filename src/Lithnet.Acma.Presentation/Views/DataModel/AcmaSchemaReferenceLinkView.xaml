@@ -1,0 +1,61 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:a="clr-namespace:Lithnet.Acma;assembly=Lithnet.Acma"
+                    xmlns:fim="clr-namespace:Microsoft.MetadirectoryServices;assembly=Microsoft.MetadirectoryServicesEx"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <DataTemplate  DataType="{x:Type p:AcmaSchemaReferenceLinkViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Source object class"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding ForwardLinkObjectClass.Name, ValidatesOnDataErrors=True, ValidatesOnExceptions=true, Mode=OneWay}"
+                         Grid.Row="0"
+                         Grid.Column="1" 
+                         IsReadOnly="True"/>
+
+                <Label Content="Source attribute"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding ForwardLinkAttribute.Name, ValidatesOnDataErrors=True, ValidatesOnExceptions=true, Mode=OneWay}"
+                         Grid.Row="1"
+                         Grid.Column="1" 
+                         IsReadOnly="True"/>
+
+                <Label Content="Back-linked object class"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                        />
+                <TextBox Text="{Binding BackLinkObjectClass.Name, ValidatesOnDataErrors=True, ValidatesOnExceptions=true, Mode=OneWay}"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         IsReadOnly="True"
+                         />
+
+                <Label Content="Back link attribute"
+                       Grid.Row="3"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding  BackLinkAttribute.Name, ValidatesOnDataErrors=True, ValidatesOnExceptions=true, Mode=OneWay}"
+                         Grid.Row="3"
+                         Grid.Column="1"
+                         IsReadOnly="True" />
+
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>

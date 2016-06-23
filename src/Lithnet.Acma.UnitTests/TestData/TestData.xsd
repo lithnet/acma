@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TestData"
+    targetNamespace="http://lithnet.local/acma-test-data.xsd"
+    elementFormDefault="unqualified"
+    xmlns="http://lithnet.local/acma-test-data.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:acma="http://lithnet.local/acma-base.xsd"
+    xmlns:acma-enums="http://lithnet.local/acma-enums.xsd"
+    xmlns:acma-rules="http://lithnet.local/acma-rules.xsd"
+    xmlns:fim-transforms="http://lithnet.local/fim-transforms.xsd"
+    xmlns:acma-constructors="http://lithnet.local/acma-constructors.xsd"
+>
+  <xs:import id="acma" namespace="http://lithnet.local/acma-base.xsd"/>
+  <xs:import id="acma-constructors" namespace="http://lithnet.local/acma-constructors.xsd"/>
+  <xs:import id="acma-rules" namespace="http://lithnet.local/acma-rules.xsd"/>
+  <xs:import id="fim-transforms" namespace="http://lithnet.local/fim-transforms.xsd"/>
+
+
+  <xs:element name="test-data-set">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="test-data" type="test-data" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="test-data">
+    <xs:sequence>
+      <xs:element name="transforms" type="fim-transforms:transforms" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="transform" type="fim-transforms:transform" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="schema-attributes" type="acma:schema-attributes" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="schema-objects" type="acma:schema-objects" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="schema-attribute" type="acma:schema-attribute" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="attribute-constructor" type="acma-constructors:attribute-constructor" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="rule" type="acma-rules:rule" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="rule-group" type="acma-rules:rule-group" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="event" type="acma-constructors:event" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="import-safety-rule" type="acma:import-safety-rule" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+</xs:schema>

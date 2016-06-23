@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/ObjectChangeRuleView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/AttributeChangeRuleView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/AttributePresenceRuleView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/EventRuleView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/ValueComparisonRuleView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/AdvancedComparisonRuleView.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+   
+</ResourceDictionary>

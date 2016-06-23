@@ -1,0 +1,10 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>Acma</Value>
+      <Value>deserializing</Value>
+      <Value>Metadirectory</Value>
+      <Value>sql</Value>
+    </CollectionProperty>
+  </GlobalSettings>
+</StyleCopSettings>

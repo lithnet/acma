@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
+                    xmlns:a="clr-namespace:Lithnet.Acma;assembly=Lithnet.Acma"
+                    xmlns:c="clr-namespace:Lithnet.MetadirectoryServices;assembly=Lithnet.MetadirectoryServices"
+                    xmlns:fim="clr-namespace:Microsoft.MetadirectoryServices;assembly=Microsoft.MetadirectoryServicesEx"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <DataTemplate  DataType="{x:Type p:DBQueryGroupViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Operator"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type a:GroupOperator}}}"
+                          SelectedValue="{Binding Operator, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Margin="2"
+                          Grid.Row="0"
+                          Grid.Column="1" />
+
+                <Label Content="Description"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Margin="2" />
+                <TextBox Text="{Binding Description, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Visible"
+                         AcceptsReturn="True"
+                         Height="100"
+                         SpellCheck.IsEnabled="True"
+                         Margin="2" />
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

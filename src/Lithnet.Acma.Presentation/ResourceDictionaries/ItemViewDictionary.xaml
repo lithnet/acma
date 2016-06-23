@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaDatabaseView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaObjectView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaAttributeView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaAttributesView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaMappingView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaShadowObjectLinkView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSequenceView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaReferenceLinkView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/SafetyRuleView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaConstantsView.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaObjectsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSequencesView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaMappingsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaReferenceLinksView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/DataModel/AcmaSchemaShadowObjectLinksView.xaml" />
+                
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Constructors/AttributeConstructorView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Constructors/ClassConstructorView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Constructors/ClassConstructorsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Constructors/ConstructorsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Constructors/AttributeConstructorGroupView.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/DBQuery/DBQueryGroupView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/DBQuery/DBQueryByValueView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/DBQuery/DBQueryObjectsView.xaml" />
+                
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Rules/RuleGroupView.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Events/AcmaInternalExitEventView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Events/AcmaExternalExitEventCmdView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Events/AcmaExternalExitEventExtensibleView.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Events/AcmaOperationEventView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Events/AcmaOperationEventsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/Events/AcmaExitEventsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/Config/XmlConfigFileView.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/ResourceDictionaries/RuleItemViewDictionary.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestObjectsViewModel.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestFileView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestStepsView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestStepObjectEvaluationView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestStepObjectModificationView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestStepObjectCreationView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Acma.Presentation;component/Views/UnitTests/UnitTestGroupView.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+   
+</ResourceDictionary>

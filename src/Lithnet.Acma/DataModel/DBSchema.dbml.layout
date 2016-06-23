@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DBSchema">
+  <DataContextMoniker Name="/DBSchemaDataContext" />
+  <nestedChildShapes>
+    <classShape Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" absoluteBounds="5.75, 0.5, 2, 1.4248478190104166">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass" />
+      <nestedChildShapes>
+        <elementListCompartment Id="84216ce4-22ca-44d1-aac7-80e2f189070d" absoluteBounds="5.765, 0.96, 1.9700000000000002, 0.86484781901041663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="45b01ac4-f872-45c7-b233-c239665d3a00" absoluteBounds="5.75, 5.5, 2, 2.4109318033854166">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1077ffac-ee4d-4463-a2c2-45917d558bba" absoluteBounds="5.7650000000000006, 5.96, 1.9700000000000002, 1.8509318033854165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="33612ebe-567b-4009-885e-ec0ab88a2e60" absoluteBounds="2.75, 3, 2, 1.9178898111979166">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSchemaMapping" />
+      <nestedChildShapes>
+        <elementListCompartment Id="455c3f7d-b1f9-4205-8988-129cf19d15ef" absoluteBounds="2.7650000000000006, 3.46, 1.9700000000000002, 1.3578898111979165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8adb0ba2-39a6-4ec1-9e76-00acab6fb116" absoluteBounds="8.5, 3.125, 2, 1.5891951497395831">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSchemaReferenceLink" />
+      <nestedChildShapes>
+        <elementListCompartment Id="290132b6-52b3-4445-a1ec-140bf2797a88" absoluteBounds="8.515, 3.585, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.44993984938401 : 1.92484781901042); (6.44993984938401 : 2.17484781901042); (7.06434872921675 : 2.17484781901042); (7.06434872921675 : 1.92484781901042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaObjectClass" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 6.70546590169271); (3.75 : 6.70546590169271); (3.75 : 4.91788981119792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaMapping" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="33612ebe-567b-4009-885e-ec0ab88a2e60" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 6.07148045084635); (4.2812525 : 6.07148045084635); (4.2812525 : 4.91788981119792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaMapping1" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="33612ebe-567b-4009-885e-ec0ab88a2e60" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 7.33945135253906); (3.2187475 : 7.33945135253906); (3.2187475 : 4.91788981119792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaMapping2" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="33612ebe-567b-4009-885e-ec0ab88a2e60" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.80480083919271 : 1.92484781901042); (5.53125 : 2.19839865820313); (5.53125 : 3.95894490559896); (4.75 : 3.95894490559896)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaMapping" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="33612ebe-567b-4009-885e-ec0ab88a2e60" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.75 : 6.70546590169271); (9.5 : 6.70546590169271); (9.5 : 4.71419514973958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaReferenceLink" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="8adb0ba2-39a6-4ec1-9e76-00acab6fb116" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.75 : 6.07148045084635); (8.9687475 : 6.07148045084635); (8.9687475 : 4.71419514973958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaReferenceLink1" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="8adb0ba2-39a6-4ec1-9e76-00acab6fb116" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.75 : 1.21242390950521); (9.5 : 1.21242390950521); (9.5 : 3.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaReferenceLink" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="8adb0ba2-39a6-4ec1-9e76-00acab6fb116" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.75 : 1.59988836425781); (8.9687475 : 1.59988836425781); (8.9687475 : 3.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaReferenceLink1" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="8adb0ba2-39a6-4ec1-9e76-00acab6fb116" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="3cf484e3-d170-4066-ae6f-e6e91af71a7e" absoluteBounds="5.75, 3, 2, 1.7535424804687496">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSchemaShadowObjectLink" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b6a69297-87f5-4d0c-b5d5-73d77897d1f0" absoluteBounds="5.765, 3.46, 1.9700000000000002, 1.19354248046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b8f5dd1f-0b6c-4673-82b5-952e74e1fdd8" absoluteBounds="0.5, 1.75, 2, 1.9178898111979166">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSequence" />
+      <nestedChildShapes>
+        <elementListCompartment Id="41913033-feaa-41a4-a1cd-4d2bd6bd2454" absoluteBounds="0.51499999999999968, 2.21, 1.9700000000000002, 1.3578898111979165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.75 : 5.5); (6.75 : 4.75354248046875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaShadowObjectLink" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="3cf484e3-d170-4066-ae6f-e6e91af71a7e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.3125 : 5.5); (7.3125 : 4.75354248046875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaAttribute/AcmaSchemaAttribute_AcmaSchemaShadowObjectLink1" />
+      <nodes>
+        <classShapeMoniker Id="45b01ac4-f872-45c7-b233-c239665d3a00" />
+        <classShapeMoniker Id="3cf484e3-d170-4066-ae6f-e6e91af71a7e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.46967436460837 : 1.92484781901042); (7.46967436460837 : 3)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaShadowObjectLink" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="3cf484e3-d170-4066-ae6f-e6e91af71a7e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.06872242469201 : 1.92484781901042); (6.06872242469201 : 3)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaShadowObjectLink1" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="3cf484e3-d170-4066-ae6f-e6e91af71a7e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="338d68c3-7829-4465-9c78-7549bbbb821d" absoluteBounds="2.75, 0.5, 2, 1.5891951497395827">
+      <DataClassMoniker Name="/DBSchemaDataContext/SafetyRule" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dda706ec-74f9-4fa8-b2cb-7809ca4fb583" absoluteBounds="2.7649999999999997, 0.96, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.75 : 3); (3.75 : 2.08919514973958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaMapping/AcmaSchemaMapping_SafetyRule" />
+      <nodes>
+        <classShapeMoniker Id="33612ebe-567b-4009-885e-ec0ab88a2e60" />
+        <classShapeMoniker Id="338d68c3-7829-4465-9c78-7549bbbb821d" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="346feda8-1e5d-4ef9-9a5a-0d96976a5bb2" absoluteBounds="0.5, 3.75, 2, 1.75354248046875">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaDBVersion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="37b56b35-49a1-45b1-9736-b82d7ad4fdb7" absoluteBounds="0.51499999999999968, 4.21, 1.9700000000000002, 1.19354248046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.75 : 1.90183104654948); (5.375 : 2.27683104654948); (5.375 : 3.95894490559896); (4.75 : 3.95894490559896)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBSchemaDataContext/AcmaSchemaObjectClass/AcmaSchemaObjectClass_AcmaSchemaMapping1" />
+      <nodes>
+        <classShapeMoniker Id="ac622c79-d99b-4769-a97a-ac8570a0c0a3" />
+        <classShapeMoniker Id="33612ebe-567b-4009-885e-ec0ab88a2e60" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ffd90b41-4094-4cda-9a12-41aea8fc2879" absoluteBounds="0.5, 0.625, 2, 1.0961531575520833">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaSetting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="147e450e-aa8a-4059-b587-d5481906cfb1" absoluteBounds="0.51500000000000012, 1.085, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c9b44abc-bdd0-4a3b-8c53-168e023eea00" absoluteBounds="0.5, 5.75, 2, 1.26050048828125">
+      <DataClassMoniker Name="/DBSchemaDataContext/AcmaConstant" />
+      <nestedChildShapes>
+        <elementListCompartment Id="58c28486-8a2c-468e-8d3a-cdc6082edf32" absoluteBounds="0.51499999999999968, 6.2100000000000009, 1.9700000000000002, 0.70050048828125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
