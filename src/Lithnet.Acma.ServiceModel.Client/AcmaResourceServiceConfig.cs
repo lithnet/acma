@@ -8,11 +8,11 @@ using System.ServiceModel.Description;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    public class AcmaServiceConfig
+    public class AcmaResourceServiceConfig
     {
-        public const string NetTcpUri = "net.tcp://localhost:44889/acma/client";
+        public const string NetTcpUri = "net.tcp://localhost:44889/acma/resource";
 
-        public const string NetTcpHostnamePlaceHolderUri = "net.tcp://{0}:44889/acma/client";
+        public const string NetTcpHostnamePlaceHolderUri = "net.tcp://{0}:44889/acma/resource";
 
         public static ServiceMetadataBehavior ServiceMetadataDisabledBehavior
         {
@@ -65,7 +65,7 @@ namespace Lithnet.Acma.ServiceModel
         {
             get
             {
-                return new EndpointAddress(AcmaServiceConfig.NetTcpUri);
+                return new EndpointAddress(AcmaResourceServiceConfig.NetTcpUri);
             }
         }
     }

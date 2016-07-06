@@ -8,17 +8,17 @@ using System.ServiceModel.Description;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    public class AcmaServiceClient : ClientBase<IAcmaService>, IAcmaService
+    public class AcmaResourceServiceClient : ClientBase<IAcmaResourceService>, IAcmaResourceService
     {
-        public AcmaServiceClient()
-            : base(AcmaServiceConfig.NetTcpBinding, AcmaServiceConfig.NetTcpEndpointAddress)
+        public AcmaResourceServiceClient()
+            : base(AcmaResourceServiceConfig.NetTcpBinding, AcmaResourceServiceConfig.NetTcpEndpointAddress)
         {
         }
 
-        public AcmaServiceClient(string hostname)
-            : base(AcmaServiceConfig.NetTcpBinding,
+        public AcmaResourceServiceClient(string hostname)
+            : base(AcmaResourceServiceConfig.NetTcpBinding,
                 new EndpointAddress(
-                        new Uri(string.Format(AcmaServiceConfig.NetTcpHostnamePlaceHolderUri, hostname))))
+                        new Uri(string.Format(AcmaResourceServiceConfig.NetTcpHostnamePlaceHolderUri, hostname))))
         {
         }
 

@@ -9,8 +9,8 @@ using System.ServiceModel.Web;
 
 namespace Lithnet.Acma.ServiceModel
 {
-    [ServiceContract(Namespace = AcmaServiceConstants.Namespace)]
-    public interface IAcmaService
+    [ServiceContract(Namespace = AcmaServiceConstants.ResourcesNamespace)]
+    public interface IAcmaResourceService
     {
         [OperationContract]
         [WebGet(UriTemplate = "/resource/{id}")]
@@ -23,10 +23,6 @@ namespace Lithnet.Acma.ServiceModel
         [OperationContract]
         [WebGet(UriTemplate = "/resource/?searchAttribute={key}&searchValue={keyValue}&operator={op}")]
         IList<AcmaResource> GetResourcesByAttributePair(string key, string keyValue, string op = "Equals");
-
-        //[OperationContract]
-        //[WebGet(UriTemplate = "/resource/?searchAttribute1={key1}&searchValue1={keyValue1}&searchAttribute2={key2}&searchValue2={keyValue2}")]
-        //IList<AcmaResource> GetResourcesByAttributePairs(string key1, string keyValue1, string key2, string keyValue2);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/resource/{id}", Method="PUT")]
