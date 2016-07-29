@@ -7,6 +7,8 @@ namespace Lithnet.Acma.ServiceModel
 {
     public class AcmaServiceConstants
     {
-        public const string Namespace = "http://lithnet.local/acma/client";
+        public const string ResourcesNamespace = "http://lithnet.local/acma/resource/";
+        public const string SchemaNamespace = "http://lithnet.local/acma/schema/";
+
     }
 }

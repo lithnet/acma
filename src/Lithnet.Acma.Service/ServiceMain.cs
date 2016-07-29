@@ -180,16 +180,16 @@ namespace Lithnet.Acma.Service
 
         private void StartAcmaServiceHost()
         {
-            this.acmaServiceHost = new ServiceHost(typeof(AcmaService), new Uri(AcmaServiceConfig.NetTcpUri));
-            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaService), AcmaServiceConfig.NetTcpBinding, "");
+            this.acmaServiceHost = new ServiceHost(typeof(AcmaService), new Uri(AcmaResourceServiceConfig.NetTcpUri));
+            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaResourceService), AcmaResourceServiceConfig.NetTcpBinding, "");
             if (this.acmaServiceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
             {
-                this.acmaServiceHost.Description.Behaviors.Add(AcmaServiceConfig.ServiceMetadataDisabledBehavior);
+                this.acmaServiceHost.Description.Behaviors.Add(AcmaResourceServiceConfig.ServiceMetadataDisabledBehavior);
             }
 
             if (this.acmaServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
             {
-                this.acmaServiceHost.Description.Behaviors.Add(AcmaServiceConfig.ServiceDebugBehavior);
+                this.acmaServiceHost.Description.Behaviors.Add(AcmaResourceServiceConfig.ServiceDebugBehavior);
             }
 
             this.acmaServiceHost.Authorization.ServiceAuthorizationManager = new AcmaServiceAuthorizationManager();

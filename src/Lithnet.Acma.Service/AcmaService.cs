@@ -17,8 +17,8 @@ using System.ServiceModel.Web;
 
 namespace Lithnet.Acma.Service
 {
-    [ServiceBehavior(Namespace = AcmaServiceConstants.Namespace)]
-    public class AcmaService : IAcmaService
+    [ServiceBehavior(Namespace = AcmaServiceConstants.ResourcesNamespace)]
+    public class AcmaService : IAcmaResourceService
     {
         internal static ManualResetEvent ConfigLock = new ManualResetEvent(true);
 

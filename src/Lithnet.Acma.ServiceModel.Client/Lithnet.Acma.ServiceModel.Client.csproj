@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lithnet.Acma.ServiceModel.Client</RootNamespace>
     <AssemblyName>Lithnet.Acma.ServiceModel.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -46,11 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcmaResource.cs" />
-    <Compile Include="AcmaServiceClient.cs" />
+    <Compile Include="AcmaResourceServiceClient.cs" />
     <Compile Include="AcmaServiceConstants.cs" />
-    <Compile Include="IAcmaService.cs" />
+    <Compile Include="IAcmaSchemaService.cs" />
+    <Compile Include="IAcmaResourceService.cs" />
+    <Compile Include="Model\AcmaAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AcmaServiceConfig.cs" />
+    <Compile Include="AcmaResourceServiceConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
