@@ -259,7 +259,7 @@ namespace Lithnet.Acma
         {
             this.StaticDeclarations = new List<ValueDeclaration>();
             this.UniqueAllocationAttributes = new List<AcmaSchemaAttribute>();
-            this.valueCache = new Dictionary<string, List<string>>();
+            this.valueCache = new Dictionary<string, HashSet<string>>();
         }
 
         private void GetAlgorithmMode()
@@ -287,17 +287,20 @@ namespace Lithnet.Acma
             }
         }
 
-        private Dictionary<string, List<string>> valueCache;
+        private Dictionary<string, HashSet<string>> valueCache;
 
         private void PopulateValueCache(MAObjectHologram hologram, string wilcardValue)
         {
             if (!this.valueCache.ContainsKey(wilcardValue))
             {
-                this.valueCache.Add(wilcardValue, new List<string>());
+                this.valueCache.Add(wilcardValue, new HashSet<string>(StringComparer.CurrentCultureIgnoreCase));
 
                 foreach (AcmaSchemaAttribute attribute in this.UniqueAllocationAttributes)
                 {
-                    this.valueCache[wilcardValue].AddRange(ActiveConfig.DB.GetAttributeValues(attribute, wilcardValue, hologram.ObjectID).ToList());
+                    foreach (string item in ActiveConfig.DB.GetAttributeValues(attribute, wilcardValue, hologram.ObjectID))
+                    {
+                        this.valueCache[wilcardValue].Add(item);
+                    }
                 }
             }
         }
@@ -326,19 +329,20 @@ namespace Lithnet.Acma
 
                     this.PopulateValueCache(hologram, wildcardValue);
 
-                    if (!this.valueCache[wildcardValue].Contains<string>(valueToTest, StringComparer.CurrentCultureIgnoreCase))
+                    if (this.valueCache[wildcardValue].Add(valueToTest))
                     {
-                        this.valueCache[wildcardValue].Add(valueToTest);
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 finally
                 {
                     if (UniqueValueConstructor.DisableCaching)
                     {
-                        this.valueCache = new Dictionary<string, List<string>>();
+                        this.valueCache = new Dictionary<string, HashSet<string>>();
                     }
 
                 }

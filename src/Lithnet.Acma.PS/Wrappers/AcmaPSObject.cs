@@ -92,7 +92,14 @@ namespace Lithnet.Acma.PS
         {
             foreach (var property in this.Properties)
             {
-                if (ActiveConfig.DB.GetAttribute(property.Name).IsReadOnlyInClass(this.Hologram.ObjectClass))
+                AcmaSchemaAttribute attribute = ActiveConfig.DB.GetAttribute(property.Name);
+
+                if (attribute.IsReadOnlyInClass(this.Hologram.ObjectClass))
+                {
+                    continue;
+                }
+
+                if (attribute.Operation == AcmaAttributeOperation.AcmaInternalTemp)
                 {
                     continue;
                 }

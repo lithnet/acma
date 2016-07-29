@@ -11,7 +11,7 @@ using Lithnet.Acma.DataModel;
 
 namespace Lithnet.Acma.PS
 {
-    [Cmdlet(VerbsCommon.Get, "AcmaObject", DefaultParameterSetName = "GetResource")]
+    [Cmdlet(VerbsCommon.Get, "AcmaObject", DefaultParameterSetName = "GetResourceByKey")]
     public class GetAcmaObjectCmdLet : AcmaCmdletConnected
     {
         [Parameter(ParameterSetName = "GetResource", ValueFromPipeline = true, Mandatory = true, Position = 1)]
