@@ -157,6 +157,7 @@
     <Content Include="AcmaPS.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="app.config" />
     <None Include="FodyWeavers.xml" />
     <None Include="packages.config" />
     <Content Include="RegisterResolver.ps1">

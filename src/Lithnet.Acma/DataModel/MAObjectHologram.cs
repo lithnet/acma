@@ -1440,7 +1440,7 @@ namespace Lithnet.Acma
         /// </summary>
         private void DereferenceShadowParent()
         {
-            if (this.ShadowParentID != Guid.Empty)
+            if (this.ShadowParent != null)
             {
                 if (this.ShadowLink != null)
                 {
