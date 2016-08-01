@@ -15,6 +15,9 @@
                 <Component Id="cmp49DA527C678D2851A592C8026C8D1979" Guid="*">
                     <File Id="filEEA1D038C48579E2C970A3CBD689326B" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.PS.dll" />
                 </Component>
+                <Component Id="cmp43DBE65792C2B6FFB3A6C09E94B74461" Guid="*">
+                    <File Id="fil18F7DECB317BF7086D3484C0900E71CE" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.PS.dll.config" />
+                </Component>
                 <Component Id="cmpACB7E05865E9B807C9559543D51E9F74" Guid="*">
                     <File Id="fil3DFA800FB89E0974549972EDCF7E2806" KeyPath="yes" Source="$(var.Lithnet.Acma.PS.TargetDir)\Lithnet.Acma.PS.pdb" />
                 </Component>
@@ -69,6 +72,7 @@
             <ComponentRef Id="cmp6F8B4A1127364EEBC4CDFB20B54EEB29" />
             <ComponentRef Id="cmp6B4753083F6AFB83AAFE8E55C5C39CA8" />
             <ComponentRef Id="cmp49DA527C678D2851A592C8026C8D1979" />
+            <ComponentRef Id="cmp43DBE65792C2B6FFB3A6C09E94B74461" />
             <ComponentRef Id="cmpACB7E05865E9B807C9559543D51E9F74" />
             <ComponentRef Id="cmp02E7FF3A6AEAE90A3A13E7791EF29F75" />
             <ComponentRef Id="cmp68C24401ECD8692CB1BBF3723546C708" />
