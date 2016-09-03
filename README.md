@@ -17,5 +17,5 @@ Watch the demonstration of ACMA to the FIM team user group on [youtube](https://
 Join the [FIM team user group](https://www.thefimteam.com/fim-team-user-group)
 
 ## Keep up to date
-* [Visit my blog](ttp://blog.lithiumblue.com)
+* [Visit my blog](http://blog.lithiumblue.com)
 * [Follow me on twitter](https://twitter.com/RyanLNewington)![](http://twitter.com/favicon.ico)
