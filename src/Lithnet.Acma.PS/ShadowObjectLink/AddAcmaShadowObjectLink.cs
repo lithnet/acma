@@ -59,7 +59,7 @@ namespace Lithnet.Acma.PS
                 AcmaSchemaAttribute referenceAttribute = ActiveConfig.DB.GetAttribute(this.ReferenceAttribute, parentClass);
 
                 ActiveConfig.DB.CreateShadowLink(shadowClass, provisioningAttribute, referenceAttribute, this.Name);
-                ActiveConfig.DB.ClearCache();
+               // ActiveConfig.DB.ClearCache();
 
             }
             catch (Exception ex)

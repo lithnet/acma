@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Lithnet ACMA"
            Language="1033"
-           Version="1.1.6087"
+           Version="!(bind.FileVersion.fil03EEA0973F13C24D418250925B85FC46)"
            Manufacturer="Lithnet"
            UpgradeCode="bcb559bd-8b3a-4a77-9d30-df3fa44b7a13">
 

@@ -434,15 +434,32 @@ namespace Lithnet.Acma
 
             this.ValidateCanCreateSafetyRule(name, pattern);
 
-            SafetyRule rule = (SafetyRule)bindingList.AddNew();
-            rule.Name = name;
-            rule.AcmaSchemaMapping = mapping;
-            rule.Pattern = pattern;
-            rule.NullAllowed = nullAllowed;
+            
+            SafetyRule rule = new SafetyRule();
+            try
+            {
+                rule.Name = name;
+                rule.AcmaSchemaMapping = mapping;
+                rule.Pattern = pattern;
+                rule.NullAllowed = nullAllowed;
+                bindingList.Add(rule);
+                this.DataContext.SubmitChanges();
+                this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, rule);
 
-            this.DataContext.SubmitChanges();
+                return rule;
+            }
+            catch
+            {
+                try
+                {
+                    bindingList.Remove(rule);
+                }
+                catch
+                {
+                }
 
-            return rule;
+                throw;
+            }
         }
 
         private void ValidateCanCreateSafetyRule(string name, string pattern)
@@ -511,14 +528,30 @@ namespace Lithnet.Acma
 
             this.ValidateCanCreateReferenceLink(forwardLinkObjectClass, forwardLink, backLinkObjectClass, backLink);
 
-            AcmaSchemaReferenceLink link = (AcmaSchemaReferenceLink)bindingList.AddNew();
-            link.ForwardLinkObjectClass = forwardLinkObjectClass;
-            link.ForwardLinkAttribute = forwardLink;
-            link.BackLinkAttribute = backLink;
-            link.BackLinkObjectClass = backLinkObjectClass;
-            this.DataContext.SubmitChanges();
+            AcmaSchemaReferenceLink link = new AcmaSchemaReferenceLink();
+            try
+            {
+                link.ForwardLinkObjectClass = forwardLinkObjectClass;
+                link.ForwardLinkAttribute = forwardLink;
+                link.BackLinkAttribute = backLink;
+                link.BackLinkObjectClass = backLinkObjectClass;
 
-            return link;
+                bindingList.Add(link);
+                this.DataContext.SubmitChanges();
+                this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, link);
+
+                return link;
+            }
+            catch
+            {
+                try
+                {
+                    bindingList.Remove(link);
+                }
+                catch { }
+
+                throw;
+            }
         }
 
         private void ValidateCanCreateReferenceLink(AcmaSchemaObjectClass forwardLinkObjectClass, AcmaSchemaAttribute forwardLink, AcmaSchemaObjectClass backLinkObjectClass, AcmaSchemaAttribute backLink)
@@ -999,15 +1032,35 @@ namespace Lithnet.Acma
 
             this.ValidateCanCreateShadowLink(shadowClass, provisioningAttribute, referenceAttribute, name);
 
-            AcmaSchemaShadowObjectLink link = (AcmaSchemaShadowObjectLink)bindingList.AddNew();
-            link.ShadowObjectClass = shadowClass;
-            link.ParentObjectClass = shadowClass.ShadowFromObjectClass;
-            link.ReferenceAttribute = referenceAttribute;
-            link.ProvisioningAttribute = provisioningAttribute;
-            link.Name = name;
-            this.DataContext.SubmitChanges();
+            AcmaSchemaShadowObjectLink link = new AcmaSchemaShadowObjectLink();
 
-            return link;
+            try
+            {
+                link.ShadowObjectClass = shadowClass;
+                link.ParentObjectClass = shadowClass.ShadowFromObjectClass;
+                link.ReferenceAttribute = referenceAttribute;
+                link.ProvisioningAttribute = provisioningAttribute;
+                link.Name = name;
+
+                bindingList.Add(link);
+                this.DataContext.SubmitChanges();
+                this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, link);
+                return link;
+
+            }
+            catch
+            {
+                try
+                {
+                    bindingList.Remove(link);
+                }
+                catch
+                {
+                }
+
+                throw;
+            }
+
         }
 
         public void DeleteShadowLink(AcmaSchemaShadowObjectLink link)
@@ -1145,36 +1198,54 @@ namespace Lithnet.Acma
 
             if (inheritedAttribute != null && inheritanceSourceAttribute == null)
             {
-                throw new ArgumentNullException("inheritanceSourceAttribute");
+                throw new ArgumentNullException(nameof(inheritanceSourceAttribute));
             }
 
             if (inheritanceSourceAttribute != null && inheritedAttribute == null)
             {
-                throw new ArgumentNullException("inheritedAttribute");
+                throw new ArgumentNullException(nameof(inheritedAttribute));
             }
 
             if (inheritanceSourceAttribute != null && inheritanceSourceObjectClass == null)
             {
-                throw new ArgumentNullException("inheritanceSourceObjectClass");
+                throw new ArgumentNullException(nameof(inheritanceSourceObjectClass));
             }
 
             this.ValidateCanCreateMapping(objectClass, attribute, inheritanceSourceAttribute, inheritanceSourceObjectClass, inheritedAttribute, isBuiltIn);
 
-            AcmaSchemaMapping mapping = (AcmaSchemaMapping)mappingsBindingList.AddNew();
-            mapping.Attribute = attribute;
-            mapping.ObjectClass = objectClass;
-            mapping.InheritanceSourceAttribute = inheritanceSourceAttribute;
-            mapping.InheritanceSourceObjectClass = inheritanceSourceObjectClass;
-            mapping.InheritedAttribute = inheritedAttribute;
-            mapping.IsBuiltIn = isBuiltIn;
-
-            //this.DataContext.AcmaSchemaMappings.InsertOnSubmit(mapping);
-            this.DataContext.SubmitChanges();
 
 
-            //mappingsBindingList.Add(mapping);
+            AcmaSchemaMapping mapping = new AcmaSchemaMapping();
 
-            return mapping;
+            try
+            {
+                mapping.Attribute = attribute;
+                mapping.ObjectClass = objectClass;
+                mapping.InheritanceSourceAttribute = inheritanceSourceAttribute;
+                mapping.InheritanceSourceObjectClass = inheritanceSourceObjectClass;
+                mapping.InheritedAttribute = inheritedAttribute;
+                mapping.IsBuiltIn = isBuiltIn;
+
+                mappingsBindingList.Add(mapping);
+
+                this.DataContext.SubmitChanges();
+                this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, mapping);
+
+                return mapping;
+            }
+            catch
+            {
+
+                try
+                {
+                    mappingsBindingList.Remove(mapping);
+                }
+                catch
+                {
+                }
+
+                throw;
+            }
         }
 
         public void DeleteMapping(AcmaSchemaMapping mapping)
@@ -1785,7 +1856,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="watermark">The timestamp value of the highest entry to retrieve</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjects(byte[] watermark)
+        public IEnumerable<MAObjectHologram> GetMAObjects(byte[] watermark)
         {
             return this.GetMAObjects(watermark, false);
         }
@@ -1795,12 +1866,12 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="watermark">The timestamp value of the highest entry to retrieve</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public  IEnumerable<MAObjectHologram> GetDeltaMAObjects(byte[] watermark)
+        public IEnumerable<MAObjectHologram> GetDeltaMAObjects(byte[] watermark)
         {
             return this.GetMAObjectsDelta(watermark, true);
         }
 
-        public  IEnumerable<MAObjectHologram> GetDeltaMAObjects(long lastVersion)
+        public IEnumerable<MAObjectHologram> GetDeltaMAObjects(long lastVersion)
         {
             return this.GetMAObjectsDelta(lastVersion);
         }
@@ -1811,7 +1882,7 @@ namespace Lithnet.Acma
         /// <param name="oldId">The old object ID</param>
         /// <param name="newId">The new object Id</param>
         /// <param name="undelete">A value indicating if the object should be undeleted if it is in a deleted state</param>
-        public  void ChangeMAObjectId(Guid oldId, Guid newId, bool undelete)
+        public void ChangeMAObjectId(Guid oldId, Guid newId, bool undelete)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -1841,7 +1912,7 @@ namespace Lithnet.Acma
         /// <param name="resurrectionParameters">The list of ResurrectionParameters used to find the deleted object</param>
         /// <param name="csentry">The incoming CSEntryChange object with an ObjectModificationType of 'Add'</param>
         /// <returns>An MAObject that matches the specified resurrection criteria, or null if no matching object was found</returns>
-        public  MAObjectHologram GetResurrectionObject(DBQueryGroup resurrectionParameters, CSEntryChange csentry)
+        public MAObjectHologram GetResurrectionObject(DBQueryGroup resurrectionParameters, CSEntryChange csentry)
         {
             if (csentry.ObjectModificationType != ObjectModificationType.Add)
             {
@@ -1887,7 +1958,7 @@ namespace Lithnet.Acma
         /// <param name="valueOperator">The comparison operation to use</param>
         /// <param name="values">The values to compare</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, IList<ValueDeclaration> values)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, IList<ValueDeclaration> values)
         {
             DBQueryByValue query = new DBQueryByValue(attribute, valueOperator, values);
             DBQueryGroup group = new DBQueryGroup();
@@ -1905,7 +1976,7 @@ namespace Lithnet.Acma
         /// <param name="valueOperator">The comparison operation to use</param>
         /// <param name="values">The values to compare</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, IList<object> values)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, IList<object> values)
         {
             DBQueryByValue query = new DBQueryByValue(attribute, valueOperator, values);
             DBQueryGroup group = new DBQueryGroup();
@@ -1923,7 +1994,7 @@ namespace Lithnet.Acma
         /// <param name="valueOperator">The comparison operation to use</param>
         /// <param name="value">The value to compare</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, object value)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(AcmaSchemaAttribute attribute, ValueOperator valueOperator, object value)
         {
             DBQueryByValue query = new DBQueryByValue(attribute, valueOperator, value);
             DBQueryGroup group = new DBQueryGroup();
@@ -1939,7 +2010,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="queryGroup">The query to evaluate</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryObject queryObject)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryObject queryObject)
         {
             if (queryObject is DBQueryGroup)
             {
@@ -1962,7 +2033,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="queryGroup">The query to evaluate</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, OrderByTermCollection orderByTerms)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, OrderByTermCollection orderByTerms)
         {
             DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, orderByTerms);
             return this.GetMAObjectsFromQueryBuilder(queryBuilder);
@@ -1973,7 +2044,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="queryGroup">The query to evaluate</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup)
         {
             DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, 0);
             return this.GetMAObjectsFromQueryBuilder(queryBuilder);
@@ -1984,7 +2055,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="queryGroup">The query to evaluate</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, int maximumResults)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, int maximumResults)
         {
             DBQueryBuilder queryBuilder = new DBQueryBuilder(queryGroup, maximumResults);
             return this.GetMAObjectsFromQueryBuilder(queryBuilder);
@@ -1996,7 +2067,7 @@ namespace Lithnet.Acma
         /// <param name="queryGroup">The query to evaluate</param>
         /// <param name="csentry">The object containing the source values for the query</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, CSEntryChange csentry)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, CSEntryChange csentry)
         {
             try
             {
@@ -2017,7 +2088,7 @@ namespace Lithnet.Acma
         /// <param name="queryGroup">The query to evaluate</param>
         /// <param name="maObject">The object containing the source values for the query</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, MAObjectHologram maObject)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, MAObjectHologram maObject)
         {
             try
             {
@@ -2039,7 +2110,7 @@ namespace Lithnet.Acma
         /// <param name="csentry">The object containing the source values for the query</param>
         /// <param name="maximumResults">The maximum number of results to return</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, CSEntryChange csentry, int maximumResults)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, CSEntryChange csentry, int maximumResults)
         {
             try
             {
@@ -2061,7 +2132,7 @@ namespace Lithnet.Acma
         /// <param name="maObject">The object containing the source values for the query</param>
         /// <param name="maximumResults">The maximum number of results to return</param>
         /// <returns>An enumeration of MAObjectHolograms matching the given search criteria</returns>
-        public  IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, MAObjectHologram maObject, int maximumResults)
+        public IEnumerable<MAObjectHologram> GetMAObjectsFromDBQuery(DBQueryGroup queryGroup, MAObjectHologram maObject, int maximumResults)
         {
             try
             {
@@ -2082,7 +2153,7 @@ namespace Lithnet.Acma
         /// <param name="attribute">The MASchemaAttribute object representing the attribute to search for</param>
         /// <param name="attributeValue">The attribute value</param>
         /// <returns>A value indicating whether the attribute and value exists on the object</returns>
-        public  bool DoesAttributeValueExist(AcmaSchemaAttribute attribute, object attributeValue, Guid requestingObjectID)
+        public bool DoesAttributeValueExist(AcmaSchemaAttribute attribute, object attributeValue, Guid requestingObjectID)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2134,7 +2205,7 @@ namespace Lithnet.Acma
         /// <param name="attribute">The MASchemaAttribute object representing the attribute to search for</param>
         /// <param name="attributeValue">The attribute value</param>
         /// <returns>A value indicating whether the attribute and value exists on the object</returns>
-        internal  IEnumerable<string> GetAttributeValues(AcmaSchemaAttribute attribute, object wildcardValue, Guid requestingObjectID)
+        internal IEnumerable<string> GetAttributeValues(AcmaSchemaAttribute attribute, object wildcardValue, Guid requestingObjectID)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2172,7 +2243,7 @@ namespace Lithnet.Acma
         /// Clears all delta changes less than and equal to the specified watermark value
         /// </summary>
         /// <param name="watermark">The watermark value</param>
-        public  void ClearDeltas(byte[] watermark)
+        public void ClearDeltas(byte[] watermark)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2192,7 +2263,7 @@ namespace Lithnet.Acma
         /// <param name="id">The ID of the new MAObject</param>
         /// <param name="objectClass">The object class to create</param>
         /// <returns>A newly created MAObject</returns>
-        public  MAObjectHologram CreateMAObject(Guid id, AcmaSchemaObjectClass objectClass)
+        public MAObjectHologram CreateMAObject(Guid id, AcmaSchemaObjectClass objectClass)
         {
             return this.CreateMAObject(id, objectClass.Name, null, ObjectModificationType.Add);
         }
@@ -2203,7 +2274,7 @@ namespace Lithnet.Acma
         /// <param name="id">The ID of the new MAObject</param>
         /// <param name="objectClass">The object class to create</param>
         /// <returns>A newly created MAObject</returns>
-        public  MAObjectHologram CreateMAObject(Guid id, string objectClass)
+        public MAObjectHologram CreateMAObject(Guid id, string objectClass)
         {
             return this.CreateMAObject(id, objectClass, null, ObjectModificationType.Add);
         }
@@ -2214,7 +2285,7 @@ namespace Lithnet.Acma
         /// <param name="id">The ID of the new MAObject</param>
         /// <param name="objectClass">The object class to create</param>
         /// <returns>A newly created MAObject</returns>
-        public  MAObjectHologram CreateMAObject(Guid id, string objectClass, ObjectModificationType modificationType)
+        public MAObjectHologram CreateMAObject(Guid id, string objectClass, ObjectModificationType modificationType)
         {
             return this.CreateMAObject(id, objectClass, null, modificationType);
         }
@@ -2226,7 +2297,7 @@ namespace Lithnet.Acma
         /// <param name="objectClass">The object class to create</param>
         /// <param name="shadowParent">The shadow parent of this object</param>
         /// <returns>A newly created MAObject</returns>
-        public  MAObjectHologram CreateMAObject(Guid id, string objectClass, MAObject shadowParent, ObjectModificationType modificationType)
+        public MAObjectHologram CreateMAObject(Guid id, string objectClass, MAObject shadowParent, ObjectModificationType modificationType)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2268,7 +2339,7 @@ namespace Lithnet.Acma
         /// Permanently deletes an object and all its attributes from the database
         /// </summary>
         /// <param name="id">The ID of the object to delete</param>
-        public  void DeleteMAObjectPermanent(Guid id)
+        public void DeleteMAObjectPermanent(Guid id)
         {
             MAObjectHologram hologram = this.GetMAObjectOrDefault(id);
 
@@ -2297,7 +2368,7 @@ namespace Lithnet.Acma
         /// Gets the highest timestamp from the MAObjects table
         /// </summary>
         /// <returns>A timestamp byte array</returns>
-        public  byte[] GetHighWatermarkMAObjects()
+        public byte[] GetHighWatermarkMAObjects()
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2314,7 +2385,7 @@ namespace Lithnet.Acma
         /// Gets the highest timestamp from the MA_Objects_Delta table
         /// </summary>
         /// <returns>A timestamp byte array</returns>
-        public  byte[] GetHighWatermarkMAObjectsDelta()
+        public byte[] GetHighWatermarkMAObjectsDelta()
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2327,12 +2398,12 @@ namespace Lithnet.Acma
             }
         }
 
-        public  Dictionary<Guid, IList<string>> GetReferencingObjects(MAObjectHologram hologram)
+        public Dictionary<Guid, IList<string>> GetReferencingObjects(MAObjectHologram hologram)
         {
             return this.GetReferencingObjects(hologram.ObjectID);
         }
 
-        public  Dictionary<Guid, IList<string>> GetReferencingObjects(Guid referencedObjectId)
+        public Dictionary<Guid, IList<string>> GetReferencingObjects(Guid referencedObjectId)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2377,7 +2448,7 @@ namespace Lithnet.Acma
         /// <param name="watermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        private  IEnumerable<MAObjectHologram> GetMAObjects(byte[] watermark = null, bool getDeleted = false)
+        private IEnumerable<MAObjectHologram> GetMAObjects(byte[] watermark = null, bool getDeleted = false)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2419,7 +2490,7 @@ namespace Lithnet.Acma
         /// <param name="watermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public  ResultEnumerator EnumerateMAObjects(IList<string> objectTypes, byte[] lowWatermark, byte[] highWatermark)
+        public ResultEnumerator EnumerateMAObjects(IList<string> objectTypes, byte[] lowWatermark, byte[] highWatermark)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2479,7 +2550,7 @@ namespace Lithnet.Acma
         /// <param name="watermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public  ResultEnumerator EnumerateMAObjectsDelta(byte[] watermark = null)
+        public ResultEnumerator EnumerateMAObjectsDelta(byte[] watermark = null)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2515,7 +2586,7 @@ namespace Lithnet.Acma
         /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        private  IEnumerable<MAObjectHologram> GetMAObjectsDelta(byte[] highWatermark = null, bool getDeleted = false)
+        private IEnumerable<MAObjectHologram> GetMAObjectsDelta(byte[] highWatermark = null, bool getDeleted = false)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2557,7 +2628,7 @@ namespace Lithnet.Acma
         /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        private  IEnumerable<MAObjectHologram> GetMAObjectsDelta(long lastVersion)
+        private IEnumerable<MAObjectHologram> GetMAObjectsDelta(long lastVersion)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2591,7 +2662,7 @@ namespace Lithnet.Acma
         /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public  long GetCurrentChangeVersion()
+        public long GetCurrentChangeVersion()
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2620,7 +2691,7 @@ namespace Lithnet.Acma
         /// <param name="highWatermark">The value of the highest timestamp that should be returned</param>
         /// <param name="getDeleted">A value indicating if deleted objects should be returned in the result set</param>
         /// <returns>An enumeration of MAObjects</returns>
-        public  long GetMinimumChangeVersion()
+        public long GetMinimumChangeVersion()
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
@@ -2648,7 +2719,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="queryBuilder">The query to use</param>
         /// <returns>The MAObjectHolograms that match the specified query </returns>
-        private  IEnumerable<MAObjectHologram> GetMAObjectsFromQueryBuilder(DBQueryBuilder queryBuilder)
+        private IEnumerable<MAObjectHologram> GetMAObjectsFromQueryBuilder(DBQueryBuilder queryBuilder)
         {
             if (string.IsNullOrWhiteSpace(queryBuilder.QueryString))
             {
