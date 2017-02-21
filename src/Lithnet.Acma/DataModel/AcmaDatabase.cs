@@ -1214,38 +1214,21 @@ namespace Lithnet.Acma
             this.ValidateCanCreateMapping(objectClass, attribute, inheritanceSourceAttribute, inheritanceSourceObjectClass, inheritedAttribute, isBuiltIn);
 
 
+            AcmaSchemaMapping mapping = (AcmaSchemaMapping)mappingsBindingList.AddNew();
+            mapping.Attribute = attribute;
+            mapping.ObjectClass = objectClass;
+            mapping.InheritanceSourceAttribute = inheritanceSourceAttribute;
+            mapping.InheritanceSourceObjectClass = inheritanceSourceObjectClass;
+            mapping.InheritedAttribute = inheritedAttribute;
+            mapping.IsBuiltIn = isBuiltIn;
 
-            AcmaSchemaMapping mapping = new AcmaSchemaMapping();
+            //this.DataContext.AcmaSchemaMappings.InsertOnSubmit(mapping);
+            this.DataContext.SubmitChanges();
 
-            try
-            {
-                mapping.Attribute = attribute;
-                mapping.ObjectClass = objectClass;
-                mapping.InheritanceSourceAttribute = inheritanceSourceAttribute;
-                mapping.InheritanceSourceObjectClass = inheritanceSourceObjectClass;
-                mapping.InheritedAttribute = inheritedAttribute;
-                mapping.IsBuiltIn = isBuiltIn;
 
-                mappingsBindingList.Add(mapping);
+            //mappingsBindingList.Add(mapping);
 
-                this.DataContext.SubmitChanges();
-                this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, mapping);
-
-                return mapping;
-            }
-            catch
-            {
-
-                try
-                {
-                    mappingsBindingList.Remove(mapping);
-                }
-                catch
-                {
-                }
-
-                throw;
-            }
+            return mapping;
         }
 
         public void DeleteMapping(AcmaSchemaMapping mapping)
