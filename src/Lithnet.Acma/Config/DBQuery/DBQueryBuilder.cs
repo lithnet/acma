@@ -185,10 +185,10 @@ namespace Lithnet.Acma
                 query.Top = maxResults;
             }
 
-            if (this.parameters.Count() == 0)
-            {
-                return null;
-            }
+            //if (this.parameters.Count == 0)
+            //{
+            //    return null;
+            //}
 
             // Prevents returning the querying object as a search result
             if (Guid.Empty != this.SourceObjectId)

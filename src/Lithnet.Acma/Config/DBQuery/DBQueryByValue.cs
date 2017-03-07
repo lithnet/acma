@@ -230,7 +230,7 @@ namespace Lithnet.Acma
                     {
                         this.RemoveError("SearchAttribute");
 
-                        if (!ComparisonEngine.IsAllowedOperator(this.Operator, this.SearchAttribute.Type))
+                        if (!ComparisonEngine.IsAllowedOperator(this.Operator, this.SearchAttribute.Type) && (!ComparisonEngine.IsAllowedPresenceOperator(this.Operator)))
                         {
                             this.AddError("Operator", "The specified search operator is not valid for this data type");
                         }
