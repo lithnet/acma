@@ -42,9 +42,11 @@ namespace Lithnet.Acma.Presentation
             textView.MouseHover += textView_MouseHover;
             textView.MouseHoverStopped += textView_TextEditorMouseHoverStopped;
             textView.VisualLinesChanged += textView_VisualLinesChanged;
+            
             this.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
-            this.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
+            this.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
             this.GotKeyboardFocus += EditBoxBase_GotKeyboardFocus;
+            
         }
 
         public bool IsMultiLine { get; set; }

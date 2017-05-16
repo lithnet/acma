@@ -42,7 +42,7 @@ namespace Lithnet.Acma.Presentation
 
                 if (this.Type == ExtendedAttributeType.Reference)
                 {
-                    if (!string.IsNullOrWhiteSpace(this.existingValueChange.Value))
+                    if (!string.IsNullOrEmpty(this.existingValueChange.Value))
                     {
                         object modelValue = this.existingValueChange.ModelValue;
                         Guid modelValueGuid = Lithnet.MetadirectoryServices.TypeConverter.ConvertData<Guid>(modelValue);
@@ -124,7 +124,7 @@ namespace Lithnet.Acma.Presentation
         {
             if (propertyName == "Value")
             {
-                if (string.IsNullOrWhiteSpace(this.Value))
+                if (string.IsNullOrEmpty(this.Value))
                 {
                     this.AddError("Value", "Value cannot be blank");
                 }

@@ -37,7 +37,7 @@
                           Margin="2">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Declaration"
-                                                Width="Auto">
+                                                Width="*">
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <p:DeclarationEditBox Text="{Binding Path=Declaration, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"

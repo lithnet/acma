@@ -2,53 +2,52 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:p="clr-namespace:Lithnet.Acma.Presentation"
                     xmlns:a="clr-namespace:Lithnet.Acma;assembly=Lithnet.Acma"
-                    xmlns:fim="clr-namespace:Microsoft.MetadirectoryServices;assembly=Microsoft.MetadirectoryServicesEx"
                     xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
 
     <DataTemplate DataType="{x:Type p:DeclarativeValueConstructorViewModel}">
-        <StackPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition  Height ="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-                <Label Content="Modification Type"
+            <Label Content="Modification Type"
                        Grid.Row="0"
                        Grid.Column="0"
                        Margin="2" />
 
-                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type a:AcmaAttributeModificationType}}}"
+            <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type a:AcmaAttributeModificationType}}}"
                           SelectedValue="{Binding Path=ModificationType, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
                           SelectedValuePath="Value"
                           Grid.Row="0"
                           Grid.Column="1"
-                          Margin="2" />
+                          Margin="2" 
+                          />
 
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                               Grid.Row="1"
+                             Grid.Column="0"
+                          Grid.ColumnSpan="2">
                 <DataGrid AutoGenerateColumns="False"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
+                          
                           ItemsSource="{Binding Path=ValueDeclarationBindingList, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
-                          Grid.Row="1"
-                          Grid.ColumnSpan="2"
                           CanUserAddRows="{Binding Path=CanAddNewValueDeclarations}"
                           CanUserDeleteRows="{Binding Path=CanDeleteValueDeclarations}"
-                          Height="200"
                           Margin="2">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Declaration"
-                                                Width="Auto">
+                                                Width="*">
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <p:DeclarationEditBox Text="{Binding Path=Declaration, Mode=TwoWay,UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
                                                           DeclarationMode="ComplexAttributeDeclaration"
                                                           ObjectClass="{Binding Path=ObjectClass, Mode=OneWay}"
                                                           SyntaxErrors="{Binding Path=SyntaxErrors, Mode=OneWayToSource}"
-                                                          IsMultiLine="True"
+                                                          IsMultiLine="True" 
                                                           Margin="1" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
@@ -86,9 +85,8 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
-            </Grid>
-        </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

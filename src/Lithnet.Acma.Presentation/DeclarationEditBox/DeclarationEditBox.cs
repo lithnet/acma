@@ -20,6 +20,9 @@ namespace Lithnet.Acma.Presentation
 {
     public class DeclarationEditBox : EditBoxBase
     {
+        private static IHighlightingDefinition acmaDLNoAttributes;
+        private static IHighlightingDefinition acmaDLAttributes;
+
         public static DependencyProperty ObjectClassProperty = DependencyProperty.Register(
            "ObjectClass",
            typeof(AcmaSchemaObjectClass),
@@ -54,6 +57,27 @@ namespace Lithnet.Acma.Presentation
 
         static DeclarationEditBox()
         {
+            Uri uri = new Uri("pack://application:,,,/Lithnet.Acma.Presentation;component/Resources/AcmaDLNoAttributes.xshd", UriKind.Absolute);
+
+            using (Stream s = Application.GetResourceStream(uri).Stream)
+            {
+                using (XmlTextReader reader = new XmlTextReader(s))
+                {
+                    acmaDLNoAttributes = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                }
+            }
+
+            uri = new Uri("pack://application:,,,/Lithnet.Acma.Presentation;component/Resources/AcmaDL.xshd", UriKind.Absolute);
+
+
+            using (Stream s = Application.GetResourceStream(uri).Stream)
+            {
+                using (XmlTextReader reader = new XmlTextReader(s))
+                {
+                    acmaDLAttributes = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                }
+            }
+
             ActiveConfig.XmlConfigChanged += ActiveConfig_XmlConfigChanged;
             ActiveConfig.DatabaseConnectionChanged += ActiveConfig_DatabaseConnectionChanged;
 
@@ -80,7 +104,7 @@ namespace Lithnet.Acma.Presentation
             this.syntaxHighlightingTimer.Start();
             this.WordWrap = true;
         }
-              
+
         public DeclarationEditBoxMode DeclarationMode
         {
             get
@@ -339,23 +363,13 @@ namespace Lithnet.Acma.Presentation
 
         private void OnDeclarationModePropertyChanged()
         {
-            Uri uri;
-
             if (this.DeclarationMode == DeclarationEditBoxMode.NoAttributeDeclarations)
             {
-                uri = new Uri("pack://application:,,,/Lithnet.Acma.Presentation;component/Resources/AcmaDLNoAttributes.xshd", UriKind.Absolute);
+                this.SyntaxHighlighting = acmaDLNoAttributes;
             }
             else
             {
-                uri = new Uri("pack://application:,,,/Lithnet.Acma.Presentation;component/Resources/AcmaDL.xshd", UriKind.Absolute);
-            }
-
-            using (Stream s = Application.GetResourceStream(uri).Stream)
-            {
-                using (XmlTextReader reader = new XmlTextReader(s))
-                {
-                    this.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                }
+                this.SyntaxHighlighting = acmaDLAttributes;
             }
         }
 

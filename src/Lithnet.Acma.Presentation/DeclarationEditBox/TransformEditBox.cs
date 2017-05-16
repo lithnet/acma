@@ -26,7 +26,9 @@ namespace Lithnet.Acma.Presentation
     {
         private IList<ICompletionData> transformCompletionItems;
 
-        public TransformEditBox()
+        private static IHighlightingDefinition highlighter;
+
+        static TransformEditBox()
         {
             Uri uri = new Uri("pack://application:,,,/Lithnet.Acma.Presentation;component/Resources/AcmaDLTransform.xshd", UriKind.Absolute);
 
@@ -34,10 +36,14 @@ namespace Lithnet.Acma.Presentation
             {
                 using (XmlTextReader reader = new XmlTextReader(s))
                 {
-                    this.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    highlighter = HighlightingLoader.Load(reader, HighlightingManager.Instance);
                 }
             }
+        }
 
+        public TransformEditBox()
+        {
+            this.SyntaxHighlighting = highlighter;
             this.TextArea.TextEntering += textEditor_TextArea_TextEntering;
             this.TextArea.TextEntered += textEditor_TextArea_TextEntered;
             ActiveConfig.XmlConfig.Transforms.CollectionChanged += Transforms_CollectionChanged;
@@ -142,7 +148,7 @@ namespace Lithnet.Acma.Presentation
             // Do not set e.Handled=true.
             // We still want to insert the character that was typed.
         }
-      
+
         private void ValidateDeclaration()
         {
             if (this.textMarkerService == null)
