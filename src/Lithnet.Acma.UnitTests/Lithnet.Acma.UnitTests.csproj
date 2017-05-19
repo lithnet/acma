@@ -58,8 +58,8 @@
       <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.6006.11723\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.Transforms, Version=1.5.6258.17738, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.1.5.6258.17738\lib\net45\Lithnet.Transforms.dll</HintPath>
+    <Reference Include="Lithnet.Transforms, Version=1.5.6348.27014, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.1.5.6348.27014\lib\net45\Lithnet.Transforms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.MetadirectoryServicesEx">
