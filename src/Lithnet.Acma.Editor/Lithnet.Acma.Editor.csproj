@@ -52,9 +52,8 @@
     <ApplicationIcon>ModelingProject_13455.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Lithnet.Common.Presentation, Version=1.0.5777.18976, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.Common.Presentation.1.0.5777.18976\lib\net40\Lithnet.Common.Presentation.dll</HintPath>
@@ -171,7 +170,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(TargetDir)."   -var var.$(TargetName).TargetDir -dr APPROOT -cg $(TargetName).Binaries -ag -scom -sreg -sfrag –srd -o "$(SolutionDir)$(SolutionName).Installer\$(ProjectName).Binaries.wxs"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

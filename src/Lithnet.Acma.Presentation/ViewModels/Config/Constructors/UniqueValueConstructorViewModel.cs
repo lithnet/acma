@@ -52,6 +52,18 @@ namespace Lithnet.Acma.Presentation
             this.ValueDeclarationBindingList = this.StaticDeclarations.GetNewBindingList();
         }
 
+        public bool DisableCaching
+        {
+            get
+            {
+                return this.typedModel.DisableCaching;
+            }
+            set
+            {
+                this.typedModel.DisableCaching = value;
+            }
+        }
+
         public string DeclarationString
         {
             get

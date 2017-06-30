@@ -307,9 +307,8 @@
       <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Lithnet.Common.Presentation, Version=1.0.5777.18976, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.Common.Presentation.1.0.5777.18976\lib\net40\Lithnet.Common.Presentation.dll</HintPath>
@@ -319,17 +318,14 @@
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6017.24789, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6017.24789\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6258.24701, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6258.24701\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
     </Reference>
-    <Reference Include="Lithnet.Transforms, Version=1.5.6348.27014, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.1.5.6348.27014\lib\net45\Lithnet.Transforms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Transforms, Version=1.5.6390.24405, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.1.5.6390.24405\lib\net45\Lithnet.Transforms.dll</HintPath>
     </Reference>
-    <Reference Include="Lithnet.Transforms.Presentation, Version=1.5.6348.27016, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.Presentation.1.5.6348.27016\lib\net45\Lithnet.Transforms.Presentation.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Transforms.Presentation, Version=1.5.6390.37853, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.Presentation.1.5.6390.37853\lib\net45\Lithnet.Transforms.Presentation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll</HintPath>
@@ -352,6 +348,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>

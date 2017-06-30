@@ -39,13 +39,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
+    </Reference>
     <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6017.24789, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6017.24789\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6258.24701, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6258.24701\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.MetadirectoryServicesEx">
       <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
@@ -97,7 +99,7 @@
     <PostBuildEvent>$(SolutionDir)\packages\ILMerge.2.14.1208\tools\ILMerge.exe /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) /lib:"..\..\..\lib" *.dll
 copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) $(TargetPath)
 copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetName).pdb $(TargetDir)$(TargetName).pdb 
-"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(TargetDir)."   -var var.$(TargetName).TargetDir -dr FIMEXTENSIONS -cg $(TargetName).Binaries -ag -scom -sreg -sfrag –srd -o "$(SolutionDir)$(SolutionName).Installer\$(ProjectName).Binaries.wxs"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>del $(ProjectDir)Lithnet.Acma.PackagedMA.xml /f

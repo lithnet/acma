@@ -14,7 +14,6 @@ using System.Runtime.Serialization;
 namespace Lithnet.Acma
 {
     [Serializable]
-    [Obsolete]
     public class AcmaCSEntryChange : CSEntryChangeDetached, IXmlSerializable
     {
         public AcmaCSEntryChange()

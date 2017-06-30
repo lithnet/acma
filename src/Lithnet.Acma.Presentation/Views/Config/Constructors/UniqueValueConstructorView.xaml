@@ -13,6 +13,7 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150" />
@@ -129,7 +130,15 @@
                     </Border>
                 </Grid>
 
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="2"
+                    Text="Disable caching"/>
+
+                <CheckBox Grid.Row="2" Grid.Column="1" Margin="2" IsChecked="{Binding Path=DisableCaching}"/>
+                
                 <Grid Grid.Row="3"
+                      Grid.Column="0"
                       Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -201,7 +210,7 @@
                                Grid.Row="2"
                                Grid.ColumnSpan="2"
                                Margin="3,3,3,3" />
-                </Grid>
+            </Grid>
 
             </Grid>
         </StackPanel>

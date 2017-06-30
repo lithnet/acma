@@ -42,25 +42,22 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6017.24789, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6017.24789\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6258.24701, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6258.24701\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.6006.11723, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.6006.11723\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.Transforms, Version=1.5.6348.27014, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.1.5.6348.27014\lib\net45\Lithnet.Transforms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Transforms, Version=1.5.6390.24405, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.1.5.6390.24405\lib\net45\Lithnet.Transforms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.MetadirectoryServicesEx">
       <SpecificVersion>False</SpecificVersion>
@@ -83,6 +80,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />

@@ -140,7 +140,6 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="maObject">The MAObjectHologram to create the CSEntryChange from</param>
         /// <returns>A new CSEntryChange object representing the current state of the specified MAObjectHologram </returns>
-        [Obsolete]
         public static AcmaCSEntryChange CreateCSEntryChangeFromMAObjectHologram(this MAObjectHologram maObject)
         {
             return CSEntryChangeExtensions.CreateCSEntryChangeFromMAObjectHologram(maObject, ObjectModificationType.Add);
@@ -152,7 +151,6 @@ namespace Lithnet.Acma
         /// <param name="maObject">The MAObjectHologram to create the CSEntryChange from</param>
         /// <param name="objectModificationType">The object modification type to apply</param>
         /// <returns>A new CSEntryChange object representing the current state of the specified MAObjectHologram </returns>
-        [Obsolete]
         public static AcmaCSEntryChange CreateCSEntryChangeFromMAObjectHologram(this MAObjectHologram maObject, ObjectModificationType objectModificationType)
         {
             AcmaCSEntryChange csentry = new AcmaCSEntryChange();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma", "Lithnet.Acma\Lithnet.Acma.csproj", "{21A9F51A-52C1-40D5-A80A-C474A186B6E0}"
 EndProject
@@ -18,12 +18,6 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Lithnet.Acma.Database", "Lithnet.Acma.Database\Lithnet.Acma.Database.sqlproj", "{91FED35B-B393-4082-94AF-6084614AAEDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.TestEngine.UnitTests", "Lithnet.Acma.TestEngine.UnitTests\Lithnet.Acma.TestEngine.UnitTests.csproj", "{ED191C16-EE47-4DA6-9DA4-AF805B25CDC3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{B5B0DF8A-9012-49A2-AB5F-B1C159C713D5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtensibleEvents", "ExtensibleEvents", "{A2BCF20F-D411-4243-B341-3D944BF6166F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensibleExitEventSample", "Samples\ExtensibleExitEventSample\ExtensibleExitEventSample.csproj", "{530FCA6F-F3C8-401B-8235-73353CF96884}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Ecma2", "Lithnet.Acma.Ecma2\Lithnet.Acma.Ecma2.csproj", "{D6D8E77F-4B97-4D99-916C-CDF81935DD79}"
 EndProject
@@ -196,20 +190,6 @@ Global
 		{ED191C16-EE47-4DA6-9DA4-AF805B25CDC3}.Service|Mixed Platforms.Build.0 = Debug|Any CPU
 		{ED191C16-EE47-4DA6-9DA4-AF805B25CDC3}.Service|x64.ActiveCfg = Debug|Any CPU
 		{ED191C16-EE47-4DA6-9DA4-AF805B25CDC3}.Service|x86.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Release|Any CPU.Build.0 = Release|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Release|x64.ActiveCfg = Release|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Release|x86.ActiveCfg = Release|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Service|Any CPU.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Service|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Service|x64.ActiveCfg = Debug|Any CPU
-		{530FCA6F-F3C8-401B-8235-73353CF96884}.Service|x86.ActiveCfg = Debug|Any CPU
 		{D6D8E77F-4B97-4D99-916C-CDF81935DD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6D8E77F-4B97-4D99-916C-CDF81935DD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6D8E77F-4B97-4D99-916C-CDF81935DD79}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -323,9 +303,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{A2BCF20F-D411-4243-B341-3D944BF6166F} = {B5B0DF8A-9012-49A2-AB5F-B1C159C713D5}
-		{530FCA6F-F3C8-401B-8235-73353CF96884} = {A2BCF20F-D411-4243-B341-3D944BF6166F}
 	EndGlobalSection
 EndGlobal

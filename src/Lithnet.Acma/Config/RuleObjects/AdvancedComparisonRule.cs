@@ -74,7 +74,7 @@ namespace Lithnet.Acma
 
             if (this.TargetValue.GetAttributeUsage(parentPath, attribute) != null)
             {
-                yield return new SchemaAttributeUsage(this, "Value comparison rule",
+                yield return new SchemaAttributeUsage(this, "Advanced value comparison rule",
                    null,
                     parentPath,
                    string.Format("{0} {1} {2}", this.SourceValue.Declaration, this.ValueOperator, this.TargetValue.Declaration));

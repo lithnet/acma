@@ -42,17 +42,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6017.24789, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6017.24789\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6258.24701, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6258.24701\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.6006.11723, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.6006.11723\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
@@ -154,7 +152,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" dir "$(TargetDir)."   -var var.$(TargetName).TargetDir -dr APPROOT -cg $(TargetName).Binaries -ag -scom -sreg -sfrag –srd -o "$(SolutionDir)$(SolutionName).Installer\$(ProjectName).Binaries.wxs"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

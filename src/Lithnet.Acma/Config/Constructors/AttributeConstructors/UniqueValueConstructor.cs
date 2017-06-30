@@ -13,7 +13,6 @@ namespace Lithnet.Acma
     using Lithnet.Acma.DataModel;
     using Lithnet.MetadirectoryServices;
     using Microsoft.MetadirectoryServices;
-    using Microsoft.Win32;
 
     /// <summary>
     /// A constructor used to create a unique attribute value using a declarative syntax
@@ -29,10 +28,14 @@ namespace Lithnet.Acma
             : base()
         {
             this.Initialize();
-            this.GetAlgorithmMode();
         }
 
-        public static bool DisableCaching { get; set; }
+        // public static bool DisableCaching { get; set; }
+
+        [DataMember(Name = "disable-caching")]
+        public bool DisableCaching { get; set; }
+
+        public static bool DisableCachingGlobal { get; set; }
 
         /// <summary>
         /// Gets or sets a list of attributes that must be tested against for uniqueness before assigning a value to this attribute
@@ -67,8 +70,6 @@ namespace Lithnet.Acma
                 this.ValueDeclaration.Declaration = value;
             }
         }
-
-        private int AlgorithmMode { get; set; }
 
         /// <summary>
         /// Constructs a target attribute value based on the rules in the constructor
@@ -230,7 +231,7 @@ namespace Lithnet.Acma
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
-            if (this.UniqueAllocationAttributes.Count() == 0)
+            if (this.UniqueAllocationAttributes.Count == 0)
             {
                 this.AddError("UniqueAllocationAttributes", "At least one unique allocation attribute is required");
             }
@@ -238,8 +239,6 @@ namespace Lithnet.Acma
             {
                 this.RemoveError("UniqueAllocationAttributes");
             }
-
-            this.GetAlgorithmMode();
         }
 
         /// <summary>
@@ -262,30 +261,6 @@ namespace Lithnet.Acma
             this.valueCache = new Dictionary<string, HashSet<string>>();
         }
 
-        private void GetAlgorithmMode()
-        {
-            RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-            RegistryKey key = baseKey.OpenSubKey(@"Software\Lithnet\ACMA\UVC\Algorithm");
-
-            if (key != null)
-            {
-                object value = key.GetValue(this.ID, null);
-                if (value != null)
-                {
-                    this.AlgorithmMode = Int32.Parse(value.ToString());
-                }
-                else
-                {
-                    value = key.GetValue(null, null);
-
-                    if (value != null)
-                    {
-                        this.AlgorithmMode = Int32.Parse(value.ToString());
-                    }
-                }
-
-            }
-        }
 
         private Dictionary<string, HashSet<string>> valueCache;
 
@@ -313,44 +288,24 @@ namespace Lithnet.Acma
         /// <returns>True, if the value is unique, false if it is not</returns>
         internal bool IsAttributeUnique(MAObjectHologram hologram, string valueToTest, string wildcardValue)
         {
-            if (this.AlgorithmMode == 0)
-            {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(wildcardValue))
-                    {
-                        throw new ArgumentNullException("wildcardValue");
-                    }
-
-                    if (string.IsNullOrWhiteSpace(valueToTest))
-                    {
-                        throw new ArgumentNullException("valueToTest");
-                    }
-
-                    this.PopulateValueCache(hologram, wildcardValue);
-
-                    if (this.valueCache[wildcardValue].Add(valueToTest))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                finally
-                {
-                    if (UniqueValueConstructor.DisableCaching)
-                    {
-                        this.valueCache = new Dictionary<string, HashSet<string>>();
-                    }
-
-                }
-            }
-            else
+            if (this.DisableCaching || UniqueValueConstructor.DisableCachingGlobal)
             {
                 return this.IsAttributeUnique(hologram, valueToTest);
             }
+
+            if (string.IsNullOrWhiteSpace(wildcardValue))
+            {
+                throw new ArgumentNullException(nameof(wildcardValue));
+            }
+
+            if (string.IsNullOrWhiteSpace(valueToTest))
+            {
+                throw new ArgumentNullException(nameof(valueToTest));
+            }
+
+            this.PopulateValueCache(hologram, wildcardValue);
+
+            return this.valueCache[wildcardValue].Add(valueToTest);
         }
 
         /// <summary>

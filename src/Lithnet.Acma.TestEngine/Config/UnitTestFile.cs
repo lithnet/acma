@@ -47,7 +47,7 @@ namespace Lithnet.Acma.TestEngine
             results.StartTime = DateTime.Now;
             results.Server = ActiveConfig.DB.ServerName;
             results.ConfigFile = ActiveConfig.XmlConfig.FileName;
-            UniqueValueConstructor.DisableCaching = true;
+            UniqueValueConstructor.DisableCachingGlobal = true;
 
             foreach (UnitTestObject item in this.UnitTestObjects)
             {

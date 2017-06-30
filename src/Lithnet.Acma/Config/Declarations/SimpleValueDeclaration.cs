@@ -71,6 +71,8 @@ namespace Lithnet.Acma
 
         public SchemaAttributeUsage GetAttributeUsage(string parentPath, AcmaSchemaAttribute attribute)
         {
+            this.ParseDeclaration();
+
             AttributeDeclaration attributeDeclaration = this.DeclarationComponent as AttributeDeclaration;
 
             if (attributeDeclaration != null)
