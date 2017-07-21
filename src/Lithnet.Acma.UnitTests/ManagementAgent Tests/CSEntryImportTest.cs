@@ -65,7 +65,7 @@ namespace Lithnet.Acma.UnitTests
                 CSEntryExport.PutExportEntry(csentry, out refretry);
 
                 MAObjectHologram sourceObject = ActiveConfig.DB.GetMAObject(id, objectClass);
-                CSEntryChange generatedCSEntry = sourceObject.ToCSEntryChange();
+                CSEntryChange generatedCSEntry = sourceObject.ToCSEntryChange( );
 
                 if (generatedCSEntry.ErrorCodeImport != MAImportError.Success)
                 {

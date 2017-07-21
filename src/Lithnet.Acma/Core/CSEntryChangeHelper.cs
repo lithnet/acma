@@ -66,8 +66,8 @@ namespace Lithnet.Acma
                     csentry.ObjectModificationType = ObjectModificationType.Add;
                     csentry.ObjectType = hologram.ObjectClass.Name;
                     csentry.DN = hologram.ObjectID.ToString();
-                    //csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("objectId", hologram.ObjectID.ToString()));
-                    GetObject(hologram, csentry, requiredAttributes);
+                    csentry.AttributeChanges.Add(AttributeChange.CreateAttributeAdd("objectId", hologram.ObjectID.ToString()));
+                    GetObject(hologram, csentry, requiredAttributes.Where(t => t.Name != "objectId"));
                     break;
 
                 case "delete":
