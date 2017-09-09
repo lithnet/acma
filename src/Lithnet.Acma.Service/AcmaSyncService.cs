@@ -167,7 +167,7 @@ namespace Lithnet.Acma.Service
             Logger.WriteSeparatorLine('-');
             Logger.WriteLine("Processing pre-operation events");
 
-            foreach (AcmaOperationEvent e in events.OfType<AcmaOperationEvent>().Where(t => t.OperationTypes.HasFlag(operationType)))
+            foreach (AcmaOperationEvent e in events.OfType<AcmaOperationEvent>().Where(t => t.OperationTypes.HasFlag(operationType) && !t.IsDisabled))
             {
                 foreach (MAObjectHologram hologram in e.GetQueryRecipients())
                 {
