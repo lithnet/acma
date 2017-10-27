@@ -21,7 +21,7 @@ namespace Lithnet.Acma.Presentation
     public class MainWindowViewModel : ViewModelBase
     {
         private XmlConfigFileViewModel configFile;
-
+        public double intTreeWidth;  //Holds current value of Left Pane (Tree) width
         private bool confirmedCloseOnDirtyViewModel;
 
         private List<Type> ignoreViewModelChanges;
@@ -79,6 +79,10 @@ namespace Lithnet.Acma.Presentation
             ViewModelBase.ViewModelChanged += ViewModelBase_ViewModelChanged;
             Application.Current.MainWindow.Closing += new CancelEventHandler(MainWindow_Closing);
             UINotifyPropertyChanges.EndIgnoreAllChanges();
+
+            //Restore TreeWidth from registry value or use default of 325
+            int intTreeWidth = Convert.ToInt32(RegistrySettings.GetValue("TreeWidth", "325"));
+            TreeWidth=intTreeWidth.ToString();
         }
 
         private void PopulateIgnoreViewModelChanges()
@@ -256,6 +260,19 @@ namespace Lithnet.Acma.Presentation
                 string filename = (this.XmlConfigFile == null || string.IsNullOrWhiteSpace(this.XmlConfigFile.FileName)) ? "(new file)" : this.XmlConfigFile.FileName;
                 string version = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
                 return string.Format("ACMA Editor {0} - {1}{2}", version, filename, this.ViewModelIsDirty ? "*" : string.Empty);
+            }
+        }
+
+        //Accessor methods for TreeWidth property.  Used to store and read default width of tree column
+        public string TreeWidth
+        {
+            get
+            {
+                return intTreeWidth.ToString();
+            }
+            set
+            {
+                intTreeWidth = Convert.ToDouble(value);
             }
         }
 
@@ -609,6 +626,9 @@ namespace Lithnet.Acma.Presentation
                     e.Cancel = true;
                 }
             }
+
+            //Save current TreeWidth value to registry.
+            RegistrySettings.SetValue("TreeWidth", intTreeWidth.ToString());
         }
 
         private void AddMRUItem(string filename)
