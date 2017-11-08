@@ -21,7 +21,6 @@ namespace Lithnet.Acma.Presentation
     public class MainWindowViewModel : ViewModelBase
     {
         private XmlConfigFileViewModel configFile;
-
         private bool confirmedCloseOnDirtyViewModel;
 
         private List<Type> ignoreViewModelChanges;
@@ -256,6 +255,18 @@ namespace Lithnet.Acma.Presentation
                 string filename = (this.XmlConfigFile == null || string.IsNullOrWhiteSpace(this.XmlConfigFile.FileName)) ? "(new file)" : this.XmlConfigFile.FileName;
                 string version = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
                 return string.Format("ACMA Editor {0} - {1}{2}", version, filename, this.ViewModelIsDirty ? "*" : string.Empty);
+            }
+        }
+
+        public string TreeWidth
+        {
+            get
+            {
+                return RegistrySettings.GetValue("TreeWidth", "325");
+            }
+            set
+            {
+                RegistrySettings.SetValue("TreeWidth", value);
             }
         }
 

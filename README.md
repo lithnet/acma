@@ -14,7 +14,7 @@ Read the [getting started guide](https://github.com/lithnet/acma/wiki)
 ## More information
 Watch the demonstration of ACMA to the FIM team user group on [youtube](https://www.youtube.com/watch?v=RBkR-L4bENg)
 
-Join the [FIM team user group](https://www.thefimteam.com/fim-team-user-group)
+Join the [MIM team user group](https://themimteam.unifysolutions.net/fim-team-user-group/)
 
 ## Keep up to date
 * [Visit my blog](http://blog.lithiumblue.com)

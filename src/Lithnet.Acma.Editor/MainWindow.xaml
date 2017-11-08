@@ -28,7 +28,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="325" />
+            <ColumnDefinition Name="TreeColumn" Width="{Binding Path=TreeWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
