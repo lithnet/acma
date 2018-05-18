@@ -86,7 +86,7 @@ namespace Lithnet.Acma.Service
         {
             Logger.WriteLine("Export Complete");
             Logger.WriteSeparatorLine('*');
-          
+
             MAStatistics.StopOperation();
             Logger.WriteLine(MAStatistics.ToString());
         }
@@ -125,22 +125,28 @@ namespace Lithnet.Acma.Service
             CachedImportRequest cachedRequest = new CachedImportRequest();
             cachedRequest.Request = request;
 
-            byte[] watermark = ActiveConfig.DB.GetHighWatermarkMAObjectsDelta();
-            response.Watermark = watermark == null ? null : Convert.ToBase64String(watermark);
-            cachedRequest.HighWatermark = watermark;
-
-            Logger.WriteLine("Got delta watermark: {0}", response.Watermark);
-           
-            ResultEnumerator enumerator;
-
             if (cachedRequest.Request.ImportType == OperationType.Delta)
             {
                 this.ProcessOperationEvents(AcmaEventOperationType.DeltaImport);
-                enumerator = ActiveConfig.DB.EnumerateMAObjectsDelta(watermark);
             }
             else
             {
                 this.ProcessOperationEvents(AcmaEventOperationType.FullImport);
+            }
+
+            byte[] watermark = ActiveConfig.DB.GetHighWatermarkMAObjectsDelta();
+            response.Watermark = watermark == null ? null : Convert.ToBase64String(watermark);
+            cachedRequest.HighWatermark = watermark;
+            Logger.WriteLine("Got delta watermark: {0}", response.Watermark);
+
+            ResultEnumerator enumerator;
+
+            if (cachedRequest.Request.ImportType == OperationType.Delta)
+            {
+                enumerator = ActiveConfig.DB.EnumerateMAObjectsDelta(watermark);
+            }
+            else
+            {
                 enumerator = ActiveConfig.DB.EnumerateMAObjects(cachedRequest.Request.Schema.Types.Select(t => t.Name).ToList(), null, null);
             }
 
