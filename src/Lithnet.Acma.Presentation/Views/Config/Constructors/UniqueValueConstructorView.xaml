@@ -84,7 +84,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <TextBlock Text="Unique fall-back value (must include %o% or %n%)"
+                <TextBlock Text="Unique fall-back value (must generate a unique value, or include %o% or %n%)"
                            Grid.Row="1"
                            Grid.Column="0"
                            Margin="2"

@@ -50,6 +50,8 @@ namespace Lithnet.Acma
         [DataMember(Name = "transform-string")]
         public string TransformsString { get; set; }
 
+        public bool HasUniqueAllocations => this.VariableDeclarations.Any(t => t.IsUniqueAllocationVariable);
+
         /// <summary>
         /// Gets or sets the serialization extension data object
         /// </summary>
@@ -124,11 +126,7 @@ namespace Lithnet.Acma
 
                 int count = this.VariableDeclarations.Count(t => t.IsUniqueAllocationVariable);
 
-                if (count == 0)
-                {
-                    throw new InvalidDeclarationStringException("The declaration string must contain a unique allocation variable (%o% or %n%)");
-                }
-                else if (count > 1)
+                if (count > 1)
                 {
                     throw new InvalidDeclarationStringException("The declaration string must contain only a single unique allocation variable (%o% or %n%)");
                 }
@@ -146,7 +144,7 @@ namespace Lithnet.Acma
 
             return null;
         }
-       
+
         /// <summary>
         /// Expands the attributes referenced in the declaration text
         /// </summary>
@@ -157,9 +155,25 @@ namespace Lithnet.Acma
         {
             string constructedString = this.ExpandComplexDeclaration(hologram);
 
-            if (isAttributeValueUnique != null)
+            if (isAttributeValueUnique == null)
             {
-                constructedString = this.ProcessUniqueAllocations(hologram, constructedString, isAttributeValueUnique);
+                return constructedString;
+            }
+
+            if (this.HasUniqueAllocations)
+            {
+                return this.ProcessUniqueAllocations(hologram, constructedString, isAttributeValueUnique);
+            }
+
+            int count = 0;
+            while (!isAttributeValueUnique(constructedString, null))
+            {
+                constructedString = this.ExpandComplexDeclaration(hologram);
+
+                if (count++ > ActiveConfig.UniqueAllocationDepth)
+                {
+                    throw new MaximumAllocationAttemptsExceededException("The maximum number of unique allocation attempts has been exceeded");
+                }
             }
 
             return constructedString;
@@ -191,21 +205,12 @@ namespace Lithnet.Acma
 
             string wilcardDeclaration = constructedValue.Replace(uniqueAllocator.Declaration, "%");
 
-            if (uniqueAllocator.VariableName == "o")
-            {
-                valueToTest = constructedValue.Replace(uniqueAllocator.Declaration, string.Empty);
-            }
-            else
+            do
             {
                 IList<object> uniqueAllocatorValue = uniqueAllocator.Expand();
                 valueToTest = constructedValue.Replace(uniqueAllocator.Declaration, uniqueAllocatorValue.First().ToSmartStringOrNull());
             }
-
-            while (!isAttributeValueUnique(valueToTest, wilcardDeclaration))
-            {
-                IList<object> uniqueAllocatorValue = uniqueAllocator.Expand();
-                valueToTest = constructedValue.Replace(uniqueAllocator.Declaration, uniqueAllocatorValue.First().ToSmartStringOrNull());
-            }
+            while (!isAttributeValueUnique(valueToTest, wilcardDeclaration));
 
             return valueToTest;
         }

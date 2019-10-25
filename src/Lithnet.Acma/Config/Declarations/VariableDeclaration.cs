@@ -9,30 +9,38 @@ namespace Lithnet.Acma
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using Lithnet.MetadirectoryServices;
     using Lithnet.Transforms;
-    using Microsoft.MetadirectoryServices;
 
     /// <summary>
     /// Contains the declaration of a variable within a DeclarationString
     /// </summary>
     public class VariableDeclaration : DeclarationComponent
     {
+        protected internal const string VariableNameRandomLowerCaseString = "randstringalphalcase";
+        protected internal const string VariableNameRandomAlphaNumericString = "randstring";
+        protected internal const string VariableNameRandomNumber = "randnum";
+        protected internal const string VariableNameNewGuid = "newguid";
+        protected internal const string VariableNameDateUtc = "utcdate";
+        protected internal const string VariableNameDateLocal = "date";
+        protected internal const string VariableNameUniquePlaceholderNumeric = "n";
+        protected internal const string VariableNameUniquePlaceholderNumericOptional = "o";
+
         internal VariableDeclaration(string variableName, string variableParameters, IList<Transform> transforms, string declaration)
         {
-            this.StartingValue = 1;
+            this.StartingValue = 0;
             this.VariableName = variableName;
             this.VariableParameters = variableParameters;
             this.Transforms = transforms;
             this.Declaration = declaration;
 
-            if (this.VariableName == "o" || this.VariableName == "n")
+            if (this.VariableName == VariableDeclaration.VariableNameUniquePlaceholderNumericOptional ||
+                this.VariableName == VariableDeclaration.VariableNameUniquePlaceholderNumeric)
             {
                 this.IsUniqueAllocationVariable = true;
             }
         }
-      
+
         /// <summary>
         /// Gets the raw attribute declaration 
         /// </summary>
@@ -52,7 +60,7 @@ namespace Lithnet.Acma
         /// Gets a list of transforms to be applied to this variable after expansion
         /// </summary>
         public IList<Transform> Transforms { get; private set; }
-               
+
         /// <summary>
         /// Gets a value indicating whether this variable can be used to unique allocation
         /// </summary>
@@ -77,7 +85,7 @@ namespace Lithnet.Acma
         /// </summary>
         public void ResetCounter()
         {
-            this.StartingValue = 1;
+            this.StartingValue = 0;
         }
 
         /// <summary>
@@ -88,30 +96,40 @@ namespace Lithnet.Acma
         {
             switch (this.VariableName)
             {
-                case "date":
+                case VariableDeclaration.VariableNameDateLocal:
                     return DateTime.Now.Truncate(TimeSpan.TicksPerSecond);
 
-                case "utcdate":
+                case VariableDeclaration.VariableNameDateUtc:
                     return DateTime.Now.ToUniversalTime().Truncate(TimeSpan.TicksPerSecond);
 
-                case "o":
-                case "n":
-                    if (this.StartingValue < ActiveConfig.UniqueAllocationDepth)
-                    {
-                        return this.StartingValue++;
-                    }
-                    else
+                case VariableDeclaration.VariableNameUniquePlaceholderNumericOptional:
+                    int current = this.StartingValue++;
+
+                    if (current > ActiveConfig.UniqueAllocationDepth)
                     {
                         throw new MaximumAllocationAttemptsExceededException("The maximum number of unique allocation attempts has been exceeded");
                     }
 
-                case "newguid":
+                    return current == 0 ? null : (object)current;
+
+                case VariableDeclaration.VariableNameUniquePlaceholderNumeric:
+                    if (++this.StartingValue > ActiveConfig.UniqueAllocationDepth)
+                    {
+                        throw new MaximumAllocationAttemptsExceededException("The maximum number of unique allocation attempts has been exceeded");
+                    }
+
+                    return this.StartingValue;
+
+                case VariableDeclaration.VariableNameNewGuid:
                     return Guid.NewGuid();
 
-                case "randstring":
-                    return this.GetRandomString();
+                case VariableDeclaration.VariableNameRandomAlphaNumericString:
+                    return this.GetRandomAlphaNumericString();
 
-                case "randnum":
+                case VariableDeclaration.VariableNameRandomLowerCaseString:
+                    return this.GetRandomLowerCaseString();
+
+                case VariableDeclaration.VariableNameRandomNumber:
                     return this.GetRandomNumber();
 
                 default:
@@ -140,16 +158,28 @@ namespace Lithnet.Acma
         /// Gets a random string value
         /// </summary>
         /// <returns>A random string of the length specified in the declaration</returns>
-        private string GetRandomString()
+        private string GetRandomAlphaNumericString()
         {
-            int length;
-
-            if (!int.TryParse(this.VariableParameters, out length))
+            if (!int.TryParse(this.VariableParameters, out int length))
             {
-                throw new InvalidOperationException("The length of the random string could not be extracted from the variable parameter. Variable should be in the format of %randstring:X%, where X is the length of the random string to generate");
+                throw new InvalidOperationException($"The length of the random string could not be extracted from the variable parameter. Variable should be in the format of %{VariableNameRandomAlphaNumericString}:X%, where X is the length of the random string to generate");
             }
 
-            return RandomValueGenerator.GenerateRandomString(length);
+            return RandomValueGenerator.GenerateRandomString(length, RandomValueGenerator.AlphaNumericCharacterSet);
+        }
+
+        /// <summary>
+        /// Gets a random string value
+        /// </summary>
+        /// <returns>A random string of the length specified in the declaration</returns>
+        private string GetRandomLowerCaseString()
+        {
+            if (!int.TryParse(this.VariableParameters, out int length))
+            {
+                throw new InvalidOperationException($"The length of the random string could not be extracted from the variable parameter. Variable should be in the format of %{VariableNameRandomLowerCaseString}:X%, where X is the length of the random string to generate");
+            }
+
+            return RandomValueGenerator.GenerateRandomString(length, RandomValueGenerator.LowercaseAlphaCharacterSet);
         }
 
         /// <summary>
@@ -166,7 +196,7 @@ namespace Lithnet.Acma
             }
             else if (!int.TryParse(this.VariableParameters, out length))
             {
-                throw new InvalidOperationException("The length of the random string could not be extracted from the variable parameter. Variable should be in the format of %randnum:X%, where X is the length of the random number to generate");
+                throw new InvalidOperationException($"The length of the random string could not be extracted from the variable parameter. Variable should be in the format of %{VariableNameRandomNumber}:X%, where X is the length of the random number to generate");
             }
 
             return RandomValueGenerator.GenerateRandomNumber(length);
@@ -176,8 +206,9 @@ namespace Lithnet.Acma
         {
             switch (name)
             {
-                case "randstring":
-                case "randnum":
+                case VariableDeclaration.VariableNameRandomAlphaNumericString:
+                case VariableDeclaration.VariableNameRandomLowerCaseString:
+                case VariableDeclaration.VariableNameRandomNumber:
                     return true;
 
                 default:
@@ -192,10 +223,11 @@ namespace Lithnet.Acma
                 return false;
             }
 
-            if (name == "randstring" || name=="randnum")
+            if (name == VariableDeclaration.VariableNameRandomAlphaNumericString ||
+                name == VariableDeclaration.VariableNameRandomNumber ||
+                name == VariableDeclaration.VariableNameRandomLowerCaseString)
             {
-                int length;
-                return int.TryParse(parameter, out length);
+                return int.TryParse(parameter, out int _);
             }
 
             return false;
@@ -203,14 +235,14 @@ namespace Lithnet.Acma
 
         public static IEnumerable<string> GetBuiltInVariableNames()
         {
-            yield return "o";
-            yield return "n";
-            yield return "date";
-            yield return "utcdate";
-            yield return "newguid";
-            yield return "randstring";
-            yield return "randnum";
-
+            yield return VariableDeclaration.VariableNameUniquePlaceholderNumericOptional;
+            yield return VariableDeclaration.VariableNameUniquePlaceholderNumeric;
+            yield return VariableDeclaration.VariableNameDateLocal;
+            yield return VariableDeclaration.VariableNameDateUtc;
+            yield return VariableDeclaration.VariableNameNewGuid;
+            yield return VariableDeclaration.VariableNameRandomAlphaNumericString;
+            yield return VariableDeclaration.VariableNameRandomLowerCaseString;
+            yield return VariableDeclaration.VariableNameRandomNumber;
         }
 
         public static IEnumerable<string> GetUserDefinedVariableNames()
@@ -239,17 +271,18 @@ namespace Lithnet.Acma
         {
             switch (this.VariableName)
             {
-                case "o":
-                case "n":
-                case "randnum":
+                case VariableDeclaration.VariableNameUniquePlaceholderNumericOptional:
+                case VariableDeclaration.VariableNameUniquePlaceholderNumeric:
+                case VariableDeclaration.VariableNameRandomNumber:
                     return ExtendedAttributeType.Integer;
 
-                case "date":
-                case "utcdate":
+                case VariableDeclaration.VariableNameDateLocal:
+                case VariableDeclaration.VariableNameDateUtc:
                     return ExtendedAttributeType.DateTime;
 
-                case "newguid":
-                case "randstring":
+                case VariableDeclaration.VariableNameNewGuid:
+                case VariableDeclaration.VariableNameRandomAlphaNumericString:
+                case VariableDeclaration.VariableNameRandomLowerCaseString:
                     return ExtendedAttributeType.String;
 
                 default:

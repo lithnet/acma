@@ -18,11 +18,9 @@ namespace Lithnet.Acma.UnitTests
     {
         public VariableDeclarationTest()
         {
+            UnitTestControl.Initialize();
         }
 
-        /// <summary>
-        ///A test for ExpandVariable
-        ///</summary>
         [TestMethod()]
         public void ExpandVariableTestUtcDate()
         {
@@ -54,28 +52,26 @@ namespace Lithnet.Acma.UnitTests
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
             int expected = 1;
-            int actual;
-            actual = (int)target.Expand().First();
+            int actual = (int)target.Expand().First();
             Assert.AreEqual(expected, actual);
 
             expected = 2;
             actual = (int)target.Expand().First();
             Assert.AreEqual(expected, actual);
         }
-
+      
         [TestMethod()]
         public void ExpandVariableTestOptionalNumber()
         {
             string declaration = "%o%";
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
-            int expected = 1;
-            int actual;
-            actual = (int)target.Expand().First();
+            string expected = null;
+            string actual = target.Expand().First().ToSmartStringOrNull();
             Assert.AreEqual(expected, actual);
 
-            expected = 2;
-            actual = (int)target.Expand().First();
+            expected = "1";
+            actual = target.Expand().First().ToSmartStringOrNull();
             Assert.AreEqual(expected, actual);
         }
 
@@ -85,12 +81,30 @@ namespace Lithnet.Acma.UnitTests
             string declaration = "%randstring:10%";
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
-            string actual;
-            actual = (string)target.Expand().First();
+            string actual = (string)target.Expand().First();
             
             if (actual.Length != 10)
             {
                 Assert.Fail("The string was not of the expected length");
+            }
+        }
+
+        [TestMethod()]
+        public void ExpandVariableTestRandomAlphaLCaseString()
+        {
+            string declaration = "%randstringalphalcase:10%";
+            VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
+            VariableDeclaration target = parser.GetVariableDeclaration();
+            string actual = (string)target.Expand().First();
+
+            if (actual.Length != 10)
+            {
+                Assert.Fail("The string was not of the expected length");
+            }
+
+            if (!actual.All(char.IsLower))
+            {
+                Assert.Fail("The string contained non-lowercase letters");
             }
         }
 
@@ -100,8 +114,7 @@ namespace Lithnet.Acma.UnitTests
             string declaration = "%randnum:4%";
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
-            long actual;
-            actual = (long)target.Expand().First();
+            long actual = (long)target.Expand().First();
 
             if (actual == 0)
             {
@@ -115,8 +128,7 @@ namespace Lithnet.Acma.UnitTests
             string declaration = "%randnum:8%";
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
-            long actual;
-            actual = (long)target.Expand().First();
+            long actual = (long)target.Expand().First();
 
             if (actual == 0)
             {
@@ -130,8 +142,7 @@ namespace Lithnet.Acma.UnitTests
             string declaration = "%randnum%";
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
-            long actual;
-            actual = (long)target.Expand().First();
+            long actual = (long)target.Expand().First();
 
             if (actual == 0)
             {
@@ -142,60 +153,49 @@ namespace Lithnet.Acma.UnitTests
         [TestMethod()]
         public void ExpandVariableTestRandomNumberTestClash()
         {
-            string declaration = "%randnum%";
-            VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
-            VariableDeclaration target = parser.GetVariableDeclaration();
-            long actual;
-            HashSet<long> values = new HashSet<long>();
+            this.ExpandVariableTestClash<long>("%randnum%");
+        }
 
-            for (int i = 0; i < 1000000; i++)
-            {
-                actual = (long)target.Expand().First();
-
-                if (!values.Add(actual))
-                {
-                    Assert.Fail("Duplicate value detected");
-                }
-            }
+        [TestMethod()]
+        public void ExpandVariableTestRandomStringTestClash()
+        {
+            this.ExpandVariableTestClash<string>("%randstringalphalcase:10%");
         }
 
         [TestMethod()]
         public void ExpandVariableTestRandomStringTestClash1()
         {
-            string declaration = "%randstring:15%";
-            VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
-            VariableDeclaration target = parser.GetVariableDeclaration();
-            string actual;
-            HashSet<string> values = new HashSet<string>();
-
-            for (int i = 0; i < 1000000; i++)
-            {
-                actual = (string)target.Expand().First();
-
-                if (!values.Add(actual))
-                {
-                    Assert.Fail("Duplicate value detected");
-                }
-            }
+            this.ExpandVariableTestClash<string>("%randstring:15%");
         }
 
         [TestMethod()]
         public void ExpandVariableTestRandomStringTestClash2()
         {
-            string declaration = "%randstring:10%";
+            this.ExpandVariableTestClash<string>("%randstring:10%");
+        }
+
+        public void ExpandVariableTestClash<T>(string declaration)
+        {
             VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
             VariableDeclaration target = parser.GetVariableDeclaration();
-            string actual;
-            HashSet<string> values = new HashSet<string>();
+            HashSet<T> values = new HashSet<T>();
 
-            for (int i = 0; i < 1000000; i++)
+            int clashCount = 0;
+            int runs = 1000000;
+
+            for (int i = 0; i < runs; i++)
             {
-                actual = (string)target.Expand().First();
+                T actual = (T)target.Expand().First();
 
                 if (!values.Add(actual))
                 {
-                    Assert.Fail("Duplicate value detected");
+                    clashCount++;
                 }
+            }
+
+            if (clashCount > 0)
+            {
+                Assert.Fail($"Duplicate values created in {clashCount} out of {runs} runs");
             }
         }
     }

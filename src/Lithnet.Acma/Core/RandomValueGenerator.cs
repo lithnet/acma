@@ -10,27 +10,32 @@ namespace Lithnet.Acma
     {
         private static RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
 
-        private static readonly char[] availableCharacters = {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
-            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
+        public static readonly char[] AlphaNumericCharacterSet = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'  };
+
+        public static readonly char[] LowercaseAlphaCharacterSet = {
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+              };
 
         public static string GenerateRandomString(int length)
         {
-            char[] identifier = new char[length];
-            byte[] randomData = new byte[length];
+            return GenerateRandomString(length, AlphaNumericCharacterSet);
+        }
 
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(randomData);
-            }
+        public static string GenerateRandomString(int length, params char[] allowedChars)
+        {
+            char[] identifier = new char[length];
+            byte[] randomData = GetRandomBytes(length);
 
             for (int idx = 0; idx < identifier.Length; idx++)
             {
-                int pos = randomData[idx] % availableCharacters.Length;
-                identifier[idx] = availableCharacters[pos];
+                int pos = randomData[idx] % allowedChars.Length;
+                identifier[idx] = allowedChars[pos];
             }
 
             return new string(identifier);
@@ -38,49 +43,52 @@ namespace Lithnet.Acma
 
         public static long GenerateRandomNumber(int length)
         {
-            if (!(length == 2 || length == 4 || length == 8))
-            {
-                throw new ArgumentException("length", "Number length can only be 2, 4 or 8");
-            }
+            ulong minValue = ulong.Parse("1".PadRight(length, '0'));
+            ulong maxValue = ulong.Parse("1".PadRight(length + 1, '0'));
 
-            byte[] randomData = new byte[length];
-
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(randomData);
-            }
-
-            long returnValue = 0;
-
-            if (length == 2)
-            {
-                returnValue =  Math.Abs(BitConverter.ToInt64(randomData, 0));
-            }
-            else if (length == 4)
-            {
-                returnValue = Math.Abs(BitConverter.ToInt32(randomData, 0));
-            }
-            else if (length == 8)
-            {
-                returnValue = Math.Abs(BitConverter.ToInt16(randomData, 0));
-            }
-
-            return returnValue;
+            return (long)GetValue(minValue, maxValue);
         }
-
 
         public static long GenerateRandomNumber()
         {
-            int length = 8;
+            return GenerateRandomNumber(8);
+        }
 
-            byte[] randomData = new byte[length];
-
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+        private static ulong GetValue(ulong minValue, ulong maxValue)
+        {
+            if (minValue >= maxValue)
             {
-                rng.GetBytes(randomData);
+                throw new ArgumentOutOfRangeException(nameof(maxValue));
             }
 
-            return Math.Abs(BitConverter.ToInt64(randomData, 0));
+            if (maxValue > long.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxValue));
+            }
+
+            ulong diff = (ulong)maxValue - minValue;
+
+            ulong upperBound = ulong.MaxValue / diff * diff;
+
+            ulong value;
+            do
+            {
+                value = GetRandomUInt64();
+            } while (value >= upperBound);
+            return (ulong)(minValue + (value % diff));
+        }
+
+        private static ulong GetRandomUInt64()
+        {
+            byte[] randomBytes = GetRandomBytes(sizeof(ulong));
+            return BitConverter.ToUInt64(randomBytes, 0);
+        }
+
+        private static byte[] GetRandomBytes(int size)
+        {
+            byte[] buffer = new byte[size];
+            rng.GetBytes(buffer);
+            return buffer;
         }
     }
 }

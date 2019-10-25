@@ -11,6 +11,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Schema;
 using System.ComponentModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lithnet.Acma.UnitTests
 {

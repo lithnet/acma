@@ -14,6 +14,207 @@ namespace Lithnet.Acma.UnitTests.Constructor_Tests.AttributeConstructor_Tests
             UnitTestControl.Initialize();
         }
 
+        [TestMethod()]
+        public void UniqueValueConstructorOptionalNumberTest()
+        {
+            UniqueValueConstructor attributeConstructor = new UniqueValueConstructor();
+            attributeConstructor.ValueDeclaration = new UniqueValueDeclaration("mytestvalue%o%");
+            attributeConstructor.Attribute = ActiveConfig.DB.GetAttribute("personID");
+            attributeConstructor.UniqueAllocationAttributes.Add(attributeConstructor.Attribute);
+
+            Guid id1 = Guid.NewGuid();
+            Guid id2 = Guid.NewGuid();
+
+            try
+            {
+                MAObjectHologram sourceObject1 = ActiveConfig.DB.CreateMAObject(id1, "person");
+                MAObjectHologram sourceObject2 = ActiveConfig.DB.CreateMAObject(id2, "person");
+
+                attributeConstructor.Execute(sourceObject1);
+
+                AttributeValue value = sourceObject1.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+
+                if (value.Value.ToString() != "mytestvalue")
+                {
+                    Assert.Fail("The constructor did not generate the expected value");
+                }
+
+                attributeConstructor.Execute(sourceObject2);
+                value = sourceObject2.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+
+                if (value.Value.ToString() != "mytestvalue1")
+                {
+                    Assert.Fail("The constructor did not generate the expected value");
+                }
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(id1);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id2);
+            }
+        }
+
+        [TestMethod()]
+        public void UniqueValueConstructorRequiredNumberTest()
+        {
+            UniqueValueConstructor attributeConstructor = new UniqueValueConstructor();
+            attributeConstructor.ValueDeclaration = new UniqueValueDeclaration("mytestvalue%n%");
+            attributeConstructor.Attribute = ActiveConfig.DB.GetAttribute("personID");
+            attributeConstructor.UniqueAllocationAttributes.Add(attributeConstructor.Attribute);
+
+            Guid newId = Guid.NewGuid();
+            try
+            {
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
+
+                attributeConstructor.Execute(sourceObject);
+
+                AttributeValue value = sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+
+                if (value.Value.ToString() != "mytestvalue1")
+                {
+                    Assert.Fail("The constructor did not generate the expected value");
+                }
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+            }
+        }
+
+        [TestMethod()]
+        public void UniqueValueConstructorSelfUniqueTest()
+        {
+            UniqueValueConstructor attributeConstructor = new UniqueValueConstructor();
+            attributeConstructor.ValueDeclaration = new UniqueValueDeclaration("mytestvalue");
+            attributeConstructor.Attribute = ActiveConfig.DB.GetAttribute("personID");
+            attributeConstructor.UniqueAllocationAttributes.Add(attributeConstructor.Attribute);
+
+            Guid newId = Guid.NewGuid();
+            try
+            {
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
+
+                attributeConstructor.Execute(sourceObject);
+
+                AttributeValue value = sourceObject.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+
+                if (value.Value.ToString() != "mytestvalue")
+                {
+                    Assert.Fail("The constructor did not generate the expected value");
+                }
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+            }
+        }
+
+        [TestMethod()]
+        public void UniqueValueConstructorSelfUniqueDuplicateTest()
+        {
+            UniqueValueConstructor attributeConstructor = new UniqueValueConstructor();
+            attributeConstructor.ValueDeclaration = new UniqueValueDeclaration("mytestvalue");
+            attributeConstructor.Attribute = ActiveConfig.DB.GetAttribute("personID");
+            attributeConstructor.UniqueAllocationAttributes.Add(attributeConstructor.Attribute);
+
+            Guid id1 = Guid.NewGuid();
+            Guid id2 = Guid.NewGuid();
+
+            try
+            {
+                MAObjectHologram sourceObject1 = ActiveConfig.DB.CreateMAObject(id1, "person");
+                MAObjectHologram sourceObject2 = ActiveConfig.DB.CreateMAObject(id2, "person");
+
+                attributeConstructor.Execute(sourceObject1);
+
+                AttributeValue value = sourceObject1.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+
+                if (value.Value.ToString() != "mytestvalue")
+                {
+                    Assert.Fail("The constructor did not generate the expected value");
+                }
+
+                sourceObject1.CommitCSEntryChange();
+
+                try
+                {
+                    attributeConstructor.Execute(sourceObject2);
+                    Assert.Fail("The constructor did not fail as expected");
+                }
+                catch (MaximumAllocationAttemptsExceededException)
+                {
+                }
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(id1);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id2);
+            }
+        }
+
+        [TestMethod()]
+        public void UniqueValueConstructorSelfUniqueRandomStringTest()
+        {
+            UniqueValueConstructor attributeConstructor = new UniqueValueConstructor();
+            attributeConstructor.ValueDeclaration = new UniqueValueDeclaration("%randstring:10%");
+            attributeConstructor.Attribute = ActiveConfig.DB.GetAttribute("personID");
+            attributeConstructor.UniqueAllocationAttributes.Add(attributeConstructor.Attribute);
+
+            Guid id1 = Guid.NewGuid();
+            Guid id2 = Guid.NewGuid();
+
+            try
+            {
+                MAObjectHologram sourceObject1 = ActiveConfig.DB.CreateMAObject(id1, "person");
+                MAObjectHologram sourceObject2 = ActiveConfig.DB.CreateMAObject(id2, "person");
+
+                attributeConstructor.Execute(sourceObject1);
+
+                AttributeValue value = sourceObject1.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+
+                sourceObject1.CommitCSEntryChange();
+
+                attributeConstructor.Execute(sourceObject2);
+
+                value = sourceObject2.GetSVAttributeValue(ActiveConfig.DB.GetAttribute("personID"));
+                if (value.IsNull)
+                {
+                    Assert.Fail("The constructor did not generate any value");
+                }
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(id1);
+                ActiveConfig.DB.DeleteMAObjectPermanent(id2);
+            }
+        }
+
+
         [TestMethod]
         public void PerformBulkUniqueAllocationTest()
         {
@@ -69,7 +270,6 @@ namespace Lithnet.Acma.UnitTests.Constructor_Tests.AttributeConstructor_Tests
                     ActiveConfig.DB.DeleteMAObjectPermanent(id);
                 }
             }
-
         }
     }
 }

@@ -88,13 +88,13 @@ namespace Lithnet.Acma
 
             string staticValue = this.TryGetUniqueValueFromStaticDeclarations(hologram);
 
-            if (string.IsNullOrWhiteSpace(staticValue))
+            if (!string.IsNullOrWhiteSpace(staticValue))
             {
-                returnValues = this.ValueDeclaration.Expand(hologram, (string valueToTest, string wildCardValue) => this.IsAttributeUnique(hologram, valueToTest, wildCardValue));
+                returnValues.Add(staticValue);
             }
             else
             {
-                returnValues.Add(staticValue);
+                returnValues = this.ValueDeclaration.Expand(hologram, (string valueToTest, string wildCardValue) => this.IsAttributeUnique(hologram, valueToTest, wildCardValue));
             }
 
             if (returnValues == null || returnValues.Count == 0)
@@ -110,7 +110,7 @@ namespace Lithnet.Acma
 
                 object newValue = TypeConverter.ConvertData(returnValues.First(), this.Attribute.Type);
 
-                if (newValue != null && !(newValue is string && string.IsNullOrWhiteSpace((string)newValue)))
+                if (newValue != null && !(newValue is string s && string.IsNullOrWhiteSpace(s)))
                 {
                     valueChanges.Add(this.CreateValueChange(newValue, ValueModificationType.Add));
                 }
@@ -285,17 +285,13 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="hologram">The object that the value is being tested for</param>
         /// <param name="valueToTest">The value test for uniqueness</param>
+        /// <param name="wildcardValue">When using a %o% or %n% declaration to guarantee uniqueness, this is the value used as a placeholder</param>
         /// <returns>True, if the value is unique, false if it is not</returns>
         internal bool IsAttributeUnique(MAObjectHologram hologram, string valueToTest, string wildcardValue)
         {
-            if (this.DisableCaching || UniqueValueConstructor.DisableCachingGlobal)
+            if (this.DisableCaching || UniqueValueConstructor.DisableCachingGlobal || string.IsNullOrWhiteSpace(wildcardValue))
             {
                 return this.IsAttributeUnique(hologram, valueToTest);
-            }
-
-            if (string.IsNullOrWhiteSpace(wildcardValue))
-            {
-                throw new ArgumentNullException(nameof(wildcardValue));
             }
 
             if (string.IsNullOrWhiteSpace(valueToTest))
