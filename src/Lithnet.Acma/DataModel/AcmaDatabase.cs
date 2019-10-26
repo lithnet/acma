@@ -528,7 +528,8 @@ namespace Lithnet.Acma
 
             this.ValidateCanCreateReferenceLink(forwardLinkObjectClass, forwardLink, backLinkObjectClass, backLink);
 
-            AcmaSchemaReferenceLink link = new AcmaSchemaReferenceLink();
+            AcmaSchemaReferenceLink link = (AcmaSchemaReferenceLink)bindingList.AddNew();
+
             try
             {
                 link.ForwardLinkObjectClass = forwardLinkObjectClass;
@@ -536,7 +537,7 @@ namespace Lithnet.Acma
                 link.BackLinkAttribute = backLink;
                 link.BackLinkObjectClass = backLinkObjectClass;
 
-                bindingList.Add(link);
+                //bindingList.Add(link);
                 this.DataContext.SubmitChanges();
                 this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, link);
 
@@ -1032,7 +1033,7 @@ namespace Lithnet.Acma
 
             this.ValidateCanCreateShadowLink(shadowClass, provisioningAttribute, referenceAttribute, name);
 
-            AcmaSchemaShadowObjectLink link = new AcmaSchemaShadowObjectLink();
+            AcmaSchemaShadowObjectLink link = (AcmaSchemaShadowObjectLink)bindingList.AddNew();
 
             try
             {
@@ -1042,11 +1043,9 @@ namespace Lithnet.Acma
                 link.ProvisioningAttribute = provisioningAttribute;
                 link.Name = name;
 
-                bindingList.Add(link);
                 this.DataContext.SubmitChanges();
                 this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, link);
                 return link;
-
             }
             catch
             {
