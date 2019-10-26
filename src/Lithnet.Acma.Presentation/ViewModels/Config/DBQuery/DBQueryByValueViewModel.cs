@@ -56,12 +56,12 @@ namespace Lithnet.Acma.Presentation
                     {
                         return string.Format("{0} {1}", this.SearchAttribute.Name, this.Operator.GetEnumDescription().ToLower());
                     }
-                    else if (this.Declaration == null || string.IsNullOrWhiteSpace(this.Declaration.Declaration ))
+                    else if (this.Declaration == null || string.IsNullOrWhiteSpace(this.Declaration.Declaration))
                     {
                         return "Undefined value query";
 
                     }
-                    else 
+                    else
                     {
                         return string.Format("{0} {1} {2}", this.SearchAttribute.Name, this.Operator.GetEnumDescription().ToLower(), this.Declaration.Declaration);
                     }
@@ -122,7 +122,7 @@ namespace Lithnet.Acma.Presentation
         {
             get
             {
-                return ActiveConfig.DB.AttributesBindingList;
+                return ActiveConfig.DB.Attributes.OrderBy(t => t.Name);
             }
         }
 

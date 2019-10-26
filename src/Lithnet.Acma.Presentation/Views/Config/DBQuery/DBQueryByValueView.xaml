@@ -23,12 +23,12 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.Resources>
-                    <CollectionViewSource Source="{Binding Path=AllowedSearchAttributes,Mode=OneWay}"
+                    <!--<CollectionViewSource Source="{Binding Path=AllowedSearchAttributes,Mode=OneWay}"
                                           x:Key="sortedAttributes">
                         <CollectionViewSource.SortDescriptions>
                             <scm:SortDescription PropertyName="Name" />
                         </CollectionViewSource.SortDescriptions>
-                    </CollectionViewSource>
+                    </CollectionViewSource>-->
 
                 </Grid.Resources>
 
@@ -36,7 +36,7 @@
                        Grid.Row="0"
                        Grid.Column="0"
                        Margin="2" />
-                <ComboBox ItemsSource="{Binding Source={StaticResource sortedAttributes}}"
+                <ComboBox ItemsSource="{Binding Path=AllowedSearchAttributes, Mode=OneWay}"
                           SelectedItem="{Binding Path=SearchAttribute, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
                           DisplayMemberPath="Name"
                           Grid.Row="0"
