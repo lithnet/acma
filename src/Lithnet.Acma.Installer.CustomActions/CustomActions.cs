@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Deployment.WindowsInstaller;
 using System.IO;
 using System.DirectoryServices.AccountManagement;
@@ -10,7 +8,7 @@ namespace Lithnet.Acma.Installer
     public class CustomActions
     {
         private const string GroupNameAcmaAdministrators = "AcmaAdministrators";
-        
+
         private const string GroupNameAcmaSyncUsers = "AcmaSyncUsers";
 
         [CustomAction]
@@ -99,7 +97,6 @@ namespace Lithnet.Acma.Installer
                 group = new GroupPrincipal(context);
                 group.Name = CustomActions.GroupNameAcmaSyncUsers;
                 mustSave = true;
-            
             }
 
             UserPrincipal user = CustomActions.FindInDomainOrMachine(syncAccount);
@@ -109,7 +106,6 @@ namespace Lithnet.Acma.Installer
                 session.Log("User not found {0}", syncAccount);
                 throw new NoMatchingPrincipalException(string.Format("The user {0} could not be found", syncAccount));
             }
-
 
             if (!group.Members.Contains(user))
             {
@@ -146,11 +142,15 @@ namespace Lithnet.Acma.Installer
 
             if (group == null)
             {
-                session.Log("Creating new group {0}", CustomActions.GroupNameAcmaSyncUsers);
+                session.Log("Creating new group {0}", CustomActions.GroupNameAcmaAdministrators);
 
                 group = new GroupPrincipal(context);
                 group.Name = CustomActions.GroupNameAcmaAdministrators;
                 group.Save();
+            }
+            else
+            {
+                session.Log("Skipping creation of group {0} as it already exists", CustomActions.GroupNameAcmaAdministrators);
             }
         }
 
