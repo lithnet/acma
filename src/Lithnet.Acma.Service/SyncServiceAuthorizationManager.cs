@@ -12,23 +12,43 @@ namespace Lithnet.Acma.Service
 {
     public class SyncServiceAuthorizationManager : ServiceAuthorizationManager
     {
-        private const string SyncUsersGroupName = "AcmaSyncUsers";
+        private static readonly object lockObject = new object();
 
         private static IdentityReference syncServiceAccount;
 
-        static SyncServiceAuthorizationManager()
+        private static IdentityReference SyncServiceAccount
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\services\FIMSynchronizationService");
-
-            if (key != null)
+            get
             {
-                string syncAccountName = (string)key.GetValue("ObjectName", null);
-
-                if (syncAccountName != null)
+                if (syncServiceAccount == null)
                 {
-                    NTAccount t = new NTAccount(syncAccountName);
-                    syncServiceAccount = t.Translate(typeof(SecurityIdentifier));
+                    lock (lockObject)
+                    {
+                        if (syncServiceAccount == null)
+                        {
+                            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\services\FIMSynchronizationService");
+
+                            string syncAccountName = (string)key?.GetValue("ObjectName", null);
+
+                            if (syncAccountName != null)
+                            {
+                                if (syncAccountName.StartsWith(".\\"))
+                                {
+                                    syncAccountName = syncAccountName.Replace(".\\", Environment.MachineName + "\\");
+                                }
+
+                                NTAccount t = new NTAccount(syncAccountName);
+                                syncServiceAccount = t.Translate(typeof(SecurityIdentifier));
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("The synchronization service username was not found in the registry");
+                            }
+                        }
+                    }
                 }
+
+                return syncServiceAccount;
             }
         }
 
@@ -42,11 +62,12 @@ namespace Lithnet.Acma.Service
                 return true;
             }
 
-            return (operationContext.ServiceSecurityContext.WindowsIdentity.User == syncServiceAccount);
+            if (SyncServiceAccount == null)
+            {
+                return false;
+            }
 
-            //IPrincipal wp = new WindowsPrincipal(operationContext.ServiceSecurityContext.WindowsIdentity);
-
-            //return wp.IsInRole(SyncServiceAuthorizationManager.SyncUsersGroupName);
+            return operationContext.ServiceSecurityContext.WindowsIdentity.User == SyncServiceAccount;
         }
     }
 }
