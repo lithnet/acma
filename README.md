@@ -14,13 +14,13 @@ Read the [getting started guide](https://github.com/lithnet/acma/wiki)
 ## How can I contribute to the project?
 * Found an issue and want us to fix it? [Log it](https://github.com/lithnet/acma/issues)
 * Want to fix an issue yourself or add functionality? Clone the project and submit a pull request
-* Make a [donation](https://lithnet.io/donate) and help us cover our costs
 
 ## More information
 Watch the demonstration of ACMA to the FIM team user group on [youtube](https://www.youtube.com/watch?v=RBkR-L4bENg)
 
-Join the [MIM team user group](https://themimteam.unifysolutions.net/fim-team-user-group/)
+## Enteprise support
+Lithnet offer enterprise support plans for our open-source products. Deploy our tools with confidence that you have the backing of the dedicated Lithnet support team if you run into any issues, have questions, or need advice. Reach out to support@lithnet.io, let us know the number of users you are managing with your ACMA implementation, and we'll put together a quote.
 
 ## Keep up to date
-* [Visit my blog](http://blog.lithiumblue.com)
-* [Follow me on twitter](https://twitter.com/RyanLNewington)![](http://twitter.com/favicon.ico)
+* [Visit our blog](http://blog.lithnet.io)
+* [Follow us on twitter](https://twitter.com/lithnet_io)![](http://twitter.com/favicon.ico)
