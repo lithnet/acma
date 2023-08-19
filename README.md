@@ -18,8 +18,8 @@ Read the [getting started guide](https://github.com/lithnet/acma/wiki)
 ## More information
 Watch the demonstration of ACMA to the FIM team user group on [youtube](https://www.youtube.com/watch?v=RBkR-L4bENg)
 
-## Enteprise support
-Lithnet offer enterprise support plans for our open-source products. Deploy our tools with confidence that you have the backing of the dedicated Lithnet support team if you run into any issues, have questions, or need advice. Reach out to support@lithnet.io, let us know the number of users you are managing with your ACMA implementation, and we'll put together a quote.
+## Enterprise support
+Lithnet offer enterprise support plans for our open-source products. Deploy our tools with confidence that you have the backing of the dedicated Lithnet support team if you run into any issues, have questions, or need advice. Simply fill out the [request form](https://lithnet.io/products/mim), let us know the number of users you are managing with your MIM implementation, and we'll put together a quote.
 
 ## Keep up to date
 * [Visit our blog](http://blog.lithnet.io)
