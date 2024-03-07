@@ -34,6 +34,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{CD386D45-6049-4649-99C5-3C6B73D50511}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\azure-pipelines.yml = ..\build\azure-pipelines.yml
+		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Global
