@@ -1,132 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{04CD3287-E3E0-4B53-AD70-0452C1CC1621}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lithnet.Acma.TestEngine</RootNamespace>
-    <AssemblyName>Lithnet.Acma.TestEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-    </Reference>
-    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6478.33562, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6478.33562\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.MetadirectoryServicesEx">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PropertyChanged, Version=2.1.4.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\packages\PropertyChanged.Fody.2.1.4\lib\netstandard1.0\PropertyChanged.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Config\UnitTestGroup.cs" />
-    <Compile Include="Config\UnitTestObject.cs" />
-    <Compile Include="Config\UnitTestStepObjectCreation.cs" />
-    <Compile Include="Reporting.cs" />
-    <Compile Include="Exceptions\UnitTestEngineException.cs" />
-    <Compile Include="Exceptions\EvaluationFailedException.cs" />
-    <Compile Include="Config\UnitTestStep.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Config\UnitTest.cs" />
-    <Compile Include="UnitTestOutcome.cs" />
-    <Compile Include="UnitTestOutcomes.cs" />
-    <Compile Include="Enums\UnitTestResult.cs" />
-    <Compile Include="Config\UnitTestFile.cs" />
-    <Compile Include="Config\UnitTestStepObjectEvaluation.cs" />
-    <Compile Include="Config\UnitTestStepObjectModification.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj">
-      <Project>{753364aa-9e05-4389-91d2-dc86ee453deb}</Project>
-      <Name>Lithnet.Acma.ServiceModel.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj">
-      <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
-      <Name>Lithnet.Acma.ServiceModel.Sync</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
-      <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
-      <Name>Lithnet.Acma</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
-  </Target>
-  <PropertyGroup>
-    <PostBuildEvent>%25BuildToolsPath%25\sign-and-save-symbols.bat $(TargetPath) $(TargetDir) $(ProjectName)</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyTitle>Lithnet Acma</AssemblyTitle>
+		<Company>Lithnet</Company>
+		<Authors>Lithnet</Authors>
+		<Product>Lithnet ACMA</Product>
+		<Description>Lithnet ACMA rules engine core library</Description>
+		<Deterministic>true</Deterministic>
+		<Version>1.2</Version>
+		<Platforms>AnyCPU</Platforms>
+		<Prefer32Bit>false</Prefer32Bit>
+		<Description>Lithnet ACMA rules engine</Description>
+		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<Reference Include="Microsoft.MetadirectoryServicesEx">
+			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+			<Private>False</Private>
+			<SpecificVersion>False</SpecificVersion>
+		</Reference>
+		<Reference Include="System.Transactions" />
+		<Reference Include="System.Data.DataSetExtensions" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj" />
+		<ProjectReference Include="..\Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj" />
+		<ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj" />
+	</ItemGroup>
 </Project>

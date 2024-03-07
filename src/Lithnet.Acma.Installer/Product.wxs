@@ -23,11 +23,11 @@
 
     <!-- Prerequisites -->
 
-    <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED"/>
     <PropertyRef Id="NETFRAMEWORK40FULLINSTALLROOTDIR64"/>
 
-    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again">
-      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
+    <Condition Message="This application requires .NET Framework 4.8. Please install the .NET Framework then run this installer again">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED]]>
     </Condition>
 
     <Property Id="SERVICE_PASSWORD" Hidden="yes" Secure="yes"/>

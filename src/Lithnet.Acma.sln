@@ -1,35 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma", "Lithnet.Acma\Lithnet.Acma.csproj", "{21A9F51A-52C1-40D5-A80A-C474A186B6E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma", "Lithnet.Acma\Lithnet.Acma.csproj", "{21A9F51A-52C1-40D5-A80A-C474A186B6E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Presentation", "Lithnet.Acma.Presentation\Lithnet.Acma.Presentation.csproj", "{A730A740-B611-4CEB-B76D-DEE86239E0EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.Presentation", "Lithnet.Acma.Presentation\Lithnet.Acma.Presentation.csproj", "{A730A740-B611-4CEB-B76D-DEE86239E0EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.PS", "Lithnet.Acma.PS\Lithnet.Acma.PS.csproj", "{BC9C0BE7-605F-4E6E-A1E7-1946A8E441EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.PS", "Lithnet.Acma.PS\Lithnet.Acma.PS.csproj", "{BC9C0BE7-605F-4E6E-A1E7-1946A8E441EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.TestEngine", "Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj", "{04CD3287-E3E0-4B53-AD70-0452C1CC1621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.TestEngine", "Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj", "{04CD3287-E3E0-4B53-AD70-0452C1CC1621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.UnitTests", "Lithnet.Acma.UnitTests\Lithnet.Acma.UnitTests.csproj", "{66C4C284-2005-4319-9099-CCDDC3445D90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.UnitTests", "Lithnet.Acma.UnitTests\Lithnet.Acma.UnitTests.csproj", "{66C4C284-2005-4319-9099-CCDDC3445D90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Editor", "Lithnet.Acma.Editor\Lithnet.Acma.Editor.csproj", "{09BC0C6B-C3D0-42DF-B1E1-E3E3310A3E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.Editor", "Lithnet.Acma.Editor\Lithnet.Acma.Editor.csproj", "{09BC0C6B-C3D0-42DF-B1E1-E3E3310A3E86}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Lithnet.Acma.Database", "Lithnet.Acma.Database\Lithnet.Acma.Database.sqlproj", "{91FED35B-B393-4082-94AF-6084614AAEDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.TestEngine.UnitTests", "Lithnet.Acma.TestEngine.UnitTests\Lithnet.Acma.TestEngine.UnitTests.csproj", "{ED191C16-EE47-4DA6-9DA4-AF805B25CDC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.TestEngine.UnitTests", "Lithnet.Acma.TestEngine.UnitTests\Lithnet.Acma.TestEngine.UnitTests.csproj", "{ED191C16-EE47-4DA6-9DA4-AF805B25CDC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Ecma2", "Lithnet.Acma.Ecma2\Lithnet.Acma.Ecma2.csproj", "{D6D8E77F-4B97-4D99-916C-CDF81935DD79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.Ecma2", "Lithnet.Acma.Ecma2\Lithnet.Acma.Ecma2.csproj", "{D6D8E77F-4B97-4D99-916C-CDF81935DD79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Service", "Lithnet.Acma.Service\Lithnet.Acma.Service.csproj", "{CC2BC865-4E25-4234-A932-B9F25494FF2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.Service", "Lithnet.Acma.Service\Lithnet.Acma.Service.csproj", "{CC2BC865-4E25-4234-A932-B9F25494FF2A}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Lithnet.Acma.Installer", "Lithnet.Acma.Installer\Lithnet.Acma.Installer.wixproj", "{A439C972-4A5D-419E-AC40-F3912E2A6DFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.Installer.CustomActions", "Lithnet.Acma.Installer.CustomActions\Lithnet.Acma.Installer.CustomActions.csproj", "{25F78609-0F2D-4139-8DB5-6A4CDFC18EAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.Installer.CustomActions", "Lithnet.Acma.Installer.CustomActions\Lithnet.Acma.Installer.CustomActions.csproj", "{25F78609-0F2D-4139-8DB5-6A4CDFC18EAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.ServiceModel.Sync", "Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj", "{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.ServiceModel.Sync", "Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj", "{87C82689-3A39-4FDC-A3B6-5D6140EC22B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Acma.ServiceModel.Client", "Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj", "{753364AA-9E05-4389-91D2-DC86EE453DEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Acma.ServiceModel.Client", "Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj", "{753364AA-9E05-4389-91D2-DC86EE453DEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{CD386D45-6049-4649-99C5-3C6B73D50511}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\azure-pipelines.yml = ..\build\azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -303,5 +308,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF7A3225-F7EC-410A-A494-4D1414AE65D9}
 	EndGlobalSection
 EndGlobal

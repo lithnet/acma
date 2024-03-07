@@ -1,64 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{25F78609-0F2D-4139-8DB5-6A4CDFC18EAD}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lithnet.Acma.Installer</RootNamespace>
-    <AssemblyName>Lithnet.Acma.Installer.CustomActions</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <WixCATargetsPath Condition=" '$(WixCATargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.CA.targets</WixCATargetsPath>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.Deployment.WindowsInstaller">
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CustomActions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="CustomAction.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
-      <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
-      <Name>Lithnet.Acma</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(WixCATargetsPath)" />
-  <PropertyGroup>
-    <PostBuildEvent>%25BuildToolsPath%25\sign-and-save-symbols.bat $(TargetPath) $(TargetDir) $(ProjectName)</PostBuildEvent>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyTitle>Lithnet Acma installer custom actions</AssemblyTitle>
+		<Company>Lithnet</Company>
+		<Authors>Lithnet</Authors>
+		<Product>Lithnet ACMA</Product>
+		<Description>Lithnet ACMA rules engine core library</Description>
+		<Deterministic>true</Deterministic>
+		<Version>1.2</Version>
+		<Platforms>x64</Platforms>
+		<Prefer32Bit>false</Prefer32Bit>
+		<Description>Lithnet ACMA rules engine</Description>
+		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System.DirectoryServices.AccountManagement" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="CustomAction.config" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="WixToolset.Dtf.CustomAction" Version="4.0.4" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj" />
+	</ItemGroup>
 </Project>

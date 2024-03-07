@@ -1,191 +1,100 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC2BC865-4E25-4234-A932-B9F25494FF2A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lithnet.Acma.Service</RootNamespace>
-    <AssemblyName>Lithnet.Acma.Service</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-    </Reference>
-    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6478.33562, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6478.33562\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.6006.11723, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.6006.11723\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.MetadirectoryServicesEx">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PropertyChanged, Version=2.1.4.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\packages\PropertyChanged.Fody.2.1.4\lib\netstandard1.0\PropertyChanged.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AcmaService.cs" />
-    <Compile Include="AcmaSyncService.cs" />
-    <Compile Include="AcmaServiceAuthorizationManager.cs" />
-    <Compile Include="SyncServiceAuthorizationManager.cs" />
-    <Compile Include="CachedImportRequest.cs" />
-    <Compile Include="AcmaServiceInstallerClass.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="AcmaServiceInstallerClass.Designer.cs">
-      <DependentUpon>AcmaServiceInstallerClass.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WindowsServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WindowsServiceInstaller.Designer.cs">
-      <DependentUpon>WindowsServiceInstaller.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ServiceMain.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ServiceMain.Designer.cs">
-      <DependentUpon>ServiceMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj">
-      <Project>{753364aa-9e05-4389-91d2-dc86ee453deb}</Project>
-      <Name>Lithnet.Acma.ServiceModel.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj">
-      <Project>{87c82689-3a39-4fdc-a3b6-5d6140ec22b1}</Project>
-      <Name>Lithnet.Acma.ServiceModel.Sync</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj">
-      <Project>{21a9f51a-52c1-40d5-a80a-c474a186b6e0}</Project>
-      <Name>Lithnet.Acma</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="config.acmax">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="App.Debug.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AcmaServiceInstallerClass.resx">
-      <DependentUpon>AcmaServiceInstallerClass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ServiceMain.resx">
-      <DependentUpon>ServiceMain.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>%25BuildToolsPath%25\sign-and-save-symbols.bat $(TargetPath) $(TargetDir) $(ProjectName)</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
-  <Target Name="AfterCompile" Condition="Exists('App.$(Configuration).config')">
-    <!--Generate transformed app config in the intermediate directory-->
-    <TransformXml Source="App.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="App.$(Configuration).config" />
-    <!--Force build process to use the transformed configuration file from now on.-->
-    <ItemGroup>
-      <AppConfigWithTargetPath Remove="App.config" />
-      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
-        <TargetPath>$(TargetFileName).config</TargetPath>
-      </AppConfigWithTargetPath>
-    </ItemGroup>
-  </Target>
-  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
-  <Target Name="AfterPublish">
-    <PropertyGroup>
-      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
-    </PropertyGroup>
-    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
-    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
-  </Target>
-  <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
-  </Target>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyTitle>Lithnet Acma Windows service</AssemblyTitle>
+		<Company>Lithnet</Company>
+		<Authors>Lithnet</Authors>
+		<Product>Lithnet ACMA</Product>
+		<Deterministic>true</Deterministic>
+		<Version>1.2</Version>
+		<Platforms>AnyCPU</Platforms>
+		<Prefer32Bit>false</Prefer32Bit>
+		<Description>Lithnet ACMA rules engine</Description>
+		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
+		<OutputType>WinExe</OutputType>
+	</PropertyGroup>
+
+	<Target Name="AfterCompile" Condition="Exists('App.$(Configuration).config')">
+		<!--Generate transformed app config in the intermediate directory-->
+		<TransformXml Source="App.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="App.$(Configuration).config" />
+		<!--Force build process to use the transformed configuration file from now on.-->
+		<ItemGroup>
+			<AppConfigWithTargetPath Remove="App.config" />
+			<AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+				<TargetPath>$(TargetFileName).config</TargetPath>
+			</AppConfigWithTargetPath>
+		</ItemGroup>
+	</Target>
+
+	<Target Name="AfterPublish">
+		<PropertyGroup>
+			<DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+		</PropertyGroup>
+		<!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+		<Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+	</Target>
+
+	<ItemGroup>
+		<PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="1.0.6006.11723" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="Microsoft.MetadirectoryServicesEx">
+			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+			<Private>False</Private>
+			<SpecificVersion>False</SpecificVersion>
+		</Reference>
+		<Reference Include="System.configuration" />
+		<Reference Include="System.Configuration.Install" />
+		<Reference Include="System.DirectoryServices.AccountManagement" />
+		<Reference Include="System.Management" />
+		<Reference Include="System.Runtime.Caching" />
+		<Reference Include="System.ServiceModel" />
+		<Reference Include="System.ServiceModel.Web" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="System.ServiceProcess" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="AcmaServiceInstallerClass.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="AcmaServiceInstallerClass.Designer.cs">
+			<DependentUpon>AcmaServiceInstallerClass.cs</DependentUpon>
+		</Compile>
+		<Compile Update="WindowsServiceInstaller.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="WindowsServiceInstaller.Designer.cs">
+			<DependentUpon>WindowsServiceInstaller.cs</DependentUpon>
+		</Compile>
+		<Compile Update="ServiceMain.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="ServiceMain.Designer.cs">
+			<DependentUpon>ServiceMain.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Lithnet.Acma.ServiceModel.Client\Lithnet.Acma.ServiceModel.Client.csproj" />
+		<ProjectReference Include="..\Lithnet.Acma.ServiceModel.Sync\Lithnet.Acma.ServiceModel.Sync.csproj" />
+		<ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="config.acmax">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="FodyWeavers.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="AcmaServiceInstallerClass.resx">
+			<DependentUpon>AcmaServiceInstallerClass.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Update="ServiceMain.resx">
+			<DependentUpon>ServiceMain.cs</DependentUpon>
+		</EmbeddedResource>
+	</ItemGroup>
 </Project>
