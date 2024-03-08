@@ -2,10 +2,6 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
     <Binary Id="CustomActionBinary" SourceFile="$(var.Lithnet.Acma.Installer.CustomActions.TargetDir)Lithnet.Acma.Installer.CustomActions.CA.dll" />
-    <CustomAction Id="SetPSModuleCustomActionDataValue"
-               Return="check"
-               Property="ReplaceModuleVariableCustomAction"
-               Value="PSModulePath=[PSMODULEPATH]AcmaPS.psd1;InstallDir=[APPROOT]" />
 
     <CustomAction Id="SetInstallUpgradeDBCustomActionDataValue"
               Return="check"
