@@ -7,13 +7,6 @@
                Property="ReplaceModuleVariableCustomAction"
                Value="PSModulePath=[PSMODULEPATH]AcmaPS.psd1;InstallDir=[APPROOT]" />
 
-    <CustomAction Id="ReplaceModuleVariableCustomAction"
-                  BinaryKey="CustomActionBinary"
-                  DllEntry="ReplaceModuleVariable"
-                  Execute="deferred"
-                  Return="check"
-                  Impersonate ="no"/>
-
     <CustomAction Id="SetInstallUpgradeDBCustomActionDataValue"
               Return="check"
               Property="InstallUpgradeDBCustomAction"
