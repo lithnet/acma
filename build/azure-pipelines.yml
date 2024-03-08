@@ -61,7 +61,7 @@ stages:
         displayName: 'Build custom actions project'
         inputs:
           command: build
-          arguments: '-c $(buildConfiguration) -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
+          arguments: '-c $(buildConfiguration) -p:Platform=x64 -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
           projects: 'src/Lithnet.Acma.Installer.CustomActions/Lithnet.Acma.Installer.CustomActions.csproj'
 
       - task: DotNetCoreCLI@2
