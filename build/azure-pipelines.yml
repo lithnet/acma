@@ -3,7 +3,7 @@ pool:
 
 variables:
   - name: buildPlatform 
-    value: 'Any CPU'
+    value: 'x64'
   - name: buildConfiguration
     value: 'Release'
   - name: build.version.major
