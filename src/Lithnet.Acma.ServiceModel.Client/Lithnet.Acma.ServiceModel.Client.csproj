@@ -7,7 +7,7 @@
 		<Product>Lithnet ACMA</Product>
 		<Deterministic>true</Deterministic>
 		<Version>1.2</Version>
-		<Platforms>AnyCPU</Platforms>
+		<Platforms>x64</Platforms>
 		<Prefer32Bit>false</Prefer32Bit>
 		<Description>Lithnet ACMA rules engine</Description>
 		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
