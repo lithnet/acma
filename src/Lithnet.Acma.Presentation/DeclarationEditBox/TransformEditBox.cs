@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using Lithnet.MetadirectoryServices;
 using Lithnet.Common.Presentation;
+using PropertyChanged;
 
 namespace Lithnet.Acma.Presentation
 {
@@ -63,6 +64,7 @@ namespace Lithnet.Acma.Presentation
             }
         }
 
+        [SuppressPropertyChangedWarnings]
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);

@@ -15,6 +15,7 @@ using Lithnet.MetadirectoryServices;
 using System.Timers;
 using Lithnet.Common.Presentation;
 using Lithnet.Transforms;
+using PropertyChanged;
 
 namespace Lithnet.Acma.Presentation
 {
@@ -44,7 +45,6 @@ namespace Lithnet.Acma.Presentation
             typeof(IList<TokenError>),
             typeof(DeclarationEditBox));
 
-
         private static IList<ICompletionData> attributeCompletionData;
 
         private static IList<ICompletionData> variableCompletionData;
@@ -68,7 +68,6 @@ namespace Lithnet.Acma.Presentation
             }
 
             uri = new Uri("pack://application:,,,/Lithnet.Acma.Presentation;component/Resources/AcmaDL.xshd", UriKind.Absolute);
-
 
             using (Stream s = Application.GetResourceStream(uri).Stream)
             {
@@ -210,6 +209,7 @@ namespace Lithnet.Acma.Presentation
 
         private bool IsStartingTransform { get; set; }
 
+        [SuppressPropertyChangedWarnings]
         private static void OnDependencyPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             DeclarationEditBox obj = sender as DeclarationEditBox;
@@ -340,6 +340,7 @@ namespace Lithnet.Acma.Presentation
             });
         }
 
+        [SuppressPropertyChangedWarnings]
         private void OnObjectClassPropertyChanged(object oldValue, object newValue)
         {
             AcmaSchemaObjectClass oldClass = oldValue as AcmaSchemaObjectClass;
@@ -361,6 +362,7 @@ namespace Lithnet.Acma.Presentation
             this.scopedAttributeCompletionData = null;
         }
 
+        [SuppressPropertyChangedWarnings]
         private void OnDeclarationModePropertyChanged()
         {
             if (this.DeclarationMode == DeclarationEditBoxMode.NoAttributeDeclarations)

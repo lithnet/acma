@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using Lithnet.MetadirectoryServices;
 using Lithnet.Common.Presentation;
+using PropertyChanged;
 
 namespace Lithnet.Acma.Presentation
 {
@@ -61,6 +62,7 @@ namespace Lithnet.Acma.Presentation
                 {
                     endOffset = this.Document.TextLength;
                 }
+
                 int length = endOffset - offset;
 
                 if (length < 2)
@@ -105,6 +107,7 @@ namespace Lithnet.Acma.Presentation
             })
         );
 
+        [SuppressPropertyChangedWarnings]
         protected override void OnTextChanged(EventArgs e)
         {
             if (this.Text != this.baseText && !(string.IsNullOrEmpty(this.Text) && string.IsNullOrEmpty(this.baseText)))
@@ -122,10 +125,7 @@ namespace Lithnet.Acma.Presentation
         /// <param name="property">The name of the property that updates</param>
         public void RaisePropertyChanged(string property)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
         private void textView_MouseHover(object sender, MouseEventArgs e)

@@ -13,37 +13,37 @@
 		<Description>Lithnet ACMA rules engine</Description>
 		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
 	</PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="1.0.6006.11723" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="System.Management.Automation" Version="6.1.7601.17515" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.MetadirectoryServicesEx">
-      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Data.DataSetExtensions" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="PSModuleInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AcmaPS.psd1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="FodyWeavers.xml" />
-    <Content Include="RegisterResolver.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj" />
-    <ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="2.0.5" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="System.Management.Automation" Version="6.1.7601.17515" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="Microsoft.MetadirectoryServicesEx">
+			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+			<SpecificVersion>False</SpecificVersion>
+		</Reference>
+		<Reference Include="System.Configuration.Install" />
+		<Reference Include="System.Data.DataSetExtensions" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="PSModuleInstaller.cs">
+			<SubType>Component</SubType>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="AcmaPS.psd1">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<None Include="FodyWeavers.xml" />
+		<Content Include="RegisterResolver.ps1">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Lithnet.Acma.TestEngine\Lithnet.Acma.TestEngine.csproj" />
+		<ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj" />
+	</ItemGroup>
 </Project>

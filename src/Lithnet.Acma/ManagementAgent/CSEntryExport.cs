@@ -26,7 +26,6 @@ namespace Lithnet.Acma
         /// Exports a single entry
         /// </summary>
         /// <param name="csentry">The entry to export</param>
-        /// <param name="dbc">The DBDataContext for the current thread</param>
         /// <param name="referenceRetryRequired">A value indicating whether one or more referenced objects were not found</param>
         /// <returns>A list of anchor attributes if the object was added to the database, otherwise returns an empty list</returns>
         public static IList<AttributeChange> PutExportEntry(CSEntryChange csentry, out bool referenceRetryRequired)
@@ -90,7 +89,6 @@ namespace Lithnet.Acma
         /// Adds a new object to the database
         /// </summary>
         /// <param name="csentry">The CSEntryChange containing the new object and its attributes</param>
-        /// <param name="dc">The DBDataContext in use on this thread</param>
         /// <param name="referenceRetryRequired">A value indicating whether a reference update failed due to a missing object and needs to be retried after all other CSEntryChanges have been processed</param>
         /// <returns>A list of anchor attributes for the new object</returns>
         private static IList<AttributeChange> PerformCSEntryExportAdd(CSEntryChange csentry, out bool referenceRetryRequired)
@@ -151,7 +149,6 @@ namespace Lithnet.Acma
         /// Deletes an object from the database
         /// </summary>
         /// <param name="csentryChange">The CSEntryChange containing the object to delete</param>
-        /// <param name="dc">The DBDataContext in use on this thread</param>
         private static void PerformCSEntryExportDelete(CSEntryChange csentryChange)
         {
             MAObjectHologram maObject = GetObjectFromDnOrAnchor(csentryChange);
@@ -163,7 +160,6 @@ namespace Lithnet.Acma
         /// Updates an object in the database
         /// </summary>
         /// <param name="csentryChange">The CSEntryChange containing the object to update and its attributes</param>
-        /// <param name="dc">The DBDataContext in use on this thread</param>
         /// <param name="referenceRetryRequired">A value indicating whether a reference update failed due to a missing object and needs to be retried after all other CSEntryChanges have been processed</param>
         private static void PerformCSEntryExportUpdate(CSEntryChange csentryChange, out bool referenceRetryRequired)
         {
@@ -178,7 +174,6 @@ namespace Lithnet.Acma
         /// Replaces an object in the database
         /// </summary>
         /// <param name="csentryChange">The CSEntryChange containing the object to update and its attributes</param>
-        /// <param name="dc">The DBDataContext in use on this thread</param>
         /// <param name="referenceRetryRequired">A value indicating whether a reference update failed due to a missing object and needs to be retried after all other CSEntryChanges have been processed</param>
         private static void PerformCSEntryExportReplace(CSEntryChange csentryChange, out bool referenceRetryRequired)
         {
@@ -284,7 +279,6 @@ namespace Lithnet.Acma
         /// Returns any deleted objects in the database that match the resurrection criteria
         /// </summary>
         /// <param name="csentryChange">The CSEntryChange object representing the object being added to the database</param>
-        /// <param name="dc">The DBDataContext in use on this thread</param>
         /// <returns>An MAObject matching the resurrection criteria, or null if no matching object was found</returns>
         private static MAObjectHologram GetResurrectionObject(CSEntryChange csentryChange)
         {

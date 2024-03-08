@@ -18,13 +18,13 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Lithnet.Common.ObjectModel" Version="1.0.6258.25160" />
-		<PackageReference Include="Lithnet.Logging" Version="1.0.5774.20685" />
-		<PackageReference Include="Lithnet.MetadirectoryServices" Version="1.0.7578.14947" />
+		<PackageReference Include="Lithnet.Logging" Version="1.0.6436.34492" />
+		<PackageReference Include="Lithnet.MetadirectoryServices" Version="2.0.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="Microsoft.MetadirectoryServicesEx">
 			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<Private>False</Private>
+			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="System.ServiceModel" />
 		<Reference Include="System.Transactions" />

@@ -7,9 +7,9 @@ variables:
   - name: buildConfiguration
     value: 'Release'
   - name: build.version.major
-    value: 1
+    value: 2
   - name: build.version.minor
-    value: 6
+    value: 0
   - name: build.version.revision
     value: $[counter(format('{0}.{1}', variables['build.version.major'], variables['build.version.minor']), 0)]
   - name: build.version.suffix
@@ -74,7 +74,8 @@ stages:
 
       - task: PublishSymbols@2
         inputs:
-          SearchPattern: '**/bin/**/*.pdb'
+          SearchPattern: '**/*.pdb'
+          IndexSources: false
           SymbolServerType: 'TeamServices'
 
       - task: DotNetCoreCLI@2

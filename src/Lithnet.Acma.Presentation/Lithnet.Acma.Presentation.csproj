@@ -20,8 +20,8 @@
 		<PackageReference Include="Lithnet.Common.ObjectModel" Version="1.0.6258.25160" />
 		<PackageReference Include="Lithnet.Common.Presentation" Version="1.0.6476.24596" />
 		<PackageReference Include="Lithnet.Logging" Version="1.0.6436.34492" />
-		<PackageReference Include="Lithnet.MetadirectoryServices" Version="1.0.7578.14947" />
-		<PackageReference Include="Lithnet.Transforms.Presentation" Version="1.6.5" />
+		<PackageReference Include="Lithnet.MetadirectoryServices" Version="2.0.5" />
+		<PackageReference Include="Lithnet.Transforms.Presentation" Version="2.0.5" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -81,6 +81,7 @@
 	<ItemGroup>
 		<Reference Include="Microsoft.MetadirectoryServicesEx">
 			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+			<SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="System.Data.Linq" />
 	</ItemGroup>

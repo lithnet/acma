@@ -579,7 +579,6 @@ namespace Lithnet.Acma.UnitTests
             }
         }
 
-
         [TestMethod()]
         public void DeleteMVAttributeValueComitted()
         {
@@ -635,7 +634,6 @@ namespace Lithnet.Acma.UnitTests
                 ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
-
 
         [TestMethod()]
         public void DeleteSVAttributeValueUncomitted()
@@ -752,7 +750,6 @@ namespace Lithnet.Acma.UnitTests
             }
         }
 
-
         [TestMethod()]
         public void DeleteMVAttributeValueNotExistentComitted()
         {
@@ -808,7 +805,6 @@ namespace Lithnet.Acma.UnitTests
                 ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
-
 
         [TestMethod()]
         public void GetSVAttributeInherited()
@@ -881,8 +877,6 @@ namespace Lithnet.Acma.UnitTests
 
             }
         }
-
-
 
         [TestMethod()]
         public void CommitSVAttributeString()
