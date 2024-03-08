@@ -15,6 +15,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="System.DirectoryServices.AccountManagement" />
+		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="CustomAction.config" />

@@ -3,6 +3,13 @@
   <Fragment>
     <Binary Id="CustomActionBinary" SourceFile="$(var.Lithnet.Acma.Installer.CustomActions.TargetDir)Lithnet.Acma.Installer.CustomActions.CA.dll" />
 
+    <CustomAction Id="ReplaceModuleVariableCustomAction"
+                  BinaryKey="CustomActionBinary"
+                  DllEntry="ReplaceModuleVariable"
+                  Execute="deferred"
+                  Return="check"
+                  Impersonate ="no"/>
+
     <CustomAction Id="SetInstallUpgradeDBCustomActionDataValue"
               Return="check"
               Property="InstallUpgradeDBCustomAction"
