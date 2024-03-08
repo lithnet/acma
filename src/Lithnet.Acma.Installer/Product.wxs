@@ -185,6 +185,8 @@
     </UI>
 
     <InstallExecuteSequence>
+      <Custom Action="SetPSModuleCustomActionDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureAcmaPS=3) AND NOT(!FeatureAcmaPS=3)]]></Custom>
+      <Custom Action="ReplaceModuleVariableCustomAction" After="SetPSModuleCustomActionDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureAcmaPS=3) AND NOT(!FeatureAcmaPS=3)]]></Custom>
       <Custom Action="SetInstallUpgradeDBCustomActionDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3) AND CREATEDB]]></Custom>
       <Custom Action="InstallUpgradeDBCustomAction" After="SetInstallUpgradeDBCustomActionDataValue"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3) AND CREATEDB]]></Custom>
       <Custom Action="SetCreateAcmaGroupsDataValue" After="InstallFiles"><![CDATA[NOT Installed AND NOT REMOVE AND (&FeatureManagementAgent=3) AND NOT(!FeatureManagementAgent=3)]]></Custom>
