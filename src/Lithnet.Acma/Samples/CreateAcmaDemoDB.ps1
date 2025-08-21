@@ -1,4 +1,7 @@
-﻿Add-PSSnapin acmacmdlets
+﻿# Import ACMA PowerShell module
+Import-Module AcmaPS
+
+# Create and connect to ACMA database
 New-AcmaDatabase -ServerName localhost -DatabaseName AcmaDemo
 Connect-AcmaEngine -ServerName localhost -DatabaseName AcmaDemo
 

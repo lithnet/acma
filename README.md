@@ -1,11 +1,11 @@
 ![](https://github.com/lithnet/acma/wiki/images/logo-ex-small.png)
 # ACMA
-Lithnet ACMA is a codeless rules engine for Microsoft Forefront Identity Manager 2010 R2. ACMA provides a means for performing powerful rules-based construction of objects and attributes without the need to write custom code.
+Lithnet ACMA is a codeless rules engine for Microsoft Identity Manager (MIM). ACMA provides a means for performing powerful rules-based construction of objects and attributes without the need to write custom code.
 
-ACMA is implemented as an extensible management agent (ECMA2.2), built upon an SQL Server 2012 database, and comes with a powerful UI-based rules editor and PowerShell extensions.
+ACMA is implemented as an extensible management agent (ECMA2.2), built upon a SQL Server database, and comes with a powerful UI-based rules editor and PowerShell extensions.
 
 ## System Requirements
-ACMA requires FIM 2010 R2 at least version 4.1.3441, SQL Server 2012, and PowerShell 3.0.
+ACMA requires Microsoft Identity Manager 2016 or later, SQL Server 2016 or later, and PowerShell 3.0 or later.
 
 ## Getting started
 Download both the management agent and ACMA editor from the [releases page](https://github.com/lithnet/acma/releases)
