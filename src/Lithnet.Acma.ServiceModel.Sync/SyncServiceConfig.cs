@@ -24,19 +24,6 @@ namespace Lithnet.Acma.ServiceModel
             }
         }
 
-        public static ServiceDebugBehavior ServiceDebugBehavior
-        {
-            get
-            {
-                return new ServiceDebugBehavior
-                {
-                    IncludeExceptionDetailInFaults = true,
-                    HttpHelpPageEnabled = false,
-                    HttpsHelpPageEnabled = false
-                };
-            }
-        }
-
         public static Binding NetNamedPipeBinding
         {
             get

@@ -169,11 +169,6 @@ namespace Lithnet.Acma.Service
                 this.syncServiceHost.Description.Behaviors.Add(SyncServiceConfig.ServiceMetadataDisabledBehavior);
             }
 
-            if (this.syncServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
-            {
-                this.syncServiceHost.Description.Behaviors.Add(SyncServiceConfig.ServiceDebugBehavior);
-            }
-
             this.syncServiceHost.Authorization.ServiceAuthorizationManager = new SyncServiceAuthorizationManager();
             this.syncServiceHost.Open();
         }
@@ -215,19 +210,6 @@ namespace Lithnet.Acma.Service
             }
         }
 
-        public static ServiceDebugBehavior ServiceDebugBehavior
-        {
-            get
-            {
-                return new ServiceDebugBehavior
-                {
-                    IncludeExceptionDetailInFaults = true,
-                    HttpHelpPageEnabled = false,
-                    HttpsHelpPageEnabled = false
-                };
-            }
-        }
-
         private void StartAcmaServiceHost()
         {
             this.acmaServiceHost = new ServiceHost(typeof(AcmaService), new Uri(AcmaResourceServiceConfig.NetTcpUri));
@@ -237,10 +219,7 @@ namespace Lithnet.Acma.Service
                 this.acmaServiceHost.Description.Behaviors.Add(ServiceMetadataDisabledBehavior);
             }
 
-            if (this.acmaServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
-            {
-                this.acmaServiceHost.Description.Behaviors.Add(ServiceDebugBehavior);
-            }
+            this.acmaServiceHost.Description.Behaviors.Add(new AcmaServiceErrorBehavior());
 
             this.acmaServiceHost.Authorization.ServiceAuthorizationManager = new AcmaServiceAuthorizationManager();
             this.acmaServiceHost.Open();
