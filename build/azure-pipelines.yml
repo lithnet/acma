@@ -1,202 +1,412 @@
+# Build, test and release pipeline for Lithnet ACMA.
+#
+# Code signing and NuGet publishing use the shared release-tools templates. Signing uses the
+# Lithnet code-signing Key Vault through the ProductionServices service connection, so there are
+# no secrets in this file. The first run of this pipeline asks for access to ProductionServices,
+# the GitHub and Public nuget feed environments and the MimManagementAgentsNuget connection;
+# select Permit for each.
+#
+# The installer is WiX v3. release-tools has no WiX template, so the MSI is built with MSBuild
+# and signed with codesign.yaml.
+#
+# The unit tests run on the hosted agent against SQL Server Express LocalDB. The test projects
+# get Microsoft.MetadirectoryServicesEx.dll from the Lithnet.MIM.MetadirectoryServicesEx package,
+# so the agent needs no MIM installation.
+#
+# Releases are published to GitHub only. The first release stage creates a pre-release; the
+# second publishes the client package to nuget.org and then promotes the same release to a full
+# release without rebuilding it. Both stages need environment approval and run only for master.
+#
+# Runs are started manually. CI and pull request triggers are both off, so nothing builds from a
+# public pull request.
+
+name: $(build.version.major).$(build.version.minor).$(build.version.revision)$(build.version.suffix)
+
+trigger: none
+pr: none
+
 pool:
   vmImage: 'windows-latest'
 
+resources:
+  repositories:
+  - repository: release_tools
+    type: git
+    name: release-tools/release-tools
+    ref: master
+
 variables:
-  - name: buildPlatform 
-    value: 'x64'
   - name: buildConfiguration
-    value: 'Release'
+    value: Release
+  - name: buildPlatform
+    value: x64
   - name: build.version.major
     value: 2
   - name: build.version.minor
-    value: 0
+    value: 1
   - name: build.version.revision
     value: $[counter(format('{0}.{1}', variables['build.version.major'], variables['build.version.minor']), 0)]
   - name: build.version.suffix
     value:
   - name: build.version
     value: $(build.version.major).$(build.version.minor).$(build.version.revision)$(build.version.suffix)
-  - name: build.versionShort
-    value: $(build.version.major).$(build.version.minor).$(build.version.revision)
-  - name: build.date
-    value: $[format('{0:yyyy}-{0:MM}-{0:dd}T{0:HH}:{0:mm}:{0:ss}', pipeline.startTime)]
-  - group: Azure KeyVault Code Signing
   - name: product.description
     value: Lithnet ACMA
-
-name: $(build.version.major).$(build.version.minor).$(build.version.revision)$(build.version.suffix)
-trigger: none
+  # Azure service connection with access to the Lithnet code-signing Key Vault.
+  - name: codeSigningSubscription
+    value: ProductionServices
+  # release-tools signing environment (dev, preview or prod). Selects the signing vault settings.
+  - name: signEnvironment
+    value: prod
+  - name: srcDir
+    value: '$(Build.SourcesDirectory)/src'
+  # Output folder of the net48 projects under the Release|x64 solution configuration. The WiX
+  # sources take the installed files from these folders ($(var.<Project>.TargetDir)).
+  - name: binSuffix
+    value: 'bin/x64/$(buildConfiguration)/net48'
+  - name: clientBin
+    value: '$(srcDir)/Lithnet.Acma.ServiceModel.Client/bin/$(buildConfiguration)/netstandard2.0'
+  - name: unitTestBin
+    value: '$(srcDir)/Lithnet.Acma.UnitTests/$(binSuffix)'
+  - name: unitTestServer
+    value: '(localdb)\MSSQLLocalDB'
+  - name: unitTestDatabase
+    value: 'AcmaUnitTestDB2'
+  - name: nupkgDir
+    value: '$(Build.ArtifactStagingDirectory)/nuget'
+  - name: installerDir
+    value: '$(Build.ArtifactStagingDirectory)/installer'
+  - name: testLogDir
+    value: '$(Build.ArtifactStagingDirectory)/testlogs'
 
 stages:
-- stage: build_provider
-  displayName: Build project
-  dependsOn: []
+- stage: build
+  displayName: Build, test, sign and package
   jobs:
-    - job: "build_provider_job"
-      displayName: Build project
-      steps:
-      - task: NuGetAuthenticate@1
-      - task: DotNetCoreCLI@2
-        displayName: 'Build Editor project'
-        inputs:
-          command: build
-          arguments: '-c $(buildConfiguration) -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
-          projects: 'src/Lithnet.Acma.Editor/Lithnet.Acma.Editor.csproj'
+  - job: build_job
+    displayName: Build, test, sign, package
+    timeoutInMinutes: 90
+    steps:
+    - template: templates/checkout.yaml@release_tools
 
-      - task: DotNetCoreCLI@2
-        displayName: 'Build ECMA project'
-        inputs:
-          command: build
-          arguments: '-c $(buildConfiguration) -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
-          projects: 'src/Lithnet.Acma.Ecma2/Lithnet.Acma.Ecma2.csproj'
+    # Restores the Lithnet.* packages, including Lithnet.MIM.MetadirectoryServicesEx, from the
+    # LithnetPrivatePackages feed declared in src/nuget.config.
+    - task: NuGetAuthenticate@1
+      displayName: Authenticate with NuGet
 
-      - task: DotNetCoreCLI@2
-        displayName: 'Build service'
-        inputs:
-          command: build
-          arguments: '-c $(buildConfiguration) -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
-          projects: 'src/Lithnet.Acma.Service/Lithnet.Acma.Service.csproj'
+    # The Release|x64 solution configuration builds the net48 projects as x64 and the
+    # netstandard2.0 client as AnyCPU. The WiX project isn't part of the solution build.
+    - task: VSBuild@1
+      displayName: Build solution
+      inputs:
+        solution: 'src/Lithnet.Acma.sln'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+        msbuildArgs: '/restore /p:Version=$(build.version) /p:GeneratePackageOnBuild=false'
+        maximumCpuCount: true
 
-      - task: DotNetCoreCLI@2
-        displayName: 'Build custom actions project'
-        inputs:
-          command: build
-          arguments: '-c $(buildConfiguration) -p:Platform=x64 -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
-          projects: 'src/Lithnet.Acma.Installer.CustomActions/Lithnet.Acma.Installer.CustomActions.csproj'
+    # ---- Unit tests against SQL LocalDB ---------------------------------------------------------
+    - task: PowerShell@2
+      displayName: Start SQL LocalDB
+      inputs:
+        targetType: inline
+        pwsh: true
+        script: |
+          $sqlLocalDb = Get-Command SqlLocalDB.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source
 
-      - task: DotNetCoreCLI@2
-        displayName: 'Build PowerShell project'
-        inputs:
-          command: build
-          arguments: '-c $(buildConfiguration) -p:Version=$(build.version) -p:GeneratePackageOnBuild=false --output "$(build.ArtifactStagingDirectory)"'
-          projects: 'src/Lithnet.Acma.PS/Lithnet.Acma.PS.csproj'
+          if (-not $sqlLocalDb)
+          {
+            $sqlLocalDb = Get-ChildItem "$env:ProgramFiles\Microsoft SQL Server\*\Tools\Binn\SqlLocalDB.exe" -ErrorAction SilentlyContinue |
+              Sort-Object FullName -Descending |
+              Select-Object -First 1 -ExpandProperty FullName
+          }
 
+          if (-not $sqlLocalDb)
+          {
+            throw "SqlLocalDB.exe was not found on this agent. The unit tests need SQL Server Express LocalDB."
+          }
 
-      - task: PublishSymbols@2
-        inputs:
-          SearchPattern: '**/*.pdb'
-          IndexSources: false
-          SymbolServerType: 'TeamServices'
+          & $sqlLocalDb versions
+          & $sqlLocalDb start MSSQLLocalDB
+          if ($LASTEXITCODE -ne 0) { throw "SqlLocalDB start MSSQLLocalDB failed with exit code $LASTEXITCODE." }
+          & $sqlLocalDb info MSSQLLocalDB
 
-      - task: DotNetCoreCLI@2
-        displayName: Install AzureSignTool
-        inputs:
-            command: 'custom'
-            custom: 'tool'
-            arguments: 'update --global azuresigntool'
+    # The script loads the net48 ACMA assemblies, so it runs in Windows PowerShell 5.1.
+    - task: PowerShell@2
+      displayName: Create unit test database
+      inputs:
+        targetType: filePath
+        filePath: '$(srcDir)/Lithnet.Acma.UnitTests/TestDatabase/New-AcmaUnitTestDatabase.ps1'
+        arguments: "-ServerName '$(unitTestServer)' -DatabaseName '$(unitTestDatabase)' -AssemblyPath '$(unitTestBin)' -Force"
+        pwsh: false
 
-      - task: PowerShell@2
-        displayName: 'Sign files with AzureSignTool'
-        inputs:
-          targetType: 'inline'
-          script: |
-            $files = @()
-            $files += (Get-ChildItem -Recurse -Path "$(Build.ArtifactStagingDirectory)\Lithnet*.dll").FullName
-            $files += (Get-ChildItem -Recurse -Path "$(Build.ArtifactStagingDirectory)\Lithnet*.exe").FullName
+    - task: DotNetCoreCLI@2
+      displayName: Run unit tests
+      inputs:
+        command: test
+        projects: |
+          src/Lithnet.Acma.UnitTests/Lithnet.Acma.UnitTests.csproj
+          src/Lithnet.Acma.TestEngine.UnitTests/Lithnet.Acma.TestEngine.UnitTests.csproj
+        arguments: '-c $(buildConfiguration) -p:Platform=$(buildPlatform) --no-build --no-restore'
+        publishTestResults: true
+        testRunTitle: ACMA unit tests
+      env:
+        ACMA_UNITTEST_SQLSERVER: '$(unitTestServer)'
+        ACMA_UNITTEST_DATABASE: '$(unitTestDatabase)'
+        ACMA_UNITTEST_LOGPATH: '$(testLogDir)/acma-unit-test.log'
 
-            write-host "Signing $($files.Length) files:"
-            write-output $files
+    - task: PublishPipelineArtifact@1
+      displayName: Publish unit test log
+      condition: succeededOrFailed()
+      inputs:
+        targetPath: '$(testLogDir)'
+        artifact: testlogs
 
-            $cmdargs = @(
-              "sign",
-              "-d", "$(product.description)",
-              "-kvu", "$(akv.url)",
-              "-kvi", "$(akv.applicationID)",
-              "-kvs", "$(akv.secret)",
-              "-kvt", "$(akv.tenantId)",
-              "-kvc", "$(akv.certificateName)",
-              "-tr", "http://timestamp.digicert.com",
-              "-td", "sha256"
-            )
+    # ---- Symbols, signing, installer and package --------------------------------------------------
+    - task: PublishSymbols@2
+      displayName: Publish symbols
+      inputs:
+        SearchPattern: 'src/**/bin/**/Lithnet.Acma*.pdb'
+        IndexSources: false
+        SymbolServerType: 'TeamServices'
 
-            $cmdargs += $files
-        
-            & AzureSignTool $cmdargs
-          failOnStderr: true
-          showWarnings: true
+    # Sign the Lithnet binaries and the PowerShell module files in the folders the installer takes
+    # them from, before the MSI is built. Files that already carry a signature are left unchanged.
+    # Third-party libraries aren't signed.
+    - template: templates/codesign.yaml@release_tools
+      parameters:
+        path:
+        - '$(srcDir)/Lithnet.Acma.Service/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.Service/$(binSuffix)/Lithnet*.exe'
+        - '$(srcDir)/Lithnet.Acma.Ecma2/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.Editor/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.Editor/$(binSuffix)/Lithnet*.exe'
+        - '$(srcDir)/Lithnet.Acma.PS/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.PS/$(binSuffix)/*.psd1'
+        - '$(srcDir)/Lithnet.Acma.PS/$(binSuffix)/*.ps1'
+        - '$(srcDir)/Lithnet.Acma.Installer.CustomActions/$(binSuffix)/Lithnet.Acma.Installer.CustomActions*.dll'
+        - '$(clientBin)/Lithnet.Acma.ServiceModel.Client.dll'
+        environment: $(signEnvironment)
+        azureSubscription: $(codeSigningSubscription)
+        description: $(product.description)
+        skipSigned: true
 
-      - task: MSBuild@1
-        displayName: 'Build installer'
-        inputs:
-          solution: '**/*.wixproj'
-          msbuildArchitecture: 'x64'
-          platform: 'x64'
-          configuration: '$(buildConfiguration)'
-          msbuildArguments: '/p:Version=$(build.version) /p:OutputPath=$(Build.ArtifactStagingDirectory) /p:BuildProjectReferences=false'
+    # BuildProjectReferences=false stops MSBuild rebuilding the referenced projects, which would
+    # replace the signed files with unsigned ones.
+    - task: MSBuild@1
+      displayName: Build installer
+      inputs:
+        solution: 'src/Lithnet.Acma.Installer/Lithnet.Acma.Installer.wixproj'
+        msbuildArchitecture: 'x64'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+        msbuildArguments: '/p:BuildProjectReferences=false'
 
-      - task: PowerShell@2
-        displayName: 'Sign MSI with AzureSignTool'
-        inputs:
-          targetType: 'inline'
-          script: |
-            $files = @()
-            $files += (Get-ChildItem -Recurse -Path "$(Build.ArtifactStagingDirectory)\*.msi").FullName
+    - task: CopyFiles@2
+      displayName: Stage installer
+      inputs:
+        sourceFolder: '$(srcDir)/Lithnet.Acma.Installer/bin/$(buildConfiguration)'
+        contents: 'Lithnet.Acma.msi'
+        targetFolder: '$(installerDir)'
 
-            write-host "Signing $($files.Length) files:"
-            write-output $files
+    - template: templates/codesign.yaml@release_tools
+      parameters:
+        path:
+        - '$(installerDir)/Lithnet.Acma.msi'
+        environment: $(signEnvironment)
+        azureSubscription: $(codeSigningSubscription)
+        description: $(product.description)
 
-            $cmdargs = @(
-              "sign",
-              "-d",   "$(product.description)",
-              "-kvu", "$(akv.url)",
-              "-kvi", "$(akv.applicationID)",
-              "-kvs", "$(akv.secret)",
-              "-kvt", "$(akv.tenantId)",
-              "-kvc", "$(akv.certificateName)",
-              "-tr", "http://timestamp.digicert.com",
-              "-td", "sha256"
-            )
+    - template: templates/verify-authenticode-signatures.yaml@release_tools
+      parameters:
+        path:
+        - '$(installerDir)/Lithnet.Acma.msi'
+        - '$(srcDir)/Lithnet.Acma.Service/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.Service/$(binSuffix)/Lithnet*.exe'
+        - '$(srcDir)/Lithnet.Acma.Ecma2/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.Editor/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.Editor/$(binSuffix)/Lithnet*.exe'
+        - '$(srcDir)/Lithnet.Acma.PS/$(binSuffix)/Lithnet*.dll'
+        - '$(srcDir)/Lithnet.Acma.PS/$(binSuffix)/*.psd1'
+        - '$(srcDir)/Lithnet.Acma.PS/$(binSuffix)/*.ps1'
+        - '$(srcDir)/Lithnet.Acma.Installer.CustomActions/$(binSuffix)/Lithnet.Acma.Installer.CustomActions*.dll'
+        - '$(clientBin)/Lithnet.Acma.ServiceModel.Client.dll'
 
-            $cmdargs += $files
-        
-            & AzureSignTool $cmdargs
-          failOnStderr: true
-          showWarnings: true
+    # Packs the client from the signed build output.
+    - task: DotNetCoreCLI@2
+      displayName: Pack Lithnet.Acma.ServiceModel.Client
+      inputs:
+        command: pack
+        packagesToPack: 'src/Lithnet.Acma.ServiceModel.Client/Lithnet.Acma.ServiceModel.Client.csproj'
+        packDirectory: '$(nupkgDir)'
+        nobuild: true
+        includesymbols: true
+        versioningScheme: byEnvVar
+        versionEnvVar: 'build.version'
 
-      - task: PublishPipelineArtifact@1
-        displayName: Publish artifact
-        inputs:
-          targetPath: '$(Build.ArtifactStagingDirectory)/Lithnet.Acma.msi'
-          publishLocation: 'pipeline'
-          artifact: installer
+    - template: templates/codesign.yaml@release_tools
+      parameters:
+        path:
+        - '$(nupkgDir)/*.nupkg'
+        - '$(nupkgDir)/*.snupkg'
+        environment: $(signEnvironment)
+        azureSubscription: $(codeSigningSubscription)
+        description: $(product.description)
 
-- stage: publish_gthub
-  displayName: Publish to github
-  dependsOn: "build_provider"
+    - task: PublishPipelineArtifact@1
+      displayName: Publish installer artifact
+      inputs:
+        targetPath: '$(installerDir)'
+        artifact: installer
+
+    - task: PublishPipelineArtifact@1
+      displayName: Publish NuGet artifact
+      inputs:
+        targetPath: '$(nupkgDir)'
+        artifact: nuget
+
+# The internal feed only receives packages that passed the unit tests in the build stage.
+- stage: publish_internal
+  displayName: Publish to internal feed
+  dependsOn: build
   jobs:
-      - deployment: 'PublishPackages'
-        environment: 'GitHub'
-        displayName: Publish packages to public github
-        pool:
-          vmImage: windows-2022 
-        strategy:
-          runOnce:
-            deploy:            
-              steps:
-              - publish: 
-              - checkout: none
-              - download: current
-                artifact: installer
-              - task: GitHubRelease@1
-                inputs:
-                  gitHubConnection: github.com_lithnet # string. Required. GitHub connection (OAuth or PAT). 
-                  repositoryName: '$(Build.Repository.Name)' # string. Required. Repository. Default: $(Build.Repository.Name).
-                  action: 'create' # 'create' | 'edit' | 'delete'. Required. Action. Default: create.
-                  #target: '$(Build.SourceVersion)' # string. Required when action = create || action = edit. Target. Default: $(Build.SourceVersion).
-                  tagSource: 'userSpecifiedTag' # 'gitTag' | 'userSpecifiedTag'. Required when action = create. Tag source. Default: gitTag.
-                  #tagPattern: # string. Optional. Use when tagSource = gitTag. Tag Pattern. 
-                  tag:  v$(build.version) # string. Required when action = edit || action = delete || tagSource = userSpecifiedTag. Tag. 
-                  title: v$(build.version) # string. Optional. Use when action = create || action = edit. Release title. 
-                  #releaseNotesSource: 'filePath' # 'filePath' | 'inline'. Optional. Use when action = create || action = edit. Release notes source. Default: filePath.
-                  #releaseNotesFilePath: # string. Optional. Use when releaseNotesSource = filePath. Release notes file path. 
-                  #releaseNotesInline: # string. Optional. Use when releaseNotesSource = inline. Release notes. 
-                  assets: '$(Pipeline.Workspace)/installer/*.msi' # string. Optional. Use when action = create || action = edit. Assets. Default: $(Build.ArtifactStagingDirectory)/*.
-                  #assetUploadMode: 'delete' # 'delete' | 'replace'. Optional. Use when action = edit. Asset upload mode. Default: delete.
-                  #isDraft: false # boolean. Optional. Use when action = create || action = edit. Draft release. Default: false.
-                  isPreRelease: true # boolean. Optional. Use when action = create || action = edit. Pre-release. Default: false.
-                  addChangeLog: true # boolean. Optional. Use when action = create || action = edit. Add changelog. Default: true.
-                # Changelog configuration
-                  changeLogCompareToRelease: 'lastFullRelease' # 'lastFullRelease' | 'lastNonDraftRelease' | 'lastNonDraftReleaseByTag'. Required when addChangeLog = true. Compare to. Default: lastFullRelease.
-                  #changeLogCompareToReleaseTag: # string. Required when changeLogCompareToRelease = lastNonDraftReleaseByTag && addChangeLog = true. Release Tag. 
-                  changeLogType: 'commitBased' # 'commitBased' | 'issueBased'. Required when addChangeLog = true. Changelog type. Default: commitBased.
-                  #changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugs", "state" : "closed" }]' # string. Optional. Use when changeLogType = issueBased && addChangeLog = true. Categories. Default: [{ "label" : "bug", "displayName" : "Bugs", "state" : "closed" }].
+  - job: publish_internal_job
+    displayName: Publish client package to internal feed
+    steps:
+    - checkout: none
+    - download: current
+      artifact: nuget
+    - template: templates/publish-nuget.yaml@release_tools
+      parameters:
+        nugetPackagePath: '$(Pipeline.Workspace)/nuget/*.nupkg'
+        symbolPackagePath: '$(Pipeline.Workspace)/nuget/*.snupkg'
+        publishInternal: true
+        publishExternal: false
+
+- stage: publish_github_prerelease
+  displayName: Publish GitHub pre-release
+  dependsOn: publish_internal
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: publish_github_prerelease_job
+    displayName: Publish MSI and client package as a GitHub pre-release
+    environment: GitHub
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: current
+            artifact: installer
+          - download: current
+            artifact: nuget
+          - task: GitHubRelease@1
+            displayName: Create GitHub pre-release v$(build.version)
+            inputs:
+              gitHubConnection: github.com_lithnet
+              repositoryName: '$(Build.Repository.Name)'
+              action: create
+              target: '$(Build.SourceVersion)'
+              tagSource: userSpecifiedTag
+              tag: v$(build.version)
+              title: v$(build.version)
+              assets: |
+                $(Pipeline.Workspace)/installer/*.msi
+                $(Pipeline.Workspace)/nuget/*.nupkg
+              isPreRelease: true
+              addChangeLog: true
+              changeLogCompareToRelease: lastFullRelease
+              changeLogType: commitBased
+
+# nuget.org is published first, so a failed push never leaves a full release whose package is
+# missing from nuget.org.
+- stage: promote_release
+  displayName: Publish to nuget.org and promote GitHub release
+  dependsOn: publish_github_prerelease
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: publish_nuget_org
+    displayName: Publish client package to nuget.org
+    environment: 'Public nuget feed'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: current
+            artifact: nuget
+          - template: templates/publish-nuget.yaml@release_tools
+            parameters:
+              nugetPackagePath: '$(Pipeline.Workspace)/nuget/*.nupkg'
+              publishInternal: false
+              publishExternal: true
+              externalFeedCredentials: 'MimManagementAgentsNuget'
+
+  - deployment: promote_github_release
+    displayName: Promote pre-release to full release
+    dependsOn: publish_nuget_org
+    environment: GitHub
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: none
+          - task: PowerShell@2
+            displayName: Verify GitHub pre-release v$(build.version)
+            inputs:
+              targetType: inline
+              pwsh: true
+              script: |
+                $releaseUri = "https://api.github.com/repos/$(Build.Repository.Name)/releases/tags/v$(build.version)"
+                $headers = @{
+                  Accept = "application/vnd.github+json"
+                  "User-Agent" = "Lithnet-Release-Pipeline"
+                  "X-GitHub-Api-Version" = "2022-11-28"
+                }
+
+                try
+                {
+                  $release = Invoke-RestMethod -Uri $releaseUri -Headers $headers -Method Get
+                }
+                catch
+                {
+                  throw "GitHub pre-release v$(build.version) could not be retrieved. Promotion has stopped. $($_.Exception.Message)"
+                }
+
+                if ($release.draft)
+                {
+                  throw "GitHub release v$(build.version) is a draft. Promotion has stopped."
+                }
+
+                if (-not $release.prerelease)
+                {
+                  throw "GitHub release v$(build.version) is not a pre-release. Promotion has stopped."
+                }
+
+                if (-not [string]::Equals([string]$release.target_commitish, "$(Build.SourceVersion)", [System.StringComparison]::OrdinalIgnoreCase))
+                {
+                  throw "GitHub pre-release v$(build.version) targets commit '$($release.target_commitish)', not '$(Build.SourceVersion)'. Promotion has stopped."
+                }
+
+                $msiAssets = @($release.assets | Where-Object { $_.name -like "*.msi" })
+                if ($msiAssets.Count -eq 0)
+                {
+                  throw "GitHub pre-release v$(build.version) does not contain an MSI asset. Promotion has stopped."
+                }
+
+                Write-Host "Verified GitHub pre-release v$(build.version) at commit $(Build.SourceVersion) with $($msiAssets.Count) MSI asset(s)."
+          - task: GitHubRelease@1
+            displayName: Promote GitHub release v$(build.version)
+            inputs:
+              gitHubConnection: github.com_lithnet
+              repositoryName: '$(Build.Repository.Name)'
+              action: edit
+              target: '$(Build.SourceVersion)'
+              tag: v$(build.version)
+              isDraft: false
+              isPreRelease: false
+              makeLatest: true
+              addChangeLog: false
+              assets: ''
+              assetUploadMode: replace
