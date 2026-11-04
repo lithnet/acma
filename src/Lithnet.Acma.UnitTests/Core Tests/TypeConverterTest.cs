@@ -1,7 +1,9 @@
 ﻿using Lithnet.Acma;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Lithnet.MetadirectoryServices;
 using Lithnet.Transforms;
 using Lithnet.Acma.DataModel;
@@ -120,9 +122,21 @@ namespace Lithnet.Acma.UnitTests
         [TestMethod()]
         public void ConvertDataDateTimeFromStringTest3()
         {
+            // The converter parses in the current culture. This test uses a day-first short date, so
+            // pin a day-first culture to give the same result on every machine.
             object obj = "1/2/2000 05:36:11.987";
             object actual;
-            actual = TypeConverter.ConvertData<DateTime>(obj);
+            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+
+            try
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-AU");
+                actual = TypeConverter.ConvertData<DateTime>(obj);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = originalCulture;
+            }
 
             if (!(actual is DateTime))
             {
@@ -171,7 +185,7 @@ namespace Lithnet.Acma.UnitTests
         [TestMethod()]
         public void ConvertDataDateTimeFromTicksTest()
         {
-            object obj = DateTime.Parse("1/2/2000 05:36:11.987").Ticks;
+            object obj = new DateTime(2000, 2, 1, 5, 36, 11, 987).Ticks;
             object actual;
             actual = TypeConverter.ConvertData<DateTime>(obj);
 
