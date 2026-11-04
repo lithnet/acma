@@ -529,6 +529,7 @@ namespace Lithnet.Acma
             this.ValidateCanCreateReferenceLink(forwardLinkObjectClass, forwardLink, backLinkObjectClass, backLink);
 
             AcmaSchemaReferenceLink link = (AcmaSchemaReferenceLink)bindingList.AddNew();
+            bool addCommitted = false;
 
             try
             {
@@ -537,7 +538,9 @@ namespace Lithnet.Acma
                 link.BackLinkAttribute = backLink;
                 link.BackLinkObjectClass = backLinkObjectClass;
 
-                //bindingList.Add(link);
+                AcmaDatabase.EndNew(bindingList, link);
+                addCommitted = true;
+
                 this.DataContext.SubmitChanges();
                 this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, link);
 
@@ -547,7 +550,7 @@ namespace Lithnet.Acma
             {
                 try
                 {
-                    bindingList.Remove(link);
+                    AcmaDatabase.UndoAddNew(bindingList, link, addCommitted);
                 }
                 catch { }
 
@@ -1030,6 +1033,7 @@ namespace Lithnet.Acma
             this.ValidateCanCreateShadowLink(shadowClass, provisioningAttribute, referenceAttribute, name);
 
             AcmaSchemaShadowObjectLink link = (AcmaSchemaShadowObjectLink)bindingList.AddNew();
+            bool addCommitted = false;
 
             try
             {
@@ -1039,6 +1043,9 @@ namespace Lithnet.Acma
                 link.ProvisioningAttribute = provisioningAttribute;
                 link.Name = name;
 
+                AcmaDatabase.EndNew(bindingList, link);
+                addCommitted = true;
+
                 this.DataContext.SubmitChanges();
                 this.DataContext.Refresh(RefreshMode.OverwriteCurrentValues, link);
                 return link;
@@ -1047,7 +1054,7 @@ namespace Lithnet.Acma
             {
                 try
                 {
-                    bindingList.Remove(link);
+                    AcmaDatabase.UndoAddNew(bindingList, link, addCommitted);
                 }
                 catch
                 {
@@ -1214,6 +1221,8 @@ namespace Lithnet.Acma
             mapping.InheritanceSourceObjectClass = inheritanceSourceObjectClass;
             mapping.InheritedAttribute = inheritedAttribute;
             mapping.IsBuiltIn = isBuiltIn;
+
+            AcmaDatabase.EndNew(mappingsBindingList, mapping);
 
             //this.DataContext.AcmaSchemaMappings.InsertOnSubmit(mapping);
             this.DataContext.SubmitChanges();
@@ -1624,6 +1633,44 @@ namespace Lithnet.Acma
             if (this.ShadowObjectLinks.Any(t => t.Name == name))
             {
                 throw new InvalidOperationException("The specified mapping name is already in use");
+            }
+        }
+
+        /// <summary>
+        /// Commits an item created with IBindingList.AddNew. This must happen before SubmitChanges. Until it is committed, a
+        /// binding list from Table.GetNewBindingList holds the item as a pending new item, and the next AddNew, Add or Remove
+        /// on that list commits it then with Table.InsertOnSubmit, which throws "Cannot add an entity that already exists"
+        /// once the item has been saved.
+        /// </summary>
+        /// <param name="bindingList">The binding list the item was added to</param>
+        /// <param name="item">The item returned by AddNew</param>
+        private static void EndNew(IBindingList bindingList, object item)
+        {
+            ICancelAddNew cancelAddNew = bindingList as ICancelAddNew;
+
+            if (cancelAddNew != null)
+            {
+                cancelAddNew.EndNew(bindingList.IndexOf(item));
+            }
+        }
+
+        /// <summary>
+        /// Takes an item created with IBindingList.AddNew back out of the binding list after a failed create
+        /// </summary>
+        /// <param name="bindingList">The binding list the item was added to</param>
+        /// <param name="item">The item returned by AddNew</param>
+        /// <param name="addCommitted">A value indicating if EndNew has already committed the item</param>
+        private static void UndoAddNew(IBindingList bindingList, object item, bool addCommitted)
+        {
+            ICancelAddNew cancelAddNew = bindingList as ICancelAddNew;
+
+            if (!addCommitted && cancelAddNew != null)
+            {
+                cancelAddNew.CancelNew(bindingList.IndexOf(item));
+            }
+            else
+            {
+                bindingList.Remove(item);
             }
         }
 

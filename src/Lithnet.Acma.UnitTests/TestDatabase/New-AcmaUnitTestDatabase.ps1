@@ -273,11 +273,6 @@ foreach ($l in $referenceLinks)
 foreach ($s in $shadowLinks)
 {
     Write-Verbose "Shadow link $($s.Name)"
-
-    # CreateShadowLink adds the link through IBindingList.AddNew and never ends the add, so a second
-    # call on the same AcmaDatabase instance re-inserts the first link and fails with "Cannot add an
-    # entity that already exists". Each shadow link therefore gets its own connection.
-    $db = New-Object Lithnet.Acma.AcmaDatabase($ServerName, $DatabaseName)
     [void]$db.CreateShadowLink(
         $db.GetObjectClass($s.ShadowObjectClass),
         $db.GetAttribute($s.ProvisioningAttribute),
