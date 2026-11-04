@@ -163,7 +163,7 @@ namespace Lithnet.Acma.Service
 
                 if (resource.ObjectID == Guid.Empty)
                 {
-                    resource.ObjectID = new Guid();
+                    resource.ObjectID = Guid.NewGuid();
                 }
 
                 CSEntryChange csentry = CSEntryChangeDetached.Create();
