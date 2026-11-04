@@ -182,9 +182,7 @@ if (-not (Test-Path $acmaAssembly))
     throw "Lithnet.Acma.dll was not found in '$AssemblyPath'. Build the unit test project first (dotnet build src\Lithnet.Acma.UnitTests)."
 }
 
-# ACMA references Microsoft.MetadirectoryServicesEx, which the resolver loads from the local MIM Synchronization Service install
-Add-Type -Path (Join-Path $AssemblyPath 'Lithnet.MetadirectoryServices.Resolver.dll')
-[Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver]::RegisterResolver()
+# ACMA references Microsoft.MetadirectoryServicesEx. The unit test build copies it into the same folder, where the CLR finds it
 Add-Type -Path (Join-Path $AssemblyPath 'Lithnet.MetadirectoryServices.dll')
 Add-Type -Path $acmaAssembly
 

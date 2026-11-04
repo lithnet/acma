@@ -27,12 +27,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-	</ItemGroup>
-	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="ModelingProject_13455.ico" />

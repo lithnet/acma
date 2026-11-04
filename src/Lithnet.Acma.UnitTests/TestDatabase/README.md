@@ -11,7 +11,7 @@ The tests in Lithnet.Acma.UnitTests run against a real ACMA database that holds 
    .\src\Lithnet.Acma.UnitTests\TestDatabase\New-AcmaUnitTestDatabase.ps1 -ServerName 'localhost\SQLEXPRESS' -Force
    ```
 
-`-Force` drops the database first if it exists. You need rights to create databases on the server. The MIM Synchronization Service must be installed on the machine, because ACMA loads `Microsoft.MetadirectoryServicesEx` from it.
+`-Force` drops the database first if it exists. You need rights to create databases on the server. The MIM Synchronization Service doesn't need to be installed: the unit test build copies `Microsoft.MetadirectoryServicesEx.dll` from the `Lithnet.MIM.MetadirectoryServicesEx` package into its output folder. SQL Server Express LocalDB works, for example `-ServerName '(localdb)\MSSQLLocalDB'`.
 
 The script creates the empty database with ACMA's own installer code (`DBInstallUpgrader.CreateDB`, which `New-AcmaDatabase` also uses; its script is the deployment script of the Lithnet.Acma.Database project). It then adds the schema through ACMA's schema API, so the result is the same as building the schema in the ACMA editor. The schema is declared in tables at the top of the script.
 

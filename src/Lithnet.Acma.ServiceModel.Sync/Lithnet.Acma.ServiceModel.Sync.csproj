@@ -16,13 +16,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="Lithnet.MetadirectoryServices" Version="2.0.5" />
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" ExcludeAssets="runtime" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
 		<Reference Include="System.ServiceModel" />
 		<Reference Include="System.ServiceModel.Web" />
 		<Reference Include="System.Data.DataSetExtensions" />

@@ -17,16 +17,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-		<PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="2.0.5" />
 		<PackageReference Include="MSTest.TestAdapter" Version="3.2.2" />
 		<PackageReference Include="MSTest.TestFramework" Version="3.2.2" />
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<Private>False</Private>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
 		<Reference Include="Reeb.SqlOM, Version=0.3.5161.19594, Culture=neutral, processorArchitecture=MSIL">
 			<HintPath>..\lib\Reeb.SqlOM.dll</HintPath>
 			<SpecificVersion>False</SpecificVersion>

@@ -41,12 +41,9 @@
 		</PackageReference>
 		<PackageReference Include="System.ServiceModel.NetTcp" Version="10.0.652802" />
 		<PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
 		<Reference Include="System.configuration" />
 		<Reference Include="System.Configuration.Install" />
 		<Reference Include="System.DirectoryServices.AccountManagement" />

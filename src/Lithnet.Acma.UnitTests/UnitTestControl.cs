@@ -56,8 +56,6 @@ namespace Lithnet.Acma.UnitTests
         {
             if (!initialized)
             {
-                Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
-
                 string logPath = UnitTestControl.LogPath;
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(logPath)));
                 Logger.LogPath = logPath;

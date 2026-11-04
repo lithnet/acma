@@ -15,10 +15,9 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" ExcludeAssets="runtime" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="System.Transactions" />
 		<Reference Include="System.Data.DataSetExtensions" />
 	</ItemGroup>

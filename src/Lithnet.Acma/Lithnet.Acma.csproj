@@ -22,12 +22,9 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="System.Management.Automation" Version="6.1.7601.17515" />
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
 		<Reference Include="Reeb.SqlOM, Version=0.3.5161.19594, Culture=neutral, processorArchitecture=MSIL">
 			<HintPath>..\lib\Reeb.SqlOM.dll</HintPath>
 			<SpecificVersion>False</SpecificVersion>

@@ -28,13 +28,9 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="3.2.2" />
 		<PackageReference Include="MSTest.TestFramework" Version="3.2.2" />
+		<PackageReference Include="Lithnet.MIM.MetadirectoryServicesEx" Version="4.1.3441" PrivateAssets="all" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="Microsoft.MetadirectoryServicesEx">
-			<HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-			<Private>False</Private>
-			<SpecificVersion>False</SpecificVersion>
-		</Reference>
 		<Reference Include="System.XML" />
 	</ItemGroup>
 	<ItemGroup>
