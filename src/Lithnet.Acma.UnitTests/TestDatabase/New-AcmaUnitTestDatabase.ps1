@@ -106,6 +106,11 @@ $attributes = @(
     @{ Name = 'directReports'; Type = 'Reference'; IsMultivalued = $true }
     @{ Name = 'displayNameSharers'; Type = 'Reference'; IsMultivalued = $true }
     @{ Name = 'peers'; Type = 'Reference'; IsMultivalued = $true }
+
+    # Temporary (acma-internal-temp): never stored, only held in an object's pending changes.
+    # MAObjectHologramTest.UpdateMVTempAttributeOnExistingObject and the DVC*MVTemp* tests in
+    # DeclarativeValueConstructorTest write it with add and conditional modifications on existing objects.
+    @{ Name = 'tempMV'; Type = 'String'; IsMultivalued = $true; Operation = 'AcmaInternalTemp' }
 )
 
 # Plain bindings: object class -> attributes
@@ -116,7 +121,8 @@ $bindings = [ordered]@{
         'dateTimeSV', 'dateTimeMV', 'dateTimeMV2',
         'connectedToCallista', 'connectedToSap', 'hasAdMgrAccount', 'hasTestShadow',
         'objectSid', 'objectSids',
-        'adMgrAccount', 'supervisor', 'testShadowAccount', 'directReports', 'displayNameSharers'
+        'adMgrAccount', 'supervisor', 'testShadowAccount', 'directReports', 'displayNameSharers',
+        'tempMV'
     )
     'testshadow' = @('hasTestShadowOfShadow', 'testShadowOfShadowAccount')
 }
@@ -208,8 +214,9 @@ $db = New-Object Lithnet.Acma.AcmaDatabase($ServerName, $DatabaseName)
 foreach ($a in $attributes)
 {
     $isMultivalued = $a.ContainsKey('IsMultivalued') -and $a.IsMultivalued
+    $operation = if ($a.ContainsKey('Operation')) { [Lithnet.Acma.AcmaAttributeOperation]$a.Operation } else { [Lithnet.Acma.AcmaAttributeOperation]::ImportExport }
     Write-Verbose "Attribute $($a.Name)"
-    [void]$db.CreateAttribute($a.Name, [Lithnet.MetadirectoryServices.ExtendedAttributeType]$a.Type, $isMultivalued, [Lithnet.Acma.AcmaAttributeOperation]::ImportExport, $false, $false)
+    [void]$db.CreateAttribute($a.Name, [Lithnet.MetadirectoryServices.ExtendedAttributeType]$a.Type, $isMultivalued, $operation, $false, $false)
     $db.ClearCache()
 }
 

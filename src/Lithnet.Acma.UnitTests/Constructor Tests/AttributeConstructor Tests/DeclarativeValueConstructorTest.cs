@@ -1228,5 +1228,76 @@ namespace Lithnet.Acma.UnitTests
                 ActiveConfig.DB.DeleteMAObjectPermanent(newId);
             }
         }
+
+        [TestMethod()]
+        public void DVCAddMVTempAttributeOnExistingObjectTest()
+        {
+            DeclarativeValueConstructor constructor1 = new DeclarativeValueConstructor();
+            constructor1.Attribute = ActiveConfig.DB.GetAttribute("tempMV");
+            constructor1.ModificationType = AcmaAttributeModificationType.Add;
+            constructor1.ValueDeclarations.Add(new ValueDeclaration("value1"));
+
+            DeclarativeValueConstructor constructor2 = new DeclarativeValueConstructor();
+            constructor2.Attribute = ActiveConfig.DB.GetAttribute("tempMV");
+            constructor2.ModificationType = AcmaAttributeModificationType.Add;
+            constructor2.ValueDeclarations.Add(new ValueDeclaration("value2"));
+
+            Guid newId = Guid.NewGuid();
+            try
+            {
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
+                sourceObject.CommitCSEntryChange();
+                sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
+
+                constructor1.Execute(sourceObject);
+                constructor2.Execute(sourceObject);
+
+                AttributeValues values = sourceObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("tempMV"));
+                Assert.AreEqual(2, values.Values.Count);
+                Assert.IsTrue(values.ContainsAllElements(new List<object>() { "value1", "value2" }));
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+            }
+        }
+
+        [TestMethod()]
+        public void DVCConditionalMVTempAttributeOnExistingObjectTest()
+        {
+            DeclarativeValueConstructor constructor1 = new DeclarativeValueConstructor();
+            constructor1.Attribute = ActiveConfig.DB.GetAttribute("tempMV");
+            constructor1.ValueDeclarations.Add(new ValueDeclaration("value1"));
+            constructor1.PresenceConditions.Items.Add(new ValueComparisonRule() { Attribute = ActiveConfig.DB.GetAttribute("mailAddressFormat"), ValueOperator = ValueOperator.Equals, ExpectedValue = new ValueDeclaration("1") });
+            constructor1.PresenceConditions.Operator = GroupOperator.All;
+            constructor1.ModificationType = AcmaAttributeModificationType.Conditional;
+
+            DeclarativeValueConstructor constructor2 = new DeclarativeValueConstructor();
+            constructor2.Attribute = ActiveConfig.DB.GetAttribute("tempMV");
+            constructor2.ValueDeclarations.Add(new ValueDeclaration("value2"));
+            constructor2.PresenceConditions.Items.Add(new ValueComparisonRule() { Attribute = ActiveConfig.DB.GetAttribute("mailAddressFormat"), ValueOperator = ValueOperator.Equals, ExpectedValue = new ValueDeclaration("1") });
+            constructor2.PresenceConditions.Operator = GroupOperator.All;
+            constructor2.ModificationType = AcmaAttributeModificationType.Conditional;
+
+            Guid newId = Guid.NewGuid();
+            try
+            {
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
+                sourceObject.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAddressFormat"), 1L);
+                sourceObject.CommitCSEntryChange();
+                sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
+
+                constructor1.Execute(sourceObject);
+                constructor2.Execute(sourceObject);
+
+                AttributeValues values = sourceObject.GetMVAttributeValues(ActiveConfig.DB.GetAttribute("tempMV"));
+                Assert.AreEqual(2, values.Values.Count);
+                Assert.IsTrue(values.ContainsAllElements(new List<object>() { "value1", "value2" }));
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+            }
+        }
     }
 }

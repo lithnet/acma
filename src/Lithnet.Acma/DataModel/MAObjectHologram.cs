@@ -1888,7 +1888,10 @@ namespace Lithnet.Acma
 
                     if (attribute.IsMultivalued)
                     {
-                        foreach (AttributeValue value in this.DBGetAttributeValues(attribute).Values)
+                        // Temporary attributes are not stored, so DBGetAttributeValues returns null and there are no existing values to keep
+                        AttributeValues existingValues = this.DBGetAttributeValues(attribute) ?? new InternalAttributeValues(attribute);
+
+                        foreach (AttributeValue value in existingValues.Values)
                         {
                             if (!change.ValueChanges.Any(t => value.ValueEquals(t.Value) && t.ModificationType == ValueModificationType.Delete))
                             {

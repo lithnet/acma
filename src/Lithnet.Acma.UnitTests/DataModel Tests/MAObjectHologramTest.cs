@@ -1241,6 +1241,32 @@ namespace Lithnet.Acma.UnitTests
         }
 
         [TestMethod()]
+        public void UpdateMVTempAttributeOnExistingObject()
+        {
+            AcmaSchemaAttribute tempAttribute = ActiveConfig.DB.GetAttribute("tempMV");
+            Guid newId = Guid.NewGuid();
+
+            try
+            {
+                MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
+                sourceObject.CommitCSEntryChange();
+                sourceObject.SetObjectModificationType(ObjectModificationType.Update, false);
+
+                sourceObject.UpdateAttributeValue(tempAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("value1") });
+                sourceObject.UpdateAttributeValue(tempAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("value2") });
+
+                AttributeValues values = sourceObject.GetMVAttributeValues(tempAttribute);
+
+                Assert.AreEqual(2, values.Values.Count);
+                Assert.IsTrue(values.ContainsAllElements(new List<object>() { "value1", "value2" }));
+            }
+            finally
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(newId);
+            }
+        }
+
+        [TestMethod()]
         public void TestValueChangeMergeDuplicateAdd()
         {
             Guid sourceObjectId = Guid.NewGuid();
