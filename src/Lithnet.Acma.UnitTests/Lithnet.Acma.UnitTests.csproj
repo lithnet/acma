@@ -38,6 +38,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Lithnet.Acma\Lithnet.Acma.csproj" />
+		<ProjectReference Include="..\Lithnet.Acma.Service\Lithnet.Acma.Service.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="TestData\OUMappings.csv" />
