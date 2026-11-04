@@ -37,6 +37,11 @@ namespace Lithnet.Acma.ServiceModel
             return this.Channel.GetResourcesByAttributePair(key, keyValue, op);
         }
 
+        public AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize, string continuationToken)
+        {
+            return this.Channel.GetResources(objectType, attributes, pageSize, continuationToken);
+        }
+
         public void ReplaceResource(string id, AcmaResource resource)
         {
             this.Channel.ReplaceResource(id, resource);

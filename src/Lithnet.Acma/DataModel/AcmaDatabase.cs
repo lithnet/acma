@@ -2438,6 +2438,53 @@ namespace Lithnet.Acma
             }
         }
 
+        /// <summary>
+        /// Gets one page of objects of the specified class that have not been deleted, in object ID order
+        /// </summary>
+        /// <param name="objectClass">The object class to read</param>
+        /// <param name="afterObjectId">The ID of the last object of the previous page, or Guid.Empty to start at the beginning</param>
+        /// <param name="pageSize">The maximum number of objects to return</param>
+        /// <returns>The objects in the page, in object ID order</returns>
+        public IList<MAObjectHologram> GetMAObjectsPage(AcmaSchemaObjectClass objectClass, Guid afterObjectId, int pageSize)
+        {
+            this.ThrowOnNullArgument("objectClass", objectClass);
+
+            if (pageSize < 1)
+            {
+                throw new ArgumentOutOfRangeException("pageSize", "The page size must be at least 1");
+            }
+
+            using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = "SELECT TOP (@pageSize) * FROM [dbo].[MA_Objects] WHERE ([deleted] = 0) AND ([objectClass] = @objectClass) AND ([objectId] > @afterObjectId) ORDER BY [objectId]";
+                command.Parameters.AddWithValue("@pageSize", pageSize);
+                command.Parameters.AddWithValue("@objectClass", objectClass.Name);
+                command.Parameters.AddWithValue("@afterObjectId", afterObjectId);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                builder.ConflictOption = ConflictOption.OverwriteChanges;
+                builder.QuotePrefix = "[";
+                builder.QuoteSuffix = "]";
+
+                DataSet dataset = new DataSet();
+                adapter.AcceptChangesDuringUpdate = true;
+                adapter.Fill(dataset);
+
+                List<MAObjectHologram> holograms = new List<MAObjectHologram>();
+
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    holograms.Add(new MAObjectHologram(row, adapter));
+                }
+
+                return holograms;
+            }
+        }
+
         public ResultEnumerator EnumerateMAObjects(IList<string> objectTypes, byte[] lowWatermark, byte[] highWatermark)
         {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())

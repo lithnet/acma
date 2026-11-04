@@ -90,6 +90,52 @@ namespace Lithnet.Acma.Service
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }
 
+        public AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize, string continuationToken)
+        {
+            if (string.IsNullOrWhiteSpace(objectType))
+            {
+                throw new ArgumentNullException("objectType");
+            }
+
+            if (pageSize < 1 || pageSize > AcmaServiceConstants.MaximumPageSize)
+            {
+                throw new ArgumentOutOfRangeException("pageSize", string.Format("The page size must be between 1 and {0}", AcmaServiceConstants.MaximumPageSize));
+            }
+
+            Guid afterObjectId = Guid.Empty;
+
+            if (!string.IsNullOrEmpty(continuationToken))
+            {
+                if (!Guid.TryParse(continuationToken, out afterObjectId))
+                {
+                    throw new ArgumentException("The continuation token is not valid. Pass the ContinuationToken of the previous page, or null for the first page", "continuationToken");
+                }
+            }
+
+            AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(objectType);
+            List<AcmaSchemaAttribute> schemaAttributes = new List<AcmaSchemaAttribute>();
+
+            if (attributes != null)
+            {
+                foreach (string attributeName in attributes)
+                {
+                    schemaAttributes.Add(ActiveConfig.DB.GetAttribute(attributeName, objectClass));
+                }
+            }
+
+            IList<MAObjectHologram> holograms = ActiveConfig.DB.GetMAObjectsPage(objectClass, afterObjectId, pageSize);
+
+            AcmaResourcePage page = new AcmaResourcePage();
+            page.Resources = holograms.Select(t => t.ToAcmaResource(schemaAttributes)).ToList();
+
+            if (holograms.Count == pageSize)
+            {
+                page.ContinuationToken = holograms[holograms.Count - 1].ObjectID.ToString();
+            }
+
+            return page;
+        }
+
         public void ReplaceResource(string id, AcmaResource resource)
         {
             try

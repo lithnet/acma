@@ -2069,5 +2069,48 @@ namespace Lithnet.Acma
 
             return r;
         }
+
+        /// <summary>
+        /// Converts the object to a resource that carries only the specified attributes, plus objectId and
+        /// objectClass, which the resource needs to identify the object
+        /// </summary>
+        /// <param name="attributes">The attributes to include. Each must be bound to the object's class</param>
+        /// <returns>The resource</returns>
+        public AcmaResource ToAcmaResource(IEnumerable<AcmaSchemaAttribute> attributes)
+        {
+            Dictionary<string, IList<string>> values = new Dictionary<string, IList<string>>();
+
+            foreach (AcmaSchemaAttribute attribute in attributes)
+            {
+                if (values.ContainsKey(attribute.Name))
+                {
+                    continue;
+                }
+
+                AttributeValues value = this.GetAttributeValues(attribute);
+
+                if (!value.IsEmptyOrNull)
+                {
+                    values.Add(attribute.Name, value.GetSerializationValues());
+                }
+            }
+
+            if (!values.ContainsKey("objectId"))
+            {
+                values.Add("objectId", new List<string>() { this.ObjectID.ToString() });
+            }
+
+            if (!values.ContainsKey("objectClass"))
+            {
+                values.Add("objectClass", new List<string>() { this.ObjectClass.Name });
+            }
+
+            AcmaResource r = new AcmaResource();
+            r.ObjectID = this.ObjectID;
+            r.ObjectType = this.ObjectClass.Name;
+            r.Attributes = values;
+
+            return r;
+        }
     }
 }
