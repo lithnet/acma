@@ -19,18 +19,65 @@ namespace Lithnet.Acma.UnitTests
     {
         private static bool initialized = false;
 
+        /// <summary>
+        /// The SQL Server instance that holds the unit test database. Set with the ACMA_UNITTEST_SQLSERVER environment variable.
+        /// </summary>
+        public static string ServerName
+        {
+            get
+            {
+                return GetSetting("ACMA_UNITTEST_SQLSERVER", "localhost");
+            }
+        }
+
+        /// <summary>
+        /// The name of the unit test database. Set with the ACMA_UNITTEST_DATABASE environment variable.
+        /// </summary>
+        public static string DatabaseName
+        {
+            get
+            {
+                return GetSetting("ACMA_UNITTEST_DATABASE", "AcmaUnitTestDB2");
+            }
+        }
+
+        /// <summary>
+        /// The log file for the test run. Set with the ACMA_UNITTEST_LOGPATH environment variable; defaults to acma-unit-test.log in the test output folder.
+        /// </summary>
+        public static string LogPath
+        {
+            get
+            {
+                return GetSetting("ACMA_UNITTEST_LOGPATH", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "acma-unit-test.log"));
+            }
+        }
+
         public static void Initialize()
         {
             if (!initialized)
             {
                 Lithnet.MetadirectoryServices.Resolver.MmsAssemblyResolver.RegisterResolver();
-                Logger.LogPath = @"D:\MAData\ACMA\acma-unit-test.log";
+
+                string logPath = UnitTestControl.LogPath;
+                Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(logPath)));
+                Logger.LogPath = logPath;
                 Logger.LogLevel = LogLevel.Debug;
-                XmlDocument doc = new XmlDocument();
-                ActiveConfig.OpenDatabase("localhost", "AcmaUnitTestDB2");
+                ActiveConfig.OpenDatabase(UnitTestControl.ServerName, UnitTestControl.DatabaseName);
                 LoadTestTransforms();
                 initialized = true;
             }
+        }
+
+        private static string GetSetting(string environmentVariable, string defaultValue)
+        {
+            string value = Environment.GetEnvironmentVariable(environmentVariable);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return defaultValue;
+            }
+
+            return value;
         }
 
         public static void DeleteAllMAObjects()
