@@ -4,6 +4,7 @@
 		<AssemblyTitle>Lithnet Acma service client library</AssemblyTitle>
 		<Company>Lithnet</Company>
 		<Authors>Lithnet</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Product>Lithnet ACMA</Product>
 		<Deterministic>true</Deterministic>
 		<Version>1.2</Version>
