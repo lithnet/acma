@@ -318,7 +318,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="attribute">The attribute to look up</param>
         /// <returns>A value indicating if the attribute has one or more values</returns>
-        protected bool DBHasAttribute(AcmaSchemaAttribute attribute)
+        protected internal bool DBHasAttribute(AcmaSchemaAttribute attribute)
         {
             return !this.DBGetAttributeValues(attribute).IsEmptyOrNull;
         }
@@ -329,7 +329,7 @@ namespace Lithnet.Acma
         /// <param name="attribute">The attribute to look up</param>
         /// <param name="value">The value to search for</param>
         /// <returns>A value indicating if the attribute has the value specified</returns>
-        protected bool DBHasAttributeValue(AcmaSchemaAttribute attribute, object value)
+        protected internal bool DBHasAttributeValue(AcmaSchemaAttribute attribute, object value)
         {
             return this.DBGetAttributeValues(attribute).HasValue(value);
         }
@@ -337,7 +337,7 @@ namespace Lithnet.Acma
         /// <summary>
         /// Rolls back changes made to the object
         /// </summary>
-        protected void Rollback()
+        protected internal void Rollback()
         {
             this.dataRow.RejectChanges();
 
@@ -354,7 +354,7 @@ namespace Lithnet.Acma
         /// <summary>
         /// Commits changes made to the object
         /// </summary>
-        protected void Commit()
+        protected internal void Commit()
         {
             this.adapter.RowUpdating += adapter_RowUpdating;
             if (this.dataRow.RowState != DataRowState.Unchanged)
@@ -394,7 +394,7 @@ namespace Lithnet.Acma
             }
         }
 
-        protected AttributeValue DBGetSVAttributeValue(AcmaSchemaAttribute attribute)
+        protected internal AttributeValue DBGetSVAttributeValue(AcmaSchemaAttribute attribute)
         {
             if (attribute.IsMultivalued)
             {
@@ -416,7 +416,7 @@ namespace Lithnet.Acma
             return this.DBGetAttributeValues(attribute);
         }
 
-        protected AttributeValues DBGetAttributeValues(AcmaSchemaAttribute attribute)
+        protected internal AttributeValues DBGetAttributeValues(AcmaSchemaAttribute attribute)
         {
             if (attribute.Operation == AcmaAttributeOperation.AcmaInternalTemp)
             {
@@ -467,7 +467,7 @@ namespace Lithnet.Acma
         /// Deletes all the values of the specified attribute
         /// </summary>
         /// <param name="attribute">The attribute to delete the values from</param>
-        protected void DBDeleteAttribute(AcmaSchemaAttribute attribute)
+        protected internal void DBDeleteAttribute(AcmaSchemaAttribute attribute)
         {
             this.ThrowOnInheritedValueModification(attribute);
 
@@ -485,7 +485,7 @@ namespace Lithnet.Acma
         /// </summary>
         /// <param name="attribute">The attribute to update</param>
         /// <param name="valueChanges">The value changes to apply</param>
-        protected void DBUpdateAttribute(AcmaSchemaAttribute attribute, IList<ValueChange> valueChanges)
+        protected internal void DBUpdateAttribute(AcmaSchemaAttribute attribute, IList<ValueChange> valueChanges)
         {
             this.ThrowOnInheritedValueModification(attribute);
 

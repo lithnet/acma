@@ -1173,7 +1173,7 @@ namespace Lithnet.Acma
         /// <param name="triggeringObject">The object that triggered this event</param>
         /// <param name="classConstructor">The class constructor for this object</param>
         /// <returns>A list of RaisedEvents</returns>
-        private List<RaisedEvent> CreateExitEvents(ClassConstructor classConstructor)
+        internal List<RaisedEvent> CreateExitEvents(ClassConstructor classConstructor)
         {
             List<RaisedEvent> raisedEvents = new List<RaisedEvent>();
 

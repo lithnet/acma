@@ -56,10 +56,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject); 
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -98,9 +95,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { 
                         ValueChange.CreateValueAdd("1test.test@test.com"),
@@ -151,9 +146,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject); 
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -178,9 +171,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(
                     testAttribute, 
@@ -215,9 +206,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(
                     testAttribute,
@@ -251,9 +240,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
 
@@ -277,9 +264,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -304,9 +289,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
 
@@ -330,9 +313,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -357,9 +338,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
 
@@ -383,9 +362,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -410,9 +387,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
 
@@ -441,9 +416,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
                 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.Commit();
@@ -474,9 +447,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
 
@@ -502,9 +473,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -532,9 +501,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.DBDeleteAttribute(testAttribute);
@@ -559,9 +526,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.Commit();
@@ -588,9 +553,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.Commit();
@@ -617,9 +580,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueDelete("test.test@test.com") });
@@ -644,9 +605,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueDelete("test.test@test.com") });
@@ -672,9 +631,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -702,9 +659,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -732,9 +687,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueDelete("test1.test1@test.com") });
@@ -759,9 +712,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.Commit();
@@ -788,9 +739,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com"), ValueChange.CreateValueAdd("test1.test1@test.com") });
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueDelete("test2.test2@test.com") });
@@ -887,9 +836,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd("test.test@test.com") });
                 target.Commit();
@@ -914,9 +861,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(55L) });
                 target.Commit();
@@ -941,9 +886,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(true) });
                 target.Commit();
@@ -968,9 +911,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(new byte[] {0,1,2,3,4}) });
                 target.Commit();
@@ -995,9 +936,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(reference) });
                 target.Commit();
@@ -1022,9 +961,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(testAttribute, new List<ValueChange>() { ValueChange.CreateValueAdd(DateTime.Parse("2010-01-01")) });
                 target.Commit();
@@ -1049,9 +986,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
                 
                 target.DBUpdateAttribute(
                     testAttribute,
@@ -1086,9 +1021,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(
                     testAttribute,
@@ -1123,9 +1056,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(
                     testAttribute,
@@ -1160,9 +1091,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(
                     testAttribute,
@@ -1200,9 +1129,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 target.DBUpdateAttribute(
                     testAttribute,
@@ -1237,10 +1164,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 try
                 {
@@ -1266,10 +1190,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
 
                 try
                 {

@@ -631,9 +631,7 @@ namespace Lithnet.Acma.UnitTests
                     Assert.Fail("The shadow parent reference link was not set correctly");
                 }
 
-                PrivateType privateType = new PrivateType(typeof(MAObjectHologram));
-                PrivateObject privateObject = new PrivateObject(shadowObject, privateType);
-                MAObjectHologram_Accessor privateShadowObject = new MAObjectHologram_Accessor(privateObject);
+                MAObjectHologram privateShadowObject = shadowObject;
 
                 privateShadowObject.Delete(true);
 
@@ -736,9 +734,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObjectHologram));
-                PrivateObject privateSourceObject = new PrivateObject(sourceObject, privateType);
-                MAObjectHologram_Accessor targetSourceObject = new MAObjectHologram_Accessor(privateSourceObject);
+                MAObjectHologram targetSourceObject = sourceObject;
 
                 sourceObject.SetAttributeValue(reference.ProvisioningAttribute, true);
                 MAObjectHologram shadowObject = sourceObject.ProvisionShadowObject(reference);
@@ -1672,9 +1668,7 @@ namespace Lithnet.Acma.UnitTests
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(sourceObjectId, "person");
 
-                PrivateType privateType = new PrivateType(typeof(MAObjectHologram));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObjectHologram_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObjectHologram target = sourceObject;
 
                 ClassConstructor personConstructor = new ClassConstructor();
                 AcmaInternalExitEvent newevent = new AcmaInternalExitEvent();
@@ -1915,9 +1909,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
                 sourceObject.SetAttributeValue(testAttribute, new List<object>() { testValue });
 
                 // Test uncommitted value
@@ -1951,9 +1943,7 @@ namespace Lithnet.Acma.UnitTests
             try
             {
                 MAObjectHologram sourceObject = ActiveConfig.DB.CreateMAObject(newId, "person");
-                PrivateType privateType = new PrivateType(typeof(MAObject));
-                PrivateObject privateObject = new PrivateObject(sourceObject, privateType);
-                MAObject_Accessor target = new MAObjectHologram_Accessor(privateObject);
+                MAObject target = sourceObject;
                 sourceObject.SetAttributeValue(testAttribute, testValues);
 
                 // Test uncommitted value
