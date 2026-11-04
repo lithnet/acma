@@ -14,31 +14,6 @@ namespace Lithnet.Acma.ServiceModel
 
         public const string NetTcpHostnamePlaceHolderUri = "net.tcp://{0}:44889/acma/resource";
 
-        public static ServiceMetadataBehavior ServiceMetadataDisabledBehavior
-        {
-            get
-            {
-                return new ServiceMetadataBehavior
-                 {
-                     HttpGetEnabled = false,
-                     HttpsGetEnabled = false
-                 };
-            }
-        }
-
-        public static ServiceDebugBehavior ServiceDebugBehavior
-        {
-            get
-            {
-                return new ServiceDebugBehavior
-                {
-                    IncludeExceptionDetailInFaults = true,
-                    HttpHelpPageEnabled = false,
-                    HttpsHelpPageEnabled = false
-                };
-            }
-        }
-
         public static Binding NetTcpBinding
         {
             get
@@ -51,10 +26,7 @@ namespace Lithnet.Acma.ServiceModel
                 binding.OpenTimeout = new TimeSpan(0, 1, 0);
                 binding.ReceiveTimeout = new TimeSpan(0, 60, 0);
                 binding.SendTimeout = new TimeSpan(0, 60, 0);
-                binding.TransactionFlow = false;
-                binding.HostNameComparisonMode = HostNameComparisonMode.StrongWildcard;
                 binding.Security.Mode = SecurityMode.Transport;
-                binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
                 binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
                 
                 return binding;

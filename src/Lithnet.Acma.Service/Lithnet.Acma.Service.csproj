@@ -39,6 +39,8 @@
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="System.ServiceModel.NetTcp" Version="10.0.652802" />
+		<PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="Microsoft.MetadirectoryServicesEx">

@@ -178,18 +178,68 @@ namespace Lithnet.Acma.Service
             this.syncServiceHost.Open();
         }
 
+        // The service keeps its own binding with the settings it has always used, so clients built
+        // against the earlier .NET Framework client library keep working beside the .NET Standard
+        // client, whose binding cannot set these options.
+        public static System.ServiceModel.Channels.Binding NetTcpBinding
+        {
+            get
+            {
+                NetTcpBinding binding = new NetTcpBinding();
+                binding.MaxReceivedMessageSize = int.MaxValue;
+                binding.ReaderQuotas.MaxStringContentLength = int.MaxValue;
+                binding.ReaderQuotas.MaxBytesPerRead = int.MaxValue;
+                binding.CloseTimeout = new TimeSpan(0, 1, 0);
+                binding.OpenTimeout = new TimeSpan(0, 1, 0);
+                binding.ReceiveTimeout = new TimeSpan(0, 60, 0);
+                binding.SendTimeout = new TimeSpan(0, 60, 0);
+                binding.TransactionFlow = false;
+                binding.HostNameComparisonMode = HostNameComparisonMode.StrongWildcard;
+                binding.Security.Mode = SecurityMode.Transport;
+                binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
+                binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+
+                return binding;
+            }
+        }
+
+        public static ServiceMetadataBehavior ServiceMetadataDisabledBehavior
+        {
+            get
+            {
+                return new ServiceMetadataBehavior
+                {
+                    HttpGetEnabled = false,
+                    HttpsGetEnabled = false
+                };
+            }
+        }
+
+        public static ServiceDebugBehavior ServiceDebugBehavior
+        {
+            get
+            {
+                return new ServiceDebugBehavior
+                {
+                    IncludeExceptionDetailInFaults = true,
+                    HttpHelpPageEnabled = false,
+                    HttpsHelpPageEnabled = false
+                };
+            }
+        }
+
         private void StartAcmaServiceHost()
         {
             this.acmaServiceHost = new ServiceHost(typeof(AcmaService), new Uri(AcmaResourceServiceConfig.NetTcpUri));
-            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaResourceService), AcmaResourceServiceConfig.NetTcpBinding, "");
+            this.acmaServiceHost.AddServiceEndpoint(typeof(IAcmaResourceService), ServiceMain.NetTcpBinding, "");
             if (this.acmaServiceHost.Description.Behaviors.Find<ServiceMetadataBehavior>() == null)
             {
-                this.acmaServiceHost.Description.Behaviors.Add(AcmaResourceServiceConfig.ServiceMetadataDisabledBehavior);
+                this.acmaServiceHost.Description.Behaviors.Add(ServiceMetadataDisabledBehavior);
             }
 
             if (this.acmaServiceHost.Description.Behaviors.Find<ServiceDebugBehavior>() == null)
             {
-                this.acmaServiceHost.Description.Behaviors.Add(AcmaResourceServiceConfig.ServiceDebugBehavior);
+                this.acmaServiceHost.Description.Behaviors.Add(ServiceDebugBehavior);
             }
 
             this.acmaServiceHost.Authorization.ServiceAuthorizationManager = new AcmaServiceAuthorizationManager();

@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<AssemblyTitle>Lithnet Acma service client library</AssemblyTitle>
 		<Company>Lithnet</Company>
 		<Authors>Lithnet</Authors>
 		<Product>Lithnet ACMA</Product>
 		<Deterministic>true</Deterministic>
 		<Version>1.2</Version>
-		<Platforms>x64</Platforms>
+		<Platforms>AnyCPU</Platforms>
 		<Prefer32Bit>false</Prefer32Bit>
 		<Description>Lithnet ACMA rules engine</Description>
 		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="System.ServiceModel" />
-		<Reference Include="System.Data.DataSetExtensions" />
-		<Reference Include="System.ServiceModel.Web" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.*" />
+		<PackageReference Include="System.ServiceModel.Http" Version="10.0.652802" />
+		<PackageReference Include="System.ServiceModel.NetTcp" Version="10.0.652802" />
 	</ItemGroup>
 </Project>
