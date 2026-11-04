@@ -9,8 +9,24 @@
 		<Version>1.2</Version>
 		<Platforms>AnyCPU</Platforms>
 		<Prefer32Bit>false</Prefer32Bit>
-		<Description>Lithnet ACMA rules engine</Description>
+		<Description>Client library for the Lithnet ACMA service. Reads and writes ACMA resources and reads the ACMA schema.</Description>
 		<Copyright>(c) $([System.DateTime]::Now.ToString('yyyy')) Lithnet Pty Ltd</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<PackageId>Lithnet.Acma.ServiceModel.Client</PackageId>
+		<PackageTags>ACMA;MIM;Lithnet</PackageTags>
+		<RepositoryUrl>https://github.com/lithnet/acma</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/lithnet/acma</PackageProjectUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
