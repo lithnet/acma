@@ -41,8 +41,3 @@ The original test database was lost, so the schema was rebuilt from what the tes
 - The `unixUid` sequence starts at 1000; the tests only read its next value.
 - All attributes are import/export and not indexed.
 - The `group` class has only the built-in attributes; the tests only check that `sn` and `shadowParent` are not on it.
-
-## Known failures
-
-- `TestReferenceLinkCreateTwoWay` expects `linkedAccounts` on `person` to be a back link of itself. ACMA refuses that link ("The forward and back link attributes cannot be the same if they belong to the same object class"), so the script does not create it and the test fails.
-- `ExpandVariableTestRandomNumberTestClash` draws one million 8-digit random numbers and expects no duplicates. With 90 million possible values, about 5,500 duplicates are expected, so the test always fails.

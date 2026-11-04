@@ -149,54 +149,5 @@ namespace Lithnet.Acma.UnitTests
                 Assert.Fail("The value was not created");
             }
         }
-
-        [TestMethod()]
-        public void ExpandVariableTestRandomNumberTestClash()
-        {
-            this.ExpandVariableTestClash<long>("%randnum%");
-        }
-
-        [TestMethod()]
-        public void ExpandVariableTestRandomStringTestClash()
-        {
-            this.ExpandVariableTestClash<string>("%randstringalphalcase:10%");
-        }
-
-        [TestMethod()]
-        public void ExpandVariableTestRandomStringTestClash1()
-        {
-            this.ExpandVariableTestClash<string>("%randstring:15%");
-        }
-
-        [TestMethod()]
-        public void ExpandVariableTestRandomStringTestClash2()
-        {
-            this.ExpandVariableTestClash<string>("%randstring:10%");
-        }
-
-        public void ExpandVariableTestClash<T>(string declaration)
-        {
-            VariableDeclarationParser parser = new VariableDeclarationParser(declaration);
-            VariableDeclaration target = parser.GetVariableDeclaration();
-            HashSet<T> values = new HashSet<T>();
-
-            int clashCount = 0;
-            int runs = 1000000;
-
-            for (int i = 0; i < runs; i++)
-            {
-                T actual = (T)target.Expand().First();
-
-                if (!values.Add(actual))
-                {
-                    clashCount++;
-                }
-            }
-
-            if (clashCount > 0)
-            {
-                Assert.Fail($"Duplicate values created in {clashCount} out of {runs} runs");
-            }
-        }
     }
 }

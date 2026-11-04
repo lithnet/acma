@@ -105,7 +105,6 @@ $attributes = @(
     @{ Name = 'testShadowOfShadowAccount'; Type = 'Reference' }
     @{ Name = 'directReports'; Type = 'Reference'; IsMultivalued = $true }
     @{ Name = 'displayNameSharers'; Type = 'Reference'; IsMultivalued = $true }
-    @{ Name = 'linkedAccounts'; Type = 'Reference'; IsMultivalued = $true }
     @{ Name = 'peers'; Type = 'Reference'; IsMultivalued = $true }
 )
 
@@ -117,7 +116,7 @@ $bindings = [ordered]@{
         'dateTimeSV', 'dateTimeMV', 'dateTimeMV2',
         'connectedToCallista', 'connectedToSap', 'hasAdMgrAccount', 'hasTestShadow',
         'objectSid', 'objectSids',
-        'adMgrAccount', 'supervisor', 'testShadowAccount', 'directReports', 'displayNameSharers', 'linkedAccounts'
+        'adMgrAccount', 'supervisor', 'testShadowAccount', 'directReports', 'displayNameSharers'
     )
     'testshadow' = @('hasTestShadowOfShadow', 'testShadowOfShadowAccount')
 }
