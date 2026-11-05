@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using Lithnet.Acma.Service;
 using Lithnet.Acma.ServiceModel;
 using Microsoft.MetadirectoryServices;
@@ -11,70 +13,132 @@ namespace Lithnet.Acma.UnitTests
     [TestClass()]
     public class AcmaServiceGetResourcesTest
     {
+        private static readonly List<string> ReadAttributes = new List<string>() { "mail", "mailAlternateAddresses", "supervisorAccountName" };
+
         public AcmaServiceGetResourcesTest()
         {
             UnitTestControl.Initialize();
         }
 
         [TestMethod()]
-        public void ContinuationTokensReadEveryObjectOnce()
+        public void EveryPageHoldsTheObjectsAsTheyWereWhenTheReadStarted()
         {
             List<Guid> createdIds = new List<Guid>();
 
             try
             {
-                for (int i = 0; i < 5; i++)
+                Guid supervisorId = AcmaServiceGetResourcesTest.CreatePerson(createdIds, "before", Guid.Empty);
+                List<Guid> personIds = new List<Guid>();
+
+                for (int i = 0; i < 4; i++)
                 {
-                    Guid id = Guid.NewGuid();
-                    MAObjectHologram hologram = ActiveConfig.DB.CreateMAObject(id, "person");
-                    hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), string.Format("test{0}@test.com", i));
-                    hologram.CommitCSEntryChange();
-                    createdIds.Add(id);
+                    personIds.Add(AcmaServiceGetResourcesTest.CreatePerson(createdIds, "before" + i, supervisorId));
                 }
 
                 AcmaService service = new AcmaService();
                 List<AcmaResource> resources = new List<AcmaResource>();
-                string token = null;
-                int pages = 0;
+                AcmaResourcePage page = service.GetResources("person", AcmaServiceGetResourcesTest.ReadAttributes, 2);
+                resources.AddRange(page.Resources);
+                Assert.IsNotNull(page.ContinuationToken, "The read fitted in one page");
 
-                do
+                // Single-valued, multivalued and inherited values change, one object is deleted and one is created, between pages
+                foreach (Guid id in personIds.Concat(new[] { supervisorId }))
                 {
-                    AcmaResourcePage page = service.GetResources("person", new List<string>() { "mail" }, 2, token);
-                    Assert.IsTrue(page.Resources.Count <= 2, "A page held more resources than the page size");
-                    resources.AddRange(page.Resources);
-                    token = page.ContinuationToken;
-                    pages++;
-                    Assert.IsTrue(pages < 1000, "Paging did not end");
+                    MAObjectHologram hologram = ActiveConfig.DB.GetMAObjectOrDefault(id);
+                    hologram.SetObjectModificationType(ObjectModificationType.Update, false);
+                    hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), "after@test.com");
+                    hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { "after-alt@test.com" });
+                    hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), "after");
+                    hologram.CommitCSEntryChange();
                 }
-                while (token != null);
 
-                for (int i = 0; i < createdIds.Count; i++)
+                ActiveConfig.DB.DeleteMAObjectPermanent(personIds[3]);
+                Guid createdDuringRead = AcmaServiceGetResourcesTest.CreatePerson(createdIds, "during", Guid.Empty);
+
+                int pages = 1;
+
+                while (page.ContinuationToken != null)
                 {
-                    List<AcmaResource> matches = resources.Where(t => t.ObjectID == createdIds[i]).ToList();
-                    Assert.AreEqual(1, matches.Count, "Object {0} was not returned exactly once", createdIds[i]);
-                    Assert.AreEqual(string.Format("test{0}@test.com", i), matches[0].Attributes["mail"].Single());
+                    page = service.GetResourcesPage(page.ContinuationToken, 2);
+                    resources.AddRange(page.Resources);
+                    pages++;
+                    Assert.IsTrue(pages < 10000, "Paging did not end");
+                }
+
+                Assert.AreEqual(resources.Count, resources.Select(t => t.ObjectID).Distinct().Count(), "An object was returned more than once");
+                Assert.IsFalse(resources.Any(t => t.ObjectID == createdDuringRead), "An object created during the read was returned");
+
+                AcmaResource supervisor = resources.Single(t => t.ObjectID == supervisorId);
+                Assert.AreEqual("before@test.com", supervisor.Attributes["mail"].Single());
+
+                for (int i = 0; i < personIds.Count; i++)
+                {
+                    AcmaResource person = resources.Single(t => t.ObjectID == personIds[i]);
+                    Assert.AreEqual(string.Format("before{0}@test.com", i), person.Attributes["mail"].Single());
+                    CollectionAssert.AreEquivalent(new List<string>() { string.Format("before{0}-alt1@test.com", i), string.Format("before{0}-alt2@test.com", i) }, person.Attributes["mailAlternateAddresses"].ToList());
+                    Assert.AreEqual("before", person.Attributes["supervisorAccountName"].Single());
                 }
             }
             finally
             {
-                foreach (Guid id in createdIds)
-                {
-                    ActiveConfig.DB.DeleteMAObjectPermanent(id);
-                }
+                AcmaServiceGetResourcesTest.Delete(createdIds);
             }
         }
 
         [TestMethod()]
-        public void APageSmallerThanThePageSizeHasNoContinuationToken()
+        public void TheReadNeitherSeesNorWaitsForUncommittedWrites()
         {
-            Guid id = Guid.NewGuid();
+            List<Guid> createdIds = new List<Guid>();
 
             try
             {
-                ActiveConfig.DB.CreateMAObject(id, "person");
+                Guid supervisorId = AcmaServiceGetResourcesTest.CreatePerson(createdIds, "before", Guid.Empty);
+                Guid personId = AcmaServiceGetResourcesTest.CreatePerson(createdIds, "before0", supervisorId);
 
-                AcmaService service = new AcmaService();
-                AcmaResourcePage page = service.GetResources("person", null, AcmaServiceConstants.MaximumPageSize, null);
+                // A write that holds locks on the object's row, its multivalued values and the row it inherits from.
+                // A read that is not a snapshot would wait for it, and time out
+                using (SqlConnection connection = new SqlConnection(ActiveConfig.DB.ConnectionString))
+                {
+                    connection.Open();
+
+                    using (SqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        SqlCommand command = new SqlCommand(
+                            "UPDATE [dbo].[MA_Objects] SET [mail] = 'uncommitted@test.com' WHERE [objectId] = @personId; " +
+                            "UPDATE [dbo].[MA_Attributes] SET [attributeValueString] = 'uncommitted-alt@test.com' WHERE [objectId] = @personId AND [attributeName] = 'mailAlternateAddresses'; " +
+                            "UPDATE [dbo].[MA_Objects] SET [accountName] = 'uncommitted' WHERE [objectId] = @supervisorId",
+                            connection,
+                            transaction);
+                        command.Parameters.AddWithValue("@personId", personId);
+                        command.Parameters.AddWithValue("@supervisorId", supervisorId);
+                        command.ExecuteNonQuery();
+
+                        AcmaResource person = AcmaServiceGetResourcesTest.ReadAll(new AcmaService()).Single(t => t.ObjectID == personId);
+
+                        Assert.AreEqual("before0@test.com", person.Attributes["mail"].Single());
+                        CollectionAssert.AreEquivalent(new List<string>() { "before0-alt1@test.com", "before0-alt2@test.com" }, person.Attributes["mailAlternateAddresses"].ToList());
+                        Assert.AreEqual("before", person.Attributes["supervisorAccountName"].Single());
+
+                        transaction.Rollback();
+                    }
+                }
+            }
+            finally
+            {
+                AcmaServiceGetResourcesTest.Delete(createdIds);
+            }
+        }
+
+        [TestMethod()]
+        public void AReadThatFitsInOnePageHasNoContinuationToken()
+        {
+            List<Guid> createdIds = new List<Guid>();
+
+            try
+            {
+                Guid id = AcmaServiceGetResourcesTest.CreatePerson(createdIds, "single", Guid.Empty);
+
+                AcmaResourcePage page = new AcmaService().GetResources("person", null, AcmaServiceConstants.MaximumPageSize);
 
                 Assert.IsTrue(page.Resources.Count < AcmaServiceConstants.MaximumPageSize, "The test database holds more person objects than one page");
                 Assert.IsNull(page.ContinuationToken);
@@ -82,7 +146,105 @@ namespace Lithnet.Acma.UnitTests
             }
             finally
             {
-                ActiveConfig.DB.DeleteMAObjectPermanent(id);
+                AcmaServiceGetResourcesTest.Delete(createdIds);
+            }
+        }
+
+        [TestMethod()]
+        public void TheLastPageEndsTheRead()
+        {
+            List<Guid> createdIds = new List<Guid>();
+
+            try
+            {
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "a", Guid.Empty);
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "b", Guid.Empty);
+
+                AcmaService service = new AcmaService();
+                AcmaResourcePage page = service.GetResources("person", null, 1);
+                string token = page.ContinuationToken;
+
+                while (page.ContinuationToken != null)
+                {
+                    page = service.GetResourcesPage(page.ContinuationToken, 1);
+                }
+
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+            }
+            finally
+            {
+                AcmaServiceGetResourcesTest.Delete(createdIds);
+            }
+        }
+
+        [TestMethod()]
+        public void AnErrorEndsTheRead()
+        {
+            List<Guid> createdIds = new List<Guid>();
+
+            try
+            {
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "a", Guid.Empty);
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "b", Guid.Empty);
+
+                AcmaService service = new AcmaService();
+                string token = service.GetResources("person", null, 1).ContinuationToken;
+
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResourcesPage(token, 0));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+            }
+            finally
+            {
+                AcmaServiceGetResourcesTest.Delete(createdIds);
+            }
+        }
+
+        [TestMethod()]
+        public void ReleaseEndsTheRead()
+        {
+            List<Guid> createdIds = new List<Guid>();
+
+            try
+            {
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "a", Guid.Empty);
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "b", Guid.Empty);
+
+                AcmaService service = new AcmaService();
+                string token = service.GetResources("person", null, 1).ContinuationToken;
+
+                service.ReleaseResources(token);
+
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+            }
+            finally
+            {
+                AcmaServiceGetResourcesTest.Delete(createdIds);
+            }
+        }
+
+        [TestMethod()]
+        public void AnIdleReadExpires()
+        {
+            List<Guid> createdIds = new List<Guid>();
+            TimeSpan expiry = AcmaService.ReadContextExpiry;
+
+            try
+            {
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "a", Guid.Empty);
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "b", Guid.Empty);
+                AcmaService.ReadContextExpiry = TimeSpan.FromSeconds(1);
+
+                AcmaService service = new AcmaService();
+                string token = service.GetResources("person", null, 1).ContinuationToken;
+
+                Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+            }
+            finally
+            {
+                AcmaService.ReadContextExpiry = expiry;
+                AcmaServiceGetResourcesTest.Delete(createdIds);
             }
         }
 
@@ -91,16 +253,17 @@ namespace Lithnet.Acma.UnitTests
         {
             AcmaService service = new AcmaService();
 
-            AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResources("person", null, 0, null));
-            AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResources("person", null, AcmaServiceConstants.MaximumPageSize + 1, null));
+            AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResources("person", null, 0));
+            AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResources("person", null, AcmaServiceConstants.MaximumPageSize + 1));
         }
 
         [TestMethod()]
-        public void AnInvalidContinuationTokenIsRejected()
+        public void AnUnknownContinuationTokenIsRejected()
         {
             AcmaService service = new AcmaService();
 
-            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 10, "not-a-token"));
+            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage("not-a-token", 10));
+            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(Guid.NewGuid().ToString(), 10));
         }
 
         [TestMethod()]
@@ -108,7 +271,7 @@ namespace Lithnet.Acma.UnitTests
         {
             AcmaService service = new AcmaService();
 
-            AcmaServiceGetResourcesTest.AssertThrows<NoSuchClassException>(() => service.GetResources("noSuchClass", null, 10, null));
+            AcmaServiceGetResourcesTest.AssertThrows<NoSuchClassException>(() => service.GetResources("noSuchClass", null, 10));
         }
 
         [TestMethod()]
@@ -116,7 +279,48 @@ namespace Lithnet.Acma.UnitTests
         {
             AcmaService service = new AcmaService();
 
-            AcmaServiceGetResourcesTest.AssertThrows<NoSuchAttributeInObjectTypeException>(() => service.GetResources("group", new List<string>() { "mail" }, 10, null));
+            AcmaServiceGetResourcesTest.AssertThrows<NoSuchAttributeInObjectTypeException>(() => service.GetResources("group", new List<string>() { "mail" }, 10));
+        }
+
+        private static List<AcmaResource> ReadAll(AcmaService service)
+        {
+            List<AcmaResource> resources = new List<AcmaResource>();
+            AcmaResourcePage page = service.GetResources("person", AcmaServiceGetResourcesTest.ReadAttributes, 2);
+            resources.AddRange(page.Resources);
+
+            while (page.ContinuationToken != null)
+            {
+                page = service.GetResourcesPage(page.ContinuationToken, 2);
+                resources.AddRange(page.Resources);
+            }
+
+            return resources;
+        }
+
+        private static Guid CreatePerson(List<Guid> createdIds, string name, Guid supervisorId)
+        {
+            Guid id = Guid.NewGuid();
+            MAObjectHologram hologram = ActiveConfig.DB.CreateMAObject(id, "person");
+            hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("accountName"), name);
+            hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("mail"), name + "@test.com");
+            hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("mailAlternateAddresses"), new List<object>() { name + "-alt1@test.com", name + "-alt2@test.com" });
+
+            if (supervisorId != Guid.Empty)
+            {
+                hologram.SetAttributeValue(ActiveConfig.DB.GetAttribute("supervisor"), supervisorId);
+            }
+
+            hologram.CommitCSEntryChange();
+            createdIds.Add(id);
+            return id;
+        }
+
+        private static void Delete(List<Guid> ids)
+        {
+            foreach (Guid id in ids)
+            {
+                ActiveConfig.DB.DeleteMAObjectPermanent(id);
+            }
         }
 
         private static void AssertThrows<T>(Action action) where T : Exception

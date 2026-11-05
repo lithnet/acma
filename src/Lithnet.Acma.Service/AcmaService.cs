@@ -22,6 +22,13 @@ namespace Lithnet.Acma.Service
     {
         internal static ManualResetEvent ConfigLock = new ManualResetEvent(true);
 
+        /// <summary>
+        /// The reads started by GetResources that have pages left, by continuation token
+        /// </summary>
+        internal static MemoryCache ReadContexts = new MemoryCache("AcmaResourceReadContexts");
+
+        internal static TimeSpan ReadContextExpiry = TimeSpan.FromMinutes(AcmaServiceConstants.ResourceReadExpiryMinutes);
+
         public AcmaResource GetResourceById(string id)
         {
             MAObjectHologram hologram = ActiveConfig.DB.GetMAObjectOrDefault(new Guid(id));
@@ -90,27 +97,14 @@ namespace Lithnet.Acma.Service
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }
 
-        public AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize, string continuationToken)
+        public AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize)
         {
             if (string.IsNullOrWhiteSpace(objectType))
             {
                 throw new ArgumentNullException("objectType");
             }
 
-            if (pageSize < 1 || pageSize > AcmaServiceConstants.MaximumPageSize)
-            {
-                throw new ArgumentOutOfRangeException("pageSize", string.Format("The page size must be between 1 and {0}", AcmaServiceConstants.MaximumPageSize));
-            }
-
-            Guid afterObjectId = Guid.Empty;
-
-            if (!string.IsNullOrEmpty(continuationToken))
-            {
-                if (!Guid.TryParse(continuationToken, out afterObjectId))
-                {
-                    throw new ArgumentException("The continuation token is not valid. Pass the ContinuationToken of the previous page, or null for the first page", "continuationToken");
-                }
-            }
+            AcmaService.ThrowOnInvalidPageSize(pageSize);
 
             AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(objectType);
             List<AcmaSchemaAttribute> schemaAttributes = new List<AcmaSchemaAttribute>();
@@ -123,14 +117,80 @@ namespace Lithnet.Acma.Service
                 }
             }
 
-            IList<MAObjectHologram> holograms = ActiveConfig.DB.GetMAObjectsPage(objectClass, afterObjectId, pageSize);
+            ResourceReadContext context = new ResourceReadContext(ActiveConfig.DB.GetResourcesSnapshot(objectClass, schemaAttributes));
+            string continuationToken = Guid.NewGuid().ToString();
 
-            AcmaResourcePage page = new AcmaResourcePage();
-            page.Resources = holograms.Select(t => t.ToAcmaResource(schemaAttributes)).ToList();
-
-            if (holograms.Count == pageSize)
+            if (context.Resources.Count > pageSize)
             {
-                page.ContinuationToken = holograms[holograms.Count - 1].ObjectID.ToString();
+                AcmaService.ReadContexts.Add(continuationToken, context, new CacheItemPolicy() { SlidingExpiration = AcmaService.ReadContextExpiry });
+            }
+
+            return AcmaService.TakePage(continuationToken, context, pageSize);
+        }
+
+        public AcmaResourcePage GetResourcesPage(string continuationToken, int pageSize)
+        {
+            if (string.IsNullOrWhiteSpace(continuationToken))
+            {
+                throw new ArgumentNullException("continuationToken");
+            }
+
+            ResourceReadContext context = AcmaService.ReadContexts.Get(continuationToken) as ResourceReadContext;
+
+            if (context == null)
+            {
+                throw new ArgumentException("The continuation token is not valid, or its read has ended. Start a new read with GetResources", "continuationToken");
+            }
+
+            lock (context)
+            {
+                try
+                {
+                    AcmaService.ThrowOnInvalidPageSize(pageSize);
+                    return AcmaService.TakePage(continuationToken, context, pageSize);
+                }
+                catch
+                {
+                    AcmaService.ReadContexts.Remove(continuationToken);
+                    throw;
+                }
+            }
+        }
+
+        public void ReleaseResources(string continuationToken)
+        {
+            if (string.IsNullOrWhiteSpace(continuationToken))
+            {
+                throw new ArgumentNullException("continuationToken");
+            }
+
+            AcmaService.ReadContexts.Remove(continuationToken);
+        }
+
+        private static void ThrowOnInvalidPageSize(int pageSize)
+        {
+            if (pageSize < 1 || pageSize > AcmaServiceConstants.MaximumPageSize)
+            {
+                throw new ArgumentOutOfRangeException("pageSize", string.Format("The page size must be between 1 and {0}", AcmaServiceConstants.MaximumPageSize));
+            }
+        }
+
+        /// <summary>
+        /// Takes the next page from a read, and ends the read when the page is its last
+        /// </summary>
+        private static AcmaResourcePage TakePage(string continuationToken, ResourceReadContext context, int pageSize)
+        {
+            AcmaResourcePage page = new AcmaResourcePage();
+            page.Resources = context.Resources.Skip(context.Position).Take(pageSize).ToList();
+            context.Position += page.Resources.Count;
+
+            if (context.Position < context.Resources.Count)
+            {
+                page.ContinuationToken = continuationToken;
+            }
+            else
+            {
+                AcmaService.ReadContexts.Remove(continuationToken);
             }
 
             return page;

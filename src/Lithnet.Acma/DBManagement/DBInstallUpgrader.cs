@@ -20,7 +20,7 @@ namespace Lithnet.Acma
 
         private static int dbMinorVersion = 7;
 
-        private static int dbRevisionVersion = 2;
+        private static int dbRevisionVersion = 3;
 
         private string ServerName { get; set; }
 
@@ -264,6 +264,10 @@ namespace Lithnet.Acma
             {
                 this.UpgradeTo1_7_2(databaseName);
             }
+            else if (dbVersion == new Version(1, 7, 2))
+            {
+                this.UpgradeTo1_7_3(databaseName);
+            }
             else if (dbVersion == DBInstallUpgrader.DBVersion)
             {
                 // Upgrade done
@@ -382,6 +386,13 @@ namespace Lithnet.Acma
         private void UpgradeTo1_7_2(string databaseName)
         {
             string createScript = this.GetSqlScript("DBManagement.Scripts.Upgrades.1_7_2.sql");
+            this.ExecuteSql(databaseName, createScript, databaseName, false);
+        }
+
+        private void UpgradeTo1_7_3(string databaseName)
+        {
+            // ALTER DATABASE cannot run inside a transaction
+            string createScript = this.GetSqlScript("DBManagement.Scripts.Upgrades.1_7_3.sql");
             this.ExecuteSql(databaseName, createScript, databaseName, false);
         }
 

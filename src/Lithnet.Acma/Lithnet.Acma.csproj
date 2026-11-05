@@ -94,6 +94,7 @@
 		<EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_1.sql" />
 		<EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_0.sql" />
 		<EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_2.sql" />
+		<EmbeddedResource Include="DBManagement\Scripts\Upgrades\1_7_3.sql" />
 		<None Include="FodyWeavers.xml" />
 	</ItemGroup>
 	<ItemGroup>

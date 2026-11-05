@@ -35,6 +35,10 @@
 	</Target>
 
 	<ItemGroup>
+		<InternalsVisibleTo Include="Lithnet.Acma.UnitTests" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="2.0.5" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
 			<PrivateAssets>all</PrivateAssets>

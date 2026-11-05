@@ -49,7 +49,7 @@ IF EXISTS (SELECT 1
            WHERE  [name] = N'$(DatabaseName)')
     BEGIN
         ALTER DATABASE [$(DatabaseName)]
-            SET ALLOW_SNAPSHOT_ISOLATION OFF;
+            SET ALLOW_SNAPSHOT_ISOLATION ON;
     END
 
 
@@ -2594,7 +2594,7 @@ DECLARE @scriptName nvarchar(20);
 
 SET @majorReleaseNumber=1;
 SET @minorReleaseNumber=7;
-SET	@pointReleaseNumber=2;
+SET	@pointReleaseNumber=3;
 SET @scriptName=N'Setup';
 
 IF NOT EXISTS(

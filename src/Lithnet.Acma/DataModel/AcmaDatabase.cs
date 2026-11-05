@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data.Linq;
 using Lithnet.Acma.DataModel;
+using Lithnet.Acma.ServiceModel;
 using Microsoft.MetadirectoryServices;
 using Lithnet.MetadirectoryServices;
 using System.ComponentModel;
@@ -2486,30 +2487,116 @@ namespace Lithnet.Acma
         }
 
         /// <summary>
-        /// Gets one page of objects of the specified class that have not been deleted, in object ID order
+        /// Reads the objects of the specified class that have not been deleted, as they were at one point in time. The objects, and every
+        /// value read for them, including multivalued and inherited values, come from one snapshot transaction
         /// </summary>
         /// <param name="objectClass">The object class to read</param>
-        /// <param name="afterObjectId">The ID of the last object of the previous page, or Guid.Empty to start at the beginning</param>
-        /// <param name="pageSize">The maximum number of objects to return</param>
-        /// <returns>The objects in the page, in object ID order</returns>
-        public IList<MAObjectHologram> GetMAObjectsPage(AcmaSchemaObjectClass objectClass, Guid afterObjectId, int pageSize)
+        /// <param name="attributes">The attributes to return for each object. objectId and objectClass are always returned</param>
+        /// <returns>The resources, in object ID order</returns>
+        public IList<AcmaResource> GetResourcesSnapshot(AcmaSchemaObjectClass objectClass, IList<AcmaSchemaAttribute> attributes)
         {
             this.ThrowOnNullArgument("objectClass", objectClass);
+            this.ThrowOnNullArgument("attributes", attributes);
 
-            if (pageSize < 1)
+            // A schema lookup inside the transaction would open a second connection. A snapshot transaction cannot
+            // be promoted to span two connections, so the read would fail
+            this.LoadSchema();
+
+            TransactionOptions options = new TransactionOptions()
             {
-                throw new ArgumentOutOfRangeException("pageSize", "The page size must be at least 1");
+                IsolationLevel = System.Transactions.IsolationLevel.Snapshot,
+                Timeout = TransactionManager.MaximumTimeout
+            };
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, options))
+            {
+                List<AcmaResource> resources = this.GetMAObjectsOfClass(objectClass).Select(t => t.ToAcmaResource(attributes)).ToList();
+                scope.Complete();
+                return resources;
+            }
+        }
+
+        /// <summary>
+        /// Loads every object and relationship of the cached schema, so that reading the schema does not query the database
+        /// </summary>
+        private void LoadSchema()
+        {
+            if (!this.CanCache)
+            {
+                throw new InvalidOperationException("The schema must be cached to read a snapshot of objects");
             }
 
+            foreach (AcmaSchemaObjectClass objectClass in this.ObjectClasses)
+            {
+                objectClass.ShadowChildren.Load();
+                objectClass.Mappings.Load();
+                objectClass.InheritanceSources.Load();
+                objectClass.BackLinks.Load();
+                objectClass.ForwardLinks.Load();
+                objectClass.ShadowLinks.Load();
+                objectClass.ShadowChildLinks.Load();
+                AcmaSchemaObjectClass shadowFrom = objectClass.ShadowFromObjectClass;
+            }
+
+            foreach (AcmaSchemaAttribute attribute in this.Attributes)
+            {
+                attribute.Mappings.Load();
+                attribute.InheritanceMappingSources.Load();
+                attribute.InheritanceMappingValues.Load();
+                attribute.BackLinks.Load();
+                attribute.ForwardLinks.Load();
+                attribute.ShadowObjectProvisioningLinks.Load();
+                attribute.ShadowObjectReferenceLinks.Load();
+            }
+
+            foreach (AcmaSchemaMapping mapping in this.Mappings)
+            {
+                mapping.SafetyRules.Load();
+                AcmaSchemaAttribute attribute = mapping.Attribute;
+                AcmaSchemaAttribute inheritanceSourceAttribute = mapping.InheritanceSourceAttribute;
+                AcmaSchemaAttribute inheritedAttribute = mapping.InheritedAttribute;
+                AcmaSchemaObjectClass objectClass = mapping.ObjectClass;
+                AcmaSchemaObjectClass inheritanceSourceObjectClass = mapping.InheritanceSourceObjectClass;
+            }
+
+            foreach (AcmaSchemaReferenceLink link in this.ReferenceLinks)
+            {
+                AcmaSchemaAttribute backLinkAttribute = link.BackLinkAttribute;
+                AcmaSchemaAttribute forwardLinkAttribute = link.ForwardLinkAttribute;
+                AcmaSchemaObjectClass backLinkObjectClass = link.BackLinkObjectClass;
+                AcmaSchemaObjectClass forwardLinkObjectClass = link.ForwardLinkObjectClass;
+            }
+
+            foreach (AcmaSchemaShadowObjectLink link in this.ShadowObjectLinks)
+            {
+                AcmaSchemaAttribute provisioningAttribute = link.ProvisioningAttribute;
+                AcmaSchemaAttribute referenceAttribute = link.ReferenceAttribute;
+                AcmaSchemaObjectClass shadowObjectClass = link.ShadowObjectClass;
+                AcmaSchemaObjectClass parentObjectClass = link.ParentObjectClass;
+            }
+
+            foreach (SafetyRule rule in this.SafetyRules)
+            {
+                AcmaSchemaMapping mapping = rule.AcmaSchemaMapping;
+            }
+
+            this.Constants.ToList();
+        }
+
+        /// <summary>
+        /// Gets the objects of the specified class that have not been deleted, in object ID order
+        /// </summary>
+        /// <param name="objectClass">The object class to read</param>
+        /// <returns>The objects, in object ID order</returns>
+        private IList<MAObjectHologram> GetMAObjectsOfClass(AcmaSchemaObjectClass objectClass)
+        {
             using (SqlConnection connection = ActiveConfig.DB.GetNewConnection())
             {
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
                 command.CommandType = CommandType.Text;
-                command.CommandText = "SELECT TOP (@pageSize) * FROM [dbo].[MA_Objects] WHERE ([deleted] = 0) AND ([objectClass] = @objectClass) AND ([objectId] > @afterObjectId) ORDER BY [objectId]";
-                command.Parameters.AddWithValue("@pageSize", pageSize);
+                command.CommandText = "SELECT * FROM [dbo].[MA_Objects] WHERE ([deleted] = 0) AND ([objectClass] = @objectClass) ORDER BY [objectId]";
                 command.Parameters.AddWithValue("@objectClass", objectClass.Name);
-                command.Parameters.AddWithValue("@afterObjectId", afterObjectId);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 SqlCommandBuilder builder = new SqlCommandBuilder(adapter);

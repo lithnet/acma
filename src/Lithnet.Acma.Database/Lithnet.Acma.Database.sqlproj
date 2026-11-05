@@ -52,7 +52,7 @@
     <ServiceBrokerOption>DisableBroker</ServiceBrokerOption>
     <DateCorrelationOptimizationOn>False</DateCorrelationOptimizationOn>
     <Parameterization>SIMPLE</Parameterization>
-    <AllowSnapshotIsolation>False</AllowSnapshotIsolation>
+    <AllowSnapshotIsolation>True</AllowSnapshotIsolation>
     <ReadCommittedSnapshot>False</ReadCommittedSnapshot>
     <VardecimalStorageFormatOn>True</VardecimalStorageFormatOn>
     <SupplementalLoggingOn>False</SupplementalLoggingOn>
