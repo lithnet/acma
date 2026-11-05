@@ -283,6 +283,17 @@ namespace Lithnet.Acma.UnitTests
         }
 
         [TestMethod()]
+        public void ReleaseDoesNothingWhenThereIsNoReadToEnd()
+        {
+            AcmaService service = new AcmaService();
+
+            service.ReleaseResources(null);
+            service.ReleaseResources(string.Empty);
+            service.ReleaseResources("not-a-token");
+            service.ReleaseResources(Guid.NewGuid().ToString());
+        }
+
+        [TestMethod()]
         public void ADifferentObjectTypeOrAttributeListEndsTheRead()
         {
             List<Guid> createdIds = new List<Guid>();

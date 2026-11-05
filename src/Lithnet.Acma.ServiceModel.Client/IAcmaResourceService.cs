@@ -34,7 +34,7 @@ namespace Lithnet.Acma.ServiceModel
         AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize, string continuationToken = null);
 
         /// <summary>
-        /// Ends a read started by GetResources before its last page
+        /// Ends a read started by GetResources before its last page. Does nothing when the token is null, unknown, or its read has already ended
         /// </summary>
         /// <param name="continuationToken">The ContinuationToken of the last page read</param>
         [OperationContract]

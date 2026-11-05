@@ -170,9 +170,10 @@ namespace Lithnet.Acma.Service
 
         public void ReleaseResources(string continuationToken)
         {
+            // Release only makes sure a read has ended, so a token for a read that has already ended, or no token, needs nothing done
             if (string.IsNullOrWhiteSpace(continuationToken))
             {
-                throw new ArgumentNullException("continuationToken");
+                return;
             }
 
             AcmaService.ReadContexts.Remove(continuationToken);
