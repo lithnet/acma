@@ -59,7 +59,7 @@ namespace Lithnet.Acma.UnitTests
 
                 while (page.ContinuationToken != null)
                 {
-                    page = service.GetResourcesPage(page.ContinuationToken, 2);
+                    page = service.GetResources("person", AcmaServiceGetResourcesTest.ReadAttributes, 2, page.ContinuationToken);
                     resources.AddRange(page.Resources);
                     pages++;
                     Assert.IsTrue(pages < 10000, "Paging did not end");
@@ -166,10 +166,10 @@ namespace Lithnet.Acma.UnitTests
 
                 while (page.ContinuationToken != null)
                 {
-                    page = service.GetResourcesPage(page.ContinuationToken, 1);
+                    page = service.GetResources("person", null, 1, page.ContinuationToken);
                 }
 
-                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 1, token));
             }
             finally
             {
@@ -190,8 +190,8 @@ namespace Lithnet.Acma.UnitTests
                 AcmaService service = new AcmaService();
                 string token = service.GetResources("person", null, 1).ContinuationToken;
 
-                AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResourcesPage(token, 0));
-                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentOutOfRangeException>(() => service.GetResources("person", null, 0, token));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 1, token));
             }
             finally
             {
@@ -214,7 +214,7 @@ namespace Lithnet.Acma.UnitTests
 
                 service.ReleaseResources(token);
 
-                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 1, token));
             }
             finally
             {
@@ -239,7 +239,7 @@ namespace Lithnet.Acma.UnitTests
 
                 Thread.Sleep(TimeSpan.FromSeconds(2));
 
-                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(token, 1));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 1, token));
             }
             finally
             {
@@ -262,8 +262,8 @@ namespace Lithnet.Acma.UnitTests
         {
             AcmaService service = new AcmaService();
 
-            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage("not-a-token", 10));
-            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResourcesPage(Guid.NewGuid().ToString(), 10));
+            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 10, "not-a-token"));
+            AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 10, Guid.NewGuid().ToString()));
         }
 
         [TestMethod()]
@@ -282,17 +282,45 @@ namespace Lithnet.Acma.UnitTests
             AcmaServiceGetResourcesTest.AssertThrows<NoSuchAttributeInObjectTypeException>(() => service.GetResources("group", new List<string>() { "mail" }, 10));
         }
 
+        [TestMethod()]
+        public void ADifferentObjectTypeOrAttributeListEndsTheRead()
+        {
+            List<Guid> createdIds = new List<Guid>();
+
+            try
+            {
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "a", Guid.Empty);
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "b", Guid.Empty);
+                AcmaServiceGetResourcesTest.CreatePerson(createdIds, "c", Guid.Empty);
+
+                AcmaService service = new AcmaService();
+
+                string token = service.GetResources("person", new List<string>() { "mail" }, 1).ContinuationToken;
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", new List<string>() { "accountName" }, 1, token));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", new List<string>() { "mail" }, 1, token));
+
+                token = service.GetResources("person", null, 1).ContinuationToken;
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("group", null, 1, token));
+                AcmaServiceGetResourcesTest.AssertThrows<ArgumentException>(() => service.GetResources("person", null, 1, token));
+            }
+            finally
+            {
+                AcmaServiceGetResourcesTest.Delete(createdIds);
+            }
+        }
+
         private static List<AcmaResource> ReadAll(AcmaService service)
         {
             List<AcmaResource> resources = new List<AcmaResource>();
-            AcmaResourcePage page = service.GetResources("person", AcmaServiceGetResourcesTest.ReadAttributes, 2);
-            resources.AddRange(page.Resources);
+            string continuationToken = null;
 
-            while (page.ContinuationToken != null)
+            do
             {
-                page = service.GetResourcesPage(page.ContinuationToken, 2);
+                AcmaResourcePage page = service.GetResources("person", AcmaServiceGetResourcesTest.ReadAttributes, 2, continuationToken);
                 resources.AddRange(page.Resources);
+                continuationToken = page.ContinuationToken;
             }
+            while (continuationToken != null);
 
             return resources;
         }

@@ -11,7 +11,7 @@ namespace Lithnet.Acma.ServiceModel
         public const string SchemaNamespace = "http://lithnet.local/acma/schema/";
 
         /// <summary>
-        /// The largest page size GetResources and GetResourcesPage accept
+        /// The largest page size GetResources accepts
         /// </summary>
         public const int MaximumPageSize = 1000;
 

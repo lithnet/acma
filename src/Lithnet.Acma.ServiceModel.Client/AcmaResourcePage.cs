@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Lithnet.Acma.ServiceModel
 {
     /// <summary>
-    /// One page of resources returned by IAcmaResourceService.GetResources or IAcmaResourceService.GetResourcesPage
+    /// One page of resources returned by IAcmaResourceService.GetResources
     /// </summary>
     [DataContract(Namespace = AcmaServiceConstants.ResourcesNamespace)]
     public class AcmaResourcePage
@@ -17,7 +17,7 @@ namespace Lithnet.Acma.ServiceModel
         public List<AcmaResource> Resources { get; set; }
 
         /// <summary>
-        /// Gets or sets the token to pass to GetResourcesPage to read the next page, or null when the read has no more pages
+        /// Gets or sets the token to pass to GetResources to read the next page, or null when the read has no more pages
         /// </summary>
         [DataMember]
         public string ContinuationToken { get; set; }

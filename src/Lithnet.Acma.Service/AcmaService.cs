@@ -97,27 +97,38 @@ namespace Lithnet.Acma.Service
             return holograms.Select(t => t.ToAcmaResource()).ToList();
         }
 
-        public AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize)
+        public AcmaResourcePage GetResources(string objectType, IList<string> attributes, int pageSize, string continuationToken = null)
         {
             if (string.IsNullOrWhiteSpace(objectType))
             {
                 throw new ArgumentNullException("objectType");
             }
 
+            List<string> attributeNames = attributes == null ? new List<string>() : attributes.ToList();
+
+            if (continuationToken == null)
+            {
+                return AcmaService.StartRead(objectType, attributeNames, pageSize);
+            }
+            else
+            {
+                return AcmaService.ContinueRead(objectType, attributeNames, pageSize, continuationToken);
+            }
+        }
+
+        private static AcmaResourcePage StartRead(string objectType, List<string> attributeNames, int pageSize)
+        {
             AcmaService.ThrowOnInvalidPageSize(pageSize);
 
             AcmaSchemaObjectClass objectClass = ActiveConfig.DB.GetObjectClass(objectType);
             List<AcmaSchemaAttribute> schemaAttributes = new List<AcmaSchemaAttribute>();
 
-            if (attributes != null)
+            foreach (string attributeName in attributeNames)
             {
-                foreach (string attributeName in attributes)
-                {
-                    schemaAttributes.Add(ActiveConfig.DB.GetAttribute(attributeName, objectClass));
-                }
+                schemaAttributes.Add(ActiveConfig.DB.GetAttribute(attributeName, objectClass));
             }
 
-            ResourceReadContext context = new ResourceReadContext(ActiveConfig.DB.GetResourcesSnapshot(objectClass, schemaAttributes));
+            ResourceReadContext context = new ResourceReadContext(objectType, attributeNames, ActiveConfig.DB.GetResourcesSnapshot(objectClass, schemaAttributes));
             string continuationToken = Guid.NewGuid().ToString();
 
             if (context.Resources.Count > pageSize)
@@ -128,24 +139,24 @@ namespace Lithnet.Acma.Service
             return AcmaService.TakePage(continuationToken, context, pageSize);
         }
 
-        public AcmaResourcePage GetResourcesPage(string continuationToken, int pageSize)
+        private static AcmaResourcePage ContinueRead(string objectType, List<string> attributeNames, int pageSize, string continuationToken)
         {
-            if (string.IsNullOrWhiteSpace(continuationToken))
-            {
-                throw new ArgumentNullException("continuationToken");
-            }
-
             ResourceReadContext context = AcmaService.ReadContexts.Get(continuationToken) as ResourceReadContext;
 
             if (context == null)
             {
-                throw new ArgumentException("The continuation token is not valid, or its read has ended. Start a new read with GetResources", "continuationToken");
+                throw new ArgumentException("The continuation token is not valid, or its read has ended. Start a new read with a null continuation token", "continuationToken");
             }
 
             lock (context)
             {
                 try
                 {
+                    if (objectType != context.ObjectType || !attributeNames.SequenceEqual(context.AttributeNames))
+                    {
+                        throw new ArgumentException("The object type and attributes must be the same as those the read started with", "continuationToken");
+                    }
+
                     AcmaService.ThrowOnInvalidPageSize(pageSize);
                     return AcmaService.TakePage(continuationToken, context, pageSize);
                 }
